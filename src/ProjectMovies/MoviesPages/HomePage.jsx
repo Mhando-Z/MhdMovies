@@ -38,7 +38,7 @@ function HomePage() {
   }, []);
 
   //
-  if (true) {
+  if (BigData.length === 0) {
     return <Loading />;
   }
 
