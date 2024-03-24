@@ -26,7 +26,7 @@ function Details() {
       <div className="flex space-x-12 flex-col lg:space-x-14 lg:p-10 p-5 lg:flex-row bg-slate-800 rounded-xl shadow-xl ">
         <div className="flex flex-col gap-2 ">
           <img
-            src={`https://image.tmdb.org/t/p/w500${datas.poster_path}`}
+            src={datas.posterUrl}
             alt="posterimage"
             className="max-w-screen h-auto rounded-xl shadow-md  duration-1000 hover:scale-105 "
           />
