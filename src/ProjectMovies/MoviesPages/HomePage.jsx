@@ -52,9 +52,9 @@ function HomePage() {
         <div className="flex md:flex-row flex-col items-center gap-5">
           <input
             type="text"
-            className="border rounded-xl text-slate-300 outline-none border-slate-400 bg-slate-700 sm:px-24 p-16 py-4 text-center text-xl lg:text-2xl"
+            className="border rounded-xl text-slate-300 outline-none border-slate-400 bg-slate-700 sm:px-24  py-2 text-center text-xl lg:text-2xl"
           />
-          <button className="py-4 px-10 text-center font-medium text-2xl bg-slate-900 rounded-xl text-slate-400  ">
+          <button className="lg:py-4 lg:px-10 py-2  px-6 text-center font-medium lg:text-2xl text-xl bg-slate-900 rounded-xl text-slate-400  ">
             Search
           </button>
         </div>
