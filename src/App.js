@@ -3,10 +3,11 @@ import HugeCard from "./ProjectMovies/MoviesPages/HugeCard";
 import HomePage from "./ProjectMovies/MoviesPages/HomePage";
 import Footer from "./ProjectMovies/MoviesPages/Footer";
 import Details from "./ProjectMovies/MoviesPages/Details";
+import "./App.css";
 
 function App() {
   return (
-    <div className="shadow-xl">
+    <div className="shadow-xl container">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />

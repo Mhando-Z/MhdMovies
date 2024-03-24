@@ -66,7 +66,7 @@ function HomePage() {
               <img
                 src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
                 alt="posterimage"
-                className=" duration-1000 hover:scale-105 max-w-screen shadow-lg h-auto rounded-b-2xl"
+                className=" duration-1000 hover:scale-105 max-w-screen shadow-lg h-auto"
               />
               <div className="flex items-center justify-center mt-2">
                 <Link

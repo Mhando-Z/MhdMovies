@@ -20,14 +20,14 @@ function Other() {
 
   return (
     <div>
-      <div className="container p-10 bg-gray-800 lg:p-3 mt-10 mx-auto grid  grid-cols-4 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-5 shadow-2xl justify-center">
+      <div className="container p-10 bg-gray-800 lg:p-3 mt-10 mx-auto grid  grid-cols-3 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-5 shadow-2xl justify-center">
         {BigData.map((data) => {
           return (
             <div className="border border-b-2 border-b-slate-50" key={data.id}>
               <img
                 src={data.posterUrl}
                 alt="posterimage"
-                className=" duration-1000 hover:scale-105 max-w-screen shadow-lg h-auto rounded-b-2xl"
+                className=" duration-1000 hover:scale-105 max-w-screen shadow-lg h-auto "
               />
               <div className="flex items-center justify-center mt-2">
                 <Link
