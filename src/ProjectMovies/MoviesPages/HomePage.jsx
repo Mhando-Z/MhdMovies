@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import movies from "../MData/MoviesData.json";
 import { Link } from "react-router-dom";
 import ScrollToTopButton from "./pageScroll";
-import thor from "../MData/image 1.jpg";
 
 function Loading() {
   return (
@@ -44,25 +43,25 @@ function HomePage() {
 
   return (
     <div className="shadow-2xl">
-      <div className="animate-pulse mt-2 duration-[2000ms] container mx-auto bg-slate-700 rounded-2xl p-2  flex items-center justify-center mb-10">
-        <img
+      <div className=" animate-pulse mt-2 duration-[2000ms] container mx-auto bg-slate-700 rounded-2xl p-2  flex items-center justify-center mb-10">
+        {/* <img
           src={thor}
           alt="postermage"
           className="w-screen h-auto rounded-b-xl"
-        />
+        /> */}
       </div>
       <div className="mt-14 mb-14 flex items-center justify-center">
-        <div className="flex flex-row items-center gap-5">
-          <button className="py-4 px-10 text-2xl bg-slate-900 rounded-xl text-slate-400  ">
-            Search
-          </button>
+        <div className="flex md:flex-row flex-col items-center gap-5">
           <input
             type="text"
             className="border rounded-xl text-slate-300 outline-none border-slate-400 bg-slate-700 sm:px-24 p-16 py-4 text-center text-xl lg:text-2xl"
           />
+          <button className="py-4 px-10 text-center font-medium text-2xl bg-slate-900 rounded-xl text-slate-400  ">
+            Search
+          </button>
         </div>
       </div>
-      <div className="container p-10 bg-gray-800 lg:p-3 mx-auto grid sm:grid-cols-2 grid-cols-2 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-5 shadow-2xl justify-center">
+      <div className="container p-10 bg-gray-800 lg:p-3 mx-auto grid sm:grid-cols-2 grid-cols-4  lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-5 shadow-2xl justify-center">
         {BigData.map((data) => {
           return (
             <div className="border border-b-2 border-b-slate-50" key={data.id}>

@@ -20,7 +20,7 @@ function Other() {
 
   return (
     <div>
-      <div className="container p-10 bg-gray-800 lg:p-3 mt-10 mx-auto grid sm:grid-cols-2 grid-cols-2 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-5 shadow-2xl justify-center">
+      <div className="container p-10 bg-gray-800 lg:p-3 mt-10 mx-auto grid  grid-cols-4 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-5 shadow-2xl justify-center">
         {BigData.map((data) => {
           return (
             <div className="border border-b-2 border-b-slate-50" key={data.id}>
