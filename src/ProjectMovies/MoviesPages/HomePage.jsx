@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import movies from "../MData/MoviesData.json";
 import { Link } from "react-router-dom";
 import ScrollToTopButton from "./pageScroll";
+import famy from "../MData/family.png";
 
 function Loading() {
   return (
@@ -43,12 +44,9 @@ function HomePage() {
 
   return (
     <div className="shadow-2xl">
-      <div className=" animate-pulse mt-2 duration-[2000ms] container mx-auto bg-slate-700 rounded-2xl p-2  flex items-center justify-center mb-10">
-        {/* <img
-          src={thor}
-          alt="postermage"
-          className="w-screen h-auto rounded-b-xl"
-        /> */}
+      <div className="flex-col mt-2  container mx-auto bg-slate-800 rounded-2xl p-2  flex items-center justify-center mb-10">
+        <img src={famy} alt="postermage" className="max-w-screen h-96" />
+        <h1 className="text-slate-400 text-5xl font-bold">MhdMovies</h1>
       </div>
       <div className="mt-14 mb-14 flex items-center justify-center">
         <div className="flex md:flex-row flex-col items-center gap-5">
@@ -61,7 +59,7 @@ function HomePage() {
           </button>
         </div>
       </div>
-      <div className="container p-10 bg-gray-800 lg:p-3 mx-auto grid sm:grid-cols-2 grid-cols-4  lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-5 shadow-2xl justify-center">
+      <div className="p-10 bg-gray-800 lg:p-3 grid grid-cols-3 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-4 shadow-2xl justify-evenly">
         {BigData.map((data) => {
           return (
             <div className="border border-b-2 border-b-slate-50" key={data.id}>
