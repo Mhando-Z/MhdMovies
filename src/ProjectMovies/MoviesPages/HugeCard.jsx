@@ -6,6 +6,11 @@ import ScrollToTopButton from "./pageScroll";
 import Collapse from "@mui/material/Collapse";
 import { useState } from "react";
 import Other from "./Other";
+import "./../../App";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import PeopleIcon from "@mui/icons-material/People";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 
 function HugeCard() {
   const [open, setOpen] = useState(false);
@@ -43,16 +48,15 @@ function HugeCard() {
   const min = datas.runtime % 60;
   //Profit Loss Logic
   //VIdeo player Apsect Ratio
-  let width = "420px";
-  let height = "250px";
 
   return (
     <div className="container mx-auto shadow-2xl rounded-xl">
       <div className="mb-10 mt-5 ">
         <Link
           to="/"
-          className="text-white hover:scale-110  duration-[2000ms] lg:text-2xl text-xl bg-gray-700 py-2 px-6"
+          className="text-white items-center justify-center lg:text-2xl text-xl bg-gray-700 py-2 px-6"
         >
+          <ArrowBackIosIcon fontSize="medium" />
           Back
         </Link>
       </div>
@@ -72,7 +76,7 @@ function HugeCard() {
               {datas.overview}
             </p>
           </div>
-          <div className="flex items-center justify-center flex-row lg:gap-2 gap-1">
+          <div className="flex flex-col items-center mb-10 justify-center lg:flex-row lg:gap-2 gap-1">
             <h2 className="text-slate-300 text-xl">Genres:</h2>
             {genres.map((data, index) => {
               return (
@@ -83,7 +87,7 @@ function HugeCard() {
             })}
           </div>
         </div>
-        <div className="lg:flex lg:flex-col lg:justify-start lg:items-start grid grid-cols-2 items-center justify-center lg:p-2 p-24 gap-10 gap-x-20">
+        <div className="lg:flex lg:flex-col lg:justify-start lg:items-start grid grid-cols-2 items-center justify-center lg:p-2 gap-10 gap-x-20">
           <div className="items-center justify-center">
             <h2 className="text-slate-300 mb-2 text-xl">
               Ratings: {datas.vote_average}
@@ -144,13 +148,52 @@ function HugeCard() {
             <h2 className="text-slate-300 text-xl">{datas.popularity}</h2>
           </div>
           <div className="grid col-span-2 grid-flow-col items-center justify-center  duration-1000 hover:scale-105">
-            <div className="flex items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+            <div className="lg:flex hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
               <ReactPlayer
                 pip={true}
                 light={false}
                 stopOnUnmount={false}
-                width={width}
-                height={height}
+                width={"900px"}
+                height={"450px"}
+                controls={true}
+                url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
+              />
+            </div>
+          </div>
+          <div className="grid col-span-2 grid-flow-col items-center justify-center  duration-1000 hover:scale-105">
+            <div className="sm:flex mr-11 hidden md:hidden lg:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+              <ReactPlayer
+                pip={true}
+                light={false}
+                stopOnUnmount={false}
+                width={"400px"}
+                height={"250px"}
+                controls={true}
+                url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
+              />
+            </div>
+          </div>
+          <div className="grid col-span-2 grid-flow-col items-center justify-center  duration-1000 hover:scale-105">
+            <div className="md:flex hidden lg:hidden mr-11 items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+              <ReactPlayer
+                pip={true}
+                light={false}
+                stopOnUnmount={false}
+                width={"700px"}
+                height={"450px"}
+                controls={true}
+                url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
+              />
+            </div>
+          </div>
+          <div className=" grid col-span-2 sm:hidden grid-flow-col items-center justify-center  duration-1000 hover:scale-105">
+            <div className=" sm:hidden flex mr-11 items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+              <ReactPlayer
+                pip={true}
+                light={false}
+                stopOnUnmount={false}
+                width={"360px"}
+                height={"200px"}
                 controls={true}
                 url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
               />
@@ -158,11 +201,19 @@ function HugeCard() {
           </div>
         </div>
         <div>
-          <h1 className="text-4xl text-slate-300 ">{datas.certification}</h1>
+          <h1 className="text-4xl mt-8 mb-5 text-slate-300 ">
+            {datas.certification}
+          </h1>
         </div>
       </div>
-      <div className="grid grid-cols-2 mt-1 justify-center lg:justify-between items-center lg:flex lg:flex-row gap-20  lg:p-10 p-10 bg-slate-800 rounded-xl shadow-xl ">
+      <div className="grid grid-cols-2 mt-1 justify-center lg:justify-between  lg:flex lg:flex-row gap-20  lg:p-10 p-10 bg-slate-800 rounded-xl shadow-xl ">
         <div>
+          <PeopleIcon
+            sx={{
+              color: "white",
+              fontSize: "2.5rem",
+            }}
+          />
           <h1 className="text-3xl text-slate-300 ">Cast</h1>
           <div>
             {cast.map((data, index) => {
@@ -175,10 +226,20 @@ function HugeCard() {
           </div>
         </div>
         <div>
+          <PhotoCameraIcon
+            sx={{
+              color: "white",
+              fontSize: "2.5rem",
+            }}
+          />
           {datas.directors.length <= 1 ? (
-            <h1 className="text-3xl text-slate-300 ">Director</h1>
+            <div>
+              <h1 className="text-3xl text-slate-300 ">Director</h1>
+            </div>
           ) : (
-            <h1 className="text-3xl text-slate-300 ">Directors</h1>
+            <div>
+              <h1 className="text-3xl text-slate-300 ">Directors</h1>
+            </div>
           )}
 
           <div>
@@ -192,6 +253,13 @@ function HugeCard() {
           </div>
         </div>
         <div>
+          <ImportContactsIcon
+            sx={{
+              color: "white",
+              fontFamily: "2.5rem",
+            }}
+          />
+
           {datas.writers.length <= 1 ? (
             <h1 className="text-3xl text-slate-300 ">Writer</h1>
           ) : (

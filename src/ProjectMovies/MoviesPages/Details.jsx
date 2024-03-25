@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import ScrollToTopButton from "./pageScroll";
 import Other from "./Other";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 function Details() {
   const { movies } = movie;
@@ -18,8 +19,9 @@ function Details() {
       <div className="mb-10 mt-5 ">
         <Link
           to="/"
-          className="text-white hover:scale-110  duration-[2000ms] lg:text-2xl text-xl bg-gray-700 py-2 px-6"
+          className="text-white items-center justify-center lg:text-2xl text-xl bg-gray-700 py-2 px-6"
         >
+          <ArrowBackIosIcon fontSize="medium" />
           Back
         </Link>
       </div>
