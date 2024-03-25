@@ -160,7 +160,7 @@ function HugeCard() {
               />
             </div>
           </div>
-          <div className="grid col-span-2 grid-flow-col items-center justify-center  duration-1000 hover:scale-105">
+          <div className="grid col-span-2 grid-flow-col items-center justify-center">
             <div className="sm:flex mr-11 hidden md:hidden lg:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
               <ReactPlayer
                 pip={true}
@@ -173,7 +173,7 @@ function HugeCard() {
               />
             </div>
           </div>
-          <div className="grid col-span-2 grid-flow-col items-center justify-center  duration-1000 hover:scale-105">
+          <div className="grid col-span-2 grid-flow-col items-center justify-center">
             <div className="md:flex hidden lg:hidden mr-11 items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
               <ReactPlayer
                 pip={true}
@@ -186,7 +186,7 @@ function HugeCard() {
               />
             </div>
           </div>
-          <div className=" grid col-span-2 sm:hidden grid-flow-col items-center justify-center  duration-1000 hover:scale-105">
+          <div className=" grid col-span-2 sm:hidden grid-flow-col items-center justify-center">
             <div className=" sm:hidden flex mr-11 items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
               <ReactPlayer
                 pip={true}
