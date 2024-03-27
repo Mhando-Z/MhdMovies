@@ -1,3 +1,4 @@
+import "./../../App";
 import movies from "../MData/MoviesData.json";
 import { Link, useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
@@ -5,8 +6,6 @@ import ReactPlayer from "react-player";
 import ScrollToTopButton from "./pageScroll";
 import Collapse from "@mui/material/Collapse";
 import { useState } from "react";
-import Other from "./Other";
-import "./../../App";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import PeopleIcon from "@mui/icons-material/People";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
@@ -14,12 +13,16 @@ import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 
 function HugeCard() {
   const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(true);
   const { data } = movies;
   const { id } = useParams();
   const datas = data.find((mov) => mov.id === parseInt(id));
 
   const handleClick = () => {
     setOpen(!open);
+  };
+  const handleClicks = () => {
+    setShow(!show);
   };
 
   //Genres Logic
@@ -51,161 +54,198 @@ function HugeCard() {
 
   return (
     <div className="container mx-auto shadow-2xl rounded-xl">
-      <div className="mb-10 mt-5 ">
-        <Link
-          to="/"
-          className="text-white items-center justify-center lg:text-2xl text-xl bg-gray-700 py-2 px-6"
-        >
-          <ArrowBackIosIcon fontSize="medium" />
-          Back
-        </Link>
-      </div>
-      <div className="flex space-x-12 flex-col lg:space-x-14 lg:p-10 p-5 lg:flex-row bg-slate-800 rounded-xl shadow-xl ">
-        <div className="flex flex-col gap-2 ">
-          <img
-            src={`https://image.tmdb.org/t/p/w500${datas.poster_path}`}
-            alt="posterimage"
-            className="max-w-screen h-auto rounded-xl shadow-md  duration-1000 hover:scale-105 "
-          />
-          <div className="flex flex-col items-center justify-center mt-4 gap-3">
-            <h1 className="text-4xl text-slate-300 ">{datas.title}</h1>
-            <h2 className="text-slate-300 text-xl max-w-md">
-              Tagline: {datas.tagline}
-            </h2>
-            <p className="text-xl max-w-md text-justify text-slate-500">
-              {datas.overview}
-            </p>
-          </div>
-          <div className="flex flex-col items-center mb-10 justify-center lg:flex-row lg:gap-2 gap-1">
-            <h2 className="text-slate-300 text-xl">Genres:</h2>
-            {genres.map((data, index) => {
-              return (
-                <h2 className="text-slate-300 text-xl" key={index}>
-                  {`${data} `}
-                </h2>
-              );
-            })}
-          </div>
+      <section>
+        {/* Button section */}
+        <div className="mb-10 mt-5 ">
+          <Link
+            to="/"
+            className="text-white items-center justify-center lg:text-2xl text-xl bg-gray-700 py-2 px-6"
+          >
+            <ArrowBackIosIcon fontSize="medium" />
+            Back
+          </Link>
         </div>
-        <div className="lg:flex lg:flex-col lg:justify-start lg:items-start grid grid-cols-2 items-center justify-center lg:p-2 gap-10 gap-x-20">
-          <div className="items-center justify-center">
-            <h2 className="text-slate-300 mb-2 text-xl">
-              Ratings: {datas.vote_average}
-            </h2>
-            <Rating
-              name="disabled"
-              defaultValue={datas.vote_average}
-              precision={0.5}
-              max={10}
-              sx={{ p: 0, m: 0 }}
-              readOnly
+      </section>
+      <section>
+        <div className="flex lg:flex-row flex-col items-center lg:items-start justify-evenly">
+          <div className="flex flex-col gap-2">
+            <img
+              src={`https://image.tmdb.org/t/p/w500${datas.poster_path}`}
+              alt="posterimage"
+              className="max-w-screen h-auto rounded-xl shadow-md  duration-1000 hover:scale-105 "
             />
-          </div>
-          <div className="flex lg:flex-row flex-col gap-2">
-            <h2 className="text-slate-300 text-xl"> Duration:</h2>
-            <h2 className="text-yellow-400 text-xl">
-              {hours}h:{min}m
-            </h2>
-          </div>
-          <div className="flex lg:flex-row flex-col gap-2">
-            <h2 className="text-slate-300 text-xl">Release Date: </h2>
-            <h2 className="text-slate-300 text-xl">{datas.release_date}</h2>
-          </div>
-          <div className="flex lg:flex-row flex-col gap-2">
-            <h2 className="text-slate-300 text-xl">Language: </h2>
-            <h2 className="text-slate-300 text-xl">
-              {datas.original_language}
-            </h2>
-          </div>
-          <div className="flex lg:flex-row flex-col gap-2">
-            <h2 className="text-slate-300 text-xl">Budget: </h2>
-            <h2 className="text-slate-300 text-xl">
-              {datas.budget === undefined ? " " : datas.budget.toLocaleString()}
-            </h2>
-            <h2 className="text-slate-300 text-xl">Revenue: </h2>
-            <h2 className="text-slate-300 text-xl">
-              {datas.revenue === undefined
-                ? " "
-                : datas.revenue.toLocaleString()}
-            </h2>
-          </div>
-          <div className="flex lg:flex-row flex-col gap-2">
-            <h2 className="text-slate-300 text-xl">Achievements: </h2>
-            <h2 className="text-slate-300 text-xl">
-              {datas.revenue === undefined
-                ? " "
-                : (datas.revenue - datas.budget).toLocaleString()}
-            </h2>
-            <h2 className="text-slate-300 text-xl spa\">
-              {datas.revenue - datas.budget <= datas.budget &&
-              datas.revenue - datas.budget !== 0
-                ? " Loss"
-                : " Profit"}
-            </h2>
-          </div>
-          <div className="flex lg:flex-row flex-col gap-2">
-            <h2 className="text-slate-300 text-xl">Popularity: </h2>
-            <h2 className="text-slate-300 text-xl">{datas.popularity}</h2>
-          </div>
-          <div className="grid col-span-2 grid-flow-col items-center justify-center  duration-1000 hover:scale-105">
-            <div className="lg:flex hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
-              <ReactPlayer
-                pip={true}
-                light={false}
-                stopOnUnmount={false}
-                width={"900px"}
-                height={"450px"}
-                controls={true}
-                url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
-              />
+            <div className="flex flex-col items-center justify-center mt-4 gap-3">
+              <h1 className="text-4xl text-slate-300 ">{datas.title}</h1>
+              <h2 className="text-slate-300 text-xl max-w-md">
+                Tagline: {datas.tagline}
+              </h2>
+              <p className="text-xl max-w-md text-justify text-slate-500">
+                {datas.overview}
+              </p>
+            </div>
+            <div className="flex flex-col items-center mb-10 justify-center lg:flex-row lg:gap-2 gap-1">
+              <h2 className="text-slate-300 text-xl">Genres:</h2>
+              {genres.map((data, index) => {
+                return (
+                  <h2 className="text-slate-300 text-xl" key={index}>
+                    {`${data} `}
+                  </h2>
+                );
+              })}
             </div>
           </div>
-          <div className="grid col-span-2 grid-flow-col items-center justify-center">
-            <div className="sm:flex mr-11 hidden md:hidden lg:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
-              <ReactPlayer
-                pip={true}
-                light={false}
-                stopOnUnmount={false}
-                width={"400px"}
-                height={"250px"}
-                controls={true}
-                url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
-              />
+          <div className="flex flex-col gap-10  ">
+            <div className="flex bg-slate-700 p-10 rounded-xl lg:flex-row sm:flex-wrap flex-col gap-y-10 items-start justify-between">
+              <div>
+                <div className="items-center justify-center">
+                  <h2 className="text-slate-300 mb-2 text-xl">
+                    Ratings: {datas.vote_average}
+                  </h2>
+                  <Rating
+                    name="disabled"
+                    defaultValue={datas.vote_average}
+                    precision={0.5}
+                    max={10}
+                    sx={{ p: 0, m: 0 }}
+                    readOnly
+                  />
+                </div>
+                {/* Ratings duration */}
+                <div className="flex lg:flex-row flex-col gap-2">
+                  <h2 className="text-slate-300 text-xl"> Duration:</h2>
+                  <h2 className="text-yellow-400 text-xl">
+                    {hours}h:{min}m
+                  </h2>
+                </div>
+                <div className="flex lg:flex-row flex-col gap-2">
+                  <h2 className="text-slate-300 text-xl">Release Date: </h2>
+                  <h2 className="text-slate-300 text-xl">
+                    {datas.release_date}
+                  </h2>
+                </div>
+              </div>
+              {/* Another div second one */}
+              <div>
+                <div>
+                  <div className="flex lg:flex-row flex-col gap-2">
+                    <h2 className="text-slate-300 text-xl">Language: </h2>
+                    <h2 className="text-slate-300 text-xl">
+                      {datas.original_language}
+                    </h2>
+                  </div>
+                </div>
+                <div className="flex lg:flex-row flex-col gap-2">
+                  <h2 className="text-slate-300 text-xl">Budget: </h2>
+                  <h2 className="text-slate-300 text-xl">
+                    {datas.budget === undefined
+                      ? " "
+                      : datas.budget.toLocaleString()}
+                  </h2>
+                  <h2 className="text-slate-300 text-xl">Revenue: </h2>
+                  <h2 className="text-slate-300 text-xl">
+                    {datas.revenue === undefined
+                      ? " "
+                      : datas.revenue.toLocaleString()}
+                  </h2>
+                </div>
+                <div className="flex lg:flex-row flex-col gap-2">
+                  <h2 className="text-slate-300 text-xl">Achievements: </h2>
+                  <h2 className="text-slate-300 text-xl">
+                    {datas.revenue === undefined
+                      ? " "
+                      : (datas.revenue - datas.budget).toLocaleString()}
+                  </h2>
+                  <h2 className="text-slate-300 text-xl spa\">
+                    {datas.revenue - datas.budget <= datas.budget &&
+                    datas.revenue - datas.budget !== 0
+                      ? " Loss"
+                      : " Profit"}
+                  </h2>
+                </div>
+              </div>
+              {/* third div */}
+              <div>
+                <div className="flex lg:flex-row flex-col gap-2">
+                  <h2 className="text-slate-300 text-xl">Popularity: </h2>
+                  <h2 className="text-slate-300 text-xl">{datas.popularity}</h2>
+                </div>
+                <div>
+                  <h1 className="text-4xl mt-8 mb-5 text-slate-300 ">
+                    {datas.certification}
+                  </h1>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="grid col-span-2 grid-flow-col items-center justify-center">
-            <div className="md:flex hidden lg:hidden mr-11 items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
-              <ReactPlayer
-                pip={true}
-                light={false}
-                stopOnUnmount={false}
-                width={"700px"}
-                height={"450px"}
-                controls={true}
-                url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
-              />
+            {/* BigGuy two creation */}
+            <div className="">
+              <div className="flex items-center justify-center">
+                <div className="lg:flex hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                  <ReactPlayer
+                    pip={true}
+                    light={false}
+                    stopOnUnmount={false}
+                    width={"900px"}
+                    height={"450px"}
+                    controls={true}
+                    url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="sm:flex hidden md:hidden lg:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                  <ReactPlayer
+                    pip={true}
+                    light={false}
+                    stopOnUnmount={false}
+                    width={"400px"}
+                    height={"250px"}
+                    controls={true}
+                    url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="md:flex hidden lg:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                  <ReactPlayer
+                    pip={true}
+                    light={false}
+                    stopOnUnmount={false}
+                    width={"700px"}
+                    height={"450px"}
+                    controls={true}
+                    url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
+                  />
+                </div>
+              </div>
+              <div className=" grid col-span-2 sm:hidden grid-flow-col items-center justify-center">
+                <div className=" sm:hidden flex items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                  <ReactPlayer
+                    pip={true}
+                    light={false}
+                    stopOnUnmount={false}
+                    width={"360px"}
+                    height={"200px"}
+                    controls={true}
+                    url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-          <div className=" grid col-span-2 sm:hidden grid-flow-col items-center justify-center">
-            <div className=" sm:hidden flex mr-11 items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
-              <ReactPlayer
-                pip={true}
-                light={false}
-                stopOnUnmount={false}
-                width={"360px"}
-                height={"200px"}
-                controls={true}
-                url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
-              />
+            {/* Download sites*/}
+            <div>
+              <div
+                onClick={handleClicks}
+                className="container mx-auto flex flex-col gap-2 lg:p-10 p-2 bg-slate-800 rounded-3xl mt-1 shadow-xl"
+              >
+                <h1 className="lg:text-3xl mb-5  text-slate-300 text-center text-xl ">
+                  Download Links
+                </h1>
+                <Collapse in={show} timeout="auto" unmountOnExit></Collapse>
+              </div>
             </div>
           </div>
         </div>
-        <div>
-          <h1 className="text-4xl mt-8 mb-5 text-slate-300 ">
-            {datas.certification}
-          </h1>
-        </div>
-      </div>
+      </section>
       <div className="grid grid-cols-2 mt-1 justify-center lg:justify-between  lg:flex lg:flex-row gap-20  lg:p-10 p-10 bg-slate-800 rounded-xl shadow-xl ">
         <div>
           <PeopleIcon
@@ -282,7 +322,7 @@ function HugeCard() {
         className="container mx-auto flex flex-col gap-2 lg:p-10 p-2 bg-slate-800 rounded-3xl mt-1 shadow-xl"
       >
         <h1 className="lg:text-3xl mb-5 text-slate-300 text-center text-xl ">
-          Click, see similar Movies
+          Similar Movies
         </h1>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <div className="grid grid-cols-2 justify-center sm:grid-cols-4 gap-4 ">
@@ -290,7 +330,7 @@ function HugeCard() {
               return (
                 <div
                   key={index}
-                  className="bg-slate-700  duration-1000 hover:scale-105 flex items-center justify-center py-4 px-10 rounded-lg "
+                  className="bg-slate-700 duration-1000 hover:scale-105 flex items-center justify-center py-4 px-10 rounded-lg "
                 >
                   <p className="lg:text-2xl text-xl line-clamp-3 text-center font-semibold text-slate-300">
                     {data}
@@ -301,7 +341,6 @@ function HugeCard() {
           </div>
         </Collapse>
       </div>
-      <Other />
       <ScrollToTopButton />
     </div>
   );
