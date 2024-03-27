@@ -14,7 +14,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 
 function HugeCard() {
   const [open, setOpen] = useState(false);
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const { data } = movies;
   const { id } = useParams();
   const datas = data.find((mov) => mov.id === parseInt(id));
@@ -98,7 +98,7 @@ function HugeCard() {
             </div>
           </div>
           <div className="flex flex-col gap-10  ">
-            <div className="flex mx-5 sm:mx-0 bg-slate-700 p-10 rounded-xl xl:flex-row sm:flex-wrap flex-col gap-y-10 items-start justify-between">
+            <div className="flex mx-5 sm:mx-0 bg-slate-700 p-10 rounded-xl xl:flex-row flex-col gap-y-10 items-start justify-between">
               <div>
                 <div className="items-center justify-center">
                   <h2 className="text-slate-300 mb-2 text-xl">
@@ -208,7 +208,7 @@ function HugeCard() {
                 </div>
               </div>
               <div className="flex items-center justify-center">
-                <div className="md:flex hidden xl:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                <div className="md:flex  hidden xl:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
                   <ReactPlayer
                     pip={true}
                     light={false}
@@ -221,7 +221,7 @@ function HugeCard() {
                 </div>
               </div>
               <div className=" grid col-span-2 sm:hidden grid-flow-col items-center justify-center">
-                <div className=" sm:hidden  flex items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                <div className=" sm:hidden flex items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
                   <ReactPlayer
                     pip={true}
                     light={false}
@@ -238,13 +238,49 @@ function HugeCard() {
             <div>
               <div
                 onClick={handleClicks}
-                className="container mx-auto flex flex-col gap-2 lg:p-10 p-2 bg-slate-800 rounded-3xl mt-1 shadow-xl"
+                className="flex flex-col gap-2 lg:p-5 p-2 bg-slate-800 rounded-3xl mt-1 shadow-xl"
               >
                 <h1 className="lg:text-3xl mb-5  text-slate-300 text-center text-xl ">
-                  <DownloadIcon sx={{ fontSize: "2.1rem", color: "white" }} />
+                  <DownloadIcon
+                    className="hover:animate-bounce"
+                    sx={{ fontSize: "2.1rem", color: "white" }}
+                  />
                   Download Links
                 </h1>
-                <Collapse in={show} timeout="auto" unmountOnExit></Collapse>
+                <Collapse in={show} timeout="auto" unmountOnExit>
+                  <div className="bg-slate-700 p-5 flex lg:grid lg:grid-cols-3 flex-col rounded-xl items-center justify-between">
+                    <Link
+                      className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
+                      to={`https://mlwbd.st/`}
+                    >
+                      link 1: MLWBD
+                    </Link>
+                    <Link
+                      className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
+                      to={`https://193.233.203.165/page/2/`}
+                    >
+                      link 2: MKvKing
+                    </Link>
+                    <Link
+                      className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
+                      to={`https://moviesnation.app/`}
+                    >
+                      link 3: MovieNation
+                    </Link>
+                    <Link
+                      className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
+                      to={`https://yts.mx/`}
+                    >
+                      link 1: YTs
+                    </Link>
+                    <Link
+                      className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
+                      to={`https://torrentgalaxy.to/`}
+                    >
+                      link 1: TorrentGalaxy
+                    </Link>
+                  </div>
+                </Collapse>
               </div>
             </div>
           </div>
