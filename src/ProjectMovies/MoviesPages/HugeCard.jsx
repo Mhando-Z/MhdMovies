@@ -236,11 +236,11 @@ function HugeCard() {
             </div>
             {/* Download sites*/}
             <div>
-              <div
-                onClick={handleClicks}
-                className="flex flex-col gap-2 lg:p-5 p-2 bg-slate-800 rounded-3xl mt-1 shadow-xl"
-              >
-                <h1 className="lg:text-3xl mb-5  text-slate-300 text-center text-xl ">
+              <div className="flex flex-col gap-2 lg:p-5 p-2 bg-slate-800 rounded-3xl mt-1 shadow-xl">
+                <h1
+                  onClick={handleClicks}
+                  className="lg:text-3xl mb-5  text-slate-300 text-center text-xl "
+                >
                   <DownloadIcon
                     className="hover:animate-bounce"
                     sx={{ fontSize: "2.1rem", color: "white" }}
@@ -271,13 +271,13 @@ function HugeCard() {
                       className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
                       to={`https://yts.mx/`}
                     >
-                      link 1: YTs
+                      link 4: YTs
                     </Link>
                     <Link
                       className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
                       to={`https://torrentgalaxy.to/`}
                     >
-                      link 1: TorrentGalaxy
+                      link 5: TorrentGalaxy
                     </Link>
                   </div>
                 </Collapse>
@@ -357,11 +357,11 @@ function HugeCard() {
           </div>
         </div>
       </div>
-      <div
-        onClick={handleClick}
-        className="container mx-auto flex flex-col gap-2 lg:p-10 p-2 bg-slate-800 rounded-3xl mt-1 shadow-xl"
-      >
-        <h1 className="lg:text-3xl mb-5 text-slate-300 text-center text-xl ">
+      <div className="container mx-auto flex flex-col gap-2 lg:p-5 p-2 bg-slate-800 rounded-3xl mt-1 shadow-xl">
+        <h1
+          onClick={handleClick}
+          className="lg:text-3xl mb-5 text-slate-300 text-center text-xl "
+        >
           Similar Movies
         </h1>
         <Collapse in={open} timeout="auto" unmountOnExit>
