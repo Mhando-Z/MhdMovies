@@ -10,6 +10,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import PeopleIcon from "@mui/icons-material/People";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import DownloadIcon from "@mui/icons-material/Download";
 
 function HugeCard() {
   const [open, setOpen] = useState(false);
@@ -75,11 +76,13 @@ function HugeCard() {
               className="max-w-screen h-auto rounded-xl shadow-md  duration-1000 hover:scale-105 "
             />
             <div className="flex flex-col items-center justify-center mt-4 gap-3">
-              <h1 className="text-4xl text-slate-300 ">{datas.title}</h1>
-              <h2 className="text-slate-300 text-xl max-w-md">
+              <h1 className="sm:text-4xl sm:mx-0 text-3xl mx-5 text-slate-300 ">
+                {datas.title}
+              </h1>
+              <h2 className="text-slate-300 text-center text-xl max-w-md">
                 Tagline: {datas.tagline}
               </h2>
-              <p className="text-xl max-w-md text-justify text-slate-500">
+              <p className="text-xl mx-5 sm:mx-0 max-w-md text-justify text-slate-500">
                 {datas.overview}
               </p>
             </div>
@@ -95,7 +98,7 @@ function HugeCard() {
             </div>
           </div>
           <div className="flex flex-col gap-10  ">
-            <div className="flex bg-slate-700 p-10 rounded-xl lg:flex-row sm:flex-wrap flex-col gap-y-10 items-start justify-between">
+            <div className="flex mx-5 sm:mx-0 bg-slate-700 p-10 rounded-xl xl:flex-row sm:flex-wrap flex-col gap-y-10 items-start justify-between">
               <div>
                 <div className="items-center justify-center">
                   <h2 className="text-slate-300 mb-2 text-xl">
@@ -179,7 +182,7 @@ function HugeCard() {
             {/* BigGuy two creation */}
             <div className="">
               <div className="flex items-center justify-center">
-                <div className="lg:flex hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                <div className="xl:flex hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
                   <ReactPlayer
                     pip={true}
                     light={false}
@@ -191,8 +194,8 @@ function HugeCard() {
                   />
                 </div>
               </div>
-              <div className="flex items-center justify-center">
-                <div className="sm:flex hidden md:hidden lg:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+              <div className="flex items-centerjustify-center">
+                <div className="sm:flex  hidden md:hidden lg:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
                   <ReactPlayer
                     pip={true}
                     light={false}
@@ -205,7 +208,7 @@ function HugeCard() {
                 </div>
               </div>
               <div className="flex items-center justify-center">
-                <div className="md:flex hidden lg:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                <div className="md:flex hidden xl:hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
                   <ReactPlayer
                     pip={true}
                     light={false}
@@ -218,7 +221,7 @@ function HugeCard() {
                 </div>
               </div>
               <div className=" grid col-span-2 sm:hidden grid-flow-col items-center justify-center">
-                <div className=" sm:hidden flex items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                <div className=" sm:hidden  flex items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
                   <ReactPlayer
                     pip={true}
                     light={false}
@@ -238,6 +241,7 @@ function HugeCard() {
                 className="container mx-auto flex flex-col gap-2 lg:p-10 p-2 bg-slate-800 rounded-3xl mt-1 shadow-xl"
               >
                 <h1 className="lg:text-3xl mb-5  text-slate-300 text-center text-xl ">
+                  <DownloadIcon sx={{ fontSize: "2.1rem", color: "white" }} />
                   Download Links
                 </h1>
                 <Collapse in={show} timeout="auto" unmountOnExit></Collapse>
@@ -251,14 +255,14 @@ function HugeCard() {
           <PeopleIcon
             sx={{
               color: "white",
-              fontSize: "2.5rem",
+              fontSize: "2.1rem",
             }}
           />
           <h1 className="text-3xl text-slate-300 ">Cast</h1>
           <div>
             {cast.map((data, index) => {
               return (
-                <p className="lg:text-2xl text-xl text-slate-300" key={index}>
+                <p className="lg:text-2xl text-lg text-slate-300" key={index}>
                   {data}
                 </p>
               );
@@ -269,23 +273,23 @@ function HugeCard() {
           <PhotoCameraIcon
             sx={{
               color: "white",
-              fontSize: "2.5rem",
+              fontSize: "2.1rem",
             }}
           />
           {datas.directors.length <= 1 ? (
             <div>
-              <h1 className="text-3xl text-slate-300 ">Director</h1>
+              <h1 className="text-2xl text-slate-300 ">Director</h1>
             </div>
           ) : (
             <div>
-              <h1 className="text-3xl text-slate-300 ">Directors</h1>
+              <h1 className="text-2xl text-slate-300 ">Directors</h1>
             </div>
           )}
 
           <div>
             {directors.map((data, index) => {
               return (
-                <p className="lg:text-2xl text-xl text-slate-300" key={index}>
+                <p className="lg:text-2xl text-lg text-slate-300" key={index}>
                   {data}
                 </p>
               );
@@ -296,7 +300,7 @@ function HugeCard() {
           <ImportContactsIcon
             sx={{
               color: "white",
-              fontFamily: "2.5rem",
+              fontSize: "2.1rem",
             }}
           />
 
@@ -309,7 +313,7 @@ function HugeCard() {
           <div className="overflow-auto max-h-40 overscroll-contain">
             {writers.map((data, index) => {
               return (
-                <p className="lg:text-2xl text-slate-300" key={index}>
+                <p className="lg:text-2xl text-lg text-slate-300" key={index}>
                   {data}
                 </p>
               );
