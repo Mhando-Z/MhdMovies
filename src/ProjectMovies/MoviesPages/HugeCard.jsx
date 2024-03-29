@@ -12,6 +12,8 @@ import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import DownloadIcon from "@mui/icons-material/Download";
 import Moviedisplay from "./MovieDisplay";
+import "@vidstack/react/player/styles/base.css";
+import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 
 function HugeCard() {
   const [open, setOpen] = useState(false);
@@ -52,7 +54,6 @@ function HugeCard() {
   const hours = Math.trunc(datas.runtime / 60);
   const min = datas.runtime % 60;
   //Profit Loss Logic
-  //VIdeo player Apsect Ratio
 
   return (
     <div className="container mx-auto shadow-2xl rounded-xl">
@@ -183,7 +184,7 @@ function HugeCard() {
             {/* BigGuy two creation */}
             <div className="">
               <div className="flex items-center justify-center">
-                <div className="xl:flex hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                <div className="lg:flex hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
                   <ReactPlayer
                     pip={true}
                     light={false}
@@ -233,6 +234,17 @@ function HugeCard() {
                     url={`https://www.youtube.com/watch?v=${datas.trailer_yt}`}
                   />
                 </div>
+              </div>
+              <div className="mt-10 flex items-center justify-center">
+                <Link
+                  className="py-2 px-10 lg:text-2xl text-xl shadow-xl rounded-lg  text-slate-200 font-semibold bg-slate-700"
+                  to={`https://vidsrc.xyz/embed/movie?imdb=${datas.external_ids.imdb_id}`}
+                >
+                  <SmartDisplayIcon
+                    sx={{ fontSize: "2rem", mr: "4px", mb: "5px" }}
+                  />
+                  Watch
+                </Link>
               </div>
             </div>
             {/* Download sites*/}

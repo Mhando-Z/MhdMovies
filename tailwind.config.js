@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// Base styles for media player and provider (~400B).
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -11,5 +12,5 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@vidstack/react/tailwind.cjs")],
 };

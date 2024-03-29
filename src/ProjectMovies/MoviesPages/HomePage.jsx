@@ -7,32 +7,20 @@ import ReactPaginate from "react-paginate";
 
 function HomePage() {
   const { data } = movies;
-  const [play, setIsVisible] = useState(true);
+  const [play, setPlay] = useState(false);
   const [val, setValue] = useState(Math.floor(Math.random() * 2000));
   const [itemOffset, setItemOffset] = useState(0);
   const [Bigdatas, setDatas] = useState([]);
   let itemsPerPage = 30;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset;
-      if (scrollTop >= 370) {
-        setIsVisible(false);
-      }
-      if (scrollTop <= 370) {
-        setIsVisible(true);
-      } // Change the threshold as per your requirement
-    };
+  const handleplay = () => {
+    setPlay(true);
+  };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
   const BigDatax = data.map((data) => {
     return data;
   });
-  const handleValuw = () => {
+  const handleValue = () => {
     return setValue(Math.floor(Math.random() * 2000));
   };
 
@@ -43,9 +31,6 @@ function HomePage() {
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % Bigdatas.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
   };
 
@@ -75,11 +60,13 @@ function HomePage() {
               objectFit: "cover",
               backgroundSize: "cover",
             }}
-            controls={true}
             url={`https://www.youtube.com/watch?v=${BigDatax[val].trailer_yt}`}
           />
         </div>
-        <div className="absolute hidden lg:flex top-60 left-0 right-0 bottom-0 bg-gradient-to-b from-transparent to-black"></div>
+        <div
+          onClick={handleplay}
+          className="absolute hidden lg:flex top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-transparent via-transparent to-black"
+        ></div>
         <div className="absolute hidden bottom-10 lg:flex items-center justify-between gap-10">
           <div className="flex-col gap-5 justify-center items-center">
             <h1 className="text-4xl md:px-5 px-2 mb-5  md:text-5xl xl:text-6xl md:max-w-5xl font-medium font-sans max-w-sm text-slate-200 left-0">
@@ -91,21 +78,21 @@ function HomePage() {
           </div>
           <div className="lg:flex items-center justify-center hidden ">
             <Link
-              onClick={handleValuw}
+              onClick={handleValue}
               className="py-2 px-10 lg:text-2xl text-white xl:text-3xl border-2 border-white"
             >
               Next
             </Link>
             <div className="flex flex-row">
               <Link
-                onClick={handleValuw}
-                to={`/movie/${String(BigDatax[val].id)}`}
+                onClick={handleValue}
+                to={`https://vidsrc.xyz/embed/movie?imdb=${BigDatax[val].external_ids.imdb_id}`}
                 className="py-2 px-10 border border-white xl:text-3xl text-white lg:text-2xl "
               >
                 Watch
               </Link>
               <Link
-                onClick={handleValuw}
+                onClick={handleValue}
                 to={`/movie/${String(BigDatax[val].id)}`}
                 className="py-2 px-10 xl:text-3xl text-white lg:text-2xl "
               >
@@ -127,11 +114,13 @@ function HomePage() {
               objectFit: "cover",
               backgroundSize: "cover",
             }}
-            controls={true}
             url={`https://www.youtube.com/watch?v=${BigDatax[val].trailer_yt}`}
           />
         </div>
-        <div className="absolute lg:hidden flex top-28 left-0 right-0 bottom-0 bg-gradient-to-b from-transparent to-black"></div>
+        <div
+          onClick={handleplay}
+          className="absolute lg:hidden flex top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-transparent via-transparent to-black"
+        ></div>
         <div className="absolute lg:hidden bottom-10 flex items-end justify-between gap-10">
           <div className="flex-col gap-5 justify-center items-center">
             <h1 className="md:px-5 px-2 sm:mb-5 mb-2  sm:text-4xl text-2xl md:max-w-5xl font-medium font-sans max-w-sm text-slate-200 left-0">
@@ -143,14 +132,14 @@ function HomePage() {
           </div>
           <div className="flex flex-col items-start justify-start lg:hidden ">
             <button
-              onClick={handleValuw}
+              onClick={handleValue}
               className="py-2 px-10 text-xl text-white"
             >
               Next
             </button>
             <div className="flex flex-col items-start">
               <Link
-                to={`/movie/${String(BigDatax[val].id)}`}
+                to={`https://vidsrc.xyz/embed/movie?imdb=${BigDatax[val].external_ids.imdb_id}`}
                 className="py-2 px-10 text-white text-xl "
               >
                 Watch
@@ -177,7 +166,7 @@ function HomePage() {
                 <div className="flex duration-1000 shadow-xl hover:scale-105 items-center flex-col gap-2 justify-center mt-2">
                   <Link
                     to={`/movie/${data.id}`}
-                    onClick={handleValuw}
+                    onClick={handleValue}
                     className="text-slate-400 lg:text-2xl line-clamp-2 md:text-xl text-lg text-center font-medium "
                   >
                     <img
