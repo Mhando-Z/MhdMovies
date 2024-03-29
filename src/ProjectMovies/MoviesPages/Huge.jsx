@@ -13,7 +13,7 @@ import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import DownloadIcon from "@mui/icons-material/Download";
 import Moviedisplay from "./MovieDisplay";
 
-function HugeCard() {
+function Huge() {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const { data } = movies;
@@ -388,4 +388,4 @@ function HugeCard() {
   );
 }
 
-export default HugeCard;
+export default Huge;
