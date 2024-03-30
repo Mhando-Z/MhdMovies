@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import movies from "../MData/MoviesData.json";
 import { Link } from "react-router-dom";
 import ScrollToTopButton from "./pageScroll";
 import ReactPlayer from "react-player";
 import ReactPaginate from "react-paginate";
+import Search from "./Search";
 
 function HomePage() {
   const { data } = movies;
   const [play, setPlay] = useState(false);
   const [val, setValue] = useState(Math.floor(Math.random() * 2000));
   const [itemOffset, setItemOffset] = useState(0);
-  const [Bigdatas, setDatas] = useState([]);
   let itemsPerPage = 30;
 
   const handleplay = () => {
-    setPlay(true);
+    setPlay(!play);
   };
 
   const BigDatax = data.map((data) => {
@@ -26,26 +26,13 @@ function HomePage() {
 
   // Pages pagination Logic
   const endOffset = itemOffset + itemsPerPage;
-  const BigData = Bigdatas.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(Bigdatas.length / itemsPerPage);
+  const BigData = BigDatax.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(BigDatax.length / itemsPerPage);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % Bigdatas.length;
+    const newOffset = (event.selected * itemsPerPage) % BigDatax.length;
     setItemOffset(newOffset);
   };
-
-  //datashuffle logic
-  const shuffle = (array: string[]) => {
-    return array
-      .map((a) => ({ sort: Math.random(), value: a }))
-      .sort((a, b) => a.sort - b.sort)
-      .map((a) => a.value);
-  };
-
-  useEffect(() => {
-    const info = shuffle(data);
-    setDatas(info);
-  }, []);
 
   return (
     <div className="shadow-2xl">
@@ -155,7 +142,11 @@ function HomePage() {
         </div>
       </div>
       {/* Small screens */}
-      <div className="flex flex-col items-center justify-center">
+      {/* Search functionality */}
+      {/* <div className="container mx-auto ">
+        <Search />
+      </div> */}
+      <div className=" container mx-auto flex flex-col items-center justify-center">
         <div className="p-1 lg:mt-5 bg-gray-800 lg:p-3 grid grid-cols-3 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-2 shadow-2xl justify-evenly">
           {BigData.map((data) => {
             return (
@@ -185,8 +176,8 @@ function HomePage() {
           <ReactPaginate
             className="md:text-xl text-md text-sm flex items-center justify-evenly gap-x-3"
             pageClassName=" bg-slate-700 text-white md:px-2 px-1"
-            activeClassName="bg-slate-500 text-white animate-bounce duration-700"
-            previousClassName=" bg-gray-200 text-black font-semibold px-2"
+            activeClassName="bg-slate-900 shadow-md shadow-white animate-bounce duration-700"
+            previousClassName="bg-gray-200 text-black font-semibold px-2"
             nextClassName="bg-gray-200 text-black font-semibold px-2"
             breakLabel="..."
             nextLabel="Next"

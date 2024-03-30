@@ -64,7 +64,7 @@ function Moviedisplay() {
               >
                 <div className="flex duration-1000 shadow-xl hover:scale-105 items-center flex-col gap-2 justify-center mt-2">
                   <Link
-                    to={`/Movie/${data.id}`}
+                    to={`/movie/${data.id}`}
                     onClick={scrollToTop}
                     className="text-slate-400 lg:text-2xl line-clamp-2 md:text-xl text-lg text-center font-medium "
                   >
@@ -84,8 +84,8 @@ function Moviedisplay() {
           <ReactPaginate
             className="md:text-xl text-md text-sm flex items-center justify-evenly gap-x-3"
             pageClassName=" bg-slate-700 text-white md:px-2 px-1"
-            activeClassName="bg-slate-500 text-white animate-bounce duration-700"
-            previousClassName=" bg-gray-200 text-black font-semibold px-2"
+            activeClassName="bg-slate-900 shadow-md shadow-white animate-bounce duration-700"
+            previousClassName="bg-gray-200 text-black font-semibold px-2"
             nextClassName="bg-gray-200 text-black font-semibold px-2"
             breakLabel="..."
             nextLabel="Next"

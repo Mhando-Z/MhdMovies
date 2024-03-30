@@ -30,9 +30,15 @@ function HugeCard() {
   };
 
   //Genres Logic
-  const genres = datas.genres.map((dt) => {
-    return dt;
-  });
+  const genres = [];
+  if (typeof datas.genres === "object") {
+    datas.genres.map((dt) => {
+      return genres.push(dt);
+    });
+  } else {
+    console.log(datas.genres);
+  }
+
   //Cast Logic
   const cast = datas.cast.map((data) => {
     return data.name;
@@ -97,6 +103,9 @@ function HugeCard() {
                   </h2>
                 );
               })}
+              <p className="text-slate-300 text-xl">
+                {genres.length === 0 ? datas.genres : " "}
+              </p>
             </div>
           </div>
           <div className="flex flex-col gap-10  ">
@@ -184,7 +193,7 @@ function HugeCard() {
             {/* BigGuy two creation */}
             <div className="">
               <div className="flex items-center justify-center">
-                <div className="lg:flex hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+                <div className="xl:flex hidden items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
                   <ReactPlayer
                     pip={true}
                     light={false}
@@ -261,8 +270,12 @@ function HugeCard() {
                   Download Links
                 </h1>
                 <Collapse in={show} timeout="auto" unmountOnExit>
-                  <div className="bg-slate-700 p-5 flex lg:grid lg:grid-cols-3 flex-col rounded-xl items-center justify-between">
-                    <Link
+                  <div className="bg-slate-700 p-5 flex flex-col rounded-xl items-center justify-between">
+                    <p className="text-lg md:text-xl text-yellow-500 text-center">
+                      Currently download links aren't available due to server
+                      problems
+                    </p>
+                    {/* <Link
                       className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
                       to={`https://mlwbd.st/`}
                     >
@@ -291,7 +304,7 @@ function HugeCard() {
                       to={`https://torrentgalaxy.to/`}
                     >
                       link 5: TorrentGalaxy
-                    </Link>
+                    </Link> */}
                   </div>
                 </Collapse>
               </div>
