@@ -143,9 +143,9 @@ function HomePage() {
       </div>
       {/* Small screens */}
       {/* Search functionality */}
-      {/* <div className="container mx-auto ">
-        <Search />
-      </div> */}
+      <div className="container mx-auto ">
+        <Search dataz={BigDatax} />
+      </div>
       <div className=" container mx-auto flex flex-col items-center justify-center">
         <div className="p-1 lg:mt-5 bg-gray-800 lg:p-3 grid grid-cols-3 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-2 shadow-2xl justify-evenly">
           {BigData.map((data) => {
@@ -154,7 +154,7 @@ function HomePage() {
                 className="border border-b-2 border-b-slate-50"
                 key={data.id}
               >
-                <div className="flex duration-1000 shadow-xl hover:scale-105 items-center flex-col gap-2 justify-center mt-2">
+                <div className="flex shadow-xl items-center flex-col gap-2 justify-center mt-2">
                   <Link
                     to={`/movie/${data.id}`}
                     onClick={handleValue}

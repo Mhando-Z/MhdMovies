@@ -18,7 +18,7 @@ function Footer() {
         <h1 className="text-slate-400 font-bold test-lg">Contacts</h1>
         <h2 className="text-slate-400 test-lg ">Phone: 0786722646</h2>
         <h2 className="text-slate-400 test-md">Email: Mhandosz17@gmail.com</h2>
-        <h2 className="text-slate-400 text-lg ">Country: Tanzania</h2>
+        <h2 className="text-slate-400 text-lg ">Address: Tanzania</h2>
       </div>
     </div>
   );

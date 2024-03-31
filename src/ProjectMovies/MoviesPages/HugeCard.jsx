@@ -84,11 +84,11 @@ function HugeCard() {
               className="max-w-screen h-auto rounded-xl shadow-md  duration-1000 hover:scale-105 "
             />
             <div className="flex flex-col items-center justify-center mt-4 gap-3">
-              <h1 className="sm:text-4xl sm:mx-0 text-3xl mx-5 text-slate-300 ">
+              <h1 className="sm:text-4xl text-center sm:mx-0 text-3xl mx-5 text-slate-300 ">
                 {datas.title}
               </h1>
               <h2 className="text-slate-300 text-center text-xl max-w-md">
-                Tagline: {datas.tagline}
+                {datas.tagline}
               </h2>
               <p className="text-xl mx-5 sm:mx-0 max-w-md text-justify text-slate-500">
                 {datas.overview}
