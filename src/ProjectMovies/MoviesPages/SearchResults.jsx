@@ -1,36 +1,57 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+//import SearchIcon from "@mui/icons-material/Search";
+import { Link } from "react-router-dom";
 
-function SearchResults() {
-  const location = useLocation();
-  const { searchResult } = location.state;
-  console.log(location);
+// Remember to import words or whatever you're using to store all the words the user can search for
 
+const Search = ({ dataz }) => {
+  const [activeSearch, setActiveSearch] = useState([]);
+
+  const handleSearch = (e) => {
+    if (e.target.value === "") {
+      setActiveSearch([]);
+      return false;
+    }
+    setActiveSearch(function search() {
+      const search_params = Object.keys(Object.assign({}, ...dataz));
+      return dataz.filter((data) => {
+        return search_params.some((param) => {
+          const paramValue = data[param];
+          if (paramValue !== undefined && paramValue !== null) {
+            const stringValue = paramValue.toString().toLowerCase();
+            return stringValue.includes(e.target.value.toLowerCase());
+          }
+          return false;
+        });
+      });
+    });
+  };
   return (
-    <div className="container mx-auto">
-      <div className="p-1 lg:mt-5 bg-gray-800 lg:p-3 grid grid-cols-3 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-2 shadow-2xl justify-evenly">
-        {searchResult.map((data) => {
-          return (
-            <div className="border border-b-2 border-b-slate-50" key={data.id}>
-              <div className="flex duration-1000 shadow-xl hover:scale-105 items-center flex-col gap-2 justify-center mt-2">
-                <Link
-                  to={`/movie/${data.id}`}
-                  className="text-slate-400 lg:text-2xl line-clamp-2 md:text-xl text-lg text-center font-medium "
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
-                    alt="posterimage"
-                    className=" max-w-screen shadow-xl h-auto"
-                  />
-                  {data.title}
-                </Link>
-              </div>
-            </div>
-          );
-        })}
+    <form className="lg:w-[500px] shadow-xl w-full fixed lg:top-4 lg:right-6">
+      <div className="relative">
+        <input
+          type="search"
+          placeholder="Type Here"
+          className="w-full p-4 rounded-full text-xl text-slate-200 text-center bg-slate-800"
+          onChange={(e) => handleSearch(e)}
+        />
+        {/* <button className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-slate-600 rounded-full">
+          <SearchIcon />
+        </button> */}
       </div>
-    </div>
+      {activeSearch.length === 0 ? (
+        ""
+      ) : (
+        <div className="absolute top-20 p-4 bg-slate-800 text-white w-full rounded-xl left-1/2 -translate-x-1/2 flex flex-col gap-2">
+          {activeSearch.map((s) => (
+            <Link to={`/movie/${s.id}`}>
+              <span>{s.title}</span>
+            </Link>
+          ))}
+        </div>
+      )}
+    </form>
   );
-}
+};
 
-export default SearchResults;
+export default Search;

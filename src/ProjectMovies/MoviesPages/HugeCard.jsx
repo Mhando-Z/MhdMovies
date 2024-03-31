@@ -14,6 +14,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import Moviedisplay from "./MovieDisplay";
 import "@vidstack/react/player/styles/base.css";
 import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
+import SearchResults from "./SearchResults";
 
 function HugeCard() {
   const [open, setOpen] = useState(false);
@@ -21,6 +22,9 @@ function HugeCard() {
   const { data } = movies;
   const { id } = useParams();
   const datas = data.find((mov) => mov.id === parseInt(id));
+  const BigDatax = data.map((data) => {
+    return data;
+  });
 
   const handleClick = () => {
     setOpen(!open);
@@ -65,14 +69,17 @@ function HugeCard() {
     <div className="container mx-auto shadow-2xl rounded-xl">
       <section>
         {/* Button section */}
-        <div className="mb-10 mt-5 ">
-          <Link
-            to="/"
-            className="text-white items-center justify-center lg:text-2xl text-xl bg-gray-700 py-2 px-6"
-          >
-            <ArrowBackIosIcon fontSize="medium" />
-            Back
-          </Link>
+        <div className="mb-20 mt-5 flex flex-col lg:flex-row items-center justify-between ">
+          <div>
+            <Link
+              to="/"
+              className="text-white hidden lg:flex items-center justify-center lg:text-2xl text-xl bg-gray-700 py-2 px-6"
+            >
+              <ArrowBackIosIcon fontSize="medium" />
+              Back
+            </Link>
+          </div>
+          <SearchResults dataz={BigDatax} />
         </div>
       </section>
       <section>
@@ -81,7 +88,7 @@ function HugeCard() {
             <img
               src={`https://image.tmdb.org/t/p/w500${datas.poster_path}`}
               alt="posterimage"
-              className="max-w-screen h-auto rounded-xl shadow-md  duration-1000 hover:scale-105 "
+              className="max-w-screen h-auto rounded-xl shadow-md  duration-1000 lg:hover:scale-105 "
             />
             <div className="flex flex-col items-center justify-center mt-4 gap-3">
               <h1 className="sm:text-4xl text-center sm:mx-0 text-3xl mx-5 text-slate-300 ">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
+//import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 
 // Remember to import words or whatever you're using to store all the words the user can search for
@@ -35,9 +35,9 @@ const Search = ({ dataz }) => {
           className="w-full p-4 rounded-full text-xl text-slate-200 text-center bg-slate-800"
           onChange={(e) => handleSearch(e)}
         />
-        <button className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-slate-600 rounded-full">
+        {/* <button className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-slate-600 rounded-full">
           <SearchIcon />
-        </button>
+        </button> */}
       </div>
       {activeSearch.length === 0 ? (
         ""
