@@ -3,7 +3,7 @@ import movies from "../MData/MoviesData.json";
 import { Link, useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import ReactPlayer from "react-player";
-import ScrollToTopButton from "./pageScroll";
+import ScrollToTopButton from "../../Components/pageScroll";
 import Collapse from "@mui/material/Collapse";
 import { useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -12,12 +12,11 @@ import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import DownloadIcon from "@mui/icons-material/Download";
 import Moviedisplay from "./MovieDisplay";
-import "@vidstack/react/player/styles/base.css";
 import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 import SearchResults from "./SearchResults";
 
 function HugeCard() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [show, setShow] = useState(false);
   const { data } = movies;
   const { id } = useParams();
@@ -56,9 +55,6 @@ function HugeCard() {
     return data.name;
   });
   //Similar movies logic
-  const similar = datas.similar.map((data) => {
-    return data.title;
-  });
 
   // Duration Logic
   const hours = Math.trunc(datas.runtime / 60);
@@ -115,7 +111,7 @@ function HugeCard() {
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-10  ">
+          <div className="flex flex-col-reverse lg:flex-col gap-10  ">
             <div className="flex mx-5 sm:mx-0 bg-slate-700 p-10 rounded-xl xl:flex-row flex-col gap-y-10 items-start justify-between">
               <div>
                 <div className="items-center justify-center">
@@ -282,36 +278,6 @@ function HugeCard() {
                       Currently download links aren't available due to server
                       problems
                     </p>
-                    {/* <Link
-                      className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
-                      to={`https://mlwbd.st/`}
-                    >
-                      link 1: MLWBD
-                    </Link>
-                    <Link
-                      className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
-                      to={`https://193.233.203.165/page/2/`}
-                    >
-                      link 2: MKvKing
-                    </Link>
-                    <Link
-                      className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
-                      to={`https://moviesnation.app/`}
-                    >
-                      link 3: MovieNation
-                    </Link>
-                    <Link
-                      className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
-                      to={`https://yts.mx/`}
-                    >
-                      link 4: YTs
-                    </Link>
-                    <Link
-                      className="text-lg md:text-xl font-medium text-yellow-500 border border-white"
-                      to={`https://torrentgalaxy.to/`}
-                    >
-                      link 5: TorrentGalaxy
-                    </Link> */}
                   </div>
                 </Collapse>
               </div>
@@ -393,27 +359,15 @@ function HugeCard() {
       <div className="container mx-auto flex flex-col gap-2 lg:p-5 p-2 bg-slate-800 rounded-3xl mt-1 shadow-xl">
         <h1
           onClick={handleClick}
-          className="lg:text-3xl mb-5 text-slate-300 text-center text-xl "
+          className="lg:text-3xl cursor-pointer mb-5 text-slate-300 text-center text-xl "
         >
-          Similar Movies
+          Movies you might like
         </h1>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <div className="grid grid-cols-2 justify-center sm:grid-cols-4 gap-4 ">
-            {similar.map((data, index) => {
-              return (
-                <div
-                  key={index}
-                  className="bg-slate-700 duration-1000 hover:scale-105 flex items-center justify-center py-4 px-10 rounded-lg "
-                >
-                  <p className="lg:text-2xl text-xl line-clamp-3 text-center font-semibold text-slate-300">
-                    {data}
-                  </p>
-                </div>
-              );
-            })}
+          <div className="">
+            <Moviedisplay />
           </div>
         </Collapse>
-        <Moviedisplay />
       </div>
       <ScrollToTopButton />
     </div>

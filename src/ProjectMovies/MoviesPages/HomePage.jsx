@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import movies from "../MData/MoviesData.json";
 import { Link } from "react-router-dom";
-import ScrollToTopButton from "./pageScroll";
+import ScrollToTopButton from "../../Components/pageScroll";
 import ReactPlayer from "react-player";
 import ReactPaginate from "react-paginate";
 import Search from "./Search";
@@ -9,14 +9,32 @@ import Search from "./Search";
 function HomePage() {
   const { data } = movies;
   const [play, setPlay] = useState(false);
-  const [val, setValue] = useState(Math.floor(Math.random() * 2000));
+  const [val, setValue] = useState(Math.floor(Math.random() * 100));
   const [itemOffset, setItemOffset] = useState(0);
   let itemsPerPage = 30;
+
+  //scroll top logic
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset; // Change the threshold as per your requirement
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const handleplay = () => {
     setPlay(!play);
   };
-
   const BigDatax = data.map((data) => {
     return data;
   });
@@ -35,57 +53,55 @@ function HomePage() {
   };
 
   return (
-    <div className="shadow-2xl">
-      <div className="mb-14 lg:flex hidden p-52 px-0 mx-0 items-center justify-center py-96 relative">
-        <div className="lg:flex hidden md:flex absolute top-0 bottom-0 right-0 left-0 items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
-          <ReactPlayer
-            playing={play}
-            width={"100vw"}
-            height={"100vh"}
-            style={{
-              position: "absolute",
-              objectFit: "cover",
-              backgroundSize: "cover",
-            }}
-            url={`https://www.youtube.com/watch?v=${BigDatax[val].trailer_yt}`}
-          />
+    <div className="shadow-2xl xl:space-y-[465px] lg:space-y-[355px] mt-0">
+      <div className="lg:flex hidden  absolute top-0 bottom-0 right-0 left-0 items-center justify-center bg-slate-700 p-3 rounded-xl shadow-lg">
+        <ReactPlayer
+          playing={play}
+          width={"100vw"}
+          height={"100vh"}
+          style={{
+            position: "absolute",
+            objectFit: "cover",
+            backgroundSize: "cover",
+          }}
+          url={`https://www.youtube.com/watch?v=${BigDatax[val].trailer_yt}`}
+        />
+      </div>
+      <div
+        onClick={handleplay}
+        className="absolute hidden lg:flex top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-transparent via-transparent to-black"
+      ></div>
+      <div className="absolute container mx-auto hidden bottom-10 lg:flex items-center justify-between gap-10">
+        <div className="flex-col gap-5 justify-center items-center">
+          <h1 className="text-4xl md:px-5 px-2 mb-5  md:text-5xl xl:text-6xl md:max-w-5xl font-medium font-sans max-w-sm text-slate-200 left-0">
+            {BigDatax[val].title}
+          </h1>
+          <p className="md:px-5 leading-4 lg:line-clamp-3 xl:text-3xl  left-0 px-2 md:max-w-6xl md:text-2xl md:text-left text-justify max-w-sm text-slate-200">
+            {BigDatax[val].overview}
+          </p>
         </div>
-        <div
-          onClick={handleplay}
-          className="absolute hidden lg:flex top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-transparent via-transparent to-black"
-        ></div>
-        <div className="absolute hidden bottom-10 lg:flex items-center justify-between gap-10">
-          <div className="flex-col gap-5 justify-center items-center">
-            <h1 className="text-4xl md:px-5 px-2 mb-5  md:text-5xl xl:text-6xl md:max-w-5xl font-medium font-sans max-w-sm text-slate-200 left-0">
-              {BigDatax[val].title}
-            </h1>
-            <p className="md:px-5 leading-4 lg:line-clamp-3 xl:text-3xl  left-0 px-2 md:max-w-6xl md:text-2xl md:text-left text-justify max-w-sm text-slate-200">
-              {BigDatax[val].overview}
-            </p>
-          </div>
-          <div className="lg:flex items-center justify-center hidden ">
+        <div className="lg:flex items-center justify-center hidden ">
+          <Link
+            onClick={handleValue}
+            className="py-2 px-10 lg:text-2xl text-white xl:text-3xl border-2 border-white"
+          >
+            Next
+          </Link>
+          <div className="flex flex-row">
             <Link
               onClick={handleValue}
-              className="py-2 px-10 lg:text-2xl text-white xl:text-3xl border-2 border-white"
+              to={`https://vidsrc.xyz/embed/movie?imdb=${BigDatax[val].external_ids.imdb_id}`}
+              className="py-2 px-10 border border-white xl:text-3xl text-white lg:text-2xl "
             >
-              Next
+              Watch
             </Link>
-            <div className="flex flex-row">
-              <Link
-                onClick={handleValue}
-                to={`https://vidsrc.xyz/embed/movie?imdb=${BigDatax[val].external_ids.imdb_id}`}
-                className="py-2 px-10 border border-white xl:text-3xl text-white lg:text-2xl "
-              >
-                Watch
-              </Link>
-              <Link
-                onClick={handleValue}
-                to={`/movie/${String(BigDatax[val].id)}`}
-                className="py-2 px-10 xl:text-3xl text-white lg:text-2xl "
-              >
-                Download
-              </Link>
-            </div>
+            <Link
+              onClick={handleValue}
+              to={`/movie/${String(BigDatax[val].id)}`}
+              className="py-2 px-10 xl:text-3xl text-white lg:text-2xl "
+            >
+              Download
+            </Link>
           </div>
         </div>
       </div>
@@ -146,8 +162,8 @@ function HomePage() {
       <div className="container mx-auto ">
         <Search dataz={BigDatax} />
       </div>
-      <div className=" container mx-auto flex flex-col items-center justify-center">
-        <div className="p-1 lg:mt-5 bg-gray-800 lg:p-3 grid grid-cols-3 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-2 shadow-2xl justify-evenly">
+      <div className="flex flex-col items-center justify-center">
+        <div className="p-1 lg:gap-x-4 bg-gray-800 lg:p-10 grid grid-cols-3 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-2 shadow-2xl justify-evenly">
           {BigData.map((data) => {
             return (
               <div
@@ -157,7 +173,7 @@ function HomePage() {
                 <div className="flex shadow-xl items-center flex-col gap-2 justify-center mt-2">
                   <Link
                     to={`/movie/${data.id}`}
-                    onClick={handleValue}
+                    onClick={scrollToTop}
                     className="text-slate-400 lg:text-2xl line-clamp-2 md:text-xl text-lg text-center font-medium "
                   >
                     <img

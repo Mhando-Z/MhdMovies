@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import movies from "../MData/MoviesData.json";
 import { Link } from "react-router-dom";
-import ScrollToTopButton from "./pageScroll";
+import ScrollToTopButton from "../../Components/pageScroll";
 import ReactPaginate from "react-paginate";
 
 function Moviedisplay() {
@@ -62,7 +62,7 @@ function Moviedisplay() {
                 className="border border-b-2 border-b-slate-50"
                 key={data.id}
               >
-                <div className="flex duration-1000 shadow-xl hover:scale-105 items-center flex-col gap-2 justify-center mt-2">
+                <div className="flex shadow-xl items-center flex-col gap-2 justify-center mt-2">
                   <Link
                     to={`/movie/${data.id}`}
                     onClick={scrollToTop}

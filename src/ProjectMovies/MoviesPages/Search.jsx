@@ -27,12 +27,12 @@ const Search = ({ dataz }) => {
     });
   };
   return (
-    <form className="lg:w-[500px] w-full top-2 fixed lg:top-9 lg:left-9 xl:top-10 xl:left-28">
+    <form className="lg:w-[500px] w-full top-2 fixed lg:top-9 lg:left-9 xl:top-10 xl:left-10">
       <div className="relative">
         <input
           type="search"
           placeholder="Type Here"
-          className="w-full p-4 rounded-full text-xl text-slate-200 text-center bg-slate-800"
+          className="w-full p-2 lg:p-3 rounded-full text-xl text-slate-200 text-center bg-slate-800"
           onChange={(e) => handleSearch(e)}
         />
         {/* <button className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-slate-600 rounded-full">

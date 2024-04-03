@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HugeCard from "./ProjectMovies/MoviesPages/HugeCard";
 import HomePage from "./ProjectMovies/MoviesPages/HomePage";
-import Footer from "./ProjectMovies/MoviesPages/Footer";
+import Footer from "./Components/Footer";
 import Pagenotfound from "./ProjectMovies/MoviesPages/Pagenotfound";
 import SearchResults from "./ProjectMovies/MoviesPages/SearchResults";
 
