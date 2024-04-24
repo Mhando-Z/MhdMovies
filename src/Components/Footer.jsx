@@ -1,24 +1,34 @@
 import React from "react";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { Link } from "react-router-dom";
 
 function Footer() {
-  const date = new Date();
-
   return (
-    <div className="container md:flex-row md:items-start items-center flex-col mx-auto mt-10 p-10  bg-slate-900 opacity-45 rounded-t-3xl flex  justify-between">
-      <div className="flex flex-col text-center md:text-left ">
-        <h1 className="text-slate-400 font-bold text-lg">MhdMovies</h1>
-        <h1 className="text-slate-400 hidden md:flex max-w-[200px] truncate text-left italic font-bold text-md">
-          {date.toString()}
-        </h1>
-        <h1 className="text-slate-400 text-center sm:text-left italic font-bold text-md">
-          @Mhando Zuberi
-        </h1>
-      </div>
-      <div className="flex flex-col text-center md:text-left">
-        <h1 className="text-slate-400 font-bold test-lg">Contacts</h1>
-        <h2 className="text-slate-400 test-lg ">Phone: 0786722646</h2>
-        <h2 className="text-slate-400 test-md">Email: Mhandosz17@gmail.com</h2>
-        <h2 className="text-slate-400 text-lg ">Address: Tanzania</h2>
+    <div className="dark:text-gray-200 bg-slate-950 bg-opacity-35 p-10">
+      <div className="container mx-auto flex md:flex-row gap-y-5 flex-col justify-between">
+        <div className="text-center md:text-left">
+          <Link
+            to={"/"}
+            className="xl:text-2xl text-lg text-black bg-yellow-400 px-1 font-extrabold"
+          >
+            MHD
+          </Link>
+        </div>
+        <div className="flex flex-row items-center justify-evenly">
+          <FacebookIcon />
+          <Link
+            to={
+              "https://www.instagram.com/tech_device360?igsh=N2ZveW53bXlkZG01&utm_source=qr"
+            }
+          >
+            <InstagramIcon />
+          </Link>
+          <Link to={"https://wa.me/message/RQ4LDCEJOO2EK1"}>
+            <WhatsAppIcon />
+          </Link>
+        </div>
       </div>
     </div>
   );

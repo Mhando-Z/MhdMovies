@@ -3,6 +3,9 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    container: {
+      center: true,
+    },
     screens: {
       xs: "375px",
       sm: "480px",
@@ -12,5 +15,8 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [require("@vidstack/react/tailwind.cjs")],
+  plugins: [
+    require("@vidstack/react/tailwind.cjs"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
 };

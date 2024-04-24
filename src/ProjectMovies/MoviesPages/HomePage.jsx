@@ -42,6 +42,13 @@ function HomePage() {
     return setValue(Math.floor(Math.random() * 2000));
   };
 
+  //Grouping Movies
+  const Groupeddata = Object.groupBy(BigDatax, (datagroup) => {
+    return datagroup.original_language;
+  });
+
+  console.log(Groupeddata);
+
   // Pages pagination Logic
   const endOffset = itemOffset + itemsPerPage;
   const BigData = BigDatax.slice(itemOffset, endOffset);
@@ -161,6 +168,7 @@ function HomePage() {
       {/* Search functionality */}
       <div className="container mx-auto ">
         <Search dataz={BigDatax} />
+        {/* Search functionality */}
       </div>
       <div className="flex flex-col items-center justify-center">
         <div className="p-1 lg:gap-x-4 bg-gray-800 lg:p-10 grid grid-cols-3 lg:grid-cols-6 md:grid-cols-5 gap-y-10 gap-x-2 shadow-2xl justify-evenly">

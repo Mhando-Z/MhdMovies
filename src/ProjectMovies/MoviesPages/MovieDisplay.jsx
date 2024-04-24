@@ -15,7 +15,6 @@ function Moviedisplay() {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset; // Change the threshold as per your requirement
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
