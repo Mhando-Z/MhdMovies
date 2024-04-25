@@ -7,7 +7,7 @@ function TvSeriesDetails() {
   const [Details, setDetails] = useState([]);
   const [Reviews, setReview] = useState([]);
   const [Similar, setSimilar] = useState([]);
-  const [Page, setPage] = useState(Math.floor(Math.random() * 4));
+  const [Page, setPage] = useState(Math.floor(Math.random() * 4) + 1);
   const { id } = useParams();
 
   //Page Logic
