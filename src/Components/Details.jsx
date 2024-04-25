@@ -72,7 +72,7 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           </div>
         </div>
       </div>
-      <div className="bg-slate-800 flex flex-row gap-x-5 rounded-xl lg:px-10 px-4">
+      <div className="bg-slate-800 flex flex-row md:justify-normal justify-between gap-x-5 rounded-xl lg:px-10 px-4">
         <h1 className="text-xl text-slate-200">
           Budget: {data.budget?.toLocaleString()}
         </h1>
@@ -111,20 +111,20 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
       <div className="flex flex-col ">
         {data.name !== undefined ? (
           <div className="p-10">
-            <h1 className="lg:text-4xl text-3xl text-center lg:text-left text-white font-semibold">
+            <h1 className="lg:text-3xl text-2xl text-center lg:text-left text-white font-semibold">
               Series you might like
             </h1>
           </div>
         ) : (
           <div className="p-10">
-            <h1 className="lg:text-4xl text-3xl text-center lg:text-left text-white font-semibold">
+            <h1 className="lg:text-3xl text-2xl text-center lg:text-left text-white font-semibold">
               Movies you might like
             </h1>
           </div>
         )}
         <div className="flex flex-col xl:items-center">
           {data.name !== undefined ? (
-            <div className="flex flex-col sm:items-center">
+            <div className="flex flex-col items-center">
               <div className="lg:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
                 {Similar?.slice(0, count).map((data, index) => {
                   return (
@@ -139,8 +139,8 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col sm:items-center">
-              <div className="lg:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
+            <div className="flex flex-col items-center">
+              <div className="md:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
                 {Similar?.slice(0, count).map((data, index) => {
                   return (
                     <Movie
@@ -154,14 +154,13 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
               </div>
             </div>
           )}
-
           <div className="flex gap-x-5 items-end justify-end px-10 py-4">
-            <h1 className="text-slate-200 text-xl font-semibold ">
+            <h1 className="text-slate-200 lg:text-xl text-lg font-semibold ">
               Page {Page}
             </h1>
             <h1
               onClick={handleIncrese}
-              className="text-slate-200 text-xl font-semibold cursor-pointer"
+              className="text-slate-200 lg:text-xl text-lg font-semibold cursor-pointer"
             >
               More..
             </h1>

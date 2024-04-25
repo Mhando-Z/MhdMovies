@@ -191,7 +191,7 @@ function NavBar() {
         </Drawer>
       </div>
       <div>
-        <Outlet />
+        <Outlet onClick={handleClick} />
       </div>
     </div>
   );

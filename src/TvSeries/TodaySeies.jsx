@@ -19,13 +19,13 @@ function TodaySeies() {
 
   return (
     <div className=" flex flex-col  justify-center">
-      <div className="px-10 py-5 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500 invisible md:visible ">
+      {/* <div className="px-10 py-5 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500 invisible md:visible ">
         <h1 className="text-4xl max-w-xl block text-white font-semibold">
           Today's Series..
         </h1>
-      </div>
-      <div className="px-5 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500 md:invisible visible ">
-        <h1 className="text-3xl mt-3 md:hidden mb-5 max-w-xl block text-white font-semibold">
+      </div> */}
+      <div className="px-5 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500">
+        <h1 className="lg:text-3xl text-2xl mt-3 mb-5 max-w-xl block text-white font-semibold">
           Today's Series..
         </h1>
       </div>
@@ -41,11 +41,13 @@ function TodaySeies() {
           );
         })}
       </div>
-      <div className="flex gap-x-5 items-end justify-end px-10 py-4">
-        <h1 className="text-slate-200 text-xl font-semibold ">Page {Page2}</h1>
+      <div className="flex gap-x-5 items-end justify-end py-4">
+        <h1 className="text-slate-200 lg:text-xl text-lg font-semibold ">
+          Page {Page2}
+        </h1>
         <h1
           onClick={handleIncrese}
-          className="text-slate-200 text-xl font-semibold cursor-pointer"
+          className="text-slate-200 lg:text-xl text-lg font-semibold cursor-pointer"
         >
           More..
         </h1>

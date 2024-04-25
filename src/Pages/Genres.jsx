@@ -184,7 +184,7 @@ function Genres() {
                     );
                   })}
                 </div>
-                <div className="flex gap-x-5 items-end justify-end px-10 py-4">
+                <div className="flex gap-x-5 items-end justify-end px-2 py-4">
                   <h1 className="text-slate-200 text-xl font-semibold ">
                     Page {Page1}
                   </h1>

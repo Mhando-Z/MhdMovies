@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import TvSeriesContex from "../Context/TvSeriesContext";
 import TvSeries from "./../Components/TvSeries";
 
-function TopRated() {
+function TopRatedSeries() {
   const { TopRated } = useContext(TvSeriesContex);
   const { Page3 } = useContext(TvSeriesContex);
   const { HandlePage3 } = useContext(TvSeriesContex);
@@ -18,13 +18,8 @@ function TopRated() {
   };
   return (
     <div className=" flex flex-col  justify-center">
-      <div className="px-10 py-5 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500 invisible md:visible ">
-        <h1 className="text-4xl max-w-xl block text-white font-semibold">
-          Top-Rated Series..
-        </h1>
-      </div>
-      <div className="px-5 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500 md:invisible visible ">
-        <h1 className="text-3xl mt-3 md:hidden mb-5 max-w-xl block text-white font-semibold">
+      <div className="px-5 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500">
+        <h1 className="lg:text-3xl md:hidden text-2xl mt-3 mb-5 max-w-xl block text-white font-semibold">
           Top-Rated Series..
         </h1>
       </div>
@@ -40,7 +35,7 @@ function TopRated() {
           );
         })}
       </div>
-      <div className="flex gap-x-5 items-end justify-end px-10 py-4">
+      <div className="flex gap-x-5 items-end justify-end py-4">
         <h1 className="text-slate-200 text-xl font-semibold ">Page {Page3}</h1>
         <h1
           onClick={handleIncrese}
@@ -53,4 +48,4 @@ function TopRated() {
   );
 }
 
-export default TopRated;
+export default TopRatedSeries;
