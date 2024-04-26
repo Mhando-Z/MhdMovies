@@ -36,7 +36,7 @@ function Watchtrailer() {
   }, [id]);
   return (
     <div className="block">
-      <div className="flex flex-col  lg:flex-row justify-between gap-y-5 ">
+      <div className="flex flex-col lg:flex-row justify-between gap-y-5 ">
         {/* Player section */}
         <div className="sticky top-0 flex-1 w-auto h-auto  lg:h-[500px]">
           <div className="hidden lg:flex  bg-slate-700 p-1 rounded-xl shadow-lg">

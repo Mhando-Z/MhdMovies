@@ -19,7 +19,7 @@ function MovieList() {
   return (
     <div className=" flex flex-col">
       <div className="px-5 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500 ">
-        <h1 className="text-3xl mt-3 mb-5 max-w-xl block text-white font-semibold">
+        <h1 className="lg:text-3xl text-2xl mt-3 mb-5 max-w-xl block text-white font-semibold">
           Trending Movies..
         </h1>
       </div>
