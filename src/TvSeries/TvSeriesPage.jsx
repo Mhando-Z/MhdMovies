@@ -9,12 +9,12 @@ import { useNavigate } from "react-router-dom";
 function TvSeriesPage() {
   const { TopRated } = useContext(TvSeriesContex);
   const [Poster, setPoster] = useState([]);
-  const [value] = useState(Math.floor(Math.random() * 20));
+  const [value] = useState(Math.floor(Math.random() * 20) + 1);
   const navigate = useNavigate();
 
   //User navigation to poster
   const HandleNavigate = () => {
-    navigate(`/Details/${TopRated[value].id}`);
+    navigate(`/TvDetails/${TopRated[value].id}`);
   };
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function TvSeriesPage() {
             {TopRated[value].name}
           </h1>
 
-          <p className="text md:text-2xl text-md text-justify tracking-tighter max-w-6xl text-slate-300 ">
+          <p className="text md:text-2xl xl:max-w-none text-md text-justify tracking-tighter max-w-6xl text-slate-300 ">
             {TopRated[value].overview}
           </p>
         </div>

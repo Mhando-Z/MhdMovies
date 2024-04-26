@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import Movie from "./Movie";
 import { Link, Outlet } from "react-router-dom";
 import Collapse from "@mui/material/Collapse";
 import ScrollToTopButton from "./pageScroll";
+import TvSeries from "./TvSeries";
+import { Rating } from "@mui/material";
 
-function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
+function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
   const [count, setCount] = useState(14);
   const [open, setOpen] = useState(false);
 
@@ -33,7 +34,7 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
         <div className="absolute bottom-0 lg:px-10 px-4">
           <h1 className="mb-3 text-4xl font-semibold text-slate-200 ">
-            {data.title}
+            {data.name}
           </h1>
           <div className="flex flex-wrap md:flex-row gap-x-5 items-center">
             <h1 className="text-2xl text-slate-200 font-semibold">Genres:</h1>
@@ -47,12 +48,20 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
               );
             })}
           </div>
-          <p className="text md:text-2xl text-md text-justify tracking-tighter xl:max-w-none md:line-clamp-none line-clamp-5 max-w-6xl text-slate-300 ">
+          <p className="text md:text-2xl text-md md:line-clamp-none line-clamp-5  text-justify tracking-tighter xl:max-w-none  lg:max-w-6xl text-slate-300 ">
             {data.overview}
           </p>
-          <div className="text-xl text-yellow-500 flex flex-row items-center">
-            <h1>{Math.trunc(data.runtime / 60)}h:</h1>
-            <h1>{data.runtime % 60}min</h1>
+          <div className="items-center justify-center">
+            <h2 className="text-slate-300 mb-2 text-xl">
+              Ratings: {data.vote_average}
+            </h2>
+            <Rating
+              name="disabled"
+              defaultValue={data.vote_average}
+              precision={0.5}
+              max={10}
+              readOnly
+            />
           </div>
         </div>
         <div className="absolute top-10 lg:px-10 px-4 block">
@@ -60,12 +69,6 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
             <h2 className="md:text-2xl text-lg text-slate-200">Status:</h2>
             <h2 className="md:text-2xl text-lg text-yellow-500">
               {data.status}
-            </h2>
-          </div>
-          <div className="flex flex-row space-x-2">
-            <h2 className="md:text-2xl text-lg text-slate-200">Date:</h2>
-            <h2 className="md:text-2xl text-lg text-slate-200">
-              {data.release_date}
             </h2>
           </div>
         </div>
@@ -78,6 +81,71 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           Revenue: {data.revenue?.toLocaleString()}
         </h1>
       </div>
+      <div className="flex flex-col md:flex-row">
+        {/* Date details */}
+        <div className="px-4 lg:px-10">
+          {/* date Release details */}
+          <div className="flex flex-row space-x-2">
+            <h2 className="md:text-2xl text-lg text-slate-200">
+              Release Date:
+            </h2>
+            <h2 className="md:text-2xl text-lg text-slate-200">
+              {data.first_air_date}
+            </h2>
+          </div>
+          <div className="flex flex-row  space-x-2 ">
+            <h2 className="md:text-2xl text-lg text-slate-200">End Date:</h2>
+            <h2 className="md:text-2xl text-lg text-slate-200">
+              {data.last_air_date}
+            </h2>
+          </div>
+        </div>
+        {/* Details on number of episodes and seasons */}
+        <div className="px-4 lg:px-10 ">
+          <div className="flex flex-row space-x-2">
+            <h2 className="md:text-2xl text-lg text-slate-200">
+              Number of Episodes:
+            </h2>
+            <h2 className="md:text-2xl text-lg text-slate-200">
+              {data.number_of_episodes}
+            </h2>
+          </div>
+          <div className="flex flex-row  space-x-2 ">
+            <h2 className="md:text-2xl text-lg text-slate-200">
+              Number Of Seasons:
+            </h2>
+            <h2 className="md:text-2xl text-lg text-slate-200">
+              {data.number_of_seasons}
+            </h2>
+          </div>
+        </div>
+      </div>
+      {/* Number of seasons print */}
+      <div className="flex flex-wrap justify-center md:justify-start gap-5 lg:px-10 px-4 mt-4 ">
+        {data.seasons?.map((data) => {
+          return (
+            <div key={data.id} className="">
+              <div
+                style={{
+                  backgroundImage: `url("https://image.tmdb.org/t/p/w500/${data.poster_path}")`,
+                }}
+                className="bg-contain bg-center lg:size-44 size-32 rounded-lg "
+              ></div>
+              <div className="flex flex-col mt-1 lg:max-w-48 max-w-36 ">
+                <h1 className="lg:text-xl text-lg text-slate-200 ">
+                  {data.name}
+                </h1>
+                <h1 className="lg:text-xl text-lg text-slate-200 ">
+                  No-Ep: {data.episode_count}
+                </h1>
+                <h1 className="lg:text-xl text-md text-slate-200 ">
+                  Date: {data.air_date}
+                </h1>
+              </div>
+            </div>
+          );
+        })}
+      </div>
       <div className="flex gap-y-5 sm:flex-row flex-col justify-between lg:max-w-lg items-center lg:px-10 px-4 mt-5">
         <button
           className="py-3 w-full sm:w-auto px-8 ring-1 ring-slate-200 lg:text-xl text-sm rounded-lg text-slate-200"
@@ -87,10 +155,10 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
         </button>
 
         <Link
-          to={`https://vidsrc.xyz/embed/movie?imdb=${data.imdb_id}`}
+          to={`https://vidsrc.xyz/embed/tv?imdb=${id.imdb_id}`}
           className="py-3 w-full text-center sm:w-auto px-8 ring-1 ring-slate-200 lg:text-xl text-sm rounded-lg text-slate-200"
         >
-          WATCH MOVIE
+          WATCH SERIES
         </Link>
       </div>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -98,21 +166,20 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           <Outlet />
         </div>
       </Collapse>
-      <div className="flex flex-col ">
-        <div className="p-10">
-          <h1 className="lg:text-3xl text-2xl text-center lg:text-left text-white font-semibold">
-            Movies you might like
+      <div className="flex flex-col mt-4 ">
+        <div className="px-4 lg:px-10 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500 ">
+          <h1 className="lg:text-3xl text-2xl mt-3 mb-5 max-w-xl block text-white font-semibold">
+            Series you might like
           </h1>
         </div>
-
         <div className="flex flex-col xl:items-center">
           <div className="flex flex-col items-center">
-            <div className="md:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
+            <div className="lg:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
               {Similar?.slice(0, count).map((data, index) => {
                 return (
-                  <Movie
-                    key={index + data.title}
-                    title={data.title}
+                  <TvSeries
+                    key={index + data.name}
+                    title={data.name}
                     image={data.poster_path}
                     id={data.id}
                   />
@@ -159,4 +226,4 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
   );
 }
 
-export default Detailz;
+export default TvDetails;

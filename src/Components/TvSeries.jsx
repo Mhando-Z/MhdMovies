@@ -19,7 +19,7 @@ function TvSeries({ title, image, id }) {
         >
           <div className="absolute top-0 left-0 right-0 via-transparent  bottom-0 bg-gradient-to-b from-transparent to-slate-800"></div>
           <h1 className="absolute bottom-0 xl:text-lg  line-clamp-1 text-slate-300 font-semibold text-center p-1">
-            {title}
+            {title || ""}
           </h1>
         </div>
       </Link>

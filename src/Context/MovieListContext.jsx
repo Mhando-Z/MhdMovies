@@ -5,6 +5,7 @@ const MovieListContext = createContext();
 
 export function MovieProvider({ children }) {
   const [Movielists, setList] = useState([]);
+  const [Trending, setTrend] = useState([]);
   const [TopRated, setTopRated] = useState([]);
   const [UpComingMovies, setUFuture] = useState([]);
   const [Page1, setPage1] = useState(1);
@@ -43,6 +44,21 @@ export function MovieProvider({ children }) {
       setTopRated(data.results);
     } catch (error) {}
   }
+  async function getTrending() {
+    try {
+      const { data } = await axios.get(
+        ` https://api.themoviedb.org/3/trending/movie/day?language=en-US`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+      setTrend(data.results);
+    } catch (error) {}
+  }
 
   async function getMovies() {
     try {
@@ -75,6 +91,7 @@ export function MovieProvider({ children }) {
     } catch (error) {}
   }
   useEffect(() => {
+    getTrending();
     getTopRated();
     getFutureMovies();
     getMovies();
@@ -91,6 +108,7 @@ export function MovieProvider({ children }) {
         HandlePage3,
         HandlePages,
         TopRated,
+        Trending,
         Page1,
         Page3,
         Page2,

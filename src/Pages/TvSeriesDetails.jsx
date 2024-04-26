@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Detailz from "../Components/Details";
 import axios from "axios";
+import TvDetails from "../Components/TvDetails";
 
 function TvSeriesDetails() {
   const [Details, setDetails] = useState([]);
   const [Reviews, setReview] = useState([]);
   const [Similar, setSimilar] = useState([]);
-  const [Page, setPage] = useState(Math.floor(Math.random() * 4) + 1);
+  const [Page, setPage] = useState(1);
+  const [ID, setIds] = useState([]);
   const { id } = useParams();
 
   //Page Logic
@@ -31,6 +32,21 @@ function TvSeriesDetails() {
       setDetails(data);
     } catch (error) {}
   }
+  async function getIds() {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/tv/${id}/external_ids`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+      setIds(data);
+    } catch (error) {}
+  }
   async function getReview() {
     try {
       const { data } = await axios.get(
@@ -49,7 +65,7 @@ function TvSeriesDetails() {
   async function getSimilar() {
     try {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=${Page}`,
+        `https://api.themoviedb.org/3/tv/${id}/similar?language=en-US&page=${Page}`,
         {
           headers: {
             accept: "application/json",
@@ -62,6 +78,7 @@ function TvSeriesDetails() {
     } catch (error) {}
   }
   useEffect(() => {
+    getIds();
     getReview();
     getDetails();
     getSimilar();
@@ -70,13 +87,13 @@ function TvSeriesDetails() {
   return (
     <div>
       <div>
-        <Detailz
+        <TvDetails
           data={Details}
           Review={Reviews}
           Similar={Similar}
           Page={Page}
           HandlePage={HandlePage}
-          id={id}
+          id={ID}
         />
       </div>
     </div>

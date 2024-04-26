@@ -7,7 +7,7 @@ function DetailsPreview() {
   const [Details, setDetails] = useState([]);
   const [Reviews, setReview] = useState([]);
   const [Similar, setSimilar] = useState([]);
-  const [Page, setPage] = useState(Math.floor(Math.random() * 4)+1);
+  const [Page, setPage] = useState(Math.floor(Math.random() * 4) + 1);
   const { id } = useParams();
 
   //Page Logic
@@ -50,7 +50,7 @@ function DetailsPreview() {
   async function getSimilar() {
     try {
       const { data } = await axios.get(
-        ` https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${Page}`,
+        `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=${Page}`,
         {
           headers: {
             accept: "application/json",

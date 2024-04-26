@@ -9,24 +9,24 @@ import TopRatedMovies from "../Movie/TopRatedMovies";
 import { useNavigate } from "react-router-dom";
 
 function HomePage() {
-  const { Movielists } = useContext(MovieListContext);
+  const { Trending } = useContext(MovieListContext);
   const [Poster, setPoster] = useState([]);
-  const [value] = useState(Math.floor(Math.random() * 20));
+  const [value] = useState(Math.floor(Math.random() * 20) + 1);
   const navigate = useNavigate();
 
   //User navigation to poster
   const HandleNavigate = () => {
-    navigate(`/Details/${Movielists[value].id}`);
+    navigate(`/Details/${Trending[value].id}`);
   };
 
   useEffect(() => {
-    const Data = Movielists.map((data, index) => {
+    const Data = Trending.map((data, index) => {
       return data.backdrop_path;
     });
     setPoster(Data);
-  }, [value, Movielists]);
+  }, [value, Trending]);
 
-  if (!Movielists || Movielists.length === 0) {
+  if (!Trending || Trending.length === 0) {
     return (
       <div className="flex items-center justify-center">
         <h1 className="text-slate-200">Loading...</h1>
@@ -46,18 +46,18 @@ function HomePage() {
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
         <div className="absolute bottom-0 lg:px-10 px-4">
           <h1 className="mb-3 text-4xl font-semibold text-slate-200 ">
-            {Movielists[value].title}
+            {Trending[value].title}
           </h1>
 
-          <p className="text md:text-2xl text-md text-justify tracking-tighter max-w-6xl text-slate-300 ">
-            {Movielists[value].overview}
+          <p className="text md:text-2xl text-md text-justify tracking-tighter line-clamp-5 xl:max-w-none max-w-6xl text-slate-300 ">
+            {Trending[value].overview}
           </p>
         </div>
         <div className="absolute top-10 lg:px-10 px-4 block">
           <div className="flex flex-row space-x-2">
             <h2 className="md:text-2xl text-lg text-slate-200">Date:</h2>
             <h2 className="md:text-2xl text-lg text-slate-200">
-              {Movielists[value].release_date}
+              {Trending[value].release_date}
             </h2>
           </div>
         </div>

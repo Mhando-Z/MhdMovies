@@ -118,6 +118,7 @@ function HugeCard() {
                   <h2 className="text-slate-300 mb-2 text-xl">
                     Ratings: {datas.vote_average}
                   </h2>
+
                   <Rating
                     name="disabled"
                     defaultValue={datas.vote_average}

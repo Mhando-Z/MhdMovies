@@ -20,7 +20,7 @@ function ResultsPage() {
   async function getDetails() {
     try {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?query=${id}&include_adult=false&language=en-US&page=${Page}`,
+        `https://api.themoviedb.org/3/search/multi?query=${id}&include_adult=false&language=en-US&page=${Page}`,
         {
           headers: {
             accept: "application/json",
@@ -50,9 +50,10 @@ function ResultsPage() {
               return (
                 <Movie
                   key={index + data.title}
-                  title={data.title}
+                  title={data.title || data.name}
                   image={data.poster_path}
                   id={data.id}
+                  type={data.media_type}
                 />
               );
             })}

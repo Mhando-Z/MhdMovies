@@ -60,7 +60,7 @@ export function TvSeriesProvider({ children }) {
   async function getTodays() {
     try {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=${Page2}`,
+        ` https://api.themoviedb.org/3/trending/tv/week?language=en-US`,
         {
           headers: {
             accept: "application/json",
