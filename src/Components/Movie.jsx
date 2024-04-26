@@ -5,22 +5,26 @@ import { useNavigate } from "react-router-dom";
 
 function Movie({ title, image, id, type }) {
   const navigate = useNavigate();
-  // handle navigation logic
-  const handleNavigation = () => {
-    if (type === "tv") {
-      navigate(`/TvDetails/${id}`);
-    } else if (type === "movie") {
-      navigate(`/Details/${id}`);
-    }
-  };
+
+  // scrool top logic
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
+  // handle navigation logic
+  const handleNavigation = () => {
+    if (type === "tv") {
+      navigate(`/TvDetails/${id}`);
+      scrollToTop();
+    } else {
+      navigate(`/Details/${id}`);
+      scrollToTop();
+    }
+  };
   return (
-    <div onClick={scrollToTop} className="items-center justify-center">
+    <div className="items-center justify-center">
       <div
         onClick={handleNavigation}
         style={{
