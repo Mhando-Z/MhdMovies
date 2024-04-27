@@ -38,11 +38,11 @@ function ResultsPage() {
 
   return (
     <div className="flex flex-col">
-      <divc className="lg:px-10 px-2">
+      <div className="lg:px-10 px-2">
         <h1 className="lg:text-2xl text-xl px-4 mb-7 text-slate-200 py-4 border-l-8 border-yellow-400">
           Search Results for... "{id}"
         </h1>
-      </divc>
+      </div>
       <div className="flex flex-col sm:items-center ">
         <div>
           <div className="md:px-10 p-2 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">

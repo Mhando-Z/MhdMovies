@@ -8,11 +8,15 @@ import Drawer from "@mui/material/Drawer";
 function NavBar() {
   const [opens, setOpens] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const [query, setQuery] = useState("");
   const ref = useRef(null);
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
-  //handle reset input function
+  //target value
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+  };
+
   const handleReset = () => {
     ref.current.value = "";
   };
@@ -22,19 +26,21 @@ function NavBar() {
   };
   //Kyepress function
   const handlePress = (e) => {
-    console.log(e);
-    if (e.keyCode === 13) {
-      navigate(`Results/${query}`);
-      ref.current.value = "";
-      handleClick();
+    if (query.length !== 0) {
+      if (e.keyCode === 13) {
+        navigate(`/Results/${query}`);
+        handleClick();
+      }
     }
   };
 
   //handle search function
-  const handleChange = (e) => {
-    setQuery(e.target.value);
+  const HandleSearch = () => {
+    if (query.length !== 0) {
+      navigate(`/Results/${query}`);
+      handleReset();
+    }
   };
-
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -98,19 +104,18 @@ function NavBar() {
           <div className="relative hidden md:flex">
             <input
               type="search"
-              ref={ref}
               onChange={(e) => handleChange(e)}
               onKeyDown={(e) => handlePress(e)}
+              ref={ref}
               placeholder="Type Here"
               className="w-full ring-1 outline-none ring-slate-500 p-1 rounded-full text-xl text-slate-200 text-center bg-slate-800"
             />
-            <Link
-              onClick={handleReset}
-              to={`Results/${query}`}
+            <button
+              onClick={HandleSearch}
               className="absolute right-0 top-1/2 -translate-y-1/2 lg:p-3 p-2 bg-slate-600 rounded-full"
             >
               <SearchIcon className="text-slate-200" />
-            </Link>
+            </button>
           </div>
           <div onClick={handleClick} className="flex md:hidden">
             <SearchIcon
@@ -127,10 +132,10 @@ function NavBar() {
       <Collapse in={opens} timeout="auto" unmountOnExit>
         <div className="bg-black h-12 w-full md:hidden flex flex-row items-center justify-center">
           <input
-            onChange={(e) => handleChange(e)}
-            onKeyDown={(e) => handlePress(e)}
             ref={ref}
             type="search"
+            onKeyDown={(e) => handlePress(e)}
+            onChange={(e) => handleChange(e)}
             placeholder="Type Here"
             className="w-full ring-1 ring-slate-500 p-2 outline-none text-xl text-slate-200 text-center bg-slate-800"
           />

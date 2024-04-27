@@ -56,9 +56,9 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
               Ratings: {data.vote_average}
             </h2>
             <Rating
-              name="disabled"
+              name="half-rating-read"
               defaultValue={data.vote_average}
-              precision={0.5}
+              precision={0.01}
               max={10}
               readOnly
             />
