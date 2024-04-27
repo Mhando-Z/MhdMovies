@@ -17,11 +17,17 @@ function NavBar() {
     ref.current.value = "";
   };
 
+  const handleClick = () => {
+    setOpens(!opens);
+  };
   //Kyepress function
   const handlePress = (e) => {
-    if (e.code === "Enter") {
+    console.log(e);
+    if (e.keyCode === 13) {
       navigate(`Results/${query}`);
       ref.current.value = "";
+      handleClick();
+      console.log("clicked Enter");
     }
   };
 
@@ -32,10 +38,6 @@ function NavBar() {
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
-  };
-
-  const handleClick = () => {
-    setOpens(!opens);
   };
 
   return (
