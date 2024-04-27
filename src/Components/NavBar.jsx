@@ -27,7 +27,6 @@ function NavBar() {
       navigate(`Results/${query}`);
       ref.current.value = "";
       handleClick();
-      console.log("clicked Enter");
     }
   };
 
