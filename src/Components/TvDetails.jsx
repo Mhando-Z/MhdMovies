@@ -129,8 +129,8 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
       {/* Number of seasons print */}
       <div
         className={`flex flex-wrap ${
-          data.seasons.length <= 1 ? "justify-start" : "justify-center"
-        } md:justify-start gap-5 lg:px-10 px-4 mt-4 h-[400px] overflow-auto `}
+          data.seasons?.length <= 1 ? "justify-start" : "justify-center"
+        } md:justify-start gap-5 lg:px-10 px-4 mt-4 h-[270px] overflow-auto `}
       >
         {data.seasons?.map((data) => {
           return (
