@@ -57,11 +57,14 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
             </h2>
             <div className="w-[200px]">
               <LinearProgress
-                variant="determinate"
-                color="warning"
                 sx={{
-                  height: "10px",
+                  backgroundColor: "white",
+                  "& .MuiLinearProgress-bar": {
+                    backgroundColor: "yellow",
+                  },
+                  height: "8px",
                 }}
+                variant="determinate"
                 value={Math.trunc(data.vote_average) * 10}
               />
             </div>
