@@ -51,7 +51,7 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
           <p className="text md:text-2xl text-md md:line-clamp-none line-clamp-5  text-justify tracking-tighter xl:max-w-none  lg:max-w-6xl text-slate-300 ">
             {data.overview}
           </p>
-          <div className="items-center justify-center">
+          <div className="items-center justify-center mb-2">
             <h2 className="text-slate-300 mb-2 text-xl">
               Ratings: {data.vote_average}
             </h2>
@@ -127,7 +127,11 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
         </div>
       </div>
       {/* Number of seasons print */}
-      <div className="flex flex-wrap justify-center md:justify-start gap-5 lg:px-10 px-4 mt-4 h-[400px] overflow-auto ">
+      <div
+        className={`flex flex-wrap ${
+          data.seasons.length <= 1 ? "justify-start" : "justify-center"
+        } md:justify-start gap-5 lg:px-10 px-4 mt-4 h-[400px] overflow-auto `}
+      >
         {data.seasons?.map((data) => {
           return (
             <div key={data.id} className="">

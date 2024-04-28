@@ -82,7 +82,6 @@ function HomePage() {
             {/*  */}
             <UpcomingMovies />
           </div>
-          <ScrollToTopButton />
         </div>
       </div>
       <ScrollToTopButton />

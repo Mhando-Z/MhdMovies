@@ -71,7 +71,7 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           </div>
         </div>
       </div>
-      <div className="lg:px-10 px-4 items-center justify-center">
+      <div className="lg:px-10 px-4 mb-2 items-center justify-center">
         <h2 className="text-slate-300 mb-2 text-xl">
           Ratings: {data.vote_average}
         </h2>
