@@ -54,7 +54,7 @@ function TvSeriesPage() {
           <div className="flex flex-row space-x-2">
             <h2 className="md:text-2xl text-lg text-slate-200">Date:</h2>
             <h2 className="md:text-2xl text-lg text-slate-200">
-              {TopRated[value].release_date}
+              {TopRated[value].first_air_date}
             </h2>
           </div>
         </div>

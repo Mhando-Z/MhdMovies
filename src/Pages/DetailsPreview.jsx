@@ -7,7 +7,7 @@ function DetailsPreview() {
   const [Details, setDetails] = useState([]);
   const [Reviews, setReview] = useState([]);
   const [Similar, setSimilar] = useState([]);
-  const [Page, setPage] = useState(Math.floor(Math.random() * 4) + 1);
+  const [Page, setPage] = useState(1);
   const { id } = useParams();
 
   //Page Logic
@@ -16,7 +16,6 @@ function DetailsPreview() {
   };
 
   //Logics
-
   async function getDetails() {
     try {
       const { data } = await axios.get(

@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import Collapse from "@mui/material/Collapse";
 import ScrollToTopButton from "./pageScroll";
 import TvSeries from "./TvSeries";
-import { Rating } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 
 function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
   const [count, setCount] = useState(14);
@@ -55,13 +55,16 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
             <h2 className="text-slate-300 mb-2 text-xl">
               Ratings: {data.vote_average}
             </h2>
-            <Rating
-              name="half-rating-read"
-              defaultValue={data.vote_average}
-              precision={0.01}
-              max={10}
-              readOnly
-            />
+            <div className="w-[200px]">
+              <LinearProgress
+                variant="determinate"
+                color="warning"
+                sx={{
+                  height: "10px",
+                }}
+                value={Math.trunc(data.vote_average) * 10}
+              />
+            </div>
           </div>
         </div>
         <div className="absolute top-10 lg:px-10 px-4 block">
@@ -121,7 +124,7 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
         </div>
       </div>
       {/* Number of seasons print */}
-      <div className="flex flex-wrap justify-center md:justify-start gap-5 lg:px-10 px-4 mt-4 ">
+      <div className="flex flex-wrap justify-center md:justify-start gap-5 lg:px-10 px-4 mt-4 h-[400px] overflow-auto ">
         {data.seasons?.map((data) => {
           return (
             <div key={data.id} className="">

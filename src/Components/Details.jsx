@@ -3,6 +3,7 @@ import Movie from "./Movie";
 import { Link, Outlet } from "react-router-dom";
 import Collapse from "@mui/material/Collapse";
 import ScrollToTopButton from "./pageScroll";
+import { LinearProgress, Rating } from "@mui/material";
 
 function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
   const [count, setCount] = useState(14);
@@ -70,6 +71,21 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           </div>
         </div>
       </div>
+      <div className="lg:px-10 px-4 items-center justify-center">
+        <h2 className="text-slate-300 mb-2 text-xl">
+          Ratings: {data.vote_average}
+        </h2>
+        <div className="w-[200px]">
+          <LinearProgress
+            variant="determinate"
+            color="warning"
+            sx={{
+              height: "10px",
+            }}
+            value={Math.trunc(data.vote_average) * 10}
+          />
+        </div>
+      </div>
       <div className="bg-slate-800 flex flex-row md:justify-normal justify-between gap-x-5 rounded-xl lg:px-10 px-4">
         <h1 className="text-xl text-slate-200">
           Budget: {data.budget?.toLocaleString()}
@@ -98,10 +114,10 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           <Outlet />
         </div>
       </Collapse>
-      <div className="flex flex-col ">
-        <div className="p-10">
-          <h1 className="lg:text-3xl text-2xl text-center lg:text-left text-white font-semibold">
-            Movies you might like
+      <div className="flex flex-col mt-5 ">
+        <div className="px-4 lg:px-10 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500 ">
+          <h1 className="lg:text-3xl text-2xl mt-3 mb-5 max-w-xl block text-white font-semibold">
+            Series you might like
           </h1>
         </div>
 
