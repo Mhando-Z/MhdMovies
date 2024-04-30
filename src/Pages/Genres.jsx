@@ -88,7 +88,7 @@ function Genres() {
               {genres?.map((data, index) => {
                 return (
                   <div
-                    key={index + data.name}
+                    key={index + data.id}
                     className={`${data.name === Gname ? Unselect : ""}`}
                   >
                     <h1
@@ -114,7 +114,7 @@ function Genres() {
               {genre?.map((data, index) => {
                 return (
                   <div
-                    key={index + data.name}
+                    key={index + data.id}
                     className={`${data.name === Gnames ? Unselect1 : " "}`}
                   >
                     <h1
@@ -142,7 +142,7 @@ function Genres() {
                   {dataFilterd?.slice(0, count).map((data, index) => {
                     return (
                       <Movie
-                        key={index + data.title}
+                        key={index + data.id}
                         title={data.title}
                         image={data.poster_path}
                         id={data.id}
@@ -176,7 +176,7 @@ function Genres() {
                   {TvdataFilter?.slice(0, counts).map((data, index) => {
                     return (
                       <TvSeries
-                        key={index + data.name}
+                        key={index + data.id}
                         title={data.name}
                         image={data.poster_path}
                         id={data.id}

@@ -49,7 +49,7 @@ function ResultsPage() {
             {Dataquery?.slice(0, count).map((data, index) => {
               return (
                 <Movie
-                  key={index + data.title}
+                  key={index + data.id}
                   title={data.title || data.name}
                   image={data.poster_path}
                   id={data.id}

@@ -9,7 +9,7 @@ export function MovieProvider({ children }) {
   const [TopRated, setTopRated] = useState([]);
   const [UpComingMovies, setUFuture] = useState([]);
   const [Page1, setPage1] = useState(1);
-  const [Page2, setPage2] = useState(1);
+  const [Page2, setPage2] = useState(3);
   const [Page3, setPage3] = useState(1);
   const Collected = [...Movielists, ...TopRated, ...UpComingMovies];
 

@@ -3,7 +3,7 @@ import Movie from "./Movie";
 import { Link, Outlet } from "react-router-dom";
 import Collapse from "@mui/material/Collapse";
 import ScrollToTopButton from "./pageScroll";
-import { LinearProgress, Rating } from "@mui/material";
+import { Fade, LinearProgress } from "@mui/material";
 
 function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
   const [count, setCount] = useState(14);
@@ -51,28 +51,40 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           <p className="text md:text-2xl text-md text-justify tracking-tighter xl:max-w-none md:line-clamp-none line-clamp-5 max-w-6xl text-slate-300 ">
             {data.overview}
           </p>
-          <div className="text-xl text-yellow-500 flex flex-row items-center">
+          <div className=" lg:text-2xl text-lg md:text-xl text-yellow-500 flex flex-row items-center">
             <h1>{Math.trunc(data.runtime / 60)}h:</h1>
             <h1>{data.runtime % 60}min</h1>
           </div>
         </div>
         <div className="absolute top-10 lg:px-10 px-4 block">
           <div className="flex flex-row space-x-2">
-            <h2 className="md:text-2xl text-lg text-slate-200">Status:</h2>
-            <h2 className="md:text-2xl text-lg text-yellow-500">
+            <h2 className="lg:text-2xl md:text-xl text-lg text-slate-200">
+              Status:
+            </h2>
+            <h2 className="lg:text-2xl md:text-xl text-lg text-yellow-500">
               {data.status}
             </h2>
           </div>
           <div className="flex flex-row space-x-2">
-            <h2 className="md:text-2xl text-lg text-slate-200">Date:</h2>
-            <h2 className="md:text-2xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl md:text-xl text-lg text-slate-200">
+              Date:
+            </h2>
+            <h2 className="lg:text-2xl md:text-xl text-lg text-slate-200">
               {data.release_date}
             </h2>
           </div>
+          <Fade timeout={1000} in={true}>
+            <div
+              style={{
+                backgroundImage: `url("${`https://image.tmdb.org/t/p/w500/${data.poster_path}`}")`,
+              }}
+              className="mt-2 hidden md:flex xl:h-[250px] rounded-xl lg:h-[220px] md:h-[200px] w-[170px] lg:w-[190px] bg-white bg-no-repeat bg-cover bg-center"
+            ></div>
+          </Fade>
         </div>
       </div>
       <div className="lg:px-10 px-4 mb-2 items-center justify-center">
-        <h2 className="text-slate-300 mb-2 text-xl">
+        <h2 className="text-slate-300 mb-2 lg:text-2xl md:text-xl text-lg">
           Ratings: {data.vote_average}
         </h2>
         <div className="w-[200px]">
@@ -90,10 +102,10 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
         </div>
       </div>
       <div className="bg-slate-800 flex flex-row md:justify-normal justify-between gap-x-5 rounded-xl lg:px-10 px-4">
-        <h1 className="text-xl text-slate-200">
+        <h1 className="lg:text-2xl md:text-xl text-lg text-slate-200">
           Budget: {data.budget?.toLocaleString()}
         </h1>
-        <h1 className="text-xl text-slate-200">
+        <h1 className="lg:text-2xl md:text-xl text-lg text-slate-200">
           Revenue: {data.revenue?.toLocaleString()}
         </h1>
       </div>

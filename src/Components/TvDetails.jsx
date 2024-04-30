@@ -4,6 +4,7 @@ import Collapse from "@mui/material/Collapse";
 import ScrollToTopButton from "./pageScroll";
 import TvSeries from "./TvSeries";
 import LinearProgress from "@mui/material/LinearProgress";
+import { Fade } from "@mui/material";
 
 function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
   const [count, setCount] = useState(14);
@@ -32,6 +33,7 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
       >
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-l via-transparent from-transparent to-slate-800"></div>
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
+
         <div className="absolute bottom-0 lg:px-10 px-4">
           <h1 className="mb-3 text-4xl font-semibold text-slate-200 ">
             {data.name}
@@ -52,7 +54,7 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
             {data.overview}
           </p>
           <div className="items-center justify-center mb-2">
-            <h2 className="text-slate-300 mb-2 text-xl">
+            <h2 className="text-slate-300 mb-2 lg:text-2xl text-xl">
               Ratings: {data.vote_average}
             </h2>
             <div className="w-[200px]">
@@ -77,13 +79,21 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
               {data.status}
             </h2>
           </div>
+          <Fade timeout={1000} in={true}>
+            <div
+              style={{
+                backgroundImage: `url("${`https://image.tmdb.org/t/p/w500/${data.poster_path}`}")`,
+              }}
+              className="mt-2 hidden rounded-xl md:flex xl:h-[250px] lg:h-[220px] md:h-[200px] w-[170px] lg:w-[190px] bg-white bg-no-repeat bg-cover bg-center"
+            ></div>
+          </Fade>
         </div>
       </div>
       <div className="bg-slate-800 flex flex-row md:justify-normal justify-between gap-x-5 rounded-xl lg:px-10 px-4">
-        <h1 className="text-xl text-slate-200">
+        <h1 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
           Budget: {data.budget?.toLocaleString()}
         </h1>
-        <h1 className="text-xl text-slate-200">
+        <h1 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
           Revenue: {data.revenue?.toLocaleString()}
         </h1>
       </div>
@@ -92,16 +102,18 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
         <div className="px-4 lg:px-10">
           {/* date Release details */}
           <div className="flex flex-row space-x-2">
-            <h2 className="md:text-2xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
               Release Date:
             </h2>
-            <h2 className="md:text-2xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl text-lg text-slate-200">
               {data.first_air_date}
             </h2>
           </div>
           <div className="flex flex-row  space-x-2 ">
-            <h2 className="md:text-2xl text-lg text-slate-200">End Date:</h2>
-            <h2 className="md:text-2xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
+              End Date:
+            </h2>
+            <h2 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
               {data.last_air_date}
             </h2>
           </div>
@@ -109,18 +121,18 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
         {/* Details on number of episodes and seasons */}
         <div className="px-4 lg:px-10 ">
           <div className="flex flex-row space-x-2">
-            <h2 className="md:text-2xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl text-lg text-slate-200">
               Number of Episodes:
             </h2>
-            <h2 className="md:text-2xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl text-lg text-slate-200">
               {data.number_of_episodes}
             </h2>
           </div>
           <div className="flex flex-row  space-x-2 ">
-            <h2 className="md:text-2xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl  md:text-xl  text-lg text-slate-200">
               Number Of Seasons:
             </h2>
-            <h2 className="md:text-2xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
               {data.number_of_seasons}
             </h2>
           </div>

@@ -43,7 +43,7 @@ function TvSeriesPage() {
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
         <div className="absolute bottom-0 lg:px-10 px-4">
           <h1 className="mb-3 text-4xl font-semibold text-slate-200 ">
-            {TopRated[value].name}
+            {TopRated[value].name || ""}
           </h1>
 
           <p className="text md:text-2xl xl:max-w-none text-md text-justify tracking-tighter max-w-6xl text-slate-300 ">
