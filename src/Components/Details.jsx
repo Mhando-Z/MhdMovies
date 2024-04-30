@@ -132,7 +132,7 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
       <div className="flex flex-col mt-5 ">
         <div className="px-4 lg:px-10 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500 ">
           <h1 className="lg:text-3xl text-2xl mt-3 mb-5 max-w-xl block text-white font-semibold">
-            Series you might like
+            Movies you might like
           </h1>
         </div>
 
