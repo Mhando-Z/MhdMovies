@@ -7,6 +7,8 @@ import ScrollToTopButton from "../Components/pageScroll";
 import MovieListContext from "../Context/MovieListContext";
 import TopRatedMovies from "../Movie/TopRatedMovies";
 import { useNavigate } from "react-router-dom";
+import { Dots } from "react-activity";
+import "react-activity/dist/library.css";
 
 function HomePage() {
   const { Trending } = useContext(MovieListContext);
@@ -29,7 +31,14 @@ function HomePage() {
   if (!Trending || Trending.length === 0) {
     return (
       <div className="flex items-center justify-center">
-        <h1 className="text-slate-200">Loading...</h1>
+        <Dots size={50} className="hidden xl:flex" color="gray" speed={0.5} />
+        <Dots
+          size={40}
+          className="lg:flex hidden xl:hidden"
+          color="gray"
+          speed={0.5}
+        />
+        <Dots size={30} className="sm:hidden flex" color="gray" speed={0.5} />
       </div>
     );
   }

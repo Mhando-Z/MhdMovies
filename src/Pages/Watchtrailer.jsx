@@ -7,10 +7,8 @@ function Watchtrailer() {
   const { id } = useParams();
   const [Videos, setVideo] = useState([]);
   const [Selected, setSelect] = useState();
-  const [isActive1, setActive] = useState(false);
 
   const handleSelect = (key) => {
-    setActive(!isActive1);
     setSelect(key);
   };
 

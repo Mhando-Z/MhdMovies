@@ -5,6 +5,8 @@ import ScrollToTopButton from "../Components/pageScroll";
 import TvSeriesContex from "../Context/TvSeriesContext";
 import TopRatedSeries from "./TopRated";
 import { useNavigate } from "react-router-dom";
+import { Dots } from "react-activity";
+import "react-activity/dist/library.css";
 
 function TvSeriesPage() {
   const { TopRated } = useContext(TvSeriesContex);
@@ -27,7 +29,14 @@ function TvSeriesPage() {
   if (!TopRated || TopRated.length === 0) {
     return (
       <div className="flex items-center justify-center">
-        <h1 className="text-slate-200">Loading...</h1>
+        <Dots size={50} className="hidden xl:flex" color="gray" speed={0.5} />
+        <Dots
+          size={40}
+          className="lg:flex hidden xl:hidden"
+          color="gray"
+          speed={0.5}
+        />
+        <Dots size={30} className="sm:hidden flex" color="gray" speed={0.5} />
       </div>
     );
   }
