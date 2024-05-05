@@ -4,15 +4,30 @@ import Movie from "../Components/Movie";
 
 function UpcomingMovies() {
   const { UpComingMovies } = useContext(MovieListContext);
-  const { HandlePage2 } = useContext(MovieListContext);
+  const { setPage2 } = useContext(MovieListContext);
   const [count, setCount] = useState(14);
   const { Page2 } = useContext(MovieListContext);
 
   const handleIncrese = () => {
     if (count !== 20) {
       setCount(count + 6);
-    } else {
-      HandlePage2();
+    }
+  };
+  //handle Decrease
+  const handleDecrease = () => {
+    if (count === 20 && count >= 14) {
+      setCount(count - 6);
+    }
+  };
+  //Handle Pages Logic
+  const handlePages = () => {
+    if (Page2 >= 1) {
+      setPage2(Page2 + 1);
+    }
+  };
+  const handlePage = () => {
+    if (Page2 >= 1) {
+      setPage2(Page2 - 1);
     }
   };
   return (
@@ -39,16 +54,42 @@ function UpcomingMovies() {
           );
         })}
       </div>
-      <div className="flex gap-x-5 items-end justify-end py-4">
-        <h1 className="text-slate-200 lg:text-xl text-lg font-semibold ">
-          Page {Page2}
-        </h1>
-        <h1
-          onClick={handleIncrese}
-          className="text-slate-200 lg:text-xl text-lg font-semibold cursor-pointer"
-        >
-          More..
-        </h1>
+      <div className="flex gap-x-5 items-end justify-between mb-2 py-4">
+        <div>
+          <h1 className="text-slate-200 lg:text-xl text-lg font-semibold ">
+            Page {Page2}
+          </h1>
+        </div>
+        <div className="flex flex-row items-center space-x-5">
+          <h1
+            onClick={handleDecrease}
+            className={`text-slate-200 lg:text-xl  text-lg font-semibold cursor-pointer ${
+              count === 20 ? "flex" : "hidden"
+            }`}
+          >
+            Less..
+          </h1>
+          <h1
+            onClick={handleIncrese}
+            className={`text-slate-200 lg:text-xl text-lg font-semibold cursor-pointer ${
+              count === 20 ? "hidden" : "flex"
+            }`}
+          >
+            More..
+          </h1>
+          <h1
+            onClick={handlePage}
+            className="text-slate-200 lg:text-xl text-lg font-semibold cursor-pointer"
+          >
+            Prev
+          </h1>
+          <h1
+            onClick={handlePages}
+            className="text-slate-200 lg:text-xl text-lg font-semibold cursor-pointer"
+          >
+            Next
+          </h1>
+        </div>
       </div>
     </div>
   );

@@ -18,21 +18,12 @@ export function MovieProvider({ children }) {
     setPage3(Page3 + 1);
     setPage2(Page2 + 1);
   };
-  const HandlePage = () => {
-    setPage1(Page1 + 1);
-  };
-  const HandlePage3 = () => {
-    setPage3(Page3 + 1);
-  };
-  const HandlePage2 = () => {
-    setPage2(Page2 + 1);
-  };
 
   //APIS calls
   async function getTopRated() {
     try {
       const { data } = await axios.get(
-        ` https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${Page3}`,
+        `  https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${Page3}`,
         {
           headers: {
             accept: "application/json",
@@ -95,7 +86,7 @@ export function MovieProvider({ children }) {
     getTopRated();
     getFutureMovies();
     getMovies();
-  }, [Page1, Page2]);
+  }, [Page1, Page2, Page3]);
 
   return (
     <MovieListContext.Provider
@@ -103,9 +94,9 @@ export function MovieProvider({ children }) {
         Movielists,
         UpComingMovies,
         Collected,
-        HandlePage,
-        HandlePage2,
-        HandlePage3,
+        setPage1,
+        setPage2,
+        setPage3,
         HandlePages,
         TopRated,
         Trending,

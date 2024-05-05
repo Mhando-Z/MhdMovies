@@ -75,7 +75,7 @@ function Genres() {
   return (
     <div className="flex mt-10 flex-col gap-y-5 justify-between min-h-screen lg:px-10 px-2">
       <div className="flex flex-col md:flex-row justify-between gap-x-10">
-        <div className="flex md:flex-col justify-between flex-row md:w-[200px] md:h-[600px] h-[200px] md:rounded-2xl bg-slate-600">
+        <div className="flex md:flex-col justify-between flex-row md:w-[200px] md:h-[600px] h-[200px] md:rounded-md bg-slate-600">
           <div className="flex flex-col">
             <div className="bg-slate-600 h-[60px]">
               <div className="px-5 py-5">

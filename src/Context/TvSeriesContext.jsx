@@ -8,23 +8,12 @@ export function TvSeriesProvider({ children }) {
   const [Todaylist, setList2] = useState([]);
   const [TopRated, setTopRated] = useState([]);
   const [Page1, setPage1] = useState(1);
-  const [Page2, setPage2] = useState(1);
-  const [Page3, setPage3] = useState(1);
+  const [Page3, setPage3] = useState(2);
   const TvCollected = [...Tvlist, ...TopRated, ...Todaylist];
 
   const TvHandlePages = () => {
     setPage1(Page1 + 1);
     setPage3(Page3 + 1);
-    setPage2(Page2 + 1);
-  };
-  const HandlePage = () => {
-    setPage1(Page1 + 1);
-  };
-  const HandlePage3 = () => {
-    setPage3(Page3 + 1);
-  };
-  const HandlePage2 = () => {
-    setPage2(Page2 + 1);
   };
 
   async function getTv() {
@@ -76,17 +65,16 @@ export function TvSeriesProvider({ children }) {
     getTopRated();
     getTodays();
     getTv();
-  }, [Page1, Page2, Page3]);
+  }, [Page1, Page3]);
   return (
     <TvSeriesContex.Provider
       value={{
         Tvlist,
         Todaylist,
         Page1,
-        Page2,
-        HandlePage,
-        HandlePage2,
-        HandlePage3,
+        Page3,
+        setPage1,
+        setPage3,
         TvHandlePages,
         TopRated,
         TvCollected,

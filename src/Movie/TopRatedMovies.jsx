@@ -3,16 +3,31 @@ import MovieListContext from "../Context/MovieListContext";
 import Movie from "../Components/Movie";
 
 function TopRatedMovies() {
-  const { UpComingMovies } = useContext(MovieListContext);
-  const { HandlePage3 } = useContext(MovieListContext);
+  const { TopRated } = useContext(MovieListContext);
+  const { setPage3 } = useContext(MovieListContext);
   const { Page3 } = useContext(MovieListContext);
   const [count, setCount] = useState(14);
 
   const handleIncrese = () => {
     if (count !== 20) {
       setCount(count + 6);
-    } else {
-      HandlePage3();
+    }
+  };
+  //handle Decrease
+  const handleDecrease = () => {
+    if (count === 20 && count >= 14) {
+      setCount(count - 6);
+    }
+  };
+  //Handle Pages Logic
+  const handlePages = () => {
+    if (Page3 >= 1) {
+      setPage3(Page3 + 1);
+    }
+  };
+  const handlePage = () => {
+    if (Page3 >= 1) {
+      setPage3(Page3 - 1);
     }
   };
   return (
@@ -28,7 +43,7 @@ function TopRatedMovies() {
         </h1>
       </div>
       <div className="md:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
-        {UpComingMovies?.slice(0, count).map((data, index) => {
+        {TopRated?.slice(0, count).map((data, index) => {
           return (
             <Movie
               key={index + data.title}
@@ -39,16 +54,42 @@ function TopRatedMovies() {
           );
         })}
       </div>
-      <div className="flex gap-x-5 items-end justify-end py-4">
-        <h1 className="text-slate-200 lg:text-xl text-lg  font-semibold ">
-          Page {Page3}
-        </h1>
-        <h1
-          onClick={handleIncrese}
-          className="text-slate-200 text-lg lg:text-xl font-semibold cursor-pointer"
-        >
-          More..
-        </h1>
+      <div className="flex gap-x-5 items-end justify-between mb-2 py-4">
+        <div>
+          <h1 className="text-slate-200 lg:text-xl text-lg font-semibold ">
+            Page {Page3}
+          </h1>
+        </div>
+        <div className="flex flex-row items-center space-x-5">
+          <h1
+            onClick={handleDecrease}
+            className={`text-slate-200 lg:text-xl  text-lg font-semibold cursor-pointer ${
+              count === 20 ? "flex" : "hidden"
+            }`}
+          >
+            Less..
+          </h1>
+          <h1
+            onClick={handleIncrese}
+            className={`text-slate-200 lg:text-xl text-lg font-semibold cursor-pointer ${
+              count === 20 ? "hidden" : "flex"
+            }`}
+          >
+            More..
+          </h1>
+          <h1
+            onClick={handlePage}
+            className="text-slate-200 lg:text-xl text-lg font-semibold cursor-pointer"
+          >
+            Prev
+          </h1>
+          <h1
+            onClick={handlePages}
+            className="text-slate-200 lg:text-xl text-lg font-semibold cursor-pointer"
+          >
+            Next
+          </h1>
+        </div>
       </div>
     </div>
   );

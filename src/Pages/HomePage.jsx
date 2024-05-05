@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import UpcomingMovies from "../Movie/UpcomingMovies";
 import MovieList from "../Movie/MovieList";
 import TvSeriesList from "../TvSeries/TvSeriesList";
-import TodaySeies from "../TvSeries/TodaySeies";
 import ScrollToTopButton from "../Components/pageScroll";
 import MovieListContext from "../Context/MovieListContext";
 import TopRatedMovies from "../Movie/TopRatedMovies";
 import { useNavigate } from "react-router-dom";
 import { Dots } from "react-activity";
 import "react-activity/dist/library.css";
+import TrendinG from "../Movie/Trending";
 
 function HomePage() {
   const { Trending } = useContext(MovieListContext);
@@ -86,7 +86,7 @@ function HomePage() {
             <MovieList />
             <TopRatedMovies />
             {/* series section */}
-            <TodaySeies />
+            <TrendinG />
             <TvSeriesList />
             {/*  */}
             <UpcomingMovies />
