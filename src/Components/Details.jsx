@@ -33,7 +33,7 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-l via-transparent from-transparent to-slate-800"></div>
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
         <div className="absolute bottom-0 lg:px-10 px-4">
-          <h1 className="mb-3 text-4xl font-semibold text-slate-200 ">
+          <h1 className="mb-3 lg:text-6xl md:text-5xl text-4xl font-extrabold text-slate-200">
             {data.title}
           </h1>
           <div className="flex flex-wrap md:flex-row gap-x-5 items-center">
@@ -48,43 +48,48 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
               );
             })}
           </div>
-          <p className="text md:text-2xl text-md text-justify tracking-tighter xl:max-w-none md:line-clamp-none line-clamp-5 max-w-6xl text-slate-300 ">
-            {data.overview}
-          </p>
-          <div className=" lg:text-2xl text-lg md:text-xl text-yellow-500 flex flex-row items-center">
+          <div className="h-[100px] overflow-scroll overflow-x-hidden">
+            <p className="md:text-xl lg:text-2xl tracking-tighter md:line-clamp-none line-clamp-5 max-w-6xl text-slate-300 ">
+              {data.overview}
+            </p>
+          </div>
+          <div className=" lg:text-2xl md:text-xl text-yellow-500 flex flex-row items-center">
             <h1>{Math.trunc(data.runtime / 60)}h:</h1>
             <h1>{data.runtime % 60}min</h1>
           </div>
         </div>
         <div className="absolute top-10 lg:px-10 px-4 block">
           <div className="flex flex-row space-x-2">
-            <h2 className="lg:text-2xl md:text-xl text-lg text-slate-200">
-              Status:
-            </h2>
-            <h2 className="lg:text-2xl md:text-xl text-lg text-yellow-500">
+            <h2 className="lg:text-2xl md:text-xl text-slate-200">Status:</h2>
+            <h2 className="lg:text-2xl md:text-xl  text-yellow-500">
               {data.status}
             </h2>
           </div>
           <div className="flex flex-row space-x-2">
-            <h2 className="lg:text-2xl md:text-xl text-lg text-slate-200">
-              Date:
-            </h2>
-            <h2 className="lg:text-2xl md:text-xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl md:text-xl text-slate-200">Date:</h2>
+            <h2 className="lg:text-2xl md:text-xl text-slate-200">
               {data.release_date}
             </h2>
           </div>
           <Fade timeout={1000} in={true}>
-            <div
-              style={{
-                backgroundImage: `url("${`https://image.tmdb.org/t/p/w500/${data.poster_path}`}")`,
-              }}
-              className="mt-2 hidden md:flex xl:h-[250px] rounded-xl lg:h-[220px] md:h-[200px] w-[170px] lg:w-[190px] bg-white bg-no-repeat bg-cover bg-center"
-            ></div>
+            <div>
+              <img
+                src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`}
+                alt="picha"
+                className="mt-2 hidden md:flex xl:h-[260px] lg:h-[250px] md:h-[220px] w-[170px] lg:w-[190px] bg-white bg-no-repeat bg-cover bg-center"
+              />
+              {/* <div
+                style={{
+                  backgroundImage: `url("${`https://image.tmdb.org/t/p/w500/${data.poster_path}`}")`,
+                }}
+                className="mt-2 hidden md:flex xl:h-[250px] rounded-xl lg:h-[220px] md:h-[200px] w-[170px] lg:w-[190px] bg-white bg-no-repeat bg-cover bg-center"
+              ></div> */}
+            </div>
           </Fade>
         </div>
       </div>
       <div className="lg:px-10 px-4 mb-2 items-center justify-center">
-        <h2 className="text-slate-300 mb-2 lg:text-2xl md:text-xl text-lg">
+        <h2 className="text-slate-300 mb-2 lg:text-2xl md:text-xl">
           Ratings: {data.vote_average}
         </h2>
         <div className="w-[200px]">
@@ -94,7 +99,7 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
               "& .MuiLinearProgress-bar": {
                 backgroundColor: "yellow",
               },
-              height: "8px",
+              height: "4px",
             }}
             variant="determinate"
             value={Math.trunc(data.vote_average) * 10}
@@ -102,10 +107,10 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
         </div>
       </div>
       <div className="bg-slate-800 flex flex-row md:justify-normal justify-between gap-x-5 rounded-xl lg:px-10 px-4">
-        <h1 className="lg:text-2xl md:text-xl text-lg text-slate-200">
+        <h1 className="lg:text-2xl md:text-xl text-slate-200">
           Budget: {data.budget?.toLocaleString()}
         </h1>
-        <h1 className="lg:text-2xl md:text-xl text-lg text-slate-200">
+        <h1 className="lg:text-2xl md:text-xl text-slate-200">
           Revenue: {data.revenue?.toLocaleString()}
         </h1>
       </div>
@@ -168,16 +173,18 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
         ""
       ) : (
         <div className="mt-5 h-[400px] overflow-auto bg-slate-900 rounded-2xl">
-          <h1 className="text-3xl px-10 text-yellow-500 mb-5 mt-5 font-semibold ">
-            Reviews
-          </h1>
+          <div className="flex sticky top-0 bg-slate-900 border-b-2 border-slate-700">
+            <h1 className="md:text-3xl text-2xl px-10 text-yellow-500 mb-5 mt-5 font-semibold ">
+              Reviews
+            </h1>
+          </div>
           {Review.map((data, index) => {
             return (
               <div key={index + data.author} className="px-10 flex flex-col">
-                <h1 className="text-2xl text-slate-200 font-semibold">
+                <h1 className="md:text-2xl text-xl text-slate-200 font-semibold">
                   {data.author}
                 </h1>
-                <p className="text-md md:text-xl text-justify mb-6 tracking-tighter text-slate-200">
+                <p className=" md:text-xl text-justify mb-6 tracking-tighter text-slate-200">
                   {data.content}
                 </p>
               </div>

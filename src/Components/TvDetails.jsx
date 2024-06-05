@@ -35,26 +35,30 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
 
         <div className="absolute bottom-0 lg:px-10 px-4">
-          <h1 className="mb-3 text-4xl font-semibold text-slate-200 ">
+          <h1 className="mb-3 lg:text-6xl md:text-5xl text-4xl font-extrabold text-slate-200">
             {data.name}
           </h1>
           <div className="flex flex-wrap md:flex-row gap-x-5 items-center">
-            <h1 className="text-2xl text-slate-200 font-semibold">Genres:</h1>
+            <h1 className="lg:text-2xl md:text-xl text-slate-200 font-semibold">
+              Genres:
+            </h1>
             {data.genres?.map((data, index) => {
               return (
                 <div key={index + data.id} className="">
-                  <h1 className="text-xl text-yellow-500 font-semibold">
+                  <h1 className="lg:text-2xl md:text-xl text-yellow-500 font-semibold">
                     {data.name}
                   </h1>
                 </div>
               );
             })}
           </div>
-          <p className="text md:text-2xl text-md md:line-clamp-none line-clamp-5  text-justify tracking-tighter xl:max-w-none  lg:max-w-6xl text-slate-300 ">
-            {data.overview}
-          </p>
+          <div className="h-[100px] overflow-scroll overflow-x-hidden">
+            <p className="md:text-xl lg:text-2xl tracking-tighter md:line-clamp-none line-clamp-5 max-w-6xl text-slate-300 ">
+              {data.overview}
+            </p>
+          </div>
           <div className="items-center justify-center mb-2">
-            <h2 className="text-slate-300 mb-2 lg:text-2xl text-xl">
+            <h2 className="text-slate-300 mb-2 lg:text-2xl md:text-xl">
               Ratings: {data.vote_average}
             </h2>
             <div className="w-[200px]">
@@ -64,7 +68,7 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
                   "& .MuiLinearProgress-bar": {
                     backgroundColor: "yellow",
                   },
-                  height: "8px",
+                  height: "3px",
                 }}
                 variant="determinate"
                 value={Math.trunc(data.vote_average) * 10}
@@ -74,26 +78,31 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
         </div>
         <div className="absolute top-10 lg:px-10 px-4 block">
           <div className="flex flex-row space-x-2">
-            <h2 className="md:text-2xl text-lg text-slate-200">Status:</h2>
-            <h2 className="md:text-2xl text-lg text-yellow-500">
+            <h2 className="lg:text-2xl md:text-xl text-slate-200">Status:</h2>
+            <h2 className="lg:text-2xl md:text-xl text-yellow-500">
               {data.status}
             </h2>
           </div>
           <Fade timeout={1000} in={true}>
-            <div
+            <img
+              src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`}
+              alt="picha"
+              className="mt-2 hidden md:flex xl:h-[260px] lg:h-[250px] md:h-[220px] w-[170px] lg:w-[190px] bg-white bg-no-repeat bg-cover bg-center"
+            />
+            {/* <div
               style={{
                 backgroundImage: `url("${`https://image.tmdb.org/t/p/w500/${data.poster_path}`}")`,
               }}
               className="mt-2 hidden rounded-xl md:flex xl:h-[250px] lg:h-[220px] md:h-[200px] w-[170px] lg:w-[190px] bg-white bg-no-repeat bg-cover bg-center"
-            ></div>
+            ></div> */}
           </Fade>
         </div>
       </div>
       <div className="bg-slate-800 flex flex-row md:justify-normal justify-between gap-x-5 rounded-xl lg:px-10 px-4">
-        <h1 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
+        <h1 className="lg:text-2xl  md:text-xl text-slate-200">
           Budget: {data.budget?.toLocaleString()}
         </h1>
-        <h1 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
+        <h1 className="lg:text-2xl  md:text-xl text-slate-200">
           Revenue: {data.revenue?.toLocaleString()}
         </h1>
       </div>
@@ -102,18 +111,18 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
         <div className="px-4 lg:px-10">
           {/* date Release details */}
           <div className="flex flex-row space-x-2">
-            <h2 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl md:text-xl text-slate-200">
               Release Date:
             </h2>
-            <h2 className="lg:text-2xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl md:text-xl text-slate-200">
               {data.first_air_date}
             </h2>
           </div>
           <div className="flex flex-row  space-x-2 ">
-            <h2 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl  md:text-xl text-slate-200">
               End Date:
             </h2>
-            <h2 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl  md:text-xl text-slate-200">
               {data.last_air_date}
             </h2>
           </div>
@@ -124,15 +133,15 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
             <h2 className="lg:text-2xl text-lg text-slate-200">
               Number of Episodes:
             </h2>
-            <h2 className="lg:text-2xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl md:text-xl text-slate-200">
               {data.number_of_episodes}
             </h2>
           </div>
           <div className="flex flex-row  space-x-2 ">
-            <h2 className="lg:text-2xl  md:text-xl  text-lg text-slate-200">
+            <h2 className="lg:text-2xl  md:text-xl text-slate-200">
               Number Of Seasons:
             </h2>
-            <h2 className="lg:text-2xl  md:text-xl text-lg text-slate-200">
+            <h2 className="lg:text-2xl  md:text-xl text-slate-200">
               {data.number_of_seasons}
             </h2>
           </div>
@@ -175,7 +184,6 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
         >
           WATCH TRAILERS
         </button>
-
         <Link
           to={`https://vidsrc.xyz/embed/tv?imdb=${id.imdb_id}`}
           className="py-3 w-full text-center sm:w-auto px-8 ring-1 ring-slate-200 lg:text-xl text-sm rounded-lg text-slate-200"
@@ -196,7 +204,7 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
         </div>
         <div className="flex flex-col xl:items-center">
           <div className="flex flex-col items-center">
-            <div className="lg:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
+            <div className="lg:px-10 p-2 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
               {Similar?.slice(0, count).map((data, index) => {
                 return (
                   <TvSeries
@@ -226,16 +234,18 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
         ""
       ) : (
         <div className="mt-5 h-[400px] overflow-auto bg-slate-900 rounded-2xl">
-          <h1 className="text-3xl px-10 text-yellow-500 mb-5 mt-5 font-semibold ">
-            Reviews
-          </h1>
+          <div className="flex sticky top-0 bg-slate-900 border-b-2 border-slate-700">
+            <h1 className="md:text-3xl text-2xl px-10 text-yellow-500 mb-5 mt-5 font-semibold ">
+              Reviews
+            </h1>
+          </div>
           {Review.map((data, index) => {
             return (
               <div key={index + data.author} className="px-10 flex flex-col">
-                <h1 className="text-2xl text-slate-200 font-semibold">
+                <h1 className="md:text-2xl text-xl text-slate-200 font-semibold">
                   {data.author}
                 </h1>
-                <p className="text-md md:text-xl text-justify mb-6 tracking-tighter text-slate-200">
+                <p className=" md:text-xl text-justify mb-6 tracking-tighter text-slate-200">
                   {data.content}
                 </p>
               </div>

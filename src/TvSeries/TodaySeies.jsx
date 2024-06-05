@@ -32,7 +32,7 @@ function TodaySeies() {
           Trending this Week...
         </h1>
       </div>
-      <div className="md:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
+      <div className="md:px-10 p-2  grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
         {Todaylist?.slice(0, count).map((data, index) => {
           return (
             <TvSeries

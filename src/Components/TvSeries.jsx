@@ -9,9 +9,19 @@ function TvSeries({ title, image, id }) {
     });
   };
   return (
-    <div className="items-center justify-center">
+    <div className="flex justify-center cursor-pointer">
       <Link onClick={scrollToTop} to={`/TvDetails/${id}`}>
-        <div
+        <img
+          src={`https://image.tmdb.org/t/p/w500/${image}`}
+          alt="poster"
+          className="max-w-screen h-auto"
+        />
+        <div className="h-16  border-b-2 border-slate-600 bg-slate-900 bg-opacity-65 ">
+          <h1 className=" xl:text-lg line-clamp-2 text-slate-300 font-semibold text-center p-1">
+            {title || ""}
+          </h1>
+        </div>
+        {/* <div
           style={{
             backgroundImage: `url("${`https://image.tmdb.org/t/p/w500/${image}`}")`,
           }}
@@ -21,7 +31,7 @@ function TvSeries({ title, image, id }) {
           <h1 className="absolute bottom-0 xl:text-lg  line-clamp-2 text-slate-300 font-semibold text-center p-1">
             {title || ""}
           </h1>
-        </div>
+        </div> */}
       </Link>
     </div>
   );

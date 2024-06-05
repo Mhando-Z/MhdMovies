@@ -65,7 +65,7 @@ function NavBar() {
                     : ""
                 }
               >
-                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200 hover:text-blue-400 hover:decoration-gray-200 hover:font-semibold ">
+                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200  hover:decoration-gray-200   ">
                   Home
                 </h1>
               </NavLink>
@@ -77,7 +77,7 @@ function NavBar() {
                 }
                 to={"/TvSeries"}
               >
-                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200 hover:text-blue-400 hover:decoration-gray-200 hover:font-semibold ">
+                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200  hover:decoration-gray-200   ">
                   TvSeries
                 </h1>
               </NavLink>
@@ -90,7 +90,7 @@ function NavBar() {
                 }
                 to={"/Genres"}
               >
-                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200 hover:text-blue-400 hover:decoration-gray-200 hover:font-semibold ">
+                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200  hover:decoration-gray-200">
                   Genre
                 </h1>
               </NavLink>
