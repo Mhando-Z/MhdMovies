@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import UpcomingMovies from "../Movie/UpcomingMovies";
 import MovieList from "../Movie/MovieList";
 import TvSeriesList from "../TvSeries/TvSeriesList";
-import ScrollToTopButton from "../Components/pageScroll";
 import MovieListContext from "../Context/MovieListContext";
 import TopRatedMovies from "../Movie/TopRatedMovies";
 import { useNavigate } from "react-router-dom";
@@ -99,7 +98,6 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <ScrollToTopButton />
     </div>
   );
 }

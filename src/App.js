@@ -12,6 +12,7 @@ import Watchtrailers from "./Pages/WatchSeriesTrailer.jsx";
 import ResultsPage from "./Pages/ResultsPage.jsx";
 import TvSeriesPage from "./TvSeries/TvSeriesPage.jsx";
 import Genres from "./Pages/Genres.jsx";
+import FloatingButton from "./Components/FloatingButton.jsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path="/TvSeries" element={<TvSeriesPage />} />
               <Route path="/Genres" element={<Genres />} />
             </Routes>
+            <FloatingButton />
             <Footer />
           </BrowserRouter>
         </MovieProvider>
