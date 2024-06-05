@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   fab: {
     position: "fixed",
     bottom: theme.spacing(2),
-    right: theme.spacing(2),
+    right: theme.spacing(0),
     opacity: 0,
     transition: "opacity 0.3s",
     zIndex: 1000,

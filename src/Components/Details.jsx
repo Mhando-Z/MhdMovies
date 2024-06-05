@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Movie from "./Movie";
 import { Link, Outlet } from "react-router-dom";
 import Collapse from "@mui/material/Collapse";
-import ScrollToTopButton from "./pageScroll";
 import { Fade, LinearProgress } from "@mui/material";
 
 function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
@@ -192,7 +191,6 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           })}
         </div>
       )}
-      <ScrollToTopButton />
     </div>
   );
 }

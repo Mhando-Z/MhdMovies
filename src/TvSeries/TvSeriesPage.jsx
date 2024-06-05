@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import TvSeriesList from "../TvSeries/TvSeriesList";
 import TodaySeies from "../TvSeries/TodaySeies";
-import ScrollToTopButton from "../Components/pageScroll";
 import TvSeriesContex from "../Context/TvSeriesContext";
 import TopRatedSeries from "./TopRated";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +54,7 @@ function TvSeriesPage() {
             {TopRated[value].name || ""}
           </h1>
 
-          <p className="lg:text-2xl md:text-xl tracking-tighter max-w-6xl text-slate-300 ">
+          <p className="lg:text-2xl md:text-xl line-clamp-5 tracking-tighter max-w-6xl text-slate-300 ">
             {TopRated[value].overview}
           </p>
         </div>
@@ -90,10 +89,8 @@ function TvSeriesPage() {
             <TodaySeies />
             <TvSeriesList />
           </div>
-          <ScrollToTopButton />
         </div>
       </div>
-      <ScrollToTopButton />
     </div>
 
     // <div>

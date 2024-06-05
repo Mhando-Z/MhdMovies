@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link as Scroll } from "react-router-dom";
 import { Container, Button, Link } from "react-floating-action-button";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { BsPersonWorkspace } from "react-icons/bs";
 import { MdArrowUpward } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
 

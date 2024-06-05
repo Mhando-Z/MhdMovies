@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Collapse from "@mui/material/Collapse";
-import ScrollToTopButton from "./pageScroll";
 import TvSeries from "./TvSeries";
 import LinearProgress from "@mui/material/LinearProgress";
 import { Fade } from "@mui/material";
@@ -253,7 +252,6 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
           })}
         </div>
       )}
-      <ScrollToTopButton />
     </div>
   );
 }
