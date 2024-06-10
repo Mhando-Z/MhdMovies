@@ -8,11 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { Dots } from "react-activity";
 import "react-activity/dist/library.css";
 import TrendinG from "../Movie/Trending";
+import Swipper3 from "../Components/Swipper/Swipper3";
 
+//
 function HomePage() {
   const { Trending } = useContext(MovieListContext);
   const [Poster, setPoster] = useState([]);
-  const [value] = useState(Math.floor(Math.random() * 20) + 1);
+  const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1);
   const navigate = useNavigate();
 
   //User navigation to poster
@@ -48,7 +50,7 @@ function HomePage() {
         style={{
           backgroundImage: `url("${`https://image.tmdb.org/t/p/w500/${Poster[value]}`}")`,
         }}
-        className="w-full h-[600px] bg-no-repeat bg-cover bg-center xl:bg-top relative"
+        className="w-full h-[700px] bg-no-repeat bg-cover bg-center xl:bg-top relative"
       >
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-l via-transparent from-transparent to-slate-800"></div>
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
@@ -69,6 +71,9 @@ function HomePage() {
             </h2>
           </div>
         </div> */}
+        <div className="absolute right-14 xl:top-48 lg:top-20 top-20 md:flex hidden ">
+          <Swipper3 data={Trending} setValue={setValue} value={value} />
+        </div>
       </div>
       <div className="flex gap-y-5 sm:flex-row flex-col justify-between lg:max-w-lg items-center lg:px-10 px-4 mt-5">
         <button
@@ -76,12 +81,6 @@ function HomePage() {
           className="py-2 w-full mt-3 sm:w-auto px-8 ring-1 ring-slate-200 lg:text-xl text-sm text-slate-200"
         >
           MORE INFO
-        </button>
-        <button
-          onClick={HandleNavigate}
-          className="py-2 w-full mt-3 sm:w-auto px-8 ring-1 ring-slate-200 lg:text-xl text-sm text-slate-200"
-        >
-          WATCH MOVIE
         </button>
       </div>
       <div className="flex flex-col mt-28 md:mt-12 ">

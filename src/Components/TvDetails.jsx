@@ -75,7 +75,7 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
             </div>
           </div>
         </div>
-        <div className="absolute top-10 lg:px-10 px-4 block">
+        <div className="absolute top-1 lg:px-10 px-4 block">
           <div className="flex flex-row space-x-2">
             <h2 className="lg:text-2xl md:text-xl text-slate-200">Status:</h2>
             <h2 className="lg:text-2xl md:text-xl text-yellow-500">

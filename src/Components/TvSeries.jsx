@@ -14,7 +14,7 @@ function TvSeries({ title, image, id }) {
         <img
           src={`https://image.tmdb.org/t/p/w500/${image}`}
           alt="poster"
-          className="max-w-screen h-auto"
+          className="w-[250px] lg:h-[325px] xl:h-[350px] md:h-[300px]"
         />
         <div className="h-16  border-b-2 border-slate-600 bg-slate-900 bg-opacity-65 ">
           <h1 className=" xl:text-lg line-clamp-2 text-slate-300 font-semibold text-center p-1">
