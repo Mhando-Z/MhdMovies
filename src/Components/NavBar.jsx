@@ -48,7 +48,7 @@ function NavBar() {
   return (
     <div className="block justify-center ">
       <div className="relative">
-        <div className="flex flex-row container lg:px-10 px-2 items-center  bg-opacity-0 justify-between py-4">
+        <div className="flex flex-row container lg:px-10 px-2 items-center bg-opacity-0 justify-between py-4">
           <div className="flex flex-row items-center justify-between gap-x-10">
             <Link
               to={"/"}

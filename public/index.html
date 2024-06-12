@@ -7,13 +7,59 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="MhdMovies is a movie reference website created using React, Tailwind CSS, and Material UI. It utilizes the TMDB API to fetch movie and series data. The website provides information about various movies and series and directs users to platforms where they can watch them online. While it's not guaranteed that every movie or series listed will be available for streaming, most of them will play."
+      content="MhdMovies is a comprehensive movie reference website created using React, Tailwind CSS, and Material UI. It utilizes the TMDB API to fetch movie and series data, providing users with detailed information and links to streaming platforms."
     />
     <link rel="apple-touch-icon" href="###" />
-
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>MhdMovies - Your Ultimate Movie and Series Reference</title>
 
-    <title>MhdMovies</title>
+    <!-- Open Graph meta tags for better social media integration -->
+    <meta
+      property="og:title"
+      content="MhdMovies - Your Ultimate Movie and Series Reference"
+    />
+    <meta
+      property="og:description"
+      content="Find detailed information about movies and series, and discover where to watch them online."
+    />
+    <meta property="og:image" content="./path/to/social-image.jpg" />
+    <meta property="og:url" content="https://www.mhdmovies.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="MhdMovies - Your Ultimate Movie and Series Reference"
+    />
+    <meta
+      name="twitter:description"
+      content="Find detailed information about movies and series, and discover where to watch them online."
+    />
+    <meta name="twitter:image" content="./path/to/twitter-image.jpg" />
+
+    <!-- Structured data for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "name": "MhdMovies",
+        "url": "https://www.mhdmovies.com",
+        "description": "MhdMovies is a comprehensive movie reference website providing detailed information about movies and series, and links to streaming platforms.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.mhdmovies.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+    <!-- Additional meta tags -->
+    <meta
+      name="keywords"
+      content="mhdmovies,MhdMovies,MHDMOVIES,MHD,Mhdmovies, series, streaming, movie information, series information, TMDB API, watch movies online, watch series online"
+    />
+    <meta name="author" content="MhdMovies Team" />
   </head>
   <body style="background-color: #1e293b">
     <noscript>You need to enable JavaScript to run this app.</noscript>
