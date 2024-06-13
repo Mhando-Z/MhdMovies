@@ -27,7 +27,7 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
         style={{
           backgroundImage: `url("${`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`}")`,
         }}
-        className="w-full h-[600px] bg-no-repeat bg-cover bg-center xl:bg-top relative"
+        className="w-full h-[700px] bg-no-repeat bg-cover bg-center xl:bg-top relative"
       >
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-l via-transparent from-transparent to-slate-800"></div>
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
