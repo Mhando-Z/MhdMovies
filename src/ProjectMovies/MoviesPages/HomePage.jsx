@@ -47,8 +47,6 @@ function HomePage() {
     return datagroup.original_language;
   });
 
-  console.log(Groupeddata);
-
   // Pages pagination Logic
   const endOffset = itemOffset + itemsPerPage;
   const BigData = BigDatax.slice(itemOffset, endOffset);

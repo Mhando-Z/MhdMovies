@@ -11,7 +11,6 @@ import "./Style.css";
 import { EffectCards } from "swiper/modules";
 
 export default function Swiper1({ data, setValue, value }) {
-  console.log(data);
   return (
     <>
       <Swiper

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Dots } from "react-activity";
 import "react-activity/dist/library.css";
 import Swiper1 from "../Components/Swipper/Swipper";
+import NavBar1 from "../Components/NavBar1";
 
 function TvSeriesPage() {
   const { TopRated } = useContext(TvSeriesContex);
@@ -67,6 +68,9 @@ function TvSeriesPage() {
             </h2>
           </div>
         </div> */}
+      </div>
+      <div className="absolute top-0 right-0 left-0">
+        <NavBar1 />
       </div>
       <div className="absolute right-14 xl:top-48 lg:top-20 top-20 md:flex hidden ">
         <Swiper1 data={TopRated} setValue={setValue} value={value} />

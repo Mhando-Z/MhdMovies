@@ -11,7 +11,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Collapse from "@mui/material/Collapse";
 import Drawer from "@mui/material/Drawer";
 
-function NavBar() {
+function NavBar1() {
   const [opens, setOpens] = useState(false);
   const [open, setOpen] = React.useState(false);
   const ref = useRef(null);
@@ -56,8 +56,8 @@ function NavBar() {
     <div
       className={`${
         location.pathname === "/" || location.pathname === "/TvSeries"
-          ? "md:hidden"
-          : "block justify-center"
+          ? "hidden md:block justify-center"
+          : "hidden"
       }`}
     >
       <div className="relative">
@@ -216,4 +216,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default NavBar1;

@@ -9,6 +9,7 @@ import { Dots } from "react-activity";
 import "react-activity/dist/library.css";
 import TrendinG from "../Movie/Trending";
 import Swipper3 from "../Components/Swipper/Swipper3";
+import NavBar1 from "../Components/NavBar1";
 
 //
 function HomePage() {
@@ -71,6 +72,9 @@ function HomePage() {
             </h2>
           </div>
         </div> */}
+        <div>
+          <NavBar1 />
+        </div>
         <div className="absolute right-14 xl:top-48 lg:top-20 top-20 md:flex hidden ">
           <Swipper3 data={Trending} setValue={setValue} value={value} />
         </div>
