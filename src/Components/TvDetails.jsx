@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Collapse from "@mui/material/Collapse";
 import TvSeries from "./TvSeries";
-import LinearProgress from "@mui/material/LinearProgress";
 import { Fade } from "@mui/material";
+import Rating from "./Rating";
 
 function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
   const [count, setCount] = useState(14);
@@ -61,7 +61,8 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
               Ratings: {data.vote_average}
             </h2>
             <div className="w-[200px]">
-              <LinearProgress
+              <Rating value={data.vote_average} />
+              {/* <LinearProgress
                 sx={{
                   backgroundColor: "white",
                   "& .MuiLinearProgress-bar": {
@@ -71,7 +72,7 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
                 }}
                 variant="determinate"
                 value={Math.trunc(data.vote_average) * 10}
-              />
+              /> */}
             </div>
           </div>
         </div>

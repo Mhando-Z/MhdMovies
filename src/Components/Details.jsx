@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Movie from "./Movie";
 import { Link, Outlet } from "react-router-dom";
 import Collapse from "@mui/material/Collapse";
-import { Fade, LinearProgress } from "@mui/material";
+import { Fade } from "@mui/material";
+import Rating from "./Rating";
 
 function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
   const [count, setCount] = useState(14);
@@ -92,7 +93,8 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           Ratings: {data.vote_average}
         </h2>
         <div className="w-[200px]">
-          <LinearProgress
+          <Rating value={data.vote_average} />
+          {/* <LinearProgress
             sx={{
               backgroundColor: "white",
               "& .MuiLinearProgress-bar": {
@@ -102,7 +104,7 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
             }}
             variant="determinate"
             value={Math.trunc(data.vote_average) * 10}
-          />
+          /> */}
         </div>
       </div>
       <div className="bg-slate-800 flex flex-row md:justify-normal justify-between gap-x-5 rounded-xl lg:px-10 px-4">
