@@ -30,6 +30,7 @@ function Movie({ title, image, id, type }) {
         src={`https://image.tmdb.org/t/p/w500/${image}`}
         alt={title && title}
         title={title && title}
+        loading="lazy"
         className="w-[250px] lg:h-[325px] xl:h-[350px] md:h-[300px]"
       />
       <div className="h-16  border-b-2 border-slate-600 bg-slate-900 bg-opacity-65">
