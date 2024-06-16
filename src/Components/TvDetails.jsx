@@ -153,9 +153,9 @@ function TvDetails({ data, Review, Similar, Page, HandlePage, id }) {
           data.seasons?.length <= 1 ? "justify-start" : "justify-center"
         } md:justify-start gap-5 lg:px-10 px-4 mt-4 h-[270px] overflow-auto `}
       >
-        {data.seasons?.map((data) => {
+        {data.seasons?.map((data, index) => {
           return (
-            <div key={data.id} className="">
+            <div key={data.id + index} className="">
               <div
                 style={{
                   backgroundImage: `url("https://image.tmdb.org/t/p/w500/${data.poster_path}")`,

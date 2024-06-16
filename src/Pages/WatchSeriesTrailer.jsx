@@ -56,9 +56,12 @@ function Watchtrailers() {
         </div>
         {/* List of video selection */}
         <div>
-          {Videos?.map((data) => {
+          {Videos?.map((data, index) => {
             return (
-              <NavLink key={data.key} onClick={() => handleSelect(data.key)}>
+              <NavLink
+                key={data.key + index}
+                onClick={() => handleSelect(data.key)}
+              >
                 <div className="flex flex-col mb-5 bg-slate-950 shadow-xl p-3 rounded-lg">
                   <div className="flex items-center flex-row gap-x-5">
                     <h1 className="text-xl text-slate-200">Video-Type</h1>

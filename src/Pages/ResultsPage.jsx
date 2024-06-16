@@ -50,7 +50,7 @@ function ResultsPage() {
               return (
                 <Movie
                   key={index + data.id}
-                  title={data.title || data.name}
+                  title={data.title}
                   image={data.poster_path}
                   id={data.id}
                   type={data.media_type}

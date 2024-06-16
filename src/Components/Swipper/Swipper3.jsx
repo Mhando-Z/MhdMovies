@@ -21,9 +21,9 @@ export default function Swiper3({ data, setValue, value }) {
         onSlideChange={(swiper) => setValue(swiper.activeIndex)}
         initialSlide={value}
       >
-        {data.map((dt) => {
+        {data.map((dt, index) => {
           return (
-            <div>
+            <div key={dt.poster_path + index}>
               <SwiperSlide>
                 <img
                   src={`https://image.tmdb.org/t/p/w500/${dt.poster_path}`}
