@@ -16,7 +16,7 @@ import FloatingButton from "./Components/FloatingButton.jsx";
 
 function App() {
   return (
-    <div className="flex flex-col justify-between min-h-screen overflow-y-scroll overflow-x-hidden">
+    <div className="flex flex-col font-roboto justify-between min-h-screen overflow-y-scroll overflow-x-hidden">
       <TvSeriesProvider>
         <MovieProvider>
           <BrowserRouter>
