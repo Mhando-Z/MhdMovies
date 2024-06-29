@@ -9,7 +9,11 @@ function TvSeries({ title, image, id, image2 }) {
     });
   };
   return (
-    <div className="flex justify-center cursor-pointer">
+    <div
+      className={`flex flex-col justify-center cursor-pointer ${
+        image === null ? "hidden" : ""
+      }`}
+    >
       <Link onClick={scrollToTop} to={`/TvDetails/${id}`}>
         <img
           src={`https://image.tmdb.org/t/p/w500/${image}`}
