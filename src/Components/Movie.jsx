@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Movie({ title, image, id, type }) {
+function Movie({ title, title2, image, id, type, image2 }) {
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
   const navigate = useNavigate();
 
   // scrool top logic
@@ -24,33 +29,33 @@ function Movie({ title, image, id, type }) {
   return (
     <div
       onClick={handleNavigation}
-      className="flex flex-col justify-center cursor-pointer"
+      className={`flex flex-col justify-center cursor-pointer ${
+        image === null ? "hidden" : ""
+      }`}
     >
-      <img
-        src={`https://image.tmdb.org/t/p/w500/${image}`}
-        alt={title && title}
-        title={title && title}
-        loading="lazy"
-        className="w-[250px] lg:h-[325px] xl:h-[350px] md:h-[300px]"
-      />
+      {imageError ? (
+        <img
+          src={`https://image.tmdb.org/t/p/w500/${image2}`}
+          alt={title || title2}
+          title={title || title2}
+          loading="lazy"
+          className="w-[250px] lg:h-[325px] xl:h-[350px] md:h-[300px]"
+        />
+      ) : (
+        <img
+          src={`https://image.tmdb.org/t/p/w500/${image}`}
+          alt={title2 || title2}
+          title={title2 || title2}
+          loading="lazy"
+          onError={handleImageError}
+          className="w-[250px] lg:h-[325px] xl:h-[350px] md:h-[300px]"
+        />
+      )}
       <div className="h-16  border-b-2 border-slate-600 bg-slate-900 bg-opacity-65">
         <h1 className=" xl:text-lg line-clamp-2 text-slate-300 font-semibold text-center p-1">
-          {title && title}
+          {title || title2}
         </h1>
       </div>
-      {/* <div
-        onClick={handleNavigation}
-        style={{
-          backgroundImage: `url("${`https://image.tmdb.org/t/p/w500/${image}`}")`,
-        }}
-        // className="relative xl:w-52 lg:w-48 md:w-32 w-28 md:h-60 sm:h-52 h-48  bg-center bg-cover bg-no-repeat lg:h-72 rounded-t-lg flex flex-col shadow-2xl ring-1 ring-slate-800 items-center gap-2"
-        className="relative lg:w-[256px] lg:h-[400px] md:w-32 w-[119px] md:h-60 sm:w-[220px]  h-[190px]  bg-center bg-cover bg-no-repeat   rounded-t-lg flex flex-col shadow-2xl ring-1 ring-slate-800 items-center gap-2"
-      >
-        <div className="absolute top-0 left-0 right-0 via-transparent  bottom-0 bg-gradient-to-b from-transparent to-slate-800"></div>
-        <h1 className="absolute bottom-0 xl:text-lg  line-clamp-2 text-slate-300 font-semibold text-center p-1">
-          {title || ""}
-        </h1>
-      </div> */}
     </div>
   );
 }

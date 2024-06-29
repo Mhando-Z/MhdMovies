@@ -51,7 +51,9 @@ function ResultsPage() {
                 <Movie
                   key={index + data.id}
                   title={data.title}
+                  title2={data.name}
                   image={data.poster_path}
+                  image2={data.backdrop_path}
                   id={data.id}
                   type={data.media_type}
                 />

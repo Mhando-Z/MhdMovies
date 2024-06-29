@@ -33,6 +33,7 @@ function TrendinG() {
               key={index + data.name}
               title={data.name}
               image={data.poster_path}
+              image2={data.backdrop_path}
               id={data.id}
             />
           );

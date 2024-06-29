@@ -177,6 +177,7 @@ function Genres() {
                     return (
                       <TvSeries
                         key={index + data.id}
+                        image2={data.backdrop_path}
                         title={data.name}
                         image={data.poster_path}
                         id={data.id}

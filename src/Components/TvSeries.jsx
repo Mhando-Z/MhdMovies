@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function TvSeries({ title, image, id }) {
+function TvSeries({ title, image, id, image2 }) {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,

@@ -45,6 +45,7 @@ function MovieList() {
               key={index + data.title}
               title={data.title}
               image={data.poster_path}
+              image2={data.backdrop_path}
               id={data.id}
             />
           );
