@@ -40,7 +40,7 @@ function NavBar() {
               Movies
             </NavLink>
             <NavLink
-              to={"TvSeries"}
+              to={"TvSeries/"}
               className={({ isActive }) =>
                 isActive
                   ? "bg-red-500  py-1 text-gray-100 rounded-3xl px-5  "

@@ -14,7 +14,7 @@ function Footer() {
       className="py-8 mt-10 text-gray-100 bg-black border-t bg-opacity-30 border-t-gray-600"
       initial={{ opacity: 1, y: 100 }}
       viewport={{ once: true }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
       <div className="container px-4 mx-auto">

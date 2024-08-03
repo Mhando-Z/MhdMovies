@@ -2,7 +2,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MovieProvider } from "./Context/MovieListContext";
 import { TvSeriesProvider } from "./Context/TvSeriesContext";
 import { NavBar, Footer } from "./UpGrade/Components/Collection";
+
 import MainPage from "./UpGrade/Pages/MainPage";
+import TvSeriesPage from "./UpGrade/Pages/TvSeriesPage";
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
             <NavBar />
             <Routes>
               <Route path="/" element={<MainPage />} />
+              <Route path="TvSeries/" element={<TvSeriesPage />} />
             </Routes>
             <Footer />
           </BrowserRouter>
