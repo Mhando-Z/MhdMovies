@@ -8,8 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { Dots } from "react-activity";
 import "react-activity/dist/library.css";
 import TrendinG from "../Movie/Trending";
-import Swipper3 from "../Components/Swipper/Swipper3";
-import NavBar1 from "../Components/NavBar1";
 
 //
 function HomePage() {
@@ -36,11 +34,11 @@ function HomePage() {
         <Dots size={50} className="hidden xl:flex" color="gray" speed={0.5} />
         <Dots
           size={40}
-          className="lg:flex hidden xl:hidden"
+          className="hidden lg:flex xl:hidden"
           color="gray"
           speed={0.5}
         />
-        <Dots size={30} className="sm:hidden flex" color="gray" speed={0.5} />
+        <Dots size={30} className="flex sm:hidden" color="gray" speed={0.5} />
       </div>
     );
   }
@@ -53,36 +51,32 @@ function HomePage() {
         }}
         className="w-full h-[700px] bg-no-repeat bg-cover bg-center xl:bg-top relative"
       >
-        <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-l via-transparent from-transparent to-slate-800"></div>
-        <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
-        <div className="absolute bottom-0 lg:px-10 px-4">
-          <h1 className="mb-3 lg:text-6xl md:text-5xl text-4xl font-extrabold text-slate-200">
+        <div className="absolute top-0 bottom-0 left-0 right-0 bg-gradient-to-l via-transparent from-transparent to-slate-800"></div>
+        <div className="absolute top-0 bottom-0 left-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
+        <div className="absolute bottom-0 px-4 lg:px-10">
+          <h1 className="mb-3 text-4xl font-extrabold font-animation lg:text-6xl md:text-5xl text-slate-200">
             {Trending[value].title || ""}
           </h1>
 
-          <p className="lg:text-2xl md:text-xl  tracking-tighter line-clamp-5  max-w-6xl text-slate-300 ">
+          <p className="max-w-6xl tracking-tighter lg:text-2xl md:text-xl line-clamp-5 text-slate-300 ">
             {Trending[value].overview}
           </p>
         </div>
-        {/* <div className="absolute top-10 lg:px-10 px-4 block">
+        {/* <div className="absolute block px-4 top-10 lg:px-10">
           <div className="flex flex-row space-x-2">
-            <h2 className="md:text-2xl text-lg text-slate-200">Date:</h2>
-            <h2 className="md:text-2xl text-lg text-slate-200">
+            <h2 className="text-lg md:text-2xl text-slate-200">Date:</h2>
+            <h2 className="text-lg md:text-2xl text-slate-200">
               {Trending[value].release_date}
             </h2>
           </div>
         </div> */}
-        <div>
-          <NavBar1 />
-        </div>
-        <div className="absolute right-14 xl:top-48 lg:top-20 top-20 md:flex hidden ">
-          <Swipper3 data={Trending} setValue={setValue} value={value} />
-        </div>
+
+        <div className="absolute hidden right-14 xl:top-48 lg:top-20 top-20 md:flex "></div>
       </div>
-      <div className="flex gap-y-5 sm:flex-row flex-col justify-between lg:max-w-lg items-center lg:px-10 px-4 mt-5">
+      <div className="flex flex-col items-center justify-between px-4 mt-5 gap-y-5 sm:flex-row lg:max-w-lg lg:px-10">
         <button
           onClick={HandleNavigate}
-          className="py-2 w-full mt-3 sm:w-auto px-8 ring-1 ring-slate-200 lg:text-xl text-sm text-slate-200"
+          className="w-full px-8 py-2 mt-3 text-sm sm:w-auto ring-1 ring-slate-200 lg:text-xl text-slate-200"
         >
           MORE INFO
         </button>

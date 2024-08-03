@@ -53,23 +53,19 @@ function NavBar() {
   };
 
   return (
-    <div
-      className={`${
-        location.pathname === "/" || location.pathname === "/TvSeries"
-          ? "md:hidden"
-          : "block justify-center"
-      }`}
-    >
-      <div className="relative">
-        <div className="flex flex-row container lg:px-10 px-2 items-center bg-opacity-0 justify-between py-4">
-          <div className="flex flex-row items-center justify-between gap-x-10">
+    <div className="">
+      <div className="container relative flex flex-col w-full mx-auto ">
+        <div className="container flex flex-row items-center justify-between py-3 mx-auto">
+          <div className="flex grow">
             <Link
               to={"/"}
-              className="xl:text-2xl text-lg bg-yellow-400 px-1 font-extrabold"
+              className="px-1 text-lg font-extrabold bg-yellow-400 font-roboto xl:text-2xl"
             >
               MHD
             </Link>
-            <div className="flex-row items-center justify-between gap-x-5 md:flex hidden">
+          </div>
+          <div className="flex flex-row items-center justify-between flex-grow bg-white gap-x-10">
+            <div className="flex-row items-center justify-between hidden gap-x-5 md:flex">
               <NavLink
                 to={"/"}
                 className={({ isActive }) =>
@@ -78,7 +74,7 @@ function NavBar() {
                     : ""
                 }
               >
-                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200  hover:decoration-gray-200   ">
+                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200 hover:decoration-gray-200 ">
                   Home
                 </h1>
               </NavLink>
@@ -90,7 +86,7 @@ function NavBar() {
                 }
                 to={"/TvSeries"}
               >
-                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200  hover:decoration-gray-200   ">
+                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200 hover:decoration-gray-200 ">
                   TvSeries
                 </h1>
               </NavLink>
@@ -103,7 +99,7 @@ function NavBar() {
                 }
                 to={"/Genres"}
               >
-                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200  hover:decoration-gray-200">
+                <h1 className="text-xl xl:text-2xl hover:underline-offset-8 hover:underline text-slate-200 hover:decoration-gray-200">
                   Genre
                 </h1>
               </NavLink>
@@ -114,18 +110,18 @@ function NavBar() {
               </NavLink> */}
             </div>
           </div>
-          <div className="relative hidden md:flex">
+          <div className="relative hidden grow md:flex">
             <input
               type="search"
               onChange={(e) => handleChange(e)}
               onKeyDown={(e) => handlePress(e)}
               ref={ref}
               placeholder="Type Here"
-              className="w-full ring-1 outline-none ring-slate-500 p-1 rounded-full text-xl text-slate-200 text-center bg-slate-800"
+              className="p-1 text-xl text-center rounded-full outline-none ring-1 ring-slate-500 text-slate-200 bg-slate-800"
             />
             <button
               onClick={HandleSearch}
-              className="absolute right-0 top-1/2 -translate-y-1/2 lg:p-3 p-2 bg-slate-600 rounded-full"
+              className="absolute right-0 p-2 -translate-y-1/2 rounded-full top-1/2 lg:p-3 bg-slate-600"
             >
               <SearchIcon className="text-slate-200" />
             </button>
@@ -143,16 +139,16 @@ function NavBar() {
       </div>
       {/* Serach Dropdown on Mobile with search Icon */}
       <Collapse in={opens} timeout="auto" unmountOnExit>
-        <div className="bg-black h-12 w-full md:hidden flex flex-row items-center justify-center">
+        <div className="flex flex-row items-center justify-center w-full h-12 bg-black md:hidden">
           <input
             ref={ref}
             type="search"
             onKeyDown={(e) => handlePress(e)}
             onChange={(e) => handleChange(e)}
             placeholder="Type Here"
-            className="w-full ring-1 ring-slate-500 p-2 outline-none text-xl text-slate-200 text-center bg-slate-800"
+            className="w-full p-2 text-xl text-center outline-none ring-1 ring-slate-500 text-slate-200 bg-slate-800"
           />
-          <Link className="py-2 hidden ring-2 ring-slate-700 px-5 bg-slate-700 text-lg text-slate-200">
+          <Link className="hidden px-5 py-2 text-lg ring-2 ring-slate-700 bg-slate-700 text-slate-200">
             Search
           </Link>
         </div>

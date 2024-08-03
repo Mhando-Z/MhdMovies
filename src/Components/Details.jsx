@@ -30,18 +30,18 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
         }}
         className="w-full h-[700px] bg-no-repeat bg-cover bg-center xl:bg-top relative"
       >
-        <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-l via-transparent from-transparent to-slate-800"></div>
-        <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
-        <div className="absolute bottom-0 lg:px-10 px-4">
-          <h1 className="mb-3 lg:text-6xl md:text-5xl text-4xl font-extrabold text-slate-200">
+        <div className="absolute top-0 bottom-0 left-0 right-0 bg-gradient-to-l via-transparent from-transparent to-slate-800"></div>
+        <div className="absolute top-0 bottom-0 left-0 right-0 bg-gradient-to-b from-transparent to-slate-800"></div>
+        <div className="absolute bottom-0 px-4 lg:px-10">
+          <h1 className="mb-3 text-4xl font-extrabold lg:text-6xl md:text-5xl text-slate-200">
             {data.title}
           </h1>
-          <div className="flex flex-wrap md:flex-row gap-x-5 items-center">
-            <h1 className="text-2xl text-slate-200 font-semibold">Genres:</h1>
+          <div className="flex flex-wrap items-center md:flex-row gap-x-5">
+            <h1 className="text-2xl font-semibold text-slate-200">Genres:</h1>
             {data.genres?.map((data, index) => {
               return (
                 <div key={index + data.id} className="">
-                  <h1 className="text-xl text-yellow-500 font-semibold">
+                  <h1 className="text-xl font-semibold text-yellow-500">
                     {data.name}
                   </h1>
                 </div>
@@ -49,19 +49,19 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
             })}
           </div>
           <div className="h-[100px] overflow-scroll overflow-x-hidden">
-            <p className="md:text-xl lg:text-2xl tracking-tighter md:line-clamp-none line-clamp-5 max-w-6xl text-slate-300 ">
+            <p className="max-w-6xl tracking-tighter md:text-xl lg:text-2xl md:line-clamp-none line-clamp-5 text-slate-300 ">
               {data.overview}
             </p>
           </div>
-          <div className=" lg:text-2xl md:text-xl text-yellow-500 flex flex-row items-center">
+          <div className="flex flex-row items-center text-yellow-500 lg:text-2xl md:text-xl">
             <h1>{Math.trunc(data.runtime / 60)}h:</h1>
             <h1>{data.runtime % 60}min</h1>
           </div>
         </div>
-        <div className="absolute top-1 lg:px-10 px-4 block">
+        <div className="absolute block px-4 top-1 lg:px-10">
           <div className="flex flex-row space-x-2">
             <h2 className="lg:text-2xl md:text-xl text-slate-200">Status:</h2>
-            <h2 className="lg:text-2xl md:text-xl  text-yellow-500">
+            <h2 className="text-yellow-500 lg:text-2xl md:text-xl">
               {data.status}
             </h2>
           </div>
@@ -88,8 +88,8 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           </Fade>
         </div>
       </div>
-      <div className="lg:px-10 px-4 mb-2 items-center justify-center">
-        <h2 className="text-slate-300 mb-2 lg:text-2xl md:text-xl">
+      <div className="items-center justify-center px-4 mb-2 lg:px-10">
+        <h2 className="mb-2 text-slate-300 lg:text-2xl md:text-xl">
           Ratings: {data.vote_average}
         </h2>
         <div className="w-[200px]">
@@ -107,7 +107,7 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           /> */}
         </div>
       </div>
-      <div className="bg-slate-800 flex flex-row md:justify-normal justify-between gap-x-5 rounded-xl lg:px-10 px-4">
+      <div className="flex flex-row justify-between px-4 bg-slate-800 md:justify-normal gap-x-5 rounded-xl lg:px-10">
         <h1 className="lg:text-2xl md:text-xl text-slate-200">
           Budget: {data.budget?.toLocaleString()}
         </h1>
@@ -115,9 +115,9 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
           Revenue: {data.revenue?.toLocaleString()}
         </h1>
       </div>
-      <div className="flex gap-y-5 sm:flex-row flex-col justify-between lg:max-w-lg items-center lg:px-10 px-4 mt-5">
+      <div className="flex flex-col items-center justify-between px-4 mt-5 gap-y-5 sm:flex-row lg:max-w-lg lg:px-10">
         <button
-          className="py-3 w-full sm:w-auto px-8 ring-1 ring-slate-200 lg:text-xl text-sm rounded-lg text-slate-200"
+          className="w-full px-8 py-3 text-sm rounded-lg sm:w-auto ring-1 ring-slate-200 lg:text-xl text-slate-200"
           onClick={handleClick}
         >
           WATCH TRAILERS
@@ -125,7 +125,7 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
 
         <Link
           to={`https://vidsrc.xyz/embed/movie?imdb=${data.imdb_id}`}
-          className="py-3 w-full text-center sm:w-auto px-8 ring-1 ring-slate-200 lg:text-xl text-sm rounded-lg text-slate-200"
+          className="w-full px-8 py-3 text-sm text-center rounded-lg sm:w-auto ring-1 ring-slate-200 lg:text-xl text-slate-200"
         >
           WATCH MOVIE
         </Link>
@@ -136,15 +136,15 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
         </div>
       </Collapse>
       <div className="flex flex-col mt-5 ">
-        <div className="px-4 lg:px-10 border-l-8 bg-slate-800 bg-opacity-75 mb-3 border-yellow-500 ">
-          <h1 className="lg:text-3xl text-2xl mt-3 mb-5 max-w-xl block text-white font-semibold">
+        <div className="px-4 mb-3 bg-opacity-75 border-l-8 border-yellow-500 lg:px-10 bg-slate-800 ">
+          <h1 className="block max-w-xl mt-3 mb-5 text-2xl font-semibold text-white lg:text-3xl">
             Movies you might like
           </h1>
         </div>
 
         <div className="flex flex-col xl:items-center">
           <div className="flex flex-col items-center">
-            <div className="md:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
+            <div className="grid items-center grid-cols-3 p-2 md:px-10 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
               {Similar?.slice(0, count).map((data, index) => {
                 return (
                   <Movie
@@ -157,13 +157,13 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
               })}
             </div>
           </div>
-          <div className="flex gap-x-5 items-end justify-end px-10 py-4">
-            <h1 className="text-slate-200 lg:text-xl text-lg font-semibold ">
+          <div className="flex items-end justify-end px-10 py-4 gap-x-5">
+            <h1 className="text-lg font-semibold text-slate-200 lg:text-xl ">
               Page {Page}
             </h1>
             <h1
               onClick={handleIncrese}
-              className="text-slate-200 lg:text-xl text-lg font-semibold cursor-pointer"
+              className="text-lg font-semibold cursor-pointer text-slate-200 lg:text-xl"
             >
               More..
             </h1>
@@ -174,18 +174,18 @@ function Detailz({ data, Review, Similar, Page, HandlePage, id }) {
         ""
       ) : (
         <div className="mt-5 h-[400px] overflow-auto bg-slate-900 rounded-2xl">
-          <div className="flex sticky top-0 bg-slate-900 border-b-2 border-slate-700">
-            <h1 className="md:text-3xl text-2xl px-10 text-yellow-500 mb-5 mt-5 font-semibold ">
+          <div className="sticky top-0 flex border-b-2 bg-slate-900 border-slate-700">
+            <h1 className="px-10 mt-5 mb-5 text-2xl font-semibold text-yellow-500 md:text-3xl ">
               Reviews
             </h1>
           </div>
           {Review.map((data, index) => {
             return (
-              <div key={index + data.author} className="px-10 flex flex-col">
-                <h1 className="md:text-2xl text-xl text-slate-200 font-semibold">
+              <div key={index + data.author} className="flex flex-col px-10">
+                <h1 className="text-xl font-semibold md:text-2xl text-slate-200">
                   {data.author}
                 </h1>
-                <p className=" md:text-xl text-justify mb-6 tracking-tighter text-slate-200">
+                <p className="mb-6 tracking-tighter text-justify md:text-xl text-slate-200">
                   {data.content}
                 </p>
               </div>

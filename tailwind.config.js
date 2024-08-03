@@ -16,6 +16,11 @@ module.exports = {
     extend: {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
+        action: ["Bebas Neue", "sans-serif"],
+        scifi: ["Orbitron", "sans-serif"],
+        fantasy: ["Almendra SC", "serif"],
+        animation: ["Baloo Bhai 2", "sans-serif"],
+        romance: ["Great Vibes", "cursive"],
       },
       fontWeight: {
         hairline: 100,
