@@ -2,6 +2,7 @@ import React from "react";
 import TvHeroSection from "../TvSeriesScreens/TvHeroSection";
 import TopRatedSeries from "../TvSeriesScreens/TopRatedSeries";
 import TodaySeies from "../TvSeriesScreens/TodaySeries";
+import TvSeriesList from "../TvSeriesScreens/TvSeriesList";
 
 function TvSeriesPage() {
   return (
@@ -12,6 +13,8 @@ function TvSeriesPage() {
       <TopRatedSeries />
       {/* Trending this week */}
       <TodaySeies />
+      {/* Popular TvSeries */}
+      <TvSeriesList />
     </div>
   );
 }
