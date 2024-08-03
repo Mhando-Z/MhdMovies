@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import TvSeriesContex from "../Context/TvSeriesContext";
 import { motion } from "framer-motion";
 import TvSeriesPoster from "../Components/TvSeriesPoster";
+import TvSeriesContex from "../../Context/TvSeriesContext";
 
 function TodaySeies() {
   const { Todaylist } = useContext(TvSeriesContex);
