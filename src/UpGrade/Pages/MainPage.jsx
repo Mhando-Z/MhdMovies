@@ -2,6 +2,7 @@ import React from "react";
 import HeroSection from "./HeroSection";
 import TrendingMovies from "../MovieScreens/TrendingMovies";
 import TrendingSeries from "../TvSeriesScreens/TrendingSeries";
+import UpComingMovies from "../MovieScreens/UpComingMovies";
 
 function MainPage() {
   return (
@@ -12,6 +13,8 @@ function MainPage() {
       <TrendingMovies />
       {/* Trending Series */}
       <TrendingSeries />
+      {/* Upcoming Movies */}
+      <UpComingMovies />
     </div>
   );
 }
