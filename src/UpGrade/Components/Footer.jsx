@@ -37,11 +37,10 @@ function Footer() {
               </div>
             </div>
             <div className="w-full mb-6 ">
-              <h4 className="mb-4 font-semibold">Company</h4>
+              <h4 className="mb-4 font-semibold">MhdMovies</h4>
               <ul>
                 <li className="mb-2">About</li>
                 <li className="mb-2">Blog</li>
-
                 <li className="mb-2">Partners</li>
               </ul>
             </div>

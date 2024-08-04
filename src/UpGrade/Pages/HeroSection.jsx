@@ -4,10 +4,27 @@ import { Rating } from "../Components/Collection";
 import Slider from "../Components/Swipper/Swipe";
 import { motion } from "framer-motion";
 import { BiSolidMoviePlay } from "react-icons/bi";
+import { Dots } from "react-activity";
 
 function HeroSection() {
   const { Trending } = useContext(MovieListContext);
   const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1);
+
+  // if (!Trending || Trending.length === 0) {
+  if (!Trending || Trending.length === 0) {
+    return (
+      <div className="flex items-center justify-center">
+        <Dots size={50} className="hidden xl:flex" color="gray" speed={0.5} />
+        <Dots
+          size={40}
+          className="hidden lg:flex xl:hidden"
+          color="gray"
+          speed={0.5}
+        />
+        <Dots size={30} className="flex sm:hidden" color="gray" speed={0.5} />
+      </div>
+    );
+  }
 
   return (
     <div>
