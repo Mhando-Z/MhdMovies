@@ -27,7 +27,6 @@ export default function TvSeriesPoster({ name, rating, image, id }) {
         <div className="w-full relative group md:h-[330px] h-[200px]  overflow-hidden bg-gray-200 rounded-lg aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
           <img
             alt={name}
-            loading="lazy"
             src={`https://image.tmdb.org/t/p/w500/${image}`}
             className="object-cover object-center w-full h-full group-hover:opacity-75"
           />
@@ -38,7 +37,7 @@ export default function TvSeriesPoster({ name, rating, image, id }) {
               transition={{ duration: 0.6, type: "spring", ease: "easeOut" }}
               src={`https://image.tmdb.org/t/p/w500/${image}`}
               alt="staffname"
-              className="mt-5 bg-center bg-cover rounded-full ring-2 ring-white size-20 md:size-32"
+              className="object-cover mt-5 rounded-full ring-2 ring-white size-20 md:size-32"
             />
             <motion.h1
               initial={{ opacity: 0, y: 20 }}

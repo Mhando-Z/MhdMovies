@@ -1,10 +1,39 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { MdLocationSearching } from "react-icons/md";
 import logo from "../../Assets/Logo/mhd.png";
 import { HiMenu } from "react-icons/hi";
 
 function NavBar() {
+  const ref = useRef(null);
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleReset = () => {
+    ref.current.value = "";
+  };
+
+  //handle inputs
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  //handles when user press Enter while searching
+  const handlePress = (e) => {
+    if (query.length !== 0) {
+      if (e.keyCode === 13) {
+        navigate(`/Results/${query}`);
+      }
+    }
+  };
+
+  //handle search function
+  const HandleSearch = () => {
+    if (query.length !== 0) {
+      navigate(`/Results/${query}`);
+    }
+  };
+
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
       <div className="flex flex-col px-2 mt-3 ">
@@ -64,10 +93,15 @@ function NavBar() {
           <div className="relative items-end justify-end hidden md:flex grow ">
             <input
               type="text"
+              onKeyDown={(e) => handlePress(e)}
+              onChange={(e) => handleChange(e)}
               className="px-10 ring-1 ring-gray-300  w-[200px] py-2 outline-none bg-gray-200 bg-opacity-25 rounded-3xl focus:ring-2 focus:ring-red-600 focus:bg-black focus:bg-opacity-25 focus:text-gray-100"
               placeholder="Search movies"
             />
-            <div className="absolute right-0 flex items-center justify-center bg-red-700 rounded-full size-10">
+            <div
+              onClick={HandleSearch}
+              className="absolute right-0 flex items-center justify-center bg-red-700 rounded-full size-10"
+            >
               <MdLocationSearching className="text-2xl text-center text-white" />
             </div>
           </div>

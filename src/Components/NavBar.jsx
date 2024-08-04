@@ -1,11 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  Link,
-  NavLink,
-  Outlet,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import Collapse from "@mui/material/Collapse";
@@ -17,7 +11,6 @@ function NavBar() {
   const ref = useRef(null);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
 
   //target value
   const handleChange = (e) => {

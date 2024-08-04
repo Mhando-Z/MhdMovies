@@ -6,6 +6,7 @@ import logo from "./Assets/Logo/mhd.png";
 import MainPage from "./UpGrade/Pages/MainPage";
 import TvSeriesPage from "./UpGrade/Pages/TvSeriesPage";
 import { useEffect, useState } from "react";
+import SearchResults from "./UpGrade/Pages/SearchResults";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -38,6 +39,7 @@ function App() {
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="TvSeries/" element={<TvSeriesPage />} />
+              <Route path="/Results/:id" element={<SearchResults />} />
             </Routes>
             <Footer />
           </BrowserRouter>

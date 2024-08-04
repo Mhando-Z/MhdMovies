@@ -10,6 +10,12 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   return (
     <motion.footer
       className="py-8 mt-10 text-gray-100 bg-black border-t bg-opacity-30 border-t-gray-600"
@@ -27,13 +33,15 @@ function Footer() {
             <div className="w-full mb-6 ">
               <h4 className="mb-4 font-semibold">Navigations</h4>
               <div className="flex flex-col gap-y-1">
-                <Link to={"/"} className="mb-2">
+                <Link onClick={scrollToTop} to={"/"} className="mb-2">
                   Home
                 </Link>
-                <Link to={"TvSeries/"} className="mb-2">
+                <Link onClick={scrollToTop} to={"TvSeries/"} className="mb-2">
                   TvSeries
                 </Link>
-                <Link className="mb-2">Insights</Link>
+                <Link onClick={scrollToTop} className="mb-2">
+                  Genres
+                </Link>
               </div>
             </div>
             <div className="w-full mb-6 ">

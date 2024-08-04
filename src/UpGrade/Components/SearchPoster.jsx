@@ -1,9 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { IoIosStar } from "react-icons/io";
+import React from "react";
 import { BiSolidMoviePlay } from "react-icons/bi";
+import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
+import { IoIosStar } from "react-icons/io";
 
-export default function MoviePoster({ title, rating, image, id }) {
+function SearchPoster({ image, rating, name, title, id, type }) {
   const navigate = useNavigate();
   // scrool top logic
   const scrollToTop = () => {
@@ -14,8 +15,13 @@ export default function MoviePoster({ title, rating, image, id }) {
   };
   // handle navigation logic
   const handleNavigation = () => {
-    navigate(`/Details/${id}`);
-    scrollToTop();
+    if (type === "tv") {
+      navigate(`/TvDetails/${id}`);
+      scrollToTop();
+    } else {
+      navigate(`/Details/${id}`);
+      scrollToTop();
+    }
   };
   return (
     <div
@@ -26,7 +32,7 @@ export default function MoviePoster({ title, rating, image, id }) {
       <Link className="group">
         <div className="w-full relative group md:h-[330px] h-[200px]  overflow-hidden bg-gray-200 rounded-lg aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
           <img
-            alt={title}
+            alt={title || name}
             src={`https://image.tmdb.org/t/p/w500/${image}`}
             className="object-cover object-center w-full h-full group-hover:opacity-75"
           />
@@ -45,7 +51,7 @@ export default function MoviePoster({ title, rating, image, id }) {
               transition={{ delay: 0.1 }}
               className="px-1 mt-4 text-sm font-bold text-center text-white md:text-xl line-clamp-2"
             >
-              {title}
+              {title || name}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -76,3 +82,5 @@ export default function MoviePoster({ title, rating, image, id }) {
     </div>
   );
 }
+
+export default SearchPoster;

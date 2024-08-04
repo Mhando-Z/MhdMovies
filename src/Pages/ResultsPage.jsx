@@ -37,15 +37,15 @@ function ResultsPage() {
   }, [id]);
 
   return (
-    <div className="flex flex-col">
-      <div className="lg:px-10 px-2">
-        <h1 className="lg:text-2xl text-xl px-4 mb-7 text-slate-200 py-4 border-l-8 border-yellow-400">
+    <div className="flex flex-col items-center justify-center min-h-screen mt-20">
+      <div className="px-2 lg:px-10">
+        <h1 className="px-4 py-4 text-xl border-l-8 border-yellow-400 lg:text-2xl mb-7 text-slate-200">
           Search Results for... "{id}"
         </h1>
       </div>
       <div className="flex flex-col sm:items-center ">
         <div>
-          <div className="md:px-10 p-2 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
+          <div className="grid grid-cols-3 p-2 md:px-10 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7 gap-x-3 gap-y-5">
             {Dataquery?.slice(0, count).map((data, index) => {
               return (
                 <Movie
@@ -60,13 +60,13 @@ function ResultsPage() {
               );
             })}
           </div>
-          <div className="flex gap-x-5 items-end justify-end px-10 py-4">
-            <h1 className="text-slate-200 text-xl font-semibold ">
+          <div className="flex items-end justify-end px-10 py-4 gap-x-5">
+            <h1 className="text-xl font-semibold text-slate-200 ">
               Page {Page}
             </h1>
             <h1
               onClick={handleIncrese}
-              className="text-slate-200 text-xl font-semibold cursor-pointer"
+              className="text-xl font-semibold cursor-pointer text-slate-200"
             >
               More..
             </h1>

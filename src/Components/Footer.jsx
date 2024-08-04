@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className="dark:text-gray-200 bg-slate-950 bg-opacity-35 p-10">
-      <div className="container mx-auto flex md:flex-row gap-y-5 flex-col justify-between">
+    <div className="p-10 dark:text-gray-200 bg-slate-950 bg-opacity-35">
+      <div className="container flex flex-col justify-between mx-auto md:flex-row gap-y-5">
         <div className="text-center md:text-left">
           <Link
             to={"/"}
-            className="xl:text-2xl text-lg text-black bg-yellow-400 px-1 font-extrabold"
+            className="px-1 text-lg font-extrabold text-black bg-yellow-400 xl:text-2xl"
           >
             MHD
           </Link>
