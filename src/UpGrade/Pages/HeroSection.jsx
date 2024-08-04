@@ -73,7 +73,7 @@ function HeroSection() {
           <Rating value={Trending[value]?.vote_average} />
         </div>
         {/* movie description */}
-        <p className="flex flex-col max-w-sm text-base tracking-tighter text-gray-100 line-clamp-4 font-roboto ">
+        <p className="max-w-sm text-base tracking-tighter text-gray-100 line-clamp-4 font-roboto">
           {Trending[value]?.overview}
         </p>
         <div>
