@@ -7,6 +7,7 @@ import MainPage from "./UpGrade/Pages/MainPage";
 import TvSeriesPage from "./UpGrade/Pages/TvSeriesPage";
 import { useEffect, useState } from "react";
 import SearchResults from "./UpGrade/Pages/SearchResults";
+import ScrollToTopButton from "./UpGrade/Components/FloatingButton";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -42,6 +43,7 @@ function App() {
               <Route path="/Results/:id" element={<SearchResults />} />
             </Routes>
             <Footer />
+            <ScrollToTopButton />
           </BrowserRouter>
         </MovieProvider>
       </TvSeriesProvider>
