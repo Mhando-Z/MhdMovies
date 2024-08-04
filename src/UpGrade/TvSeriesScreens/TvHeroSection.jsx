@@ -13,7 +13,7 @@ function TvHeroSection() {
 
   return (
     <div>
-      <div className="flex relative overflow-hidden w-screen flex-col font-roboto xl:h-[970px] lg:h-[800px] md:h-[880px] h-[600px] ">
+      <div className="flex relative overflow-hidden w-screen flex-col font-roboto xl:h-[970px] lg:h-[800px] md:h-[880px] h-[450px] ">
         <img
           src={`https://image.tmdb.org/t/p/w500/${TopRated[value]?.backdrop_path}`}
           alt={TopRated[value]?.name}
@@ -75,7 +75,7 @@ function TvHeroSection() {
           <Rating value={TopRated[value]?.vote_average} />
         </div>
         {/* Series description */}
-        <p className="max-w-sm text-base tracking-tighter text-gray-100  line-clamp-4 font-roboto">
+        <p className="max-w-sm text-base tracking-tighter text-gray-100 line-clamp-4 font-roboto">
           {TopRated[value]?.overview}
         </p>
         <div>
