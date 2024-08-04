@@ -3,7 +3,6 @@ import { MovieProvider } from "./Context/MovieListContext";
 import { TvSeriesProvider } from "./Context/TvSeriesContext";
 import { NavBar, Footer } from "./UpGrade/Components/Collection";
 import logo from "./Assets/Logo/mhd.png";
-
 import MainPage from "./UpGrade/Pages/MainPage";
 import TvSeriesPage from "./UpGrade/Pages/TvSeriesPage";
 import { useEffect, useState } from "react";
@@ -25,7 +24,7 @@ function App() {
         <img
           src={logo}
           alt="MhdLogo"
-          className="object-cover w-[300px] animate-pulse duration-1000 transition-all"
+          className="object-cover md:w-[300px] w-[200px] animate-pulse duration-1000 transition-all"
         />
       </div>
     );
