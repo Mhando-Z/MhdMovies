@@ -37,7 +37,7 @@ function TvHeroSection() {
           </div>
           <div className="grid grid-cols-4 gap-5"></div>
           {/* movie description */}
-          <p className="flex flex-col max-w-sm text-base tracking-tighter text-gray-100 md:max-w-lg sm:max-w-md line-clamp-5 font-roboto xl:text-lg">
+          <p className="max-w-sm text-base tracking-tighter text-gray-100 md:max-w-lg sm:max-w-md line-clamp-5 font-roboto xl:text-lg">
             {TopRated[value]?.overview}
           </p>
           <div>
@@ -75,7 +75,7 @@ function TvHeroSection() {
           <Rating value={TopRated[value]?.vote_average} />
         </div>
         {/* Series description */}
-        <p className="flex flex-col max-w-sm text-base tracking-tighter text-gray-100 line-clamp-4 font-roboto ">
+        <p className="max-w-sm text-base tracking-tighter text-gray-100  line-clamp-4 font-roboto">
           {TopRated[value]?.overview}
         </p>
         <div>

@@ -35,7 +35,7 @@ function HeroSection() {
           </div>
           <div className="grid grid-cols-4 gap-5"></div>
           {/* movie description */}
-          <p className="flex flex-col max-w-sm text-base tracking-tighter text-gray-100 md:max-w-lg sm:max-w-md line-clamp-5 font-roboto xl:text-lg">
+          <p className="max-w-sm text-base tracking-tighter text-gray-100 md:max-w-lg sm:max-w-md line-clamp-5 font-roboto xl:text-lg">
             {Trending[value]?.overview}
           </p>
           <div>
