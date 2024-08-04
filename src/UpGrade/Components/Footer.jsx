@@ -6,6 +6,7 @@ import { FaFacebook } from "react-icons/fa6";
 import { RiInstagramFill } from "react-icons/ri";
 import { FaYoutube } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,7 +15,7 @@ function Footer() {
       className="py-8 mt-10 text-gray-100 bg-black border-t bg-opacity-30 border-t-gray-600"
       initial={{ opacity: 1, y: 100 }}
       viewport={{ once: true }}
-      whileInView={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
       <div className="container px-4 mx-auto">
@@ -24,11 +25,15 @@ function Footer() {
           </div>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3 gap-x-20">
             <div className="w-full mb-6 ">
-              <h4 className="mb-4 font-semibold">Solutions</h4>
+              <h4 className="mb-4 font-semibold">Navigations</h4>
               <ul>
-                <li className="mb-2">Marketing</li>
-                <li className="mb-2">Analytics</li>
-                <li className="mb-2">Insights</li>
+                <Link to={"/"} className="mb-2">
+                  Home
+                </Link>
+                <Link to={"TvSeries/"} className="mb-2">
+                  TvSeries
+                </Link>
+                <Link className="mb-2">Insights</Link>
               </ul>
             </div>
             <div className="w-full mb-6 ">
