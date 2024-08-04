@@ -26,7 +26,7 @@ function Footer() {
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3 gap-x-20">
             <div className="w-full mb-6 ">
               <h4 className="mb-4 font-semibold">Navigations</h4>
-              <ul>
+              <div className="flex flex-col gap-y-1">
                 <Link to={"/"} className="mb-2">
                   Home
                 </Link>
@@ -34,7 +34,7 @@ function Footer() {
                   TvSeries
                 </Link>
                 <Link className="mb-2">Insights</Link>
-              </ul>
+              </div>
             </div>
             <div className="w-full mb-6 ">
               <h4 className="mb-4 font-semibold">Company</h4>
