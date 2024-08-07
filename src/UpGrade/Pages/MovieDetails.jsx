@@ -222,8 +222,9 @@ function MovieDetails() {
             </button>
           </div>
         </div>
+        <div className="container flex flex-col mx-auto mt-4 border-b-2 border-b-gray-700"></div>
         {/* Other movie images */}
-        <div className="grid grid-cols-3 gap-1 mt-5">
+        <div className="grid grid-cols-3 gap-1 mt-2 ">
           {Images?.slice(1, 4).map((dt, index) => {
             return (
               <div key={dt.file_path + index}>
@@ -236,6 +237,7 @@ function MovieDetails() {
             );
           })}
         </div>
+        <div className="container flex flex-col mx-auto mt-3 border-b-2 border-b-gray-700"></div>
         {/* Other movies which are similar */}
         <div className="container flex flex-col mx-auto mt-5 md:mt-20">
           <h1 className="mb-2 text-2xl font-bold text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
