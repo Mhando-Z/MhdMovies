@@ -1,26 +1,29 @@
 import axios from "axios";
 import Rating from "../Components/Rating";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import MoviePoster from "../Components/MoviePoster";
+import ReactPlayer from "react-player";
+
+// Utility function to check if the URL is a YouTube URL
+const isYouTubeUrl = (url) => {
+  const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
+  return youtubeRegex.test(url);
+};
 
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
   const [Reviews, setReview] = useState([]);
   const [Images, setImage] = useState([]);
-
+  const [Videos, setVideo] = useState([]);
+  const [Selected, setSelect] = useState();
   const [count, setCount] = useState(14);
   const [Similar, setSimilar] = useState([]);
   const [Page, setPage] = useState(1);
   const { id } = useParams();
-
-  //Page Logic
-  const HandlePage = () => {
-    setPage(Page + 1);
-  };
 
   //Logics
   async function getDetails() {
@@ -84,8 +87,25 @@ function MovieDetails() {
       setImage(data.backdrops);
     } catch (error) {}
   }
+  async function getVideo() {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+      setVideo(data.results);
+      setSelect(data.results[0].key);
+    } catch (error) {}
+  }
 
   useEffect(() => {
+    getVideo();
     getImages();
     getReview();
     getDetails();
@@ -93,6 +113,10 @@ function MovieDetails() {
   }, [Page, id]);
 
   // buttons logics
+  const handleSelect = (key) => {
+    setSelect(key);
+  };
+
   const handleIncrese = () => {
     if (count !== 20) {
       setCount(count + 6);
@@ -120,14 +144,35 @@ function MovieDetails() {
     <div className="flex flex-col min-h-screen font-roboto">
       <div className="flex flex-col">
         {/* backdrop poster */}
-        <div className="relative">
+        <div className="relative flex flex-col">
           <img
             src={`https://image.tmdb.org/t/p/w500/${Details?.backdrop_path}`}
             alt={Details?.title}
             className="object-cover object-top w-screen xl:h-[550px] h-[500px]"
           />
-          {/* Trallers section be here*/}
           <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col bg-gradient-to-t from-black via-transparent to-transparent"></div>
+          {/* Trallers section be here*/}
+          <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col min-h-screen">
+            <div className="flex-1 w-auto h-auto">
+              <div className="hidden shadow-lg lg:flex">
+                <ReactPlayer
+                  width={"100%"}
+                  height={"580px"}
+                  controls={true}
+                  url={`https://www.youtube.com/watch?v=${Selected}`}
+                />
+              </div>
+              <div className="flex shadow-lg lg:hidden">
+                <ReactPlayer
+                  width={"100%"}
+                  height={"400px"}
+                  controls={true}
+                  url={`https://www.youtube.com/watch?v=${Selected}`}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="absolute bottom-[-100px] left-0 right-0 flex flex-col top-80 bg-gradient-to-t from-black via-transparent to-transparent"></div>
         </div>
         <div className="flex flex-col gap-3 md:flex-row xl:container xl:mx-auto">
           {/* frontal image */}
@@ -139,9 +184,9 @@ function MovieDetails() {
             />
           </div>
           {/* title and prompt actions */}
-          <div className="flex flex-col flex-grow px-2">
+          <div className="z-40 flex flex-col flex-grow px-2 ">
             {/* movie title */}
-            <h1 className="max-w-lg mb-2 text-3xl font-bold text-gray-100 md:max-w-2xl md:text-5xl font-action">
+            <h1 className="max-w-lg mb-2 text-3xl font-bold text-gray-100 md:max-w-2xl md:text-5xl">
               {Details?.title}
             </h1>
             {/* Tagline */}
@@ -206,20 +251,51 @@ function MovieDetails() {
             <p className="mt-2 mb-1 text-base font-medium text-cyan-400 xl:text-lg">
               Overview
             </p>
-            <p className="max-w-lg text-gray-100 xl:max-w-xl font-romance">
+            <p className="max-w-lg text-gray-100 xl:max-w-xl font-animation">
               {Details?.overview}
             </p>
           </div>
           {/* Action Buttons */}
-          <div className="flex flex-col items-end px-4 mt-2 gap-y-4">
-            <button className="flex flex-row items-center px-4 py-2 text-gray-100 bg-red-600 bg-opacity-65 gap-x-2">
+          <div className="z-40 flex-col items-end hidden px-4 mt-2 gap-y-4">
+            <Link
+              to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+              className="flex flex-row items-center px-4 py-2 text-gray-100 bg-red-600 bg-opacity-65 gap-x-2"
+            >
               <FaRegCirclePlay />
               Watch
-            </button>
+            </Link>
             <button className="flex flex-row items-center px-4 py-2 text-gray-100 bg-green-600 bg-opacity-65 gap-x-1">
               <FaRegCirclePlay />
               Trailler
             </button>
+          </div>
+          {/* selections */}
+          <div className="h-[400px] overflow-y-auto z-40">
+            {Videos?.map((data, index) => {
+              return (
+                <NavLink
+                  key={data.key + index}
+                  onClick={() => handleSelect(data.key)}
+                >
+                  <div className="flex flex-col p-3 mb-5 overflow-y-auto rounded-lg shadow-xl bg-slate-950">
+                    <div className="flex flex-row items-center gap-x-5">
+                      <h1 className="text-xl text-slate-200">Video-Type</h1>
+                      <h1 className="text-lg text-yellow-500">{data.type}</h1>
+                    </div>
+                    <div className="flex flex-row items-center gap-x-5">
+                      <h1 className="text-xl text-slate-200">Site</h1>
+                      <h2 className="text-lg text-yellow-500">{data.site}</h2>
+                    </div>
+                    <div className="flex flex-row items-center gap-x-5">
+                      <h1 className="text-sm text-slate-200">Date</h1>
+                      <h1 className="text-sm text-blue-400">
+                        {data.published_at}
+                      </h1>
+                    </div>
+                  </div>
+                </NavLink>
+              );
+            })}
           </div>
         </div>
         <div className="container flex flex-col mx-auto mt-4 border-b-2 border-b-gray-700"></div>
@@ -241,7 +317,7 @@ function MovieDetails() {
         {/* Other movies which are similar */}
         <div className="container flex flex-col mx-auto mt-5 md:mt-20">
           <h1 className="mb-2 text-2xl font-bold text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
-            Similar Movies
+            Movies you might like
           </h1>
           <div className="grid grid-cols-3 gap-2 gap-y-8 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 ">
             {Similar?.slice(0, count).map((data, index) => {
