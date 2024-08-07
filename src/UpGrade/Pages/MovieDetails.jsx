@@ -7,6 +7,7 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
   const [Reviews, setReview] = useState([]);
+  const [Images, setImage] = useState([]);
   const [Similar, setSimilar] = useState([]);
   const [Page, setPage] = useState(1);
   const { id } = useParams();
@@ -62,13 +63,32 @@ function MovieDetails() {
       setSimilar(data.results);
     } catch (error) {}
   }
+  async function getImages() {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/movie/${id}/images`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+
+      setImage(data.backdrops);
+    } catch (error) {}
+  }
+
   useEffect(() => {
+    getImages();
     getReview();
     getDetails();
     getSimilar();
   }, [Page, id]);
 
   console.log(Details);
+  console.log(Images);
 
   return (
     <div className="flex flex-col min-h-screen mt-20 font-roboto">
@@ -123,13 +143,13 @@ function MovieDetails() {
             </div>
             {/* status and releasedate ingo */}
             <div className="flex flex-row items-center gap-x-5">
-              <div className="flex flex-row space-x-2">
+              <div className="flex flex-row items-center space-x-2">
                 <h2 className="text-base lg:text-lg text-slate-200">Status:</h2>
                 <h2 className="text-base text-yellow-500 xl:text-lg">
                   {Details?.status}
                 </h2>
               </div>
-              <div className="flex flex-row space-x-2">
+              <div className="flex flex-row items-center space-x-2">
                 <h2 className="text-base lg:text-lg text-slate-200">Date:</h2>
                 <h2 className="text-base text-yellow-500 xl:text-lg">
                   {Details?.release_date}
@@ -138,10 +158,10 @@ function MovieDetails() {
             </div>
             {/* budget details */}
             <div className="flex flex-row justify-between bg-slate-800 bg-opacity-10 md:justify-normal gap-x-5">
-              <h1 className="text-base xl:text-lg text-slate-200">
+              <h1 className="flex flex-row items-center text-base xl:text-lg text-slate-200">
                 Budget: {Details?.budget?.toLocaleString()}
               </h1>
-              <h1 className="text-base xl:text-lg text-slate-200">
+              <h1 className="flex flex-row items-center text-base xl:text-lg text-slate-200">
                 Revenue: {Details?.revenue?.toLocaleString()}
               </h1>
             </div>
@@ -151,7 +171,22 @@ function MovieDetails() {
           {/* Action Buttons */}
           <div></div>
         </div>
+        {/* Other movie images */}
+        <div className="grid grid-cols-3 gap-1 mt-5">
+          {Images?.slice(1, 4).map((dt, index) => {
+            return (
+              <div key={dt.file_path + index}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${dt?.file_path}`}
+                  alt={dt?.title}
+                  className="object-cover w-screen h-[300px]"
+                />
+              </div>
+            );
+          })}
+        </div>
 
+        {/* Reviews */}
         <div>
           {Reviews?.length === 0 ? (
             ""
