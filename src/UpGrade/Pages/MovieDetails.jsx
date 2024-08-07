@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Rating from "../Components/Rating";
+import { IoPersonCircleOutline } from "react-icons/io5";
 
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
@@ -167,7 +168,8 @@ function MovieDetails() {
                     key={index + data.author}
                     className="flex flex-col px-10"
                   >
-                    <h1 className="text-xl font-semibold md:text-2xl text-slate-200">
+                    <h1 className="flex flex-row items-center w-full text-xl font-semibold gap-x-3 md:text-2xl text-slate-200">
+                      <IoPersonCircleOutline className="text-3xl" />
                       {data.author}
                     </h1>
                     <p className="mb-6 text-base tracking-tighter text-justify xl:text-lg text-slate-200">
