@@ -4,11 +4,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { FaRegCirclePlay } from "react-icons/fa6";
+import { motion } from "framer-motion";
+import MoviePoster from "../Components/MoviePoster";
 
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
   const [Reviews, setReview] = useState([]);
   const [Images, setImage] = useState([]);
+
+  const [count, setCount] = useState(14);
   const [Similar, setSimilar] = useState([]);
   const [Page, setPage] = useState(1);
   const { id } = useParams();
@@ -87,6 +91,30 @@ function MovieDetails() {
     getDetails();
     getSimilar();
   }, [Page, id]);
+
+  // buttons logics
+  const handleIncrese = () => {
+    if (count !== 20) {
+      setCount(count + 6);
+    }
+  };
+  //handle Decrease
+  const handleDecrease = () => {
+    if (count === 20 && count >= 14) {
+      setCount(count - 6);
+    }
+  };
+  //Handle Pages Logic
+  const handlePages = () => {
+    if (Page >= 1) {
+      setPage(Page + 1);
+    }
+  };
+  const handlePage = () => {
+    if (Page >= 1) {
+      setPage(Page - 1);
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen font-roboto">
@@ -209,9 +237,72 @@ function MovieDetails() {
           })}
         </div>
         {/* Other movies which are similar */}
+        <div className="container flex flex-col mx-auto mt-5 md:mt-20">
+          <h1 className="mb-2 text-2xl font-bold text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
+            Similar Movies
+          </h1>
+          <div className="grid grid-cols-3 gap-2 gap-y-8 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 ">
+            {Similar?.slice(0, count).map((data, index) => {
+              return (
+                <div key={data.id}>
+                  <MoviePoster
+                    title={data?.title}
+                    image={data?.poster_path}
+                    id={data.id}
+                    rating={data?.vote_average}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex flex-col items-end justify-end w-full mt-10">
+            <div className="flex flex-row items-center space-x-5">
+              <motion.button
+                whileInView={{ opacity: 1, y: 0 }}
+                whileTap={{ scale: 0.8 }}
+                transition={{ type: "spring", ease: "easeOut" }}
+                onClick={handleDecrease}
+                className={`text-slate-200 text-base xl:text-lg font-semibold cursor-pointer ${
+                  count === 20 ? "flex" : "hidden"
+                }`}
+              >
+                Less..
+              </motion.button>
+              <motion.button
+                whileInView={{ opacity: 1, y: 0 }}
+                whileTap={{ scale: 0.8 }}
+                transition={{ type: "spring", ease: "easeOut" }}
+                onClick={handleIncrese}
+                className={`text-slate-200 bg-red-600 px-3 text-base xl:text-lg font-semibold cursor-pointer ${
+                  count === 20 ? "hidden" : "flex"
+                }`}
+              >
+                More..
+              </motion.button>
+              <motion.button
+                whileInView={{ opacity: 1, y: 0 }}
+                whileTap={{ scale: 0.8 }}
+                transition={{ type: "spring", ease: "easeOut" }}
+                onClick={handlePage}
+                className="px-3 text-base font-semibold bg-red-600 cursor-pointer xl:text-lg text-slate-200"
+              >
+                Prev
+              </motion.button>
+              <motion.button
+                whileInView={{ opacity: 1, y: 0 }}
+                whileTap={{ scale: 0.8 }}
+                transition={{ type: "spring", ease: "easeOut" }}
+                onClick={handlePages}
+                className="px-3 text-base font-semibold bg-red-600 cursor-pointer xl:text-lg text-slate-200"
+              >
+                Next
+              </motion.button>
+            </div>
+          </div>
+        </div>
 
         {/* Reviews */}
-        <div className="flex flex-col xl:container xl:mx-auto">
+        <div className="flex flex-col px-2 xl:container xl:mx-auto">
           {Reviews?.length === 0 ? (
             ""
           ) : (
