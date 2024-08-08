@@ -19,8 +19,10 @@ export default function TvSeriesPoster({ name, rating, image, id }) {
   };
   return (
     <div
-      className={`flex flex-col justify-center cursor-pointer ${
-        image === null ? "hidden" : ""
+      className={` ${
+        image === null || image?.length === 0
+          ? "hidden"
+          : "flex flex-col justify-center cursor-pointer"
       }`}
     >
       <Link className="group">

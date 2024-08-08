@@ -362,6 +362,37 @@ function TvSeriesDetails() {
           )}
         </div>
         <div className="container flex flex-col mx-auto mt-4 border-b-2 border-b-gray-700"></div>
+        {/* Seasons list */}
+        {/* Number of seasons print */}
+        <div
+          className={`grid xl:grid-cols-7 md:grid-cols-4 sm:grid-cols-3 grid-cols-2  ${
+            Details?.seasons?.length <= 1 ? "justify-start" : "justify-center"
+          } md:justify-start gap-5 lg:px-10  mt-4 h-[320px] overflow-auto `}
+        >
+          {Details?.seasons?.map((data, index) => {
+            return (
+              <div key={data.id + index} className="">
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
+                  alt={Details?.title}
+                  className="object- object-top w-screen h-[300px]"
+                />
+
+                <div className="flex-col hidden mt-1 lg:max-w-48 max-w-36">
+                  <h1 className="text-lg lg:text-xl text-slate-200 ">
+                    {data.name}
+                  </h1>
+                  <h1 className="text-lg lg:text-xl text-slate-200 ">
+                    No-Ep: {data.episode_count}
+                  </h1>
+                  <h1 className="lg:text-xl text-md text-slate-200 ">
+                    Date: {data.air_date}
+                  </h1>
+                </div>
+              </div>
+            );
+          })}
+        </div>
         {/* Other movie images */}
         <div className="grid grid-cols-3 gap-1 mt-2 ">
           {Images?.slice(1, 4).map((dt, index) => {
