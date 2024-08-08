@@ -16,7 +16,7 @@ function SearchPoster({ image, rating, name, title, id, type }) {
   // handle navigation logic
   const handleNavigation = () => {
     if (type === "tv") {
-      navigate(`/TvDetails/${id}`);
+      navigate(`/TvSeriesDetails/${id}`);
       scrollToTop();
     } else {
       navigate(`/Details/${id}`);

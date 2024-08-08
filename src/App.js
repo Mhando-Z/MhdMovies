@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import SearchResults from "./UpGrade/Pages/SearchResults";
 import ScrollToTopButton from "./UpGrade/Components/FloatingButton";
 import MovieDetails from "./UpGrade/Pages/MovieDetails";
+import TvSeriesDetails from "./UpGrade/Pages/TvSeriesDetails";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -43,6 +44,10 @@ function App() {
               <Route path="TvSeries/" element={<TvSeriesPage />} />
               <Route path="/Results/:id" element={<SearchResults />} />
               <Route path="/MovieDetails/:id" element={<MovieDetails />} />
+              <Route
+                path="/TvSeriesDetails/:id"
+                element={<TvSeriesDetails />}
+              />
             </Routes>
             <Footer />
             <ScrollToTopButton />

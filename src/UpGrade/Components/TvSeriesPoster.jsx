@@ -14,7 +14,7 @@ export default function TvSeriesPoster({ name, rating, image, id }) {
   };
   // handle navigation logic
   const handleNavigation = () => {
-    navigate(`/Details/${id}`);
+    navigate(`/TvSeriesDetails/${id}`);
     scrollToTop();
   };
   return (
@@ -65,8 +65,13 @@ export default function TvSeriesPoster({ name, rating, image, id }) {
               transition={{ type: "spring", ease: "easeOut" }}
               className="flex flex-row items-center px-3 py-1 mt-3 font-medium text-center text-black bg-gray-100 md:px-5 md:py-2 hover:ring-green-700 rounded-3xl hover:bg-slate-50 hover:ring-1 "
             >
-              <BiSolidMoviePlay />
-              Watch
+              <Link
+                className="flex flex-row items-center w-full "
+                to={`/TvSeriesDetails/${id}`}
+              >
+                <BiSolidMoviePlay />
+                Watch
+              </Link>
             </motion.button>
           </div>
         </div>
