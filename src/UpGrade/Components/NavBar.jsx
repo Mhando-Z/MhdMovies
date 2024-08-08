@@ -90,7 +90,7 @@ function NavBar() {
               type="text"
               onKeyDown={(e) => handlePress(e)}
               onChange={(e) => handleChange(e)}
-              className="px-10 ring-1 ring-gray-300  w-[200px] py-2 outline-none text-gray-100  rounded-3xl focus:ring-2 focus:ring-red-600 bg-black bg-opacity-25 focus:text-gray-100"
+              className="px-10 ring-1 ring-gray-300  w-[200px] py-2 outline-none text-gray-100  rounded-3xl focus:ring-2  bg-black bg-opacity-25 focus:text-gray-100"
               placeholder="Search movies"
             />
             <div
