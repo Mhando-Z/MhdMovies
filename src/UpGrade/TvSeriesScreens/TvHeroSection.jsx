@@ -7,10 +7,7 @@ import TvSeriesContex from "../../Context/TvSeriesContext";
 
 function TvHeroSection() {
   const { Todaylist } = useContext(TvSeriesContex);
-
   const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1);
-
-  console.log(Todaylist);
 
   return (
     <div>
