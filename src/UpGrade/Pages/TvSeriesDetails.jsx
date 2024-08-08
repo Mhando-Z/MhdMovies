@@ -21,6 +21,8 @@ function TvSeriesDetails() {
   const [count, setCount] = useState(14);
   const [Trailer, setTrailer] = useState(false);
 
+  console.log(ID);
+
   //Logics
   async function getDetails() {
     try {
@@ -196,7 +198,7 @@ function TvSeriesDetails() {
                     {Trailer ? (
                       <div className="flex flex-col px-3 md:hidden">
                         <Link
-                          to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+                          to={`https://vidsrc.xyz/embed/movie?imdb=${ID.imdb_id}`}
                           className="flex flex-row items-center px-2 py-2 bg-red-600"
                         >
                           <FaRegCirclePlay className="text-3xl text-gray-100 transition-all duration-700 animate-pulse" />{" "}
@@ -319,9 +321,7 @@ function TvSeriesDetails() {
             {/* Play movie button */}
             {Trailer ? (
               <div className="absolute right-0 flex-col hidden size-20 md:flex ">
-                <Link
-                  to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
-                >
+                <Link to={`https://vidsrc.xyz/embed/movie?imdb=${ID.imdb_id}`}>
                   <FaRegCirclePlay className="text-5xl text-gray-100 transition-all duration-700 animate-pulse" />
                 </Link>
               </div>
@@ -364,7 +364,7 @@ function TvSeriesDetails() {
             <div className="z-40 flex flex-col items-end px-4 mt-2 gap-y-4">
               {/* selections */}
               <Link
-                to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+                to={`https://vidsrc.xyz/embed/movie?imdb=${ID.imdb_id}`}
                 className="flex flex-row items-center px-4 py-2 text-gray-100 bg-red-600 bg-opacity-65 gap-x-2"
               >
                 <FaRegCirclePlay />
@@ -384,7 +384,7 @@ function TvSeriesDetails() {
         {/* Seasons list */}
         {/* Number of seasons print */}
         <div
-          className={`grid xl:grid-cols-7 md:grid-cols-4 sm:grid-cols-3 grid-cols-2  ${
+          className={`grid xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2  ${
             Details?.seasons?.length <= 1 ? "justify-start" : "justify-center"
           } md:justify-start gap-5 lg:px-10  mt-4 h-[320px] overflow-auto `}
         >
@@ -396,7 +396,7 @@ function TvSeriesDetails() {
                   alt={Details?.title}
                   className="object- object-top w-screen h-[300px]"
                 />
-
+                {/* Season and number of episodes */}
                 <div className="flex flex-row items-center justify-between w-full mt-1 ">
                   <h1 className="text-base xl:text-lg text-slate-200 ">
                     {data.name}
