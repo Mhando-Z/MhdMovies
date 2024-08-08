@@ -381,7 +381,7 @@ function TvSeriesDetails() {
         <div className="container flex flex-col mx-auto mt-5 md:mt-20">
           {Similar.length !== 0 ? (
             <h1 className="mb-2 text-2xl font-bold text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
-              Movies you might like
+              Series you might like
             </h1>
           ) : (
             ""
@@ -391,7 +391,7 @@ function TvSeriesDetails() {
               return (
                 <div key={data.id}>
                   <TvSeriesPoster
-                    title={data?.title}
+                    name={data?.name}
                     image={data?.poster_path}
                     id={data.id}
                     rating={data?.vote_average}

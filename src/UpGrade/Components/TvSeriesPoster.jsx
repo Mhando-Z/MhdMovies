@@ -75,8 +75,6 @@ export default function TvSeriesPoster({ name, rating, image, id }) {
             </motion.button>
           </div>
         </div>
-        {/* <h3 className="mt-4 text-sm text-gray-700">{title}</h3> */}
-        {/* <p className="mt-1 text-lg font-medium text-gray-900">{rating}</p> */}
       </Link>
     </div>
   );
