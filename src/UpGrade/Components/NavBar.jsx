@@ -42,7 +42,7 @@ function NavBar() {
             />
           </div>
           {/* navlinks */}
-          <div className="flex-row items-center justify-between flex-grow hidden px-2 py-1 bg-gray-200 md:flex ring-1 ring-gray-400 bg-opacity-20 rounded-3xl">
+          <div className="flex-row items-center justify-between flex-grow hidden px-2 py-1 bg-black bg-opacity-25 md:flex ring-1 ring-gray-400 rounded-3xl">
             <NavLink
               to={"/"}
               className={({ isActive }) =>
@@ -90,7 +90,7 @@ function NavBar() {
               type="text"
               onKeyDown={(e) => handlePress(e)}
               onChange={(e) => handleChange(e)}
-              className="px-10 ring-1 ring-gray-300  w-[200px] py-2 outline-none bg-gray-200 bg-opacity-25 rounded-3xl focus:ring-2 focus:ring-red-600 focus:bg-black focus:bg-opacity-25 focus:text-gray-100"
+              className="px-10 ring-1 ring-gray-300  w-[200px] py-2 outline-none text-gray-100  rounded-3xl focus:ring-2 focus:ring-red-600 bg-black bg-opacity-25 focus:text-gray-100"
               placeholder="Search movies"
             />
             <div
