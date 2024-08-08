@@ -14,8 +14,8 @@ function MovieDetails() {
   const [Images, setImage] = useState([]);
   const [Videos, setVideo] = useState([]);
   const [Selected, setSelect] = useState();
-  const [count, setCount] = useState(14);
   const [Similar, setSimilar] = useState([]);
+  const [count, setCount] = useState(14);
   const [Trailer, setTrailer] = useState(false);
   const [Page, setPage] = useState(1);
   const { id } = useParams();
@@ -108,7 +108,14 @@ function MovieDetails() {
   }, [Page, id]);
 
   // buttons logics
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   const handleTrailer = () => {
+    scrollToTop();
     setTrailer(!Trailer);
   };
   const handleSelect = (key) => {
@@ -161,22 +168,40 @@ function MovieDetails() {
                     url={`https://www.youtube.com/watch?v=${Selected}`}
                   />
                 </div>
-                <div className="flex shadow-lg lg:hidden">
+                <div className="flex flex-col shadow-lg lg:hidden">
                   <ReactPlayer
                     width={"100%"}
                     height={"400px"}
                     controls={true}
                     url={`https://www.youtube.com/watch?v=${Selected}`}
                   />
+                  <div className="flex flex-col mt-10 ">
+                    {/* Play movie button */}
+                    {Trailer ? (
+                      <div className="flex flex-col px-3 md:hidden">
+                        <Link
+                          to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+                          className="flex flex-row items-center px-2 py-2 bg-red-600"
+                        >
+                          <FaRegCirclePlay className="text-3xl text-gray-100 transition-all duration-700 animate-pulse" />{" "}
+                          <p className="ml-2 text-lg text-gray-100">
+                            WatchMovie
+                          </p>
+                        </Link>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           ) : (
             ""
           )}
-          <div className="absolute bottom-[-100px] left-0 right-0 flex flex-col top-80 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+          <div className="absolute bottom-[-100px] md:flex hidden left-0 right-0  flex-col top-80 bg-gradient-to-t from-black via-transparent to-transparent"></div>
         </div>
-        <div className="flex flex-col gap-3 md:flex-row xl:container xl:mx-auto">
+        <div className="flex flex-col-reverse gap-3 md:flex-row xl:container xl:mx-auto">
           {/* frontal image */}
           <div className="md:h-[260px] h-[200px] hidden  z-40 justify-center md:flex rounded-lg mt-[-100px] ml-5">
             <img
