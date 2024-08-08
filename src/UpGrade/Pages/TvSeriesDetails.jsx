@@ -397,9 +397,12 @@ function TvSeriesDetails() {
                   className="object- object-top w-screen h-[300px]"
                 />
 
-                <div className="flex-col mt-1 lg:max-w-48 max-w-36">
+                <div className="flex flex-row items-center justify-between w-full mt-1 ">
                   <h1 className="text-base xl:text-lg text-slate-200 ">
                     {data.name}
+                  </h1>
+                  <h1 className="text-base xl:text-lg text-slate-200 ">
+                    Ep: {data.episode_count}
                   </h1>
                 </div>
               </div>
