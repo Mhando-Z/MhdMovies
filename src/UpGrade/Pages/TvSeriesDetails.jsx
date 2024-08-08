@@ -297,6 +297,25 @@ function TvSeriesDetails() {
             <p className="max-w-lg text-gray-100 xl:max-w-xl">
               {Details?.overview}
             </p>
+            {/* Details on number of episodes and seasons */}
+            <div className="mt-5">
+              <div className="flex flex-row space-x-2">
+                <h2 className="text-base xl:text-lg text-slate-200">
+                  Number of Episodes:
+                </h2>
+                <h2 className="text-base xl:text-lg text-slate-200">
+                  {Details?.number_of_episodes}
+                </h2>
+              </div>
+              <div className="flex flex-row space-x-2 ">
+                <h2 className="text-base xl:text-lg text-slate-200">
+                  Number Of Seasons:
+                </h2>
+                <h2 className="text-base xl:text-lg text-slate-200">
+                  {Details?.number_of_seasons}
+                </h2>
+              </div>
+            </div>
             {/* Play movie button */}
             {Trailer ? (
               <div className="absolute right-0 flex-col hidden size-20 md:flex ">
@@ -378,15 +397,9 @@ function TvSeriesDetails() {
                   className="object- object-top w-screen h-[300px]"
                 />
 
-                <div className="flex-col hidden mt-1 lg:max-w-48 max-w-36">
-                  <h1 className="text-lg lg:text-xl text-slate-200 ">
+                <div className="flex-col mt-1 lg:max-w-48 max-w-36">
+                  <h1 className="text-base xl:text-lg text-slate-200 ">
                     {data.name}
-                  </h1>
-                  <h1 className="text-lg lg:text-xl text-slate-200 ">
-                    No-Ep: {data.episode_count}
-                  </h1>
-                  <h1 className="lg:text-xl text-md text-slate-200 ">
-                    Date: {data.air_date}
                   </h1>
                 </div>
               </div>
