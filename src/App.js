@@ -10,6 +10,7 @@ import SearchResults from "./UpGrade/Pages/SearchResults";
 import ScrollToTopButton from "./UpGrade/Components/FloatingButton";
 import MovieDetails from "./UpGrade/Pages/MovieDetails";
 import TvSeriesDetails from "./UpGrade/Pages/TvSeriesDetails";
+import Genres from "./UpGrade/Pages/Genres";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -43,6 +44,7 @@ function App() {
               <Route path="/" element={<MainPage />} />
               <Route path="TvSeries/" element={<TvSeriesPage />} />
               <Route path="/Results/:id" element={<SearchResults />} />
+              <Route path="Genres/" element={<Genres />} />
               <Route path="/MovieDetails/:id" element={<MovieDetails />} />
               <Route
                 path="/TvSeriesDetails/:id"

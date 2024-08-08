@@ -6,17 +6,18 @@ import { BiSolidMoviePlay } from "react-icons/bi";
 import TvSeriesContex from "../../Context/TvSeriesContext";
 
 function TvHeroSection() {
-  const { TopRated } = useContext(TvSeriesContex);
+  const { Todaylist } = useContext(TvSeriesContex);
+
   const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1);
 
-  console.log(TopRated);
+  console.log(Todaylist);
 
   return (
     <div>
       <div className="flex relative overflow-hidden w-screen flex-col font-roboto xl:h-[970px] lg:h-[800px] md:h-[880px] h-[450px] ">
         <img
-          src={`https://image.tmdb.org/t/p/w500/${TopRated[value]?.backdrop_path}`}
-          alt={TopRated[value]?.name}
+          src={`https://image.tmdb.org/t/p/w500/${Todaylist[value]?.backdrop_path}`}
+          alt={Todaylist[value]?.name}
           className="object-cover w-screen h-full"
         />
         <div className="absolute top-0 bottom-0 left-0 right-0 via-transparent bg-gradient-to-r from-black to-transparent"></div>
@@ -24,21 +25,21 @@ function TvHeroSection() {
         <div className="container absolute flex-col hidden w-full mx-auto md:flex md:left-2 xl:left-60 top-96">
           {/* Movie name */}
           <h1 className="flex flex-col max-w-xl text-5xl font-bold text-gray-100 font-roboto xl:text-7xl">
-            {TopRated[value]?.name}
+            {Todaylist[value]?.name}
           </h1>
           {/* Rating */}
           <div className="flex flex-row items-center mt-2 mb-2 gap-x-3">
             <div>
               <h3 className="text-base text-gray-100 xl:text-lg">
-                {TopRated[value]?.vote_average}
+                {Todaylist[value]?.vote_average}
               </h3>
             </div>
-            <Rating value={TopRated[value]?.vote_average} />
+            <Rating value={Todaylist[value]?.vote_average} />
           </div>
           <div className="grid grid-cols-4 gap-5"></div>
           {/* movie description */}
           <p className="max-w-sm text-base tracking-tighter text-gray-100 md:max-w-lg sm:max-w-md line-clamp-5 font-roboto xl:text-lg">
-            {TopRated[value]?.overview}
+            {Todaylist[value]?.overview}
           </p>
           <div>
             {/* button for more information about movie */}
@@ -56,27 +57,27 @@ function TvHeroSection() {
           </div>
         </div>
         <div className="absolute md:flex hidden md:bottom-0 xl:w-[500px] md:w-[400px] xl:right-56 md:right-5">
-          <Slider data={TopRated} value={value} setValue={setValue} />
+          <Slider data={Todaylist} value={value} setValue={setValue} />
         </div>
       </div>
       {/* mobile view */}
       <div className="container flex flex-col w-full px-1 mx-auto md:hidden ">
         {/* TvSeries name */}
         <h1 className="flex flex-col max-w-xl text-4xl font-bold text-gray-100 md:text-5xl font-roboto xl:text-7xl">
-          {TopRated[value]?.name}
+          {Todaylist[value]?.name}
         </h1>
         {/* Rating */}
         <div className="flex flex-row items-center mt-2 mb-2 gap-x-3">
           <div>
             <h3 className="text-base text-gray-100 xl:text-lg">
-              {TopRated[value]?.vote_average}
+              {Todaylist[value]?.vote_average}
             </h3>
           </div>
-          <Rating value={TopRated[value]?.vote_average} />
+          <Rating value={Todaylist[value]?.vote_average} />
         </div>
         {/* Series description */}
         <p className="max-w-sm text-base tracking-tighter text-gray-100 line-clamp-4 font-roboto">
-          {TopRated[value]?.overview}
+          {Todaylist[value]?.overview}
         </p>
         <div>
           {/* button for more information about movie */}
@@ -94,7 +95,7 @@ function TvHeroSection() {
         </div>
       </div>
       <div className="w-[400px] md:hidden container mx-auto  flex items-center justify-end">
-        <Slider data={TopRated} value={value} setValue={setValue} />
+        <Slider data={Todaylist} value={value} setValue={setValue} />
       </div>
     </div>
   );

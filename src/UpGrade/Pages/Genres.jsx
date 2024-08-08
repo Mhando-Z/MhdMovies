@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import MovieListContext from "../Context/MovieListContext";
-import MovieGenre from "../Data/MovieGenre";
-import TvGenre from "../Data/TvSeriesGenre";
-import Movie from "../Components/Movie";
-import TvSeriesContex from "../Context/TvSeriesContext";
-import TvSeries from "./../Components/TvSeries";
+import MovieListContext from "../../Context/MovieListContext";
+import MovieGenre from "../../Data/MovieGenre";
+import TvGenre from "../../Data/TvSeriesGenre";
+import TvSeriesContex from "../../Context/TvSeriesContext";
+import MoviePoster from "../Components/MoviePoster";
+import TvSeriesPoster from "../Components/TvSeriesPoster";
 
 function Genres() {
   const { Collected } = useContext(MovieListContext);
@@ -73,8 +73,8 @@ function Genres() {
   });
 
   return (
-    <div className="flex mt-10 flex-col gap-y-5 justify-between min-h-screen lg:px-10 px-2">
-      <div className="flex flex-col md:flex-row justify-between gap-x-10">
+    <div className="flex flex-col justify-between min-h-screen px-2 mt-10 gap-y-5 lg:px-10">
+      <div className="flex flex-col justify-between md:flex-row gap-x-10">
         <div className="flex md:flex-col justify-between flex-row md:w-[200px] md:h-[600px] h-[200px] md:rounded-md bg-slate-600">
           <div className="flex flex-col">
             <div className="bg-slate-600 h-[60px]">
@@ -93,7 +93,7 @@ function Genres() {
                   >
                     <h1
                       onClick={() => HandleSelect(data.id, data.name)}
-                      className="text-xl text-slate-200 font-semibold cursor-pointer"
+                      className="text-xl font-semibold cursor-pointer text-slate-200"
                     >
                       {data.name}
                     </h1>
@@ -119,7 +119,7 @@ function Genres() {
                   >
                     <h1
                       onClick={() => HandleTvSelect(data.id, data.name)}
-                      className="text-xl text-slate-200 font-semibold cursor-pointer"
+                      className="text-xl font-semibold cursor-pointer text-slate-200"
                     >
                       {data.name}
                     </h1>
@@ -132,16 +132,16 @@ function Genres() {
         <div className="flex-1 h-[900px] flex-col justify-center overflow-auto rounded-xl ring-4 ring-slate-700 ">
           {ShowContent1 && (
             <div>
-              <div className="py-4 lg:px-10 px-2 bg-slate-800 w-full">
-                <h1 className="text-3xl  border-l-4 border-yellow-400 px-4 font-bold text-slate-200 ">
+              <div className="w-full px-2 py-4 lg:px-10 bg-slate-800">
+                <h1 className="px-4 text-3xl font-bold border-l-4 border-yellow-400 text-slate-200 ">
                   {Gname}
                 </h1>
               </div>
               <div className="flex flex-col sm:items-center">
-                <div className="md:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-3 gap-y-5">
+                <div className="grid items-center grid-cols-3 p-2 md:px-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-3 gap-y-5">
                   {dataFilterd?.slice(0, count).map((data, index) => {
                     return (
-                      <Movie
+                      <MoviePoster
                         key={index + data.id}
                         title={data.title}
                         image={data.poster_path}
@@ -150,13 +150,13 @@ function Genres() {
                     );
                   })}
                 </div>
-                <div className="flex gap-x-5 items-end justify-end px-10 py-4">
-                  <h1 className="text-slate-200 text-xl font-semibold ">
+                <div className="flex items-end justify-end px-10 py-4 gap-x-5">
+                  <h1 className="text-xl font-semibold text-slate-200 ">
                     Page {1}
                   </h1>
                   <h1
                     onClick={handleIncrese}
-                    className="text-slate-200 text-xl font-semibold cursor-pointer"
+                    className="text-xl font-semibold cursor-pointer text-slate-200"
                   >
                     More..
                   </h1>
@@ -166,32 +166,32 @@ function Genres() {
           )}
           {ShowContent2 && (
             <div>
-              <div className="py-4 lg:px-10 px-2 bg-slate-800 w-full">
-                <h1 className="text-3xl  border-l-4 border-yellow-400 px-4 font-bold text-slate-200 ">
+              <div className="w-full px-2 py-4 lg:px-10 bg-slate-800">
+                <h1 className="px-4 text-3xl font-bold border-l-4 border-yellow-400 text-slate-200 ">
                   {Gnames}
                 </h1>
               </div>
               <div className="flex flex-col sm:items-center">
-                <div className="md:px-10 p-2 items-center grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-3 gap-y-5">
+                <div className="grid items-center grid-cols-3 p-2 md:px-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-3 gap-y-5">
                   {TvdataFilter?.slice(0, counts).map((data, index) => {
                     return (
-                      <TvSeries
+                      <TvSeriesPoster
                         key={index + data.id}
                         image2={data.backdrop_path}
-                        title={data.name}
+                        name={data.name}
                         image={data.poster_path}
                         id={data.id}
                       />
                     );
                   })}
                 </div>
-                <div className="flex gap-x-5 items-end justify-end px-2 py-4">
-                  <h1 className="text-slate-200 text-xl font-semibold ">
+                <div className="flex items-end justify-end px-2 py-4 gap-x-5">
+                  <h1 className="text-xl font-semibold text-slate-200 ">
                     Page {Page1}
                   </h1>
                   <h1
                     onClick={handleIncreses}
-                    className="text-slate-200 text-xl font-semibold cursor-pointer"
+                    className="text-xl font-semibold cursor-pointer text-slate-200"
                   >
                     More..
                   </h1>
