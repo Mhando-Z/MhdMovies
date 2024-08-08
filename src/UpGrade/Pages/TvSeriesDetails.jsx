@@ -21,8 +21,6 @@ function TvSeriesDetails() {
   const [count, setCount] = useState(14);
   const [Trailer, setTrailer] = useState(false);
 
-  console.log(ID);
-
   //Logics
   async function getDetails() {
     try {

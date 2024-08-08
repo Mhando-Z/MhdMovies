@@ -51,12 +51,13 @@ function SearchResults() {
       <div className="grid grid-cols-3 gap-2 gap-y-8 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 ">
         {Dataquery?.slice(0, count).map((data, index) => {
           return (
-            <div key={data.id}>
+            <div key={data.id + index}>
               <SearchPoster
                 title={data?.title}
                 name={data?.name}
+                type={data?.media_type}
                 image={data?.poster_path}
-                id={data.id}
+                id={data?.id}
                 rating={data?.vote_average}
               />
             </div>
