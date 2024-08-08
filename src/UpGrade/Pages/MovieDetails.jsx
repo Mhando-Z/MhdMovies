@@ -8,12 +8,6 @@ import { motion } from "framer-motion";
 import MoviePoster from "../Components/MoviePoster";
 import ReactPlayer from "react-player";
 
-// Utility function to check if the URL is a YouTube URL
-const isYouTubeUrl = (url) => {
-  const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
-  return youtubeRegex.test(url);
-};
-
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
   const [Reviews, setReview] = useState([]);
@@ -22,6 +16,7 @@ function MovieDetails() {
   const [Selected, setSelect] = useState();
   const [count, setCount] = useState(14);
   const [Similar, setSimilar] = useState([]);
+  const [Trailer, setTrailer] = useState(false);
   const [Page, setPage] = useState(1);
   const { id } = useParams();
 
@@ -113,6 +108,9 @@ function MovieDetails() {
   }, [Page, id]);
 
   // buttons logics
+  const handleTrailer = () => {
+    setTrailer(!Trailer);
+  };
   const handleSelect = (key) => {
     setSelect(key);
   };
@@ -152,26 +150,30 @@ function MovieDetails() {
           />
           <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col bg-gradient-to-t from-black via-transparent to-transparent"></div>
           {/* Trallers section be here*/}
-          <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col min-h-screen">
-            <div className="flex-1 w-auto h-auto">
-              <div className="hidden shadow-lg lg:flex">
-                <ReactPlayer
-                  width={"100%"}
-                  height={"580px"}
-                  controls={true}
-                  url={`https://www.youtube.com/watch?v=${Selected}`}
-                />
-              </div>
-              <div className="flex shadow-lg lg:hidden">
-                <ReactPlayer
-                  width={"100%"}
-                  height={"400px"}
-                  controls={true}
-                  url={`https://www.youtube.com/watch?v=${Selected}`}
-                />
+          {Trailer ? (
+            <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col min-h-screen">
+              <div className="flex-1 w-auto h-auto">
+                <div className="hidden shadow-lg lg:flex">
+                  <ReactPlayer
+                    width={"100%"}
+                    height={"580px"}
+                    controls={true}
+                    url={`https://www.youtube.com/watch?v=${Selected}`}
+                  />
+                </div>
+                <div className="flex shadow-lg lg:hidden">
+                  <ReactPlayer
+                    width={"100%"}
+                    height={"400px"}
+                    controls={true}
+                    url={`https://www.youtube.com/watch?v=${Selected}`}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
           <div className="absolute bottom-[-100px] left-0 right-0 flex flex-col top-80 bg-gradient-to-t from-black via-transparent to-transparent"></div>
         </div>
         <div className="flex flex-col gap-3 md:flex-row xl:container xl:mx-auto">
@@ -184,10 +186,10 @@ function MovieDetails() {
             />
           </div>
           {/* title and prompt actions */}
-          <div className="z-40 flex flex-col flex-grow px-2 ">
+          <div className="relative z-40 flex flex-col flex-grow px-2">
             {/* movie title */}
             <h1 className="max-w-lg mb-2 text-3xl font-bold text-gray-100 md:max-w-2xl md:text-5xl">
-              {Details?.title}
+              {Details?.title}{" "}
             </h1>
             {/* Tagline */}
             <h2 className="mb-2 text-base font-medium text-gray-100 xl:text-lg ">
@@ -251,52 +253,72 @@ function MovieDetails() {
             <p className="mt-2 mb-1 text-base font-medium text-cyan-400 xl:text-lg">
               Overview
             </p>
-            <p className="max-w-lg text-gray-100 xl:max-w-xl font-animation">
+            <p className="max-w-lg text-gray-100 xl:max-w-xl">
               {Details?.overview}
             </p>
-          </div>
-          {/* Action Buttons */}
-          <div className="z-40 flex-col items-end hidden px-4 mt-2 gap-y-4">
-            <Link
-              to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
-              className="flex flex-row items-center px-4 py-2 text-gray-100 bg-red-600 bg-opacity-65 gap-x-2"
-            >
-              <FaRegCirclePlay />
-              Watch
-            </Link>
-            <button className="flex flex-row items-center px-4 py-2 text-gray-100 bg-green-600 bg-opacity-65 gap-x-1">
-              <FaRegCirclePlay />
-              Trailler
-            </button>
-          </div>
-          {/* selections */}
-          <div className="h-[400px] overflow-y-auto z-40">
-            {Videos?.map((data, index) => {
-              return (
-                <NavLink
-                  key={data.key + index}
-                  onClick={() => handleSelect(data.key)}
+            {/* Play movie button */}
+            {Trailer ? (
+              <div className="absolute right-0 flex-col hidden size-20 md:flex ">
+                <Link
+                  to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
                 >
-                  <div className="flex flex-col p-3 mb-5 overflow-y-auto rounded-lg shadow-xl bg-slate-950">
-                    <div className="flex flex-row items-center gap-x-5">
-                      <h1 className="text-xl text-slate-200">Video-Type</h1>
-                      <h1 className="text-lg text-yellow-500">{data.type}</h1>
-                    </div>
-                    <div className="flex flex-row items-center gap-x-5">
-                      <h1 className="text-xl text-slate-200">Site</h1>
-                      <h2 className="text-lg text-yellow-500">{data.site}</h2>
-                    </div>
-                    <div className="flex flex-row items-center gap-x-5">
-                      <h1 className="text-sm text-slate-200">Date</h1>
-                      <h1 className="text-sm text-blue-400">
-                        {data.published_at}
-                      </h1>
-                    </div>
-                  </div>
-                </NavLink>
-              );
-            })}
+                  <FaRegCirclePlay className="text-5xl text-gray-100 transition-all duration-700 animate-pulse" />
+                </Link>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
+          {/* Action Buttons and video link selection */}
+          {Trailer ? (
+            <div className="h-[400px] overflow-y-auto z-40 bg-black">
+              {Videos?.map((data, index) => {
+                return (
+                  <NavLink
+                    key={data.key + index}
+                    onClick={() => handleSelect(data.key)}
+                  >
+                    <div
+                      className={`flex flex-col p-3 mb-5 focus:ring-2 focus:bg-white overflow-y-auto rounded-lg bg-slate-950 shadow-xl`}
+                    >
+                      <div className="flex flex-row items-center gap-x-5">
+                        <h1 className="text-lg text-slate-200">Video-Type</h1>
+                        <h1 className="text-lg text-yellow-500">{data.type}</h1>
+                      </div>
+                      <div className="flex flex-row items-center gap-x-5">
+                        <h1 className="text-lg text-slate-200">Site</h1>
+                        <h2 className="text-lg text-yellow-500">{data.site}</h2>
+                      </div>
+                      <div className="flex flex-row items-center gap-x-5">
+                        <h1 className="text-sm text-slate-200">Date</h1>
+                        <h1 className="text-sm text-blue-400">
+                          {data.published_at}
+                        </h1>
+                      </div>
+                    </div>
+                  </NavLink>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="z-40 flex flex-col items-end px-4 mt-2 gap-y-4">
+              {/* selections */}
+              <Link
+                to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+                className="flex flex-row items-center px-4 py-2 text-gray-100 bg-red-600 bg-opacity-65 gap-x-2"
+              >
+                <FaRegCirclePlay />
+                Watch
+              </Link>
+              <button
+                onClick={handleTrailer}
+                className="flex flex-row items-center px-4 py-2 text-gray-100 bg-green-600 bg-opacity-65 gap-x-1"
+              >
+                <FaRegCirclePlay />
+                Trailler
+              </button>
+            </div>
+          )}
         </div>
         <div className="container flex flex-col mx-auto mt-4 border-b-2 border-b-gray-700"></div>
         {/* Other movie images */}
@@ -316,9 +338,13 @@ function MovieDetails() {
         <div className="container flex flex-col mx-auto mt-3 border-b-2 border-b-gray-700"></div>
         {/* Other movies which are similar */}
         <div className="container flex flex-col mx-auto mt-5 md:mt-20">
-          <h1 className="mb-2 text-2xl font-bold text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
-            Movies you might like
-          </h1>
+          {Similar.length !== 0 ? (
+            <h1 className="mb-2 text-2xl font-bold text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
+              Movies you might like
+            </h1>
+          ) : (
+            ""
+          )}
           <div className="grid grid-cols-3 gap-2 gap-y-8 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 ">
             {Similar?.slice(0, count).map((data, index) => {
               return (
@@ -333,54 +359,58 @@ function MovieDetails() {
               );
             })}
           </div>
-          <div className="flex flex-col items-end justify-end w-full mt-10">
-            <div className="flex flex-row items-center space-x-5">
-              <motion.button
-                whileInView={{ opacity: 1, y: 0 }}
-                whileTap={{ scale: 0.8 }}
-                transition={{ type: "spring", ease: "easeOut" }}
-                onClick={handleDecrease}
-                className={`text-slate-200 text-base xl:text-lg font-semibold cursor-pointer ${
-                  count === 20 ? "flex" : "hidden"
-                }`}
-              >
-                Less..
-              </motion.button>
-              <motion.button
-                whileInView={{ opacity: 1, y: 0 }}
-                whileTap={{ scale: 0.8 }}
-                transition={{ type: "spring", ease: "easeOut" }}
-                onClick={handleIncrese}
-                className={`text-slate-200 bg-red-600 px-3 text-base xl:text-lg font-semibold cursor-pointer ${
-                  count === 20 ? "hidden" : "flex"
-                }`}
-              >
-                More..
-              </motion.button>
-              <motion.button
-                whileInView={{ opacity: 1, y: 0 }}
-                whileTap={{ scale: 0.8 }}
-                transition={{ type: "spring", ease: "easeOut" }}
-                onClick={handlePage}
-                className="px-3 text-base font-semibold bg-red-600 cursor-pointer xl:text-lg text-slate-200"
-              >
-                Prev
-              </motion.button>
-              <motion.button
-                whileInView={{ opacity: 1, y: 0 }}
-                whileTap={{ scale: 0.8 }}
-                transition={{ type: "spring", ease: "easeOut" }}
-                onClick={handlePages}
-                className="px-3 text-base font-semibold bg-red-600 cursor-pointer xl:text-lg text-slate-200"
-              >
-                Next
-              </motion.button>
+          {Similar.length !== 0 ? (
+            <div className="flex flex-col items-end justify-end w-full mt-10">
+              <div className="flex flex-row items-center space-x-5">
+                <motion.button
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileTap={{ scale: 0.8 }}
+                  transition={{ type: "spring", ease: "easeOut" }}
+                  onClick={handleDecrease}
+                  className={`text-slate-200 text-base xl:text-lg font-semibold cursor-pointer ${
+                    count === 20 ? "flex" : "hidden"
+                  }`}
+                >
+                  Less..
+                </motion.button>
+                <motion.button
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileTap={{ scale: 0.8 }}
+                  transition={{ type: "spring", ease: "easeOut" }}
+                  onClick={handleIncrese}
+                  className={`text-slate-200 bg-red-600 px-3 text-base xl:text-lg font-semibold cursor-pointer ${
+                    count === 20 ? "hidden" : "flex"
+                  }`}
+                >
+                  More..
+                </motion.button>
+                <motion.button
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileTap={{ scale: 0.8 }}
+                  transition={{ type: "spring", ease: "easeOut" }}
+                  onClick={handlePage}
+                  className="px-3 text-base font-semibold bg-red-600 cursor-pointer xl:text-lg text-slate-200"
+                >
+                  Prev
+                </motion.button>
+                <motion.button
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileTap={{ scale: 0.8 }}
+                  transition={{ type: "spring", ease: "easeOut" }}
+                  onClick={handlePages}
+                  className="px-3 text-base font-semibold bg-red-600 cursor-pointer xl:text-lg text-slate-200"
+                >
+                  Next
+                </motion.button>
+              </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
         </div>
 
         {/* Reviews */}
-        <div className="flex flex-col px-2 xl:container xl:mx-auto">
+        <div className="flex flex-col px-2 md:container md:mx-auto">
           {Reviews?.length === 0 ? (
             ""
           ) : (
