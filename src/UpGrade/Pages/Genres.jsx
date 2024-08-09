@@ -137,12 +137,12 @@ function Genres() {
           {ShowContent1 && (
             <div className="flex flex-col min-h-screen">
               <div className="sticky top-0 z-40 w-full px-2 py-4 mb-2 xl:mb-10 bg-slate-800">
-                <h1 className="px-4 text-2xl font-bold border-l-4 border-yellow-400 text-slate-200 ">
+                <h1 className="px-4 text-2xl font-bold border-l-4 border-yellow-400 text-slate-200">
                   {Gname}
                 </h1>
               </div>
-              <div className="flex flex-col sm:items-center">
-                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-1 gap-y-5">
+              <div className="flex flex-col">
+                <div className="grid grid-cols-3 p-2 md:px-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-1 gap-y-5">
                   {dataFilterd?.slice(0, count).map((data, index) => {
                     return (
                       <div key={data.id}>
@@ -152,7 +152,9 @@ function Genres() {
                           id={data.id}
                           rating={data?.vote_average}
                         />
-                        <p>{data.title}</p>
+                        <p className="text-gray-100 line-clamp-1">
+                          {data.title}
+                        </p>
                       </div>
                     );
                   })}
@@ -172,23 +174,25 @@ function Genres() {
             </div>
           )}
           {ShowContent2 && (
-            <div>
-              <div className="w-full px-2 py-4 lg:px-10 bg-slate-800">
+            <div className="flex flex-col min-h-screen">
+              <div className="sticky top-0 z-40 w-full px-2 py-4 mb-2 xl:mb-10 bg-slate-800">
                 <h1 className="px-4 text-2xl font-bold border-l-4 border-yellow-400 text-slate-200 ">
                   {Gnames}
                 </h1>
               </div>
-              <div className="flex flex-col sm:items-center">
-                <div className="grid items-center grid-cols-3 p-2 md:px-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-1 gap-y-5">
+              <div className="flex flex-col">
+                <div className="grid grid-cols-3 p-2 md:px-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-1 gap-y-5">
                   {TvdataFilter?.slice(0, counts).map((data, index) => {
                     return (
-                      <TvSeriesPoster
-                        key={index + data.id}
-                        name={data.name}
-                        image={data.poster_path}
-                        id={data.id}
-                        rating={data?.vote_average}
-                      />
+                      <div key={data.id}>
+                        <TvSeriesPoster
+                          name={data.name}
+                          image={data.poster_path}
+                          id={data.id}
+                          rating={data?.vote_average}
+                        />
+                        <p>{data.name}</p>
+                      </div>
                     );
                   })}
                 </div>
