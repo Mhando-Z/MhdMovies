@@ -142,7 +142,7 @@ function Genres() {
                 </h1>
               </div>
               <div className="flex flex-col">
-                <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-1">
+                <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-1">
                   {dataFilterd?.slice(0, count).map((data, index) => {
                     return (
                       <div key={data.id}>
@@ -179,7 +179,7 @@ function Genres() {
                 </h1>
               </div>
               <div className="flex flex-col ">
-                <div className="grid grid-cols-3 p-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-1">
+                <div className="grid grid-cols-3 p-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-1">
                   {TvdataFilter?.slice(0, counts).map((data, index) => {
                     return (
                       <div key={data.id + index}>
