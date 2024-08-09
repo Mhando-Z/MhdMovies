@@ -133,7 +133,7 @@ function Genres() {
             </div>
           </div>
         </div>
-        <div className="flex-1 h-[900px] flex flex-col items-center justify-center overflow-auto rounded-xl ring-4 ring-slate-700">
+        <div className="flex-1 h-[900px] flex flex-col   justify-center overflow-auto rounded-xl ring-4 ring-slate-700">
           {ShowContent1 && (
             <div className="flex flex-col min-h-screen">
               <div className="sticky top-0 z-40 w-full px-2 py-4 mb-2 xl:mb-10 bg-slate-800">
@@ -142,7 +142,7 @@ function Genres() {
                 </h1>
               </div>
               <div className="flex flex-col">
-                <div className="grid grid-cols-3 p-2 md:px-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-1 gap-y-5">
+                <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-1">
                   {dataFilterd?.slice(0, count).map((data, index) => {
                     return (
                       <div key={data.id}>
@@ -152,9 +152,7 @@ function Genres() {
                           id={data.id}
                           rating={data?.vote_average}
                         />
-                        <p className="text-gray-100 line-clamp-1">
-                          {data.title}
-                        </p>
+                        <p className="line-clamp-1">{data.title}</p>
                       </div>
                     );
                   })}
@@ -180,11 +178,11 @@ function Genres() {
                   {Gnames}
                 </h1>
               </div>
-              <div className="flex flex-col">
-                <div className="grid grid-cols-3 p-2 md:px-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-1 gap-y-5">
+              <div className="flex flex-col ">
+                <div className="grid grid-cols-3 p-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-1">
                   {TvdataFilter?.slice(0, counts).map((data, index) => {
                     return (
-                      <div key={data.id}>
+                      <div key={data.id + index}>
                         <TvSeriesPoster
                           name={data.name}
                           image={data.poster_path}
