@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { MdLocationSearching } from "react-icons/md";
 import logo from "../../Assets/Logo/mhd.png";
 import { HiMenu } from "react-icons/hi";
+import MovieListContext from "../../Context/MovieListContext";
 
 function NavBar() {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const { visible } = useContext(MovieListContext);
 
   //handle inputs
   const handleChange = (e) => {
@@ -30,8 +32,8 @@ function NavBar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
-      <div className="flex flex-col px-2 mt-3 ">
+    <div className={`fixed top-0 left-0 right-0 z-50 flex flex-col ${visible}`}>
+      <div className={`flex flex-col px-2 mt-3`}>
         <div className="flex flex-row items-center justify-between gap-x-5 ">
           {/* logo */}
           <div className="flex grow">

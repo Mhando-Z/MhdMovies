@@ -8,6 +8,7 @@ export function MovieProvider({ children }) {
   const [Trending, setTrend] = useState([]);
   const [TopRated, setTopRated] = useState([]);
   const [UpComingMovies, setUFuture] = useState([]);
+  const [visible, setVisible] = useState("");
   const [Page1, setPage1] = useState(1);
   const [Page2, setPage2] = useState(3);
   const [Page3, setPage3] = useState(1);
@@ -94,6 +95,8 @@ export function MovieProvider({ children }) {
         Movielists,
         UpComingMovies,
         Collected,
+        visible,
+        setVisible,
         setPage1,
         setPage2,
         setPage3,

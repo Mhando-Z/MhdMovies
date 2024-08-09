@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import MovieListContext from "../../Context/MovieListContext";
 
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { setVisible } = useContext(MovieListContext);
 
   // Show button when page is scrolled up to a certain distance
   const toggleVisibility = () => {
     if (window.pageYOffset > 300) {
       setIsVisible(true);
+      setVisible("bg-black bg-opacity-80");
     } else {
       setIsVisible(false);
+      setVisible("");
     }
   };
 
