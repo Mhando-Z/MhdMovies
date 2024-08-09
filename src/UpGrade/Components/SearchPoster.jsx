@@ -25,8 +25,10 @@ function SearchPoster({ image, rating, name, title, id, type }) {
   };
   return (
     <div
-      className={`flex flex-col justify-center cursor-pointer ${
-        image === null ? "hidden" : ""
+      className={` ${
+        image === null
+          ? "hidden"
+          : "flex flex-col justify-center cursor-pointer"
       }`}
     >
       <Link className="group">

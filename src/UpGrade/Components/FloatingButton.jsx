@@ -9,7 +9,7 @@ const ScrollToTopButton = () => {
   const toggleVisibility = () => {
     if (window.pageYOffset > 300) {
       setIsVisible(true);
-      setVisible("bg-black bg-opacity-80");
+      setVisible("bg-black bg-opacity-80 z-59");
     } else {
       setIsVisible(false);
       setVisible("");

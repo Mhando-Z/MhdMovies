@@ -5,6 +5,7 @@ import TvGenre from "../../Data/TvSeriesGenre";
 import TvSeriesContex from "../../Context/TvSeriesContext";
 import MoviePoster from "../Components/MoviePoster";
 import TvSeriesPoster from "../Components/TvSeriesPoster";
+import { motion } from "framer-motion";
 
 function Genres() {
   const { Collected } = useContext(MovieListContext);
@@ -72,45 +73,48 @@ function Genres() {
     return dt.genre_ids.includes(TvSelected);
   });
 
+  console.log(dataFilterd);
+
   return (
-    <div className="flex flex-col justify-between min-h-screen px-2 mt-10 gap-y-5 lg:px-10">
+    <div className="flex flex-col justify-between min-h-screen px-2 mt-20 gap-y-5 ">
       <div className="flex flex-col justify-between md:flex-row gap-x-10">
-        <div className="flex md:flex-col justify-between flex-row md:w-[200px] md:h-[600px] h-[200px] md:rounded-md bg-slate-600">
+        {/* side panel */}
+        <div className="flex md:flex-col justify-between flex-row md:w-[200px] md:h-screen h-[200px] md:rounded-md bg-slate-600">
           <div className="flex flex-col">
             <div className="bg-slate-600 h-[60px]">
               <div className="px-5 py-5">
-                <h1 className="text-xl font-bold text-slate-200">
+                <h1 className="text-lg font-bold md:text-xl text-slate-200">
                   Movie Genres
                 </h1>
               </div>
             </div>
-            <div className="h-[240px] overflow-auto p-5">
+            <div className="h-[340px] overflow-auto py-3 px-5">
               {genres?.map((data, index) => {
                 return (
-                  <div
+                  <motion.div
                     key={index + data.id}
                     className={`${data.name === Gname ? Unselect : ""}`}
                   >
                     <h1
                       onClick={() => HandleSelect(data.id, data.name)}
-                      className="text-xl font-semibold cursor-pointer text-slate-200"
+                      className="px-4 text-lg font-semibold rounded cursor-pointer text-slate-200"
                     >
                       {data.name}
                     </h1>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
           </div>
           <div className="flex flex-col">
             <div className="bg-slate-600 h-[60px]">
-              <div className="px-5 py-5">
-                <h1 className="text-xl font-bold text-slate-200">
+              <div className="px-5 py-5 ">
+                <h1 className="text-lg font-bold md:text-xl text-slate-200">
                   Tv-Series Genres
                 </h1>
               </div>
             </div>
-            <div className="h-[240px] overflow-auto p-5">
+            <div className="h-[300px] overflow-auto py-3 px-5">
               {genre?.map((data, index) => {
                 return (
                   <div
@@ -119,7 +123,7 @@ function Genres() {
                   >
                     <h1
                       onClick={() => HandleTvSelect(data.id, data.name)}
-                      className="text-xl font-semibold cursor-pointer text-slate-200"
+                      className="px-4 text-lg font-semibold rounded cursor-pointer text-slate-200"
                     >
                       {data.name}
                     </h1>
@@ -129,16 +133,16 @@ function Genres() {
             </div>
           </div>
         </div>
-        <div className="flex-1 h-[900px] flex-col justify-center overflow-auto rounded-xl ring-4 ring-slate-700 ">
+        <div className="flex-1 h-[900px] flex flex-col justify-center overflow-auto rounded-xl ring-4 ring-slate-700">
           {ShowContent1 && (
             <div>
               <div className="w-full px-2 py-4 lg:px-10 bg-slate-800">
-                <h1 className="px-4 text-3xl font-bold border-l-4 border-yellow-400 text-slate-200 ">
+                <h1 className="px-4 text-2xl font-bold border-l-4 border-yellow-400 text-slate-200 ">
                   {Gname}
                 </h1>
               </div>
               <div className="flex flex-col sm:items-center">
-                <div className="grid items-center grid-cols-3 p-2 md:px-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-3 gap-y-5">
+                <div className="grid items-center grid-cols-3 p-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-3 gap-y-5">
                   {dataFilterd?.slice(0, count).map((data, index) => {
                     return (
                       <MoviePoster
@@ -167,7 +171,7 @@ function Genres() {
           {ShowContent2 && (
             <div>
               <div className="w-full px-2 py-4 lg:px-10 bg-slate-800">
-                <h1 className="px-4 text-3xl font-bold border-l-4 border-yellow-400 text-slate-200 ">
+                <h1 className="px-4 text-2xl font-bold border-l-4 border-yellow-400 text-slate-200 ">
                   {Gnames}
                 </h1>
               </div>
