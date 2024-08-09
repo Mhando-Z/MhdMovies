@@ -7,6 +7,7 @@ import TvSeriesPoster from "./../Components/TvSeriesPoster";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import ReactPlayer from "react-player";
 import Rating from "../Components/Rating";
+import { ImLoop2 } from "react-icons/im";
 
 function TvSeriesDetails() {
   const [Details, setDetails] = useState([]);
@@ -160,6 +161,16 @@ function TvSeriesDetails() {
       setPage(Page - 1);
     }
   };
+
+  if (!Details || Details?.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <div>
+          <ImLoop2 className="text-3xl text-gray-100 transition-all duration-700 opacity-70 md:text-4xl animate-spin" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen font-roboto">

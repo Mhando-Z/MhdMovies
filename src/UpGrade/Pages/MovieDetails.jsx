@@ -7,6 +7,7 @@ import { FaRegCirclePlay } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import MoviePoster from "../Components/MoviePoster";
 import ReactPlayer from "react-player";
+import { ImLoop2 } from "react-icons/im";
 
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
@@ -144,6 +145,16 @@ function MovieDetails() {
       setPage(Page - 1);
     }
   };
+
+  if (!Details || Details?.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <div>
+          <ImLoop2 className="text-3xl text-gray-100 transition-all duration-700 opacity-70 md:text-4xl animate-spin" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen font-roboto">
