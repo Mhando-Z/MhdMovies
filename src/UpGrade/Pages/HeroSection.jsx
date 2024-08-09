@@ -4,6 +4,7 @@ import { Rating } from "../Components/Collection";
 import Slider from "../Components/Swipper/Swipe";
 import { motion } from "framer-motion";
 import { BiSolidMoviePlay } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 function HeroSection() {
   const { Trending } = useContext(MovieListContext);
@@ -48,8 +49,13 @@ function HeroSection() {
               transition={{ type: "spring", ease: "easeOut" }}
               className="flex flex-row items-center px-3 py-2 mt-3 font-medium text-center text-gray-100 bg-red-600 gap-x-2 hover:ring-green-700 hover:ring-1 "
             >
-              <BiSolidMoviePlay />
-              Watch
+              <Link
+                className="flex flex-row items-center w-full "
+                to={`/MovieDetails/${Trending[value]?.id}`}
+              >
+                <BiSolidMoviePlay />
+                Watch
+              </Link>
             </motion.button>
           </div>
         </div>
