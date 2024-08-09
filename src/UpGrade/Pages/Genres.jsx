@@ -77,9 +77,9 @@ function Genres() {
 
   return (
     <div className="flex flex-col justify-between min-h-screen px-2 mt-20 gap-y-5 ">
-      <div className="flex flex-col justify-between md:flex-row gap-x-10">
+      <div className="flex flex-col justify-between md:flex-row gap-y-4 gap-x-10">
         {/* side panel */}
-        <div className="flex md:flex-col justify-between flex-row md:w-[200px] md:h-screen h-[200px] md:rounded-md bg-slate-600">
+        <div className="flex md:flex-col justify-between flex-row md:w-[200px] md:min-h-screen h-[200px] md:rounded bg-slate-600">
           <div className="flex flex-col">
             <div className="bg-slate-600 h-[60px]">
               <div className="px-5 py-5">
@@ -133,24 +133,27 @@ function Genres() {
             </div>
           </div>
         </div>
-        <div className="flex-1 h-[900px] flex flex-col justify-center overflow-auto rounded-xl ring-4 ring-slate-700">
+        <div className="flex-1 h-[900px] flex flex-col items-center justify-center overflow-auto rounded-xl ring-4 ring-slate-700">
           {ShowContent1 && (
-            <div>
-              <div className="w-full px-2 py-4 lg:px-10 bg-slate-800">
+            <div className="flex flex-col min-h-screen">
+              <div className="sticky top-0 z-40 w-full px-2 py-4 mb-2 xl:mb-10 bg-slate-800">
                 <h1 className="px-4 text-2xl font-bold border-l-4 border-yellow-400 text-slate-200 ">
                   {Gname}
                 </h1>
               </div>
               <div className="flex flex-col sm:items-center">
-                <div className="grid items-center grid-cols-3 p-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-3 gap-y-5">
+                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-1 gap-y-5">
                   {dataFilterd?.slice(0, count).map((data, index) => {
                     return (
-                      <MoviePoster
-                        key={index + data.id}
-                        title={data.title}
-                        image={data.poster_path}
-                        id={data.id}
-                      />
+                      <div key={data.id}>
+                        <MoviePoster
+                          title={data.title}
+                          image={data.poster_path}
+                          id={data.id}
+                          rating={data?.vote_average}
+                        />
+                        <p>{data.title}</p>
+                      </div>
                     );
                   })}
                 </div>
@@ -176,15 +179,15 @@ function Genres() {
                 </h1>
               </div>
               <div className="flex flex-col sm:items-center">
-                <div className="grid items-center grid-cols-3 p-2 md:px-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-3 gap-y-5">
+                <div className="grid items-center grid-cols-3 p-2 md:px-10 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-1 gap-y-5">
                   {TvdataFilter?.slice(0, counts).map((data, index) => {
                     return (
                       <TvSeriesPoster
                         key={index + data.id}
-                        image2={data.backdrop_path}
                         name={data.name}
                         image={data.poster_path}
                         id={data.id}
+                        rating={data?.vote_average}
                       />
                     );
                   })}
