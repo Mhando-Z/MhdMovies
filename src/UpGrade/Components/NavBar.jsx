@@ -39,7 +39,7 @@ function NavBar() {
 
   return (
     <div className={`fixed top-0 left-0 right-0 z-50 flex flex-col ${visible}`}>
-      <div className={`flex flex-col px-2 mt-3`}>
+      <div className={`flex flex-col px-2 mt-2`}>
         <div className="relative flex flex-row items-center justify-between gap-x-5 ">
           {/* logo */}
           <div className="flex grow">
@@ -104,7 +104,7 @@ function NavBar() {
           </div>
           {/* navlinks for mobile phone */}
           {view ? (
-            <div className="absolute bottom-0 left-0 right-0 md:hidden top-14 bg-opacity-30">
+            <div className="absolute bottom-0 left-0 right-0 md:hidden top-16 bg-opacity-30">
               {/* navlinks */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -135,7 +135,7 @@ function NavBar() {
                   to={"Genres"}
                   className={({ isActive }) =>
                     isActive
-                      ? "bg-red-500  py-1 text-gray-100 rounded-3xl px-5  "
+                      ? "bg-red-500 py-1 text-gray-100 rounded-3xl px-5  "
                       : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:text-gray-100 rounded-3xl"
                   }
                 >
@@ -147,7 +147,7 @@ function NavBar() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="relative w-full mt-3"
+                className="relative w-full mt-4"
               >
                 <input
                   type="text"
