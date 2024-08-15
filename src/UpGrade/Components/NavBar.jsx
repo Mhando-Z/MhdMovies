@@ -107,6 +107,7 @@ function NavBar() {
             <div className="absolute bottom-0 left-0 right-0 md:hidden top-16 bg-opacity-30">
               {/* navlinks */}
               <motion.div
+                onClick={handleClick}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 className="flex flex-row items-center justify-between px-2 py-1 bg-black bg-opacity-25 md:flex ring-1 ring-gray-400 rounded-3xl"
@@ -160,7 +161,10 @@ function NavBar() {
                   onClick={HandleSearch}
                   className="absolute top-0 right-0 flex items-center justify-center bg-red-700 rounded-full size-10"
                 >
-                  <MdLocationSearching className="text-2xl text-center text-white" />
+                  <MdLocationSearching
+                    onClick={handleClick}
+                    className="text-2xl text-center text-white"
+                  />
                 </div>
               </motion.div>
             </div>
