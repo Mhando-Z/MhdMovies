@@ -73,8 +73,6 @@ function Genres() {
     return dt.genre_ids.includes(TvSelected);
   });
 
-  console.log(dataFilterd);
-
   return (
     <div className="flex flex-col justify-between min-h-screen px-2 mt-20 gap-y-5 ">
       <div className="flex flex-col justify-between md:flex-row gap-y-4 gap-x-10">
