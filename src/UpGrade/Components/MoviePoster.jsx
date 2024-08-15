@@ -27,6 +27,7 @@ export default function MoviePoster({ title, rating, image, id }) {
         <div className="w-full relative group md:h-[330px] h-[200px]  overflow-hidden bg-gray-200 rounded-lg aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
           <img
             alt={title}
+            loading="lazy"
             src={`https://image.tmdb.org/t/p/w500/${image}`}
             className="object-cover object-center w-full h-full group-hover:opacity-75"
           />

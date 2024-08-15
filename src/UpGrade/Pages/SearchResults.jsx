@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchPoster from "../Components/SearchPoster";
 import { motion } from "framer-motion";
+import { ImLoop2 } from "react-icons/im";
 
 function SearchResults() {
   const [Dataquery, setData] = useState();
@@ -43,6 +44,16 @@ function SearchResults() {
   useEffect(() => {
     getDetails();
   }, [id]);
+
+  if (!Dataquery || Dataquery?.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <div>
+          <ImLoop2 className="text-3xl text-gray-100 transition-all duration-700 opacity-70 md:text-4xl animate-spin" />
+        </div>
+      </div>
+    );
+  }
 
   // trim the unwanted
   const Dataque = Dataquery?.filter((dt) => dt.poster_path !== null);
