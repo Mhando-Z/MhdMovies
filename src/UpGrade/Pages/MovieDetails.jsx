@@ -156,6 +156,9 @@ function MovieDetails() {
     );
   }
 
+  // trim the unwanted
+  const Similars = Similar?.filter((dt) => dt.poster_path !== null);
+
   return (
     <div className="flex flex-col min-h-screen font-roboto">
       <div className="flex flex-col">

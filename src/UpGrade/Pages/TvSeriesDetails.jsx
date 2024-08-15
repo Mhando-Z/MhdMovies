@@ -172,6 +172,9 @@ function TvSeriesDetails() {
     );
   }
 
+  // trim the unwanted
+  const Similars = Similar?.filter((dt) => dt.poster_path !== null);
+
   return (
     <div className="flex flex-col min-h-screen font-roboto">
       <div className="flex flex-col">
@@ -435,7 +438,7 @@ function TvSeriesDetails() {
         <div className="container flex flex-col mx-auto mt-3 border-b-2 border-b-gray-700"></div>
         {/* Other movies which are similar */}
         <div className="container flex flex-col mx-auto mt-5 md:mt-20">
-          {Similar.length !== 0 ? (
+          {Similars.length !== 0 ? (
             <h1 className="mb-2 text-2xl font-bold text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
               Series you might like
             </h1>
@@ -443,7 +446,7 @@ function TvSeriesDetails() {
             ""
           )}
           <div className="grid grid-cols-3 gap-2 gap-y-8 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 ">
-            {Similar?.slice(0, count).map((data, index) => {
+            {Similars?.slice(0, count).map((data, index) => {
               return (
                 <div key={data.id}>
                   <TvSeriesPoster
