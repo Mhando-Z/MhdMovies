@@ -16,6 +16,7 @@ function TvSeriesDetails() {
   const [Page, setPage] = useState(1);
   const [ID, setIds] = useState([]);
   const { id } = useParams();
+  const [Cast, setCast] = useState();
   const [Images, setImage] = useState([]);
   const [Videos, setVideo] = useState([]);
   const [Selected, setSelect] = useState();
@@ -115,7 +116,23 @@ function TvSeriesDetails() {
       setImage(data.backdrops);
     } catch (error) {}
   }
+  async function getCasts() {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/tv/${id}/credits?language=en-US`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+      setCast(data.cast);
+    } catch (error) {}
+  }
   useEffect(() => {
+    getCasts();
     getVideo();
     getImages();
     getIds();
@@ -175,6 +192,7 @@ function TvSeriesDetails() {
   // trim the unwanted
   const Similars = Similar?.filter((dt) => dt.poster_path !== null);
   const Seasons = Details?.seasons?.filter((dt) => dt.poster_path !== null);
+  const Casts = Cast?.filter((dt) => dt.profile_path !== null);
 
   return (
     <div className="flex flex-col min-h-screen font-roboto">
@@ -423,24 +441,43 @@ function TvSeriesDetails() {
           })}
         </div>
         {/* Other movie images */}
-        <div className="grid grid-cols-3 gap-1 mt-2 ">
-          {Images?.slice(1, 4).map((dt, index) => {
+        <div className="grid grid-flow-col mt-2 overflow-x-auto overflow-y-hidden">
+          {Images?.map((dt, index) => {
             return (
-              <div key={dt.file_path + index}>
+              <div key={dt.file_path + index} className="w-[500px]">
                 <img
                   src={`https://image.tmdb.org/t/p/w1280/${dt?.file_path}`}
                   alt={dt?.title}
-                  className="object-cover w-screen h-[300px]"
+                  className="object-cover w-screen h-[400px]"
                 />
               </div>
             );
           })}
         </div>
         <div className="container flex flex-col mx-auto mt-3 border-b-2 border-b-gray-700"></div>
+        {/* Casts of movie */}
+        <h1 className="px-2 mt-2 mb-4 text-xl font-semibold text-gray-100 border-l-4 border-l-red-700 font-fantasy">
+          Cast
+        </h1>
+        <div className="grid grid-flow-col overflow-x-auto overflow-y-hidden">
+          {Casts?.map((dt, index) => {
+            return (
+              <div key={dt.file_path + index} className="w-[220px]">
+                <img
+                  src={`https://image.tmdb.org/t/p/w780/${dt?.profile_path}`}
+                  alt={dt?.name}
+                  className=" w-screen h-[300px]"
+                />
+                <h2 className="px-1 text-gray-100">{dt?.name}</h2>
+                <h2 className="px-1 text-gray-100">{dt?.character}</h2>
+              </div>
+            );
+          })}
+        </div>
         {/* Other movies which are similar */}
         <div className="container flex flex-col mx-auto mt-5 md:mt-20">
           {Similars.length !== 0 ? (
-            <h1 className="mb-2 text-2xl font-bold text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
+            <h1 className="mb-2 text-2xl font-medium text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
               Series you might like
             </h1>
           ) : (
