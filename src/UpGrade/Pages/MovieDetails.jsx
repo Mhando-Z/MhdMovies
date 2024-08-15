@@ -116,8 +116,6 @@ function MovieDetails() {
     } catch (error) {}
   }
 
-  console.log(Cast);
-
   useEffect(() => {
     getCasts();
     getVideo();
