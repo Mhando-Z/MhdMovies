@@ -14,7 +14,7 @@ function TvHeroSection() {
     <div>
       <div className="flex relative overflow-hidden w-screen flex-col font-roboto xl:h-[970px] lg:h-[800px] md:h-[880px] h-[450px] ">
         <img
-          src={`https://image.tmdb.org/t/p/w500/${Todaylist[value]?.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/w1280/${Todaylist[value]?.backdrop_path}`}
           alt={Todaylist[value]?.name}
           className="object-cover w-screen h-full"
         />

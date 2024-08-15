@@ -165,7 +165,7 @@ function MovieDetails() {
         {/* backdrop poster */}
         <div className="relative flex flex-col">
           <img
-            src={`https://image.tmdb.org/t/p/w500/${Details?.backdrop_path}`}
+            src={`https://image.tmdb.org/t/p/w1280/${Details?.backdrop_path}`}
             alt={Details?.title}
             className="object-cover object-top w-screen xl:h-[550px] h-[500px]"
           />

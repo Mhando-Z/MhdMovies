@@ -182,7 +182,7 @@ function TvSeriesDetails() {
         {/* backdrop poster */}
         <div className="relative flex flex-col">
           <img
-            src={`https://image.tmdb.org/t/p/w500/${Details?.backdrop_path}`}
+            src={`https://image.tmdb.org/t/p/w1280/${Details?.backdrop_path}`}
             alt={Details?.title}
             className="object-cover object-top w-screen xl:h-[550px] h-[500px]"
           />
@@ -405,7 +405,7 @@ function TvSeriesDetails() {
             return (
               <div key={data.id + index} className="">
                 <img
-                  src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
+                  src={`https://image.tmdb.org/t/p/w780/${data?.poster_path}`}
                   alt={Details?.title}
                   className="object- object-top w-screen h-[300px]"
                 />
@@ -428,7 +428,7 @@ function TvSeriesDetails() {
             return (
               <div key={dt.file_path + index}>
                 <img
-                  src={`https://image.tmdb.org/t/p/w500/${dt?.file_path}`}
+                  src={`https://image.tmdb.org/t/p/w1280/${dt?.file_path}`}
                   alt={dt?.title}
                   className="object-cover w-screen h-[300px]"
                 />
@@ -460,7 +460,7 @@ function TvSeriesDetails() {
               );
             })}
           </div>
-          {Similar.length !== 0 ? (
+          {Similar?.length !== 0 ? (
             <div className="flex flex-col items-end justify-end w-full mt-10">
               <div className="flex flex-row items-center space-x-5">
                 <motion.button
