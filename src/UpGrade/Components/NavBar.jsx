@@ -50,13 +50,13 @@ function NavBar() {
             />
           </div>
           {/* navlinks */}
-          <div className="flex-row items-center justify-between hidden px-2 py-1 bg-black bg-opacity-25 md:flex ring-1 ring-gray-400 rounded-3xl">
+          <div className="flex-row items-center justify-between hidden px-2 py-1 bg-black bg-opacity-25 gap-x-6 md:flex ring-1 ring-gray-400 rounded-3xl">
             <NavLink
               to={"/"}
               className={({ isActive }) =>
                 isActive
                   ? "bg-red-500 py-1 text-gray-100 rounded-3xl px-5  "
-                  : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:text-gray-100 rounded-3xl"
+                  : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:py-1 hover:text-gray-100 rounded-3xl"
               }
             >
               Home
@@ -66,7 +66,7 @@ function NavBar() {
               className={({ isActive }) =>
                 isActive
                   ? "bg-red-500  py-1 text-gray-100 rounded-3xl px-5  "
-                  : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:text-gray-100 rounded-3xl"
+                  : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:py-1 hover:text-gray-100 rounded-3xl"
               }
             >
               TvSeries
@@ -76,7 +76,7 @@ function NavBar() {
               className={({ isActive }) =>
                 isActive
                   ? "bg-red-500  py-1 text-gray-100 rounded-3xl px-5  "
-                  : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:text-gray-100 rounded-3xl"
+                  : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:py-1 hover:text-gray-100 rounded-3xl"
               }
             >
               Genres
@@ -117,7 +117,7 @@ function NavBar() {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-red-500 py-1 text-gray-100 rounded-3xl px-5  "
-                      : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:text-gray-100 rounded-3xl"
+                      : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:py-1 hover:text-gray-100 rounded-3xl"
                   }
                 >
                   Home
@@ -127,7 +127,7 @@ function NavBar() {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-red-500  py-1 text-gray-100 rounded-3xl px-5  "
-                      : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:text-gray-100 rounded-3xl"
+                      : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:py-1 hover:text-gray-100 rounded-3xl"
                   }
                 >
                   TvSeries
@@ -137,7 +137,7 @@ function NavBar() {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-red-500 py-1 text-gray-100 rounded-3xl px-5  "
-                      : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:text-gray-100 rounded-3xl"
+                      : "px-5 text-gray-100 font-medium hover:bg-red-500 hover:py-1 hover:text-gray-100 rounded-3xl"
                   }
                 >
                   Genres
