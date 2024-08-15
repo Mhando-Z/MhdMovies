@@ -50,7 +50,7 @@ function NavBar() {
             />
           </div>
           {/* navlinks */}
-          <div className="flex-row items-center justify-between flex-grow hidden px-2 py-1 bg-black bg-opacity-25 md:flex ring-1 ring-gray-400 rounded-3xl">
+          <div className="flex-row items-center justify-between hidden px-2 py-1 bg-black bg-opacity-25 md:flex ring-1 ring-gray-400 rounded-3xl">
             <NavLink
               to={"/"}
               className={({ isActive }) =>
