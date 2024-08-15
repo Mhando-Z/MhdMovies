@@ -12,9 +12,10 @@ function HeroSection() {
 
   return (
     <div>
+      {/* image size for backdrop-picture is 1280*/}
       <div className="flex relative overflow-hidden w-screen flex-col font-roboto xl:h-[970px] lg:h-[800px] md:h-[880px] h-[450px] ">
         <img
-          src={`https://image.tmdb.org/t/p/w500/${Trending[value]?.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/w1280/${Trending[value]?.backdrop_path}`}
           alt={Trending[value]?.title}
           className="object-cover w-screen h-full"
         />

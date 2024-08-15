@@ -36,7 +36,7 @@ function SearchPoster({ image, rating, name, title, id, type }) {
           <img
             alt={title || name}
             loading="lazy"
-            src={`https://image.tmdb.org/t/p/w500/${image}`}
+            src={`https://image.tmdb.org/t/p/w780/${image}`}
             className="object-cover object-center w-full h-full group-hover:opacity-75"
           />
           <div className="absolute top-0 bottom-0 left-0 right-0 flex-col items-center justify-center hidden transition-all duration-700 bg-black rounded-lg bg-opacity-80 group-hover:flex">
