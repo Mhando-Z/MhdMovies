@@ -385,7 +385,7 @@ function MovieDetails() {
             ""
           )}
           <div className="grid grid-cols-3 gap-2 gap-y-8 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 ">
-            {Similar?.slice(0, count).map((data, index) => {
+            {Similars?.slice(0, count).map((data, index) => {
               return (
                 <div key={data.id}>
                   <MoviePoster

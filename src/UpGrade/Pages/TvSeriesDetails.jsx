@@ -174,6 +174,7 @@ function TvSeriesDetails() {
 
   // trim the unwanted
   const Similars = Similar?.filter((dt) => dt.poster_path !== null);
+  const Seasons = Details?.seasons?.filter((dt) => dt.poster_path !== null);
 
   return (
     <div className="flex flex-col min-h-screen font-roboto">
@@ -400,7 +401,7 @@ function TvSeriesDetails() {
             Details?.seasons?.length <= 1 ? "justify-start" : "justify-center"
           } md:justify-start gap-5 lg:px-10  mt-4 h-[320px] overflow-auto `}
         >
-          {Details?.seasons?.map((data, index) => {
+          {Seasons?.map((data, index) => {
             return (
               <div key={data.id + index} className="">
                 <img
