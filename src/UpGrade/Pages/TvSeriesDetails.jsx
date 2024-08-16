@@ -352,7 +352,7 @@ function TvSeriesDetails() {
             {/* Play movie button */}
             {Trailer ? (
               <div className="absolute right-0 flex-col hidden size-20 md:flex ">
-                <Link to={`https://vidsrc.xyz/embed/movie?imdb=${ID.imdb_id}`}>
+                <Link to={`https://vidsrc.xyz/embed/tvf?imdb=${ID.imdb_id}`}>
                   <FaRegCirclePlay className="text-5xl text-gray-100 transition-all duration-700 animate-pulse" />
                 </Link>
               </div>
@@ -395,7 +395,7 @@ function TvSeriesDetails() {
             <div className="z-40 flex flex-col items-end px-4 mt-2 gap-y-4">
               {/* selections */}
               <Link
-                to={`https://vidsrc.xyz/embed/movie?imdb=${ID.imdb_id}`}
+                to={`https://vidsrc.xyz/embed/tv?imdb=${ID.imdb_id}`}
                 className="flex flex-row items-center px-4 py-2 text-gray-100 bg-red-600 bg-opacity-65 gap-x-2"
               >
                 <FaRegCirclePlay />
