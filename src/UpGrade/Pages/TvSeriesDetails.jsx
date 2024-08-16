@@ -229,12 +229,12 @@ function TvSeriesDetails() {
                     {Trailer ? (
                       <div className="flex flex-col px-3 md:hidden">
                         <Link
-                          to={`https://vidsrc.xyz/embed/movie?imdb=${ID.imdb_id}`}
+                          to={`https://vidsrc.xyz/embed/tv?imdb=${ID.imdb_id}`}
                           className="flex flex-row items-center px-2 py-2 bg-red-600"
                         >
                           <FaRegCirclePlay className="text-3xl text-gray-100 transition-all duration-700 animate-pulse" />{" "}
                           <p className="ml-2 text-lg text-gray-100">
-                            WatchMovie
+                            WatchSeries
                           </p>
                         </Link>
                       </div>
