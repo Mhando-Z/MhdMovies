@@ -18,7 +18,7 @@ function SearchResults() {
       setPage(Page + 1);
     }
   };
-  //handle Decrease
+
   const handleDecrease = () => {
     if (count === 20 && count >= 14) {
       setCount(count - 6);
@@ -45,7 +45,7 @@ function SearchResults() {
     getDetails();
   }, [id]);
 
-  if (!Dataquery || Dataquery?.length === 0) {
+  if (!Dataquery) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div>
@@ -55,8 +55,18 @@ function SearchResults() {
     );
   }
 
-  // trim the unwanted
   const Dataque = Dataquery?.filter((dt) => dt.poster_path !== null);
+
+  // Conditional rendering for no results found
+  if (Dataque.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-xl font-medium text-gray-100">
+          No results found for "{id}"
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="container flex flex-col min-h-screen mx-auto mt-20">
