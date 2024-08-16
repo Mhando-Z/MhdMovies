@@ -27,7 +27,9 @@ function Footer() {
       <div className="container px-4 mx-auto">
         <div className="flex flex-col justify-between w-full md:flex-row gap-x-20">
           <div className="flex flex-col items-center justify-center flex-grow mb-6 md:justify-start md:items-start">
-            <img src={logo} alt="Logo" className="mb-4 h-auto w-[200px]" />
+            <Link to={"/"}>
+              <img src={logo} alt="Logo" className="mb-4 h-auto w-[200px]" />
+            </Link>
           </div>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3 gap-x-20">
             <div className="w-full mb-6 ">

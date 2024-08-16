@@ -199,11 +199,13 @@ function TvSeriesDetails() {
       <div className="flex flex-col">
         {/* backdrop poster */}
         <div className="relative flex flex-col">
-          <img
-            src={`https://image.tmdb.org/t/p/w1280/${Details?.backdrop_path}`}
-            alt={Details?.title}
-            className="object-cover object-top w-screen xl:h-[550px] h-[500px]"
-          />
+          <Link to={"/"}>
+            <img
+              src={`https://image.tmdb.org/t/p/w1280/${Details?.backdrop_path}`}
+              alt={Details?.title}
+              className="object-cover object-top w-screen xl:h-[550px] h-[500px]"
+            />
+          </Link>
           <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col bg-gradient-to-t from-black via-transparent to-transparent"></div>
           {/* Trallers section be here*/}
           {Trailer ? (
