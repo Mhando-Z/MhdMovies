@@ -155,13 +155,11 @@ function Genres() {
                     );
                   })}
                 </div>
-                <div className="flex items-end justify-end px-10 py-4 gap-x-5">
-                  <h1 className="text-xl font-semibold text-slate-200 ">
-                    Page {1}
-                  </h1>
+                <div className="flex items-end justify-end px-10 py-4 text-base xl:text-lg gap-x-5">
+                  <h1 className="font-semibold  text-slate-200">Page {1}</h1>
                   <h1
                     onClick={handleIncrese}
-                    className="text-xl font-semibold cursor-pointer text-slate-200"
+                    className="font-semibold cursor-pointer  text-slate-200"
                   >
                     More..
                   </h1>
