@@ -7,6 +7,7 @@ export function TvSeriesProvider({ children }) {
   const [Tvlist, setList] = useState([]);
   const [Todaylist, setList2] = useState([]);
   const [TopRated, setTopRated] = useState([]);
+  const [ToDay, setToday] = useState([]);
   const [Page1, setPage1] = useState(1);
   const [Page3, setPage3] = useState(2);
   const TvCollected = [...Tvlist, ...TopRated, ...Todaylist];
@@ -19,7 +20,9 @@ export function TvSeriesProvider({ children }) {
   async function getTv() {
     try {
       const { data } = await axios.get(
-        ` https://api.themoviedb.org/3/tv/popular?language=en-US&page=${Page1}`,
+        ` https://api.themoviedb.org/3/tv/popular?language=en-US&page=${
+          Page1 + 4
+        }`,
         {
           headers: {
             accept: "application/json",
@@ -29,6 +32,21 @@ export function TvSeriesProvider({ children }) {
         }
       );
       setList(data.results);
+    } catch (error) {}
+  }
+  async function getToday() {
+    try {
+      const { data } = await axios.get(
+        ` https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=${Page1}`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+      setToday(data.results);
     } catch (error) {}
   }
   async function getTopRated() {
@@ -62,6 +80,7 @@ export function TvSeriesProvider({ children }) {
     } catch (error) {}
   }
   useEffect(() => {
+    getToday();
     getTopRated();
     getTodays();
     getTv();
@@ -73,6 +92,7 @@ export function TvSeriesProvider({ children }) {
         Todaylist,
         Page1,
         Page3,
+        ToDay,
         setPage1,
         setPage3,
         TvHandlePages,

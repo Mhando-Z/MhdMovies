@@ -5,6 +5,7 @@ import TodaySeies from "../TvSeriesScreens/TodaySeries";
 import TvSeriesList from "../TvSeriesScreens/TvSeriesList";
 import { ImLoop2 } from "react-icons/im";
 import TvSeriesContex from "../../Context/TvSeriesContext";
+import AiringToday from "../TvSeriesScreens/AiringToday";
 
 function TvSeriesPage() {
   const { Todaylist } = useContext(TvSeriesContex);
@@ -24,6 +25,8 @@ function TvSeriesPage() {
       <TvHeroSection />
       {/* top rated series */}
       <TopRatedSeries />
+      {/* Airing today */}
+      <AiringToday />
       {/* Trending this week */}
       <TodaySeies />
       {/* Popular TvSeries */}
