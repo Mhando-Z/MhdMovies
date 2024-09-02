@@ -189,7 +189,6 @@ function TvSeriesDetails() {
     );
   }
 
-  console.log(Details);
 
   // trim the unwanted
   const Similars = Similar?.filter((dt) => dt.poster_path !== null);

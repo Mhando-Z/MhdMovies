@@ -4,7 +4,6 @@ import TvSeriesPoster from "../Components/TvSeriesPoster";
 
 function AiringToday() {
   const { ToDay } = useContext(TvSeriesContex);
-  console.log(ToDay);
 
   return (
     <div className="">
