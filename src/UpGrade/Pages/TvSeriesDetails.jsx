@@ -189,6 +189,8 @@ function TvSeriesDetails() {
     );
   }
 
+  console.log(Details);
+
   // trim the unwanted
   const Similars = Similar?.filter((dt) => dt.poster_path !== null);
   const Seasons = Details?.seasons?.filter((dt) => dt.poster_path !== null);
@@ -312,7 +314,7 @@ function TvSeriesDetails() {
               <div className="flex flex-row items-center space-x-2">
                 <h2 className="text-base lg:text-lg text-slate-200">Date:</h2>
                 <h2 className="text-base text-yellow-500 xl:text-lg">
-                  {Details?.release_date}
+                  {Details?.first_air_date}
                 </h2>
               </div>
             </div>
@@ -350,6 +352,18 @@ function TvSeriesDetails() {
                   {Details?.number_of_seasons}
                 </h2>
               </div>
+              {Details.next_episode_to_air !== null ? (
+                <div className="flex flex-row space-x-2 ">
+                  <h2 className="text-sm md:text-base xl:text-lg text-slate-200">
+                    Next Episode Release:
+                  </h2>
+                  <h2 className="text-sm md:text-base xl:text-lg text-slate-200">
+                    {Details?.next_episode_to_air.air_date}
+                  </h2>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             {/* Play movie button */}
             {Trailer ? (
