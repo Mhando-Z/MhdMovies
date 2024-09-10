@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import MoviePoster from "../Components/MoviePoster";
 import ReactPlayer from "react-player";
 import { ImLoop2 } from "react-icons/im";
+import { Dots } from "react-activity";
 
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
@@ -167,7 +168,7 @@ function MovieDetails() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div>
-          <ImLoop2 className="text-3xl text-gray-100 transition-all duration-700 opacity-70 md:text-4xl animate-spin" />
+          <Dots color="gray" size={25} speed={1} animating={true} />
         </div>
       </div>
     );
@@ -384,7 +385,7 @@ function MovieDetails() {
             return (
               <div key={dt.file_path + index} className="w-[500px]">
                 <img
-                  src={`https://image.tmdb.org/t/p/w1280/${dt?.file_path}`}
+                  src={`https://image.tmdb.org/t/p/w780/${dt?.file_path}`}
                   alt={dt?.title}
                   className="object-cover w-screen h-[400px]"
                 />

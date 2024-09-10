@@ -8,6 +8,7 @@ import { FaRegCirclePlay } from "react-icons/fa6";
 import ReactPlayer from "react-player";
 import Rating from "../Components/Rating";
 import { ImLoop2 } from "react-icons/im";
+import { Dots } from "react-activity";
 
 function TvSeriesDetails() {
   const [Details, setDetails] = useState([]);
@@ -183,12 +184,11 @@ function TvSeriesDetails() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div>
-          <ImLoop2 className="text-3xl text-gray-100 transition-all duration-700 opacity-70 md:text-4xl animate-spin" />
+          <Dots color="gray" size={25} speed={1} animating={true} />
         </div>
       </div>
     );
   }
-
 
   // trim the unwanted
   const Similars = Similar?.filter((dt) => dt.poster_path !== null);
@@ -455,13 +455,13 @@ function TvSeriesDetails() {
             );
           })}
         </div>
-        {/* Other movie images */}
+        {/* Related TvSeries images */}
         <div className="grid grid-flow-col mt-2 overflow-x-auto overflow-y-hidden">
           {Images?.map((dt, index) => {
             return (
               <div key={dt.file_path + index} className="w-[500px]">
                 <img
-                  src={`https://image.tmdb.org/t/p/w1280/${dt?.file_path}`}
+                  src={`https://image.tmdb.org/t/p/w780/${dt?.file_path}`}
                   alt={dt?.title}
                   className="object-cover w-screen h-[400px]"
                 />
