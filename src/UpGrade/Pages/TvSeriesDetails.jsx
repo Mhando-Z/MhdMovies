@@ -7,7 +7,6 @@ import TvSeriesPoster from "./../Components/TvSeriesPoster";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import ReactPlayer from "react-player";
 import Rating from "../Components/Rating";
-import { ImLoop2 } from "react-icons/im";
 import { Dots } from "react-activity";
 
 function TvSeriesDetails() {

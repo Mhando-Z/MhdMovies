@@ -7,7 +7,6 @@ import { FaRegCirclePlay } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import MoviePoster from "../Components/MoviePoster";
 import ReactPlayer from "react-player";
-import { ImLoop2 } from "react-icons/im";
 import { Dots } from "react-activity";
 
 function MovieDetails() {
