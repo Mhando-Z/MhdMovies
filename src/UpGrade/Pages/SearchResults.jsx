@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchPoster from "../Components/SearchPoster";
 import { motion } from "framer-motion";
-import { ImLoop2 } from "react-icons/im";
+import { Dots } from 'react-activity';
 
 function SearchResults() {
   const [Dataquery, setData] = useState();
@@ -49,7 +49,8 @@ function SearchResults() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div>
-          <ImLoop2 className="text-3xl text-gray-100 transition-all duration-700 opacity-70 md:text-4xl animate-spin" />
+          <Dots color="gray" size={25} speed={1} animating={true} />
+
         </div>
       </div>
     );

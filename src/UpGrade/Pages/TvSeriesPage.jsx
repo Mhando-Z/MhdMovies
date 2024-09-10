@@ -3,9 +3,9 @@ import TvHeroSection from "../TvSeriesScreens/TvHeroSection";
 import TopRatedSeries from "../TvSeriesScreens/TopRatedSeries";
 import TodaySeies from "../TvSeriesScreens/TodaySeries";
 import TvSeriesList from "../TvSeriesScreens/TvSeriesList";
-import { ImLoop2 } from "react-icons/im";
 import TvSeriesContex from "../../Context/TvSeriesContext";
 import AiringToday from "../TvSeriesScreens/AiringToday";
+import { Dots } from "react-activity";
 
 function TvSeriesPage() {
   const { Todaylist } = useContext(TvSeriesContex);
@@ -14,7 +14,7 @@ function TvSeriesPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div>
-          <ImLoop2 className="text-3xl text-gray-100 transition-all duration-700 opacity-70 md:text-4xl animate-spin" />
+          <Dots color="gray" size={25} speed={1} animating={true} />
         </div>
       </div>
     );

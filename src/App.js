@@ -11,6 +11,7 @@ import ScrollToTopButton from "./UpGrade/Components/FloatingButton";
 import MovieDetails from "./UpGrade/Pages/MovieDetails";
 import TvSeriesDetails from "./UpGrade/Pages/TvSeriesDetails";
 import Genres from "./UpGrade/Pages/Genres";
+import "react-activity/dist/Dots.css";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
