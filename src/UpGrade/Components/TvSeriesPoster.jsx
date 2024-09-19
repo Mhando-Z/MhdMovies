@@ -46,7 +46,7 @@ export default function TvSeriesPoster({ name, rating, image, id }) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="px-1 mt-4 text-sm font-bold text-center text-white md:text-xl line-clamp-2"
+              className="px-1 mt-4 text-xs font-bold text-center text-white md:text-xl line-clamp-1 md:line-clamp-2"
             >
               {name}
             </motion.h1>
@@ -54,10 +54,10 @@ export default function TvSeriesPoster({ name, rating, image, id }) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="flex flex-row items-center justify-center w-full text-sm font-medium text-center text-white md:text-lg gap-x-2"
+              className="flex flex-row items-center justify-center w-full text-xs font-medium text-center text-white md:text-lg gap-x-2"
             >
               {rating}
-              <IoIosStar className="text-sm text-yellow-400 md:text-lg" />
+              <IoIosStar className="text-xs text-yellow-400 md:text-lg" />
             </motion.p>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -69,7 +69,7 @@ export default function TvSeriesPoster({ name, rating, image, id }) {
               className="flex flex-row items-center px-3 py-1 mt-3 font-medium text-center text-black bg-gray-100 md:px-5 md:py-2 hover:ring-green-700 rounded-3xl hover:bg-slate-50 hover:ring-1 "
             >
               <Link
-                className="flex flex-row items-center w-full "
+                className="flex flex-row items-center w-full gap-1 text-xs md:text-sm "
                 to={`/TvSeriesDetails/${id}`}
               >
                 <BiSolidMoviePlay />
