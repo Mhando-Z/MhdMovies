@@ -495,7 +495,7 @@ function TvSeriesDetails() {
         {/* Other movies which are similar */}
         <div className="container flex flex-col mx-auto mt-5 md:mt-20">
           {Similars.length !== 0 ? (
-            <h1 className="mb-2 text-2xl font-medium text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
+            <h1 className="mb-2 text-xl font-medium text-gray-100 md:mb-10 md:text-2xl font-roboto">
               Series you might like
             </h1>
           ) : (
