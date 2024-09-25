@@ -115,7 +115,7 @@ function Genres() {
                             >
                               <h1
                                 onClick={() => HandleSelect(data.id, data.name)}
-                                className="px-4 text-lg font-semibold rounded cursor-pointer text-slate-200"
+                                className="px-4 text-xs font-semibold rounded cursor-pointer md:text-sm text-slate-200"
                               >
                                 {data.name}
                               </h1>
@@ -145,7 +145,7 @@ function Genres() {
                                 onClick={() =>
                                   HandleTvSelect(data.id, data.name)
                                 }
-                                className="px-4 text-lg font-semibold rounded cursor-pointer text-slate-200"
+                                className="px-4 text-xs font-semibold rounded cursor-pointer md:text-sm text-slate-200"
                               >
                                 {data.name}
                               </h1>
