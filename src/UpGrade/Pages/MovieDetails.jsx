@@ -406,8 +406,12 @@ function MovieDetails() {
                   alt={dt?.name}
                   className=" w-screen h-[300px]"
                 />
-                <h2 className="px-1 text-gray-100">{dt?.name}</h2>
-                <h2 className="px-1 text-gray-100">{dt?.character}</h2>
+                <h2 className="px-1 text-xs text-gray-100 md:text-sm">
+                  {dt?.name}
+                </h2>
+                <h2 className="px-1 text-xs text-gray-100 md:text-sm">
+                  {dt?.character}
+                </h2>
               </div>
             );
           })}
@@ -415,7 +419,7 @@ function MovieDetails() {
         {/* Other movies which are similar */}
         <div className="container flex flex-col mx-auto mt-5 md:mt-20">
           {Similar.length !== 0 ? (
-            <h1 className="mb-2 text-2xl font-medium text-gray-100 md:mb-10 sm:text-3xl md:text-4xl font-roboto">
+            <h1 className="mb-2 text-xl font-medium text-gray-100 md:mb-10 sm:text-3xl md:text-2xl font-roboto">
               Movies you might like
             </h1>
           ) : (
@@ -492,7 +496,7 @@ function MovieDetails() {
           ) : (
             <div className="mt-5 h-[400px] overflow-auto bg-slate-900 bg-opacity-50">
               <div className="sticky top-0 flex border-b-2 bg-gray-950 border-slate-700">
-                <h1 className="mt-5 mb-5 text-2xl font-semibold text-yellow-500 md:text-3xl ">
+                <h1 className="mt-5 mb-5 text-xl font-semibold text-yellow-500 md:text-2xl ">
                   Reviews
                 </h1>
               </div>
@@ -503,7 +507,7 @@ function MovieDetails() {
                       <IoPersonCircleOutline className="text-3xl" />
                       {data.author}
                     </h1>
-                    <p className="mb-6 text-base tracking-tighter text-justify xl:text-lg text-slate-200">
+                    <p className="mb-6 text-xs tracking-tighter text-justify md:text-sm xl:text-sm text-slate-200">
                       {data.content}
                     </p>
                   </div>
