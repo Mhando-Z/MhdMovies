@@ -1,10 +1,10 @@
 import React, { useContext, useState, useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Search } from "lucide-react";
 import MovieListContext from "../../Context/MovieListContext";
-import logo from "../../Assets/Logo/mhd.png";
 import { motion, AnimatePresence } from "framer-motion";
+import logo from "../../Assets/Logo/mhd.png";
 
 function NavBar() {
   const [query, setQuery] = useState("");
@@ -45,10 +45,15 @@ function NavBar() {
   };
 
   const handleClick = () => setView(!view);
+  const location = useLocation();
 
   return (
     <motion.div
-      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md ${visible}`}
+      className={`${
+        location?.pathname === "/Genres"
+          ? "hidden"
+          : "fixed top-0 left-0 right-0 z-50 backdrop-blur-md "
+      }${visible}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 100 }}

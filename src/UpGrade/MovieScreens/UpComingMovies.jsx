@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { motion } from "framer-motion";
 import MovieListContext from "../../Context/MovieListContext";
 import MoviePoster from "../Components/MoviePoster";
 import {

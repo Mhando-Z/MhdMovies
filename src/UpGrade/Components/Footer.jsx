@@ -6,19 +6,17 @@ import { FaFacebook } from "react-icons/fa6";
 import { RiInstagramFill } from "react-icons/ri";
 import { FaYoutube } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  const location = useLocation();
+
   return (
     <motion.footer
-      className="py-8 mt-10 text-gray-100 bg-black border-t bg-opacity-30 border-t-gray-600"
+      className={`${
+        location.pathname === "/Genres" ? "hidden" : ""
+      } py-8 mt-10  text-gray-100 bg-black border-t bg-opacity-30 border-t-gray-600`}
       initial={{ opacity: 1, y: 100 }}
       viewport={{ once: true }}
       animate={{ opacity: 1, y: 0 }}
@@ -35,15 +33,13 @@ function Footer() {
             <div className="w-full mb-6 ">
               <h4 className="mb-4 font-semibold">Navigations</h4>
               <div className="flex flex-col gap-y-1">
-                <Link onClick={scrollToTop} to={"/"} className="mb-2">
+                <Link to={"/"} className="mb-2">
                   Home
                 </Link>
-                <Link onClick={scrollToTop} to={"TvSeries/"} className="mb-2">
+                <Link to={"TvSeries/"} className="mb-2">
                   TvSeries
                 </Link>
-                <Link onClick={scrollToTop} className="mb-2">
-                  Genres
-                </Link>
+                <Link className="mb-2">Genres</Link>
               </div>
             </div>
             <div className="w-full mb-6 ">
