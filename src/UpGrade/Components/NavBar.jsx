@@ -65,7 +65,7 @@ function NavBar() {
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `px-4 py-2 rounded-full transition-all duration-200 ${
+                `px-4 py-1.5 rounded-full transition-all duration-200 ${
                   isActive
                     ? "bg-red-500 text-white"
                     : "text-gray-300 hover:bg-red-500/10 hover:text-white"
@@ -77,7 +77,7 @@ function NavBar() {
             <NavLink
               to="TvSeries/"
               className={({ isActive }) =>
-                `px-4 py-2 rounded-full transition-all duration-200 ${
+                `px-4 py-1.5 rounded-full transition-all duration-200 ${
                   isActive
                     ? "bg-red-500 text-white"
                     : "text-gray-300 hover:bg-red-500/10 hover:text-white"
@@ -89,7 +89,7 @@ function NavBar() {
             <NavLink
               to="Genres"
               className={({ isActive }) =>
-                `px-4 py-2 rounded-full transition-all duration-200 ${
+                `px-4 py-1.5 rounded-full transition-all duration-200 ${
                   isActive
                     ? "bg-red-500 text-white"
                     : "text-gray-300 hover:bg-red-500/10 hover:text-white"
@@ -125,7 +125,7 @@ function NavBar() {
                     onChange={handleChange}
                     onKeyDown={handlePress}
                     onBlur={handleSearchBlur}
-                    className="w-full px-4 py-2 pl-10 text-white placeholder-gray-400 rounded-full bg-white/10 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="w-full px-4 py-1.5 pl-10 text-white placeholder-gray-400 rounded-full bg-white/10 focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Search movies..."
                   />
                   <Search

@@ -381,7 +381,7 @@ function MovieDetails() {
         </div>
         <div className="container flex flex-col mx-auto mt-4 border-b-2 border-b-gray-700"></div>
         {/* Casts of movie */}
-        <h1 className="px-2 mb-4 text-xl font-semibold text-gray-100 border-l-4 border-l-red-700 font-scifi">
+        <h1 className="px-2 mt-2 mb-4 text-xl font-semibold text-gray-100 border-l-4 border-l-red-700 font-scifi">
           Cast
         </h1>
         <div className="grid grid-flow-col overflow-x-auto overflow-y-hidden">

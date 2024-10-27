@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import TvSeriesContex from "../../Context/TvSeriesContext";
-import { motion } from "framer-motion";
 import TvSeriesPoster from "../Components/TvSeriesPoster";
+import { MinusCircle, PlusCircle, TrendingUp, Tv } from "lucide-react";
 
 function TrendingSeries() {
   const { Todaylist } = useContext(TvSeriesContex);
@@ -21,15 +21,89 @@ function TrendingSeries() {
   };
   return (
     <div className="container flex flex-col mx-auto">
-      <h1 className="mt-3 text-2xl font-bold text-gray-100 sm:text-3xl md:text-4xl mb-7 font-roboto">
-        Trending Series
-      </h1>
+      <div className="relative py-6">
+        {/* Background glow effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 via-red-500/5 to-transparent blur-xl" />
+
+        <div className="relative">
+          {/* Main container */}
+          <div className="flex items-center gap-4">
+            {/* Icon group with animation */}
+            <div className="relative hidden sm:block">
+              <Tv className="w-8 h-8 text-red-500" />
+              <TrendingUp className="absolute w-4 h-4 text-red-400 -top-2 -right-2 animate-bounce" />
+            </div>
+
+            {/* Heading content */}
+            <div className="flex flex-col">
+              <div className="relative">
+                {/* Main heading with gradient */}
+                <h1 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
+                  <span className="relative">
+                    {/* Gradient underline */}
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 via-red-400 to-transparent transform translate-y-2" />
+                    {/* Text with gradient */}
+                    <span className="relative text-transparent bg-gradient-to-r from-white via-gray-100 to-gray-200 bg-clip-text">
+                      Trending Series
+                    </span>
+                  </span>
+                </h1>
+
+                {/* Subtitle */}
+                <p className="mt-4 text-sm text-gray-400">
+                  Most watched shows right now
+                </p>
+              </div>
+            </div>
+
+            {/* Decorative elements */}
+            <div className="items-center flex-grow hidden gap-2 md:flex">
+              <div className="flex-grow h-[1px] bg-gradient-to-r from-red-500/50 to-transparent" />
+              {/* Trending indicators */}
+              <div className="flex gap-1">
+                {[...Array(3)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-1 rounded-full bg-red-500/50 animate-pulse"
+                    style={{
+                      height: `${(i + 1) * 8}px`,
+                      animationDelay: `${i * 200}ms`,
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom accent line */}
+          <div className="absolute bottom-0 left-0 right-0">
+            <div className="h-[1px] bg-gradient-to-r from-transparent via-red-500/30 to-transparent" />
+          </div>
+        </div>
+
+        {/* Floating particles */}
+        <div className="absolute top-0 right-0 hidden md:block">
+          {[...Array(3)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 rounded-full bg-red-400/60 animate-ping"
+              style={{
+                top: `${i * 10}px`,
+                right: `${i * 15}px`,
+                animationDelay: `${i * 300}ms`,
+                animationDuration: "2s",
+              }}
+            />
+          ))}
+        </div>
+      </div>
       <div className="grid grid-cols-3 gap-2 gap-y-8 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 ">
         {Todaylist?.slice(0, count).map((data, index) => {
           return (
             <div key={data.id}>
               <TvSeriesPoster
                 name={data?.name}
+                image2={data?.backdrop_path}
                 image={data?.poster_path}
                 id={data.id}
                 rating={data?.vote_average}
@@ -39,30 +113,24 @@ function TrendingSeries() {
         })}
       </div>
       <div className="flex flex-col items-end justify-end w-full mt-10">
-        <div className="flex flex-row items-center space-x-5">
-          <motion.button
-            whileInView={{ opacity: 1, y: 0 }}
-            whileTap={{ scale: 0.8 }}
-            transition={{ type: "spring", ease: "easeOut" }}
+        {/* Less/More Button */}
+        {count === 20 ? (
+          <button
             onClick={handleDecrease}
-            className={`text-slate-200 text-base xl:text-lg font-semibold cursor-pointer ${
-              count === 20 ? "flex" : "hidden"
-            }`}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
           >
-            Less..
-          </motion.button>
-          <motion.button
-            whileInView={{ opacity: 1, y: 0 }}
-            whileTap={{ scale: 0.8 }}
-            transition={{ type: "spring", ease: "easeOut" }}
+            <MinusCircle className="w-4 h-4" />
+            <span>Show Less</span>
+          </button>
+        ) : (
+          <button
             onClick={handleIncrese}
-            className={`text-slate-200 bg-red-600 px-3 text-base xl:text-lg font-semibold cursor-pointer ${
-              count === 20 ? "hidden" : "flex"
-            }`}
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
           >
-            More..
-          </motion.button>
-        </div>
+            <PlusCircle className="w-4 h-4" />
+            <span>Show More</span>
+          </button>
+        )}
       </div>
     </div>
   );
