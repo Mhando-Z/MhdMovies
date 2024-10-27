@@ -86,7 +86,7 @@ function UpComingMovies() {
         <div className="absolute -bottom-1 right-0 w-20 h-[1px] bg-gradient-to-l from-red-500/50 to-transparent transform -rotate-45" />
       </div>
 
-      <div className="grid grid-cols-3 gap-2 gap-y-8 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 ">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 gap-y-8 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 ">
         {UpComingMovies?.slice(0, count).map((data, index) => {
           return (
             <div key={data.id}>
