@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import MoviePoster from "../Components/MoviePoster";
 import ReactPlayer from "react-player";
 import { Dots } from "react-activity";
+import { Slider } from "../Components/slider";
+import CastProfile from "../Components/Cast";
 
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
@@ -394,24 +396,18 @@ function MovieDetails() {
         </div>
         <div className="container flex flex-col mx-auto border-b-2 border-b-gray-700"></div>
         {/* Casts of movie */}
-        <h1 className="px-2 mt-2 mb-4 text-xl font-semibold text-gray-100 border-l-4 border-l-red-700 font-fantasy">
+        <h1 className="px-2 mt-2 mb-4 text-xl font-semibold text-gray-100 border-l-4 border-l-red-700 font-scifi">
           Cast
         </h1>
         <div className="grid grid-flow-col overflow-x-auto overflow-y-hidden">
           {Casts?.map((dt, index) => {
             return (
               <div key={dt.file_path + index} className="w-[220px]">
-                <img
-                  src={`https://image.tmdb.org/t/p/w780/${dt?.profile_path}`}
-                  alt={dt?.name}
-                  className=" w-screen h-[300px]"
+                <CastProfile
+                  image={dt?.profile_path}
+                  name={dt?.name}
+                  role={dt?.character}
                 />
-                <h2 className="px-1 text-xs text-gray-100 md:text-sm">
-                  {dt?.name}
-                </h2>
-                <h2 className="px-1 text-xs text-gray-100 md:text-sm">
-                  {dt?.character}
-                </h2>
               </div>
             );
           })}
@@ -487,6 +483,9 @@ function MovieDetails() {
           ) : (
             ""
           )}
+        </div>
+        <div className="mt-5">
+          <Slider data={Similars} />
         </div>
 
         {/* Reviews */}

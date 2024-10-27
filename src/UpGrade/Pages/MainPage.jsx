@@ -28,6 +28,7 @@ function MainPage() {
       <TrendingSeries />
       {/* Upcoming Movies */}
       <UpComingMovies />
+      {/*  */}
     </div>
   );
 }

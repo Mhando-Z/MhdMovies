@@ -21,6 +21,7 @@ module.exports = {
         fantasy: ["Almendra SC", "serif"],
         animation: ["Baloo Bhai 2", "sans-serif"],
         romance: ["Great Vibes", "cursive"],
+        Raleway: ["Raleway", "sans-serif"],
       },
       fontWeight: {
         hairline: 100,
