@@ -380,23 +380,8 @@ function MovieDetails() {
           )}
         </div>
         <div className="container flex flex-col mx-auto mt-4 border-b-2 border-b-gray-700"></div>
-        {/* Other movie images */}
-        <div className="grid grid-flow-col mt-2 overflow-x-auto overflow-y-hidden">
-          {Images?.map((dt, index) => {
-            return (
-              <div key={dt.file_path + index} className="w-[500px]">
-                <img
-                  src={`https://image.tmdb.org/t/p/w780/${dt?.file_path}`}
-                  alt={dt?.title}
-                  className="object-cover w-screen h-[400px]"
-                />
-              </div>
-            );
-          })}
-        </div>
-        <div className="container flex flex-col mx-auto border-b-2 border-b-gray-700"></div>
         {/* Casts of movie */}
-        <h1 className="px-2 mt-2 mb-4 text-xl font-semibold text-gray-100 border-l-4 border-l-red-700 font-scifi">
+        <h1 className="px-2 mb-4 text-xl font-semibold text-gray-100 border-l-4 border-l-red-700 font-scifi">
           Cast
         </h1>
         <div className="grid grid-flow-col overflow-x-auto overflow-y-hidden">
@@ -412,6 +397,21 @@ function MovieDetails() {
             );
           })}
         </div>
+        {/* Other movie images */}
+        <div className="grid grid-flow-col mt-4 overflow-x-auto overflow-y-hidden">
+          {Images?.map((dt, index) => {
+            return (
+              <div key={dt.file_path + index} className="w-[500px]">
+                <img
+                  src={`https://image.tmdb.org/t/p/w780/${dt?.file_path}`}
+                  alt={dt?.title}
+                  className="object-cover w-screen h-[400px]"
+                />
+              </div>
+            );
+          })}
+        </div>
+        <div className="container flex flex-col mx-auto border-b-2 border-b-gray-700"></div>
         {/* Other movies which are similar */}
         <div className="container flex flex-col mx-auto mt-5 md:mt-20">
           {Similar.length !== 0 ? (
