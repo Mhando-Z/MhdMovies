@@ -217,10 +217,10 @@ function MovieDetails() {
             </div>
             <div className="flex-1">
               <div className="space-y-4">
-                <h1 className="text-4xl font-bold text-white font-Raleway md:text-6xl">
+                <h1 className="text-4xl font-bold text-white md:text-6xl">
                   {Details?.title}
                 </h1>
-                <p className="text-xl font-light text-cyan-400">
+                <p className="text-xl font-light font-Raleway text-cyan-400">
                   {Details?.tagline}
                 </p>
                 <div className="flex flex-wrap gap-2">
