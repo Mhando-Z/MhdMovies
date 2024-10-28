@@ -88,7 +88,7 @@ function TrendingMovies() {
           {count === 20 ? (
             <button
               onClick={handleDecrease}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
             >
               <MinusCircle className="w-4 h-4" />
               <span>Show Less</span>
@@ -96,7 +96,7 @@ function TrendingMovies() {
           ) : (
             <button
               onClick={handleIncrese}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Show More</span>
@@ -107,7 +107,7 @@ function TrendingMovies() {
           <div className="flex items-center gap-2">
             <button
               onClick={handlePages}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
             >
               <ChevronLeft className="w-4 h-4" />
               <span>Previous</span>
@@ -115,7 +115,7 @@ function TrendingMovies() {
 
             <button
               onClick={handlePage}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
             >
               <span>Next</span>
               <ChevronRight className="w-4 h-4" />
