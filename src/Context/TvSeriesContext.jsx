@@ -20,7 +20,7 @@ export function TvSeriesProvider({ children }) {
   async function getTv() {
     try {
       const { data } = await axios.get(
-        ` https://api.themoviedb.org/3/tv/popular?language=en-US&page=${
+        `https://api.themoviedb.org/3/tv/popular?language=en-US&page=${
           Page1 + 4
         }`,
         {
@@ -37,7 +37,7 @@ export function TvSeriesProvider({ children }) {
   async function getToday() {
     try {
       const { data } = await axios.get(
-        ` https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=${Page1}`,
+        `https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=${Page1}`,
         {
           headers: {
             accept: "application/json",
@@ -52,7 +52,7 @@ export function TvSeriesProvider({ children }) {
   async function getTopRated() {
     try {
       const { data } = await axios.get(
-        ` https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${Page3}`,
+        `https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${Page3}`,
         {
           headers: {
             accept: "application/json",
@@ -67,7 +67,7 @@ export function TvSeriesProvider({ children }) {
   async function getTodays() {
     try {
       const { data } = await axios.get(
-        ` https://api.themoviedb.org/3/trending/tv/week?language=en-US`,
+        `https://api.themoviedb.org/3/trending/tv/week?language=en-US`,
         {
           headers: {
             accept: "application/json",
@@ -93,11 +93,11 @@ export function TvSeriesProvider({ children }) {
         Page1,
         Page3,
         ToDay,
+        TopRated,
+        TvCollected,
         setPage1,
         setPage3,
         TvHandlePages,
-        TopRated,
-        TvCollected,
       }}
     >
       {children}

@@ -93,9 +93,17 @@ const HeroSection = () => {
             <div className="flex-1 flex flex-col justify-center max-w-2xl gap-4 md:gap-6 h-[70%] md:h-full">
               {/* Movie Title */}
               <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                animate={{
+                  opacity: isLoaded ? 1 : 0,
+                  y: isLoaded ? 0 : 30,
+                  scale: isLoaded ? 1 : 0.95,
+                }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.2,
+                  ease: [0.42, 0, 0.58, 1],
+                }}
                 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-6xl lg:text-7xl"
               >
                 {currentMovie?.title}

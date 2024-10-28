@@ -72,7 +72,7 @@ function Genres() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-900">
+    <div className="flex h-screen ">
       {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 w-72 bg-gray-800 h-full transform ${

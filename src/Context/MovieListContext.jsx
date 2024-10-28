@@ -24,7 +24,7 @@ export function MovieProvider({ children }) {
   async function getTopRated() {
     try {
       const { data } = await axios.get(
-        `  https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${Page3}`,
+        `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${Page3}`,
         {
           headers: {
             accept: "application/json",
@@ -39,7 +39,7 @@ export function MovieProvider({ children }) {
   async function getTrending() {
     try {
       const { data } = await axios.get(
-        ` https://api.themoviedb.org/3/trending/movie/day?language=en-US`,
+        `https://api.themoviedb.org/3/trending/movie/day?language=en-US`,
         {
           headers: {
             accept: "application/json",
