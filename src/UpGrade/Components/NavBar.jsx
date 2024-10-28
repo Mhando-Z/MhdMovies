@@ -52,13 +52,13 @@ function NavBar() {
       className={`${
         location?.pathname === "/Genres"
           ? "hidden"
-          : "fixed top-0 left-0 right-0 z-50 backdrop-blur-md "
-      }${visible}`}
+          : "fixed top-0 left-0 right-0 z-50"
+      }${visible} z-50`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 100 }}
     >
-      <div className="container mx-auto">
+      <div className="container z-50 mx-auto">
         <div className="relative flex items-center justify-between h-16">
           {/* Logo */}
           <motion.div className="flex-shrink-0" whileHover={{ scale: 1.05 }}>
@@ -66,7 +66,7 @@ function NavBar() {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="items-center hidden space-x-1 md:flex">
+          <div className="items-center hidden space-x-1 backdrop-blur-md md:flex">
             <NavLink
               to="/"
               className={({ isActive }) =>
@@ -172,7 +172,7 @@ function NavBar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden md:hidden"
+              className="overflow-hidden md:hidden backdrop-blur-md"
             >
               <div className="px-2 pt-2 pb-3 space-y-1">
                 <NavLink
