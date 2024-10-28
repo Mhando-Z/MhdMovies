@@ -23,12 +23,12 @@ function TvSeriesPage() {
     <div className="flex flex-col gap-y-5">
       {/* TvHerosection */}
       <TvHeroSection />
+      {/* Trending this week */}
+      <TodaySeies />
       {/* top rated series */}
       <TopRatedSeries />
       {/* Airing today */}
       <AiringToday />
-      {/* Trending this week */}
-      <TodaySeies />
       {/* Popular TvSeries */}
       <TvSeriesList />
     </div>

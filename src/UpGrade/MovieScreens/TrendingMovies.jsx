@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { MoviePoster } from "../Components/Collection";
 import MovieListContext from "../../Context/MovieListContext";
-import { motion } from "framer-motion";
+
 import {
   ChevronLeft,
   ChevronRight,
