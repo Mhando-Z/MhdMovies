@@ -254,14 +254,14 @@ function MovieDetails() {
                 <div className="flex gap-4 pt-4">
                   <Link
                     to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
-                    className="flex items-center gap-2 px-6 py-1.5 md:py-3 font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+                    className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
                   >
                     <FaRegCirclePlay className="text-xl" />
                     Watch Now
                   </Link>
                   <button
                     onClick={handleTrailer}
-                    className="flex items-center gap-2 px-6 py-1.5 md:py-3 font-medium text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
+                    className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
                   >
                     <FaRegCirclePlay className="text-xl" />
                     Watch Trailer

@@ -54,7 +54,7 @@ function TodaySeies() {
             <div key={data.id}>
               <TvSeriesPoster
                 image2={data?.backdrop_path}
-                title={data?.title}
+                name={data?.name}
                 image={data?.poster_path}
                 id={data.id}
                 rating={data?.vote_average}
