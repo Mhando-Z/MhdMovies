@@ -293,19 +293,20 @@ function MovieDetails() {
                 </span>
               ))}
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <Rating value={Details?.vote_average} />
                 <span className="text-gray-300">
                   {Details?.vote_average?.toFixed(1)}
                 </span>
               </div>
-              <span className="text-gray-400">•</span>
+              <span className="text-gray-400">••••••</span>
               <span className="text-gray-300">
                 {Math.floor(Details?.runtime / 60)}h {Details?.runtime % 60}m
               </span>
-              <span className="text-gray-400">•</span>
-              <span className="text-gray-300">{Details?.release_date}</span>
+              <span className="text-sm text-gray-300">
+                {Details?.release_date}
+              </span>
             </div>
             <p className="max-w-3xl text-lg text-gray-300">
               {Details?.overview}
