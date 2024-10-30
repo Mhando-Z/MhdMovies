@@ -3,7 +3,6 @@
 // import { IoPersonCircleOutline } from "react-icons/io5";
 // import { Link, NavLink, useParams } from "react-router-dom";
 // import { motion } from "framer-motion";
-// import TvSeriesPoster from "./../Components/TvSeriesPoster";
 // import { FaRegCirclePlay } from "react-icons/fa6";
 // import ReactPlayer from "react-player";
 // import Rating from "../Components/Rating";
@@ -605,7 +604,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { FaRegCirclePlay } from "react-icons/fa6";
-import MoviePoster from "../Components/MoviePoster";
+import TvSeriesPoster from "./../Components/TvSeriesPoster";
 import ReactPlayer from "react-player";
 import { Dots } from "react-activity";
 // import { Slider } from "../Components/slider";
@@ -1216,9 +1215,9 @@ function MovieDetails() {
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {Similars?.slice(0, count).map((movie, index) => (
-              <MoviePoster
+              <TvSeriesPoster
                 key={movie.id + index}
-                title={movie?.title}
+                name={movie?.name}
                 image={movie?.poster_path}
                 image2={movie?.backdrop_path}
                 id={movie.id}
