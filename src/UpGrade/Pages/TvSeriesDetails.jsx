@@ -980,7 +980,7 @@ function MovieDetails() {
                   {index % 2 !== 0 && (
                     <div className="text-5xl text-gray-500 " />
                   )}
-                  <div className="pl-2 ">
+                  <div className={` ${index % 2 === 0 ? "pr-1" : " pl-5"}`}>
                     <div>
                       <h2
                         className="text-xl font-semibold text-white transition-colors cursor-pointer hover:text-blue-400 md:text-2xl"
@@ -1008,7 +1008,7 @@ function MovieDetails() {
                 <AnimatePresence>
                   {expandedItem === index && (
                     <>
-                      <div className="w-full">
+                      <div className="w-full mt-2">
                         <motion.p
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
@@ -1016,8 +1016,8 @@ function MovieDetails() {
                           transition={{ duration: 0.3 }}
                           className={` ${
                             index % 2 === 0
-                              ? "text-gray-200 w-full"
-                              : "max-w-3xl pl-4 mt-2 text-gray-200"
+                              ? "text-gray-200 pr-3 md:pl-10 text-justify"
+                              : "max-w-3xl pl-7 mt-2 text-gray-200"
                           }`}
                         >
                           {item?.overview}
@@ -1034,7 +1034,7 @@ function MovieDetails() {
                           src={`https://image.tmdb.org/t/p/w500/${item?.poster_path}`}
                           alt={item?.name}
                           className={`mt-3 rounded-lg  ${
-                            index % 2 === 0 ? "" : "pl-4"
+                            index % 2 === 0 ? "pr-3" : "pl-7"
                           }`}
                         />
                       </div>
@@ -1127,7 +1127,7 @@ function MovieDetails() {
         </div>
       </section>
 
-      {/* Similar Movies */}
+      {/* Similar TVseries */}
       {Similar.length > 0 && (
         <section className="container px-4 py-12 mx-auto">
           <div className="relative py-4 mb-6">
