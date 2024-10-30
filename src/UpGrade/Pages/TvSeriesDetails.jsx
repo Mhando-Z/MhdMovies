@@ -941,8 +941,43 @@ function MovieDetails() {
         </div>
       </div>
 
-      {/* list of seasosons  */}
+      {/* Trailer Section */}
+      {Trailer && (
+        <div className="container px-4 py-16 mx-auto">
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="md:col-span-2">
+              <ReactPlayer
+                width="100%"
+                height="500px"
+                controls={true}
+                url={`https://www.youtube.com/watch?v=${Selected}`}
+                className="overflow-hidden rounded-lg"
+              />
+            </div>
+            <div className="space-y-4 max-h-[500px] overflow-y-auto">
+              {Videos?.map((video, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleSelect(video.key)}
+                  className="w-full p-4 text-left transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-yellow-500">{video.type}</span>
+                      <span className="text-gray-400">{video.site}</span>
+                    </div>
+                    <p className="text-sm text-blue-400">
+                      {video.published_at}
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
+      {/* list of seasosons  */}
       <div className="container flex flex-col px-5 mx-auto mt-16 md:px-0">
         <table className="w-full bg-gray-800 rounded-lg md:w-1/2">
           <tbody>
@@ -1142,42 +1177,6 @@ function MovieDetails() {
           </div>
         )}
       </div>
-
-      {/* Trailer Section */}
-      {Trailer && (
-        <div className="container px-4 py-16 mx-auto">
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="md:col-span-2">
-              <ReactPlayer
-                width="100%"
-                height="500px"
-                controls={true}
-                url={`https://www.youtube.com/watch?v=${Selected}`}
-                className="overflow-hidden rounded-lg"
-              />
-            </div>
-            <div className="space-y-4 max-h-[500px] overflow-y-auto">
-              {Videos?.map((video, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleSelect(video.key)}
-                  className="w-full p-4 text-left transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-yellow-500">{video.type}</span>
-                      <span className="text-gray-400">{video.site}</span>
-                    </div>
-                    <p className="text-sm text-blue-400">
-                      {video.published_at}
-                    </p>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Cast Section */}
       <div className="container px-4 py-16 mx-auto">
