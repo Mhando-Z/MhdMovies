@@ -367,6 +367,75 @@ function MovieDetails() {
         </div>
       )}
 
+      {/* table stats */}
+      <div className="container flex flex-col px-5 mx-auto mt-16 md:px-0">
+        <table className="w-full bg-gray-800 rounded-lg md:w-1/2">
+          <tbody>
+            <tr className="border-b border-gray-700">
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                Status:
+              </td>
+              <td className="px-4 py-2 text-base text-yellow-500 lg:text-lg">
+                {Details?.status}
+              </td>
+            </tr>
+            <tr className="border-b border-gray-700">
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                Release Date:
+              </td>
+              <td className="px-4 py-2 text-base text-yellow-500 lg:text-lg">
+                {Details?.release_date}
+              </td>
+            </tr>
+            <tr className="border-b border-gray-700">
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                Budget:
+              </td>
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                $ {(Details?.budget).toLocaleString()}
+              </td>
+            </tr>
+            <tr className="border-b border-gray-700">
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                Revenue{" "}
+              </td>
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                $ {Details?.revenue.toLocaleString()}
+              </td>
+            </tr>
+            <tr className="border-b border-gray-700">
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                Companises{" "}
+              </td>
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                <div className="flex flex-wrap gap-y-2 gap-x-3">
+                  {Details?.production_companies?.map((comp) => {
+                    return (
+                      <div
+                        className="px-2 bg-gray-700 rounded-xl"
+                        key={comp?.id}
+                      >
+                        <p>{comp?.name}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </td>
+            </tr>
+            {/* {Details.next_episode_to_air !== null && (
+              <tr className="border-b border-gray-700">
+                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                  Next Episode Release:
+                </td>
+                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                  {Details?.next_episode_to_air.air_date}
+                </td>
+              </tr>
+            )} */}
+          </tbody>
+        </table>
+      </div>
+
       {/* Cast Section */}
       <div className="container px-4 py-16 mx-auto">
         <h2 className="relative py-2 mb-8 overflow-hidden text-2xl font-bold text-white font-scifi group">
