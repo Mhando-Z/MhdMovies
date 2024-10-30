@@ -573,8 +573,8 @@ function MovieDetails() {
                       <div
                         className={` ${
                           index % 2 === 0
-                            ? "flex flex-col  mt-2 justify-end w-full"
-                            : "flex flex-col mt-2 w-full justify-start"
+                            ? "md:flex flex-col  mt-2 hidden  justify-end w-full"
+                            : "md:flex flex-col mt-2 hidden  w-full justify-start"
                         }`}
                       >
                         {Episodes?.slice(0, Enum)?.map((Ep, index) => {
