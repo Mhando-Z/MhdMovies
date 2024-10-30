@@ -1064,6 +1064,31 @@ function MovieDetails() {
           </motion.div>
         ))}
       </div>
+      <div
+        className={`${
+          Seasons?.length <= 4
+            ? "hidden"
+            : "container flex items-end justify-end w-full mx-auto mt-16"
+        }`}
+      >
+        {num === Seasons?.length ? (
+          <button
+            onClick={() => setNum(num - 4)}
+            className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+          >
+            <MinusCircle className="w-4 h-4" />
+            <span>Show Less</span>
+          </button>
+        ) : (
+          <button
+            onClick={() => setNum(num + 4)}
+            className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+          >
+            <PlusCircle className="w-4 h-4" />
+            <span>Show More</span>
+          </button>
+        )}
+      </div>
 
       {/* Trailer Section */}
       {Trailer && (
