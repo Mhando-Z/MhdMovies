@@ -637,12 +637,39 @@ function MovieDetails() {
   const [Trailer, setTrailer] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
   const [num, setNum] = useState(4);
+  const [Enum, setENum] = useState(5);
+  const [Episodes, setEpisodes] = useState();
+  const [EpData, setEpdata] = useState({
+    season_id: "",
+    season_number: "",
+  });
 
-  const toggleExpand = (index) => {
+  const toggleExpand = (index, item) => {
     setExpandedItem(expandedItem === index ? null : index);
+    setEpdata({
+      season_id: item?.id,
+      season_number: item?.season_number,
+    });
   };
 
+  console.log(Episodes);
+
   //Logics
+  async function getEpisodes() {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/tv/${EpData?.season_id}/season/${EpData?.season_number}?language=en-US`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+      setEpisodes(data?.episodes);
+    } catch (error) {}
+  }
   async function getDetails() {
     try {
       const { data } = await axios.get(
@@ -751,6 +778,7 @@ function MovieDetails() {
     } catch (error) {}
   }
   useEffect(() => {
+    getEpisodes();
     getCasts();
     getVideo();
     getImages();
@@ -758,7 +786,7 @@ function MovieDetails() {
     getReview();
     getDetails();
     getSimilar();
-  }, [Page, id]);
+  }, [Page, id, EpData]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -898,10 +926,10 @@ function MovieDetails() {
               {Details?.tagline}
             </p>
             <div className="flex flex-wrap gap-2">
-              {Details?.genres?.map((genre) => (
+              {Details?.genres?.map((genre, index) => (
                 <>
                   <span
-                    key={genre.id}
+                    key={genre.id + index}
                     className="px-3 py-1 text-sm text-gray-200 rounded-full bg-gray-800/80"
                   >
                     {genre.name}
@@ -957,7 +985,7 @@ function MovieDetails() {
             <div className="space-y-4 max-h-[500px] overflow-y-auto">
               {Videos?.map((video, index) => (
                 <button
-                  key={index}
+                  key={index + video?.key}
                   onClick={() => handleSelect(video.key)}
                   className="w-full p-4 text-left transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
                 >
@@ -1019,11 +1047,11 @@ function MovieDetails() {
               </td>
               <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
                 <div className="flex flex-wrap gap-y-2 gap-x-3">
-                  {Details?.production_companies?.map((comp) => {
+                  {Details?.production_companies?.map((comp, index) => {
                     return (
                       <div
                         className="px-2 bg-gray-700 rounded-xl"
-                        key={comp?.id}
+                        key={comp?.id + index}
                       >
                         <p>{comp?.name}</p>
                       </div>
@@ -1059,10 +1087,9 @@ function MovieDetails() {
 
       <div className="relative flex-grow space-y-6">
         <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 transform -translate-x-1/2"></div>
-
         {Seasons?.slice(0, num)?.map((item, index) => (
           <motion.div
-            key={index + item?.id}
+            key={index + item?.name}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -1089,7 +1116,7 @@ function MovieDetails() {
                     <div>
                       <h2
                         className="text-xl font-semibold text-white transition-colors cursor-pointer hover:text-blue-400 md:text-2xl"
-                        onClick={() => toggleExpand(index)}
+                        onClick={() => toggleExpand(index, item)}
                       >
                         {item.name}
                       </h2>
@@ -1128,6 +1155,7 @@ function MovieDetails() {
                           {item?.overview}
                         </motion.p>
                       </div>
+                      {/* image */}
                       <div
                         className={` ${
                           index % 2 === 0
@@ -1142,6 +1170,64 @@ function MovieDetails() {
                             index % 2 === 0 ? "pr-3" : "pl-7"
                           }`}
                         />
+                      </div>
+                      {/* Episodes lists */}
+                      <div
+                        className={` ${
+                          index % 2 === 0
+                            ? "flex flex-col  mt-2 justify-end w-full"
+                            : "flex flex-col mt-2 w-full justify-start"
+                        }`}
+                      >
+                        {Episodes?.slice(0, Enum)?.map((Ep, index) => {
+                          return (
+                            <div
+                              key={index + Ep.id}
+                              className="grid grid-cols-1 gap-x-3"
+                            >
+                              {/* Episod banner */}
+                              <div className="flex flex-row p-2 text-white bg-gray-800 gap-x-4">
+                                <p>Episode</p>
+                                {Ep?.episode_number}
+                                <h1>{Ep?.name}</h1>
+                              </div>
+                              {/* name and description */}
+                              <div className="py-3 text-white">
+                                <p className="line-clamp-3">{Ep?.overview}</p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                        {Enum >= Episodes?.length ? (
+                          <button
+                            onClick={() => setENum(Enum - 4)}
+                            className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+                          >
+                            <MinusCircle className="w-4 h-4" />
+                            <span>Show Less</span>
+                          </button>
+                        ) : (
+                          <div className="flex flex-row gap-x-5">
+                            <button
+                              onClick={() => setENum(Enum - 4)}
+                              className={`${
+                                Enum >= 6
+                                  ? "inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+                                  : "hidden"
+                              }`}
+                            >
+                              <MinusCircle className="w-4 h-4" />
+                              <span>Show Less</span>
+                            </button>
+                            <button
+                              onClick={() => setENum(Enum + 4)}
+                              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+                            >
+                              <PlusCircle className="w-4 h-4" />
+                              <span>Show More</span>
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </>
                   )}
@@ -1235,7 +1321,7 @@ function MovieDetails() {
         <h2 className="mb-6 text-2xl font-bold text-white">Movie Stills</h2>
         <div className="grid grid-flow-col gap-4 pb-4 overflow-x-auto">
           {Images?.map((image, index) => (
-            <div key={index} className="w-[400px]">
+            <div key={index + image?.file_path} className="w-[400px]">
               <img
                 src={`https://image.tmdb.org/t/p/w780/${image?.file_path}`}
                 alt={`Movie still ${index + 1}`}
@@ -1316,7 +1402,7 @@ function MovieDetails() {
             <div className="absolute hidden transform -translate-y-1/2 top-1/2 right-4 lg:block">
               {[...Array(3)].map((_, i) => (
                 <div
-                  key={i}
+                  key={i + "ACDS"}
                   className="absolute"
                   style={{
                     top: `${i * -10}px`,
