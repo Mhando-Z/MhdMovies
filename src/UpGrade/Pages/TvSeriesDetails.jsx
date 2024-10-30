@@ -812,8 +812,6 @@ function MovieDetails() {
   const Casts = Cast?.filter((dt) => dt.profile_path !== null);
   const Seasons = Details?.seasons?.filter((dt) => dt.poster_path !== null);
 
-  console.log(Details);
-
   return (
     <div className="min-h-screen font-sans">
       {/* Hero Section with Backdrop */}
