@@ -812,6 +812,8 @@ function MovieDetails() {
   const Casts = Cast?.filter((dt) => dt.profile_path !== null);
   const Seasons = Details?.seasons?.filter((dt) => dt.poster_path !== null);
 
+  console.log(Details);
+
   return (
     <div className="min-h-screen font-sans">
       {/* Hero Section with Backdrop */}
@@ -1013,6 +1015,36 @@ function MovieDetails() {
                 {Details?.number_of_seasons}
               </td>
             </tr>
+            <tr className="border-b border-gray-700">
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                Companises{" "}
+              </td>
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                <div className="flex flex-wrap gap-y-2 gap-x-3">
+                  {Details?.production_companies?.map((comp) => {
+                    return (
+                      <div
+                        className="px-2 bg-gray-700 rounded-xl"
+                        key={comp?.id}
+                      >
+                        <p>{comp?.name}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </td>
+            </tr>
+            {Details.episode_run_time.length !== 0 && (
+              <tr className="border-b border-gray-700">
+                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                  Episode Runtime:
+                </td>
+                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                  {Math.floor(Details?.episode_run_time[0] / 60)}h{" "}
+                  {Details?.episode_run_time[0] % 60}m
+                </td>
+              </tr>
+            )}
             {Details.next_episode_to_air !== null && (
               <tr className="border-b border-gray-700">
                 <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
