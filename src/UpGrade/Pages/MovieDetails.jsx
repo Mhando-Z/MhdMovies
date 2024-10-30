@@ -207,7 +207,7 @@ function MovieDetails() {
 
         {/* Movie Info Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-8">
-          <div className="container flex gap-8 mx-auto">
+          <div className="container hidden gap-8 mx-auto md:flex">
             <div className="hidden w-64 translate-y-16 md:block">
               <img
                 src={`https://image.tmdb.org/t/p/w500/${Details?.poster_path}`}
@@ -254,20 +254,77 @@ function MovieDetails() {
                 <div className="flex gap-4 pt-4">
                   <Link
                     to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
-                    className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+                    className="flex items-center gap-2 px-6 py-1.5 md:py-3 font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
                   >
                     <FaRegCirclePlay className="text-xl" />
                     Watch Now
                   </Link>
                   <button
                     onClick={handleTrailer}
-                    className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
+                    className="flex items-center gap-2 px-6 py-1.5 md:py-3 font-medium text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
                   >
                     <FaRegCirclePlay className="text-xl" />
                     Watch Trailer
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* movie mobile overlay view */}
+      <div className="container flex gap-8 px-5 mx-auto md:hidden">
+        <div className="flex-1">
+          <div className="space-y-4">
+            <h1 className="text-4xl font-bold text-white md:text-6xl">
+              {Details?.title}
+            </h1>
+            <p className="text-xl font-light font-Raleway text-cyan-400">
+              {Details?.tagline}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {Details?.genres?.map((genre) => (
+                <span
+                  key={genre.id}
+                  className="px-3 py-1 text-sm text-gray-200 rounded-full bg-gray-800/80"
+                >
+                  {genre.name}
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Rating value={Details?.vote_average} />
+                <span className="text-gray-300">
+                  {Details?.vote_average?.toFixed(1)}
+                </span>
+              </div>
+              <span className="text-gray-400">•</span>
+              <span className="text-gray-300">
+                {Math.floor(Details?.runtime / 60)}h {Details?.runtime % 60}m
+              </span>
+              <span className="text-gray-400">•</span>
+              <span className="text-gray-300">{Details?.release_date}</span>
+            </div>
+            <p className="max-w-3xl text-lg text-gray-300">
+              {Details?.overview}
+            </p>
+            <div className="flex flex-row items-center justify-between pt-4">
+              <Link
+                to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+                className="flex items-center gap-2 px-4 py-1.5 font-medium text-white transition-colors bg-red-600 rounded-lg"
+              >
+                <FaRegCirclePlay className="text-xl" />
+                Watch Now
+              </Link>
+              <Link
+                onClick={handleTrailer}
+                className="flex items-center gap-2 px-4 py-2 font-medium text-white transition-colors bg-gray-800 rounded-lg"
+              >
+                <FaRegCirclePlay className="text-xl" />
+                Watch Trailer
+              </Link>
             </div>
           </div>
         </div>
