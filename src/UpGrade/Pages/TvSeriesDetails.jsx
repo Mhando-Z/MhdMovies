@@ -861,12 +861,6 @@ function MovieDetails() {
                     </span>
                   </div>
                   <span className="text-gray-400">•</span>
-                  <span className="text-gray-300">
-                    {Math.floor(Details?.runtime / 60)}h {Details?.runtime % 60}
-                    m
-                  </span>
-                  <span className="text-gray-400">•</span>
-                  <span className="text-gray-300">{Details?.release_date}</span>
                 </div>
                 <p className="max-w-3xl text-lg text-gray-300">
                   {Details?.overview}
@@ -905,12 +899,14 @@ function MovieDetails() {
             </p>
             <div className="flex flex-wrap gap-2">
               {Details?.genres?.map((genre) => (
-                <span
-                  key={genre.id}
-                  className="px-3 py-1 text-sm text-gray-200 rounded-full bg-gray-800/80"
-                >
-                  {genre.name}
-                </span>
+                <>
+                  <span
+                    key={genre.id}
+                    className="px-3 py-1 text-sm text-gray-200 rounded-full bg-gray-800/80"
+                  >
+                    {genre.name}
+                  </span>
+                </>
               ))}
             </div>
             <div className="flex flex-col">
@@ -921,12 +917,6 @@ function MovieDetails() {
                 </span>
               </div>
               <span className="text-gray-400">••••••</span>
-              <span className="text-gray-300">
-                {Math.floor(Details?.runtime / 60)}h {Details?.runtime % 60}m
-              </span>
-              <span className="text-sm text-gray-300">
-                {Details?.release_date}
-              </span>
             </div>
             <p className="max-w-3xl text-lg text-gray-300">
               {Details?.overview}
@@ -952,6 +942,56 @@ function MovieDetails() {
       </div>
 
       {/* list of seasosons  */}
+
+      <div className="container flex flex-col px-5 mx-auto mt-16 md:px-0">
+        <table className="w-full bg-gray-800 rounded-lg md:w-1/2">
+          <tbody>
+            <tr className="border-b border-gray-700">
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                Status:
+              </td>
+              <td className="px-4 py-2 text-base text-yellow-500 lg:text-lg">
+                {Details?.status}
+              </td>
+            </tr>
+            <tr className="border-b border-gray-700">
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                Release Date:
+              </td>
+              <td className="px-4 py-2 text-base text-yellow-500 lg:text-lg">
+                {Details?.first_air_date}
+              </td>
+            </tr>
+            <tr className="border-b border-gray-700">
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                Number of Episodes:
+              </td>
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                {Details?.number_of_episodes}
+              </td>
+            </tr>
+            <tr className="border-b border-gray-700">
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                Number of Seasons:
+              </td>
+              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                {Details?.number_of_seasons}
+              </td>
+            </tr>
+            {Details.next_episode_to_air !== null && (
+              <tr className="border-b border-gray-700">
+                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                  Next Episode Release:
+                </td>
+                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                  {Details?.next_episode_to_air.air_date}
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
       <div className="relative flex-grow space-y-6">
         <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 transform -translate-x-1/2"></div>
 
@@ -1071,7 +1111,7 @@ function MovieDetails() {
             : "container flex items-end justify-end w-full mx-auto mt-16"
         }`}
       >
-        {num === Seasons?.length ? (
+        {num >= Seasons?.length ? (
           <button
             onClick={() => setNum(num - 4)}
             className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
@@ -1080,13 +1120,26 @@ function MovieDetails() {
             <span>Show Less</span>
           </button>
         ) : (
-          <button
-            onClick={() => setNum(num + 4)}
-            className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
-          >
-            <PlusCircle className="w-4 h-4" />
-            <span>Show More</span>
-          </button>
+          <div className="flex flex-row gap-x-5">
+            <button
+              onClick={() => setNum(num - 4)}
+              className={`${
+                num >= 5
+                  ? "inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+                  : "hidden"
+              }`}
+            >
+              <MinusCircle className="w-4 h-4" />
+              <span>Show Less</span>
+            </button>
+            <button
+              onClick={() => setNum(num + 4)}
+              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+            >
+              <PlusCircle className="w-4 h-4" />
+              <span>Show More</span>
+            </button>
+          </div>
         )}
       </div>
 
