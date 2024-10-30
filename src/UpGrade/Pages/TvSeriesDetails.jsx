@@ -1016,7 +1016,7 @@ function MovieDetails() {
                           transition={{ duration: 0.3 }}
                           className={` ${
                             index % 2 === 0
-                              ? "text-gray-200 pr-3 md:pl-10 text-justify"
+                              ? "text-gray-200 pr-3 md:pl-10 md:text-justify"
                               : "max-w-3xl pl-7 mt-2 text-gray-200"
                           }`}
                         >
@@ -1045,8 +1045,20 @@ function MovieDetails() {
               )}
             </div>
             <div className="relative">
-              <div className="absolute z-10 w-4 h-4 transform -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full top-1/2 left-1/2"></div>
-              <div className="w-8 h-0.5 bg-gray-200 absolute top-1/2 left-1/2 transform -translate-y-1/2"></div>
+              <div
+                className={`mt-3 rounded-lg  ${
+                  index % 2 === 0
+                    ? "absolute z-10 w-4 h-4 transform -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full top-1/2 "
+                    : "absolute z-10 w-4 h-4 transform -translate-x-1/2 -translate-y-1/2 bg-blue-500 rounded-full top-1/2 left-1/2"
+                }`}
+              ></div>
+              <div
+                className={`mt-3 rounded-lg  ${
+                  index % 2 === 0
+                    ? "w-8 h-0.5 bg-gray-200 absolute top-1/2 right-1/2 transform -translate-y-1/2"
+                    : "w-8 h-0.5 bg-gray-200 absolute top-1/2 left-1/2 transform -translate-y-1/2"
+                }`}
+              ></div>
             </div>
             <div className="w-1/2"></div>
           </motion.div>
