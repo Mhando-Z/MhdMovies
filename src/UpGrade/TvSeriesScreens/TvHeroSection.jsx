@@ -145,7 +145,7 @@ const TvHeroSection = () => {
                 animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
               >
-                <Link to={`/MovieDetails/${currentMovie?.id}`}>
+                <Link to={`/TvSeriesDetails/${currentMovie?.id}`}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
