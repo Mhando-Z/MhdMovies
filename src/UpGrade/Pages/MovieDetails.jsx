@@ -369,7 +369,7 @@ function MovieDetails() {
 
       {/* table stats */}
       <div className="container flex flex-col px-5 mx-auto mt-16 md:px-0">
-        <table className="w-full bg-gray-800 rounded-lg md:w-1/2">
+        <table className="w-full bg-gray-800 rounded-lg bg-opacity-20 md:w-1/2">
           <tbody>
             <tr className="border-b border-gray-700">
               <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
@@ -578,7 +578,7 @@ function MovieDetails() {
               {count === 20 ? (
                 <button
                   onClick={handleDecrease}
-                  className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
                 >
                   <MinusCircle className="w-4 h-4" />
                   <span>Show Less</span>
@@ -586,7 +586,7 @@ function MovieDetails() {
               ) : (
                 <button
                   onClick={handleIncrese}
-                  className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
                 >
                   <PlusCircle className="w-4 h-4" />
                   <span>Show More</span>
@@ -597,7 +597,7 @@ function MovieDetails() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handlePages}
-                  className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span>Previous</span>
@@ -605,7 +605,7 @@ function MovieDetails() {
 
                 <button
                   onClick={handlePage}
-                  className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
                 >
                   <span>Next</span>
                   <ChevronRight className="w-4 h-4" />
