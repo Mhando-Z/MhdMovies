@@ -36,38 +36,44 @@ function MovieDetails() {
   const [count, setCount] = useState(14);
   const [Trailer, setTrailer] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
+  const [show, setShow] = useState(false);
   const [num, setNum] = useState(4);
   const [Enum, setENum] = useState(5);
   const [Episodes, setEpisodes] = useState();
-  const [EpData, setEpdata] = useState({
-    season_id: "",
-    season_number: "",
-  });
+  // const [EpData, setEpdata] = useState({
+  //   season_id: "",
+  //   season_number: "",
+  // });
 
   const toggleExpand = (index, item) => {
     setExpandedItem(expandedItem === index ? null : index);
-    setEpdata({
-      season_id: item?.id,
-      season_number: item?.season_number,
-    });
+    // setEpdata({
+    //   season_id: item?.id,
+    //   season_number: item?.season_number,
+    // });
+  };
+
+  const handleShowEpisode = () => {
+    setShow(!show);
   };
 
   //Logics
-  async function getEpisodes() {
-    try {
-      const { data } = await axios.get(
-        `https://api.themoviedb.org/3/tv/${EpData?.season_id}/season/${EpData?.season_number}?language=en-US`,
-        {
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
-          },
-        }
-      );
-      setEpisodes(data?.episodes);
-    } catch (error) {}
-  }
+  // async function getEpisodes() {
+  //   try {
+  //     const { data } = await axios.get(
+  //       `https://api.themoviedb.org/3/tv/${EpData?.season_id}/season/${EpData?.season_number}?language=en-US`,
+  //       {
+  //         headers: {
+  //           accept: "application/json",
+  //           Authorization:
+  //             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+  //         },
+  //       }
+  //     );
+  //     console.log(data?.episodes);
+  //     setEpisodes(data?.episodes);
+  //   } catch (error) {}
+  // }
   async function getDetails() {
     try {
       const { data } = await axios.get(
@@ -176,7 +182,6 @@ function MovieDetails() {
     } catch (error) {}
   }
   useEffect(() => {
-    getEpisodes();
     getCasts();
     getVideo();
     getImages();
@@ -184,7 +189,7 @@ function MovieDetails() {
     getReview();
     getDetails();
     getSimilar();
-  }, [Page, id, EpData]);
+  }, [Page, id]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -270,9 +275,9 @@ function MovieDetails() {
                   {Details?.tagline}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {Details?.genres?.map((genre) => (
+                  {Details?.genres?.map((genre, index) => (
                     <span
-                      key={genre.id}
+                      key={genre.id + index}
                       className="px-3 py-1 text-sm text-gray-200 rounded-full bg-gray-800/80"
                     >
                       {genre.name}
@@ -405,8 +410,8 @@ function MovieDetails() {
 
       {/* list of seasosons  */}
       <div className="container flex flex-col px-5 mx-auto mt-16 md:px-0">
-        <table className="w-full bg-gray-800 rounded-lg md:w-1/2">
-          <tbody>
+        <table className="w-full bg-gray-800 rounded-lg bg-opacity-20 md:w-1/2">
+          <tbody className="">
             <tr className="border-b border-gray-700">
               <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
                 Status:
@@ -448,7 +453,7 @@ function MovieDetails() {
                   {Details?.production_companies?.map((comp, index) => {
                     return (
                       <div
-                        className="px-2 bg-gray-700 rounded-xl"
+                        className="px-4 bg-gray-700 rounded-xl"
                         key={comp?.id + index}
                       >
                         <p>{comp?.name}</p>
@@ -571,62 +576,98 @@ function MovieDetails() {
                       </div>
                       {/* Episodes lists */}
                       <div
-                        className={` ${
+                        className={`mt-3 hidden rounded-lg  ${
                           index % 2 === 0
-                            ? "md:flex flex-col  mt-2 hidden  justify-end w-full"
-                            : "md:flex flex-col mt-2 hidden  w-full justify-start"
+                            ? "pr-3 w-full items-end justify-end flex"
+                            : "pl-7 w-full"
                         }`}
                       >
-                        {Episodes?.slice(0, Enum)?.map((Ep, index) => {
-                          return (
+                        <button
+                          className={`mt-3 rounded-lg  ${
+                            index % 2 === 0
+                              ? "md:flex hidden  py-1.5 px-4 bg-slate-700 text-white mt-4"
+                              : "md:flex hidden  py-1.5 px-4 bg-slate-700 text-white mt-4"
+                          }`}
+                          onClick={handleShowEpisode}
+                        >
+                          Episodes
+                        </button>
+                      </div>
+                      {show ? (
+                        <div
+                          className={` ${
+                            index % 2 === 0
+                              ? "md:flex flex-col  mt-2 hidden  justify-end w-full"
+                              : "md:flex flex-col mt-2 hidden  w-full justify-start"
+                          }`}
+                        >
+                          {Episodes?.slice(0, Enum)?.map((Ep, index) => {
+                            return (
+                              <div
+                                key={index + Ep.id}
+                                className="grid grid-cols-1 px-5 gap-x-3"
+                              >
+                                {/* Episod banner */}
+                                <div className="flex flex-row p-2 text-white bg-gray-800 gap-x-4">
+                                  <p>Episode</p>
+                                  {Ep?.episode_number}
+                                  <h1>{Ep?.name}</h1>
+                                </div>
+                                {/* name and description */}
+                                <div className="py-3 text-white">
+                                  <p className="line-clamp-3">{Ep?.overview}</p>
+                                </div>
+                              </div>
+                            );
+                          })}
+                          {Enum >= Episodes?.length ? (
                             <div
-                              key={index + Ep.id}
-                              className="grid grid-cols-1 gap-x-3"
-                            >
-                              {/* Episod banner */}
-                              <div className="flex flex-row p-2 text-white bg-gray-800 gap-x-4">
-                                <p>Episode</p>
-                                {Ep?.episode_number}
-                                <h1>{Ep?.name}</h1>
-                              </div>
-                              {/* name and description */}
-                              <div className="py-3 text-white">
-                                <p className="line-clamp-3">{Ep?.overview}</p>
-                              </div>
-                            </div>
-                          );
-                        })}
-                        {Enum >= Episodes?.length ? (
-                          <button
-                            onClick={() => setENum(Enum - 4)}
-                            className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
-                          >
-                            <MinusCircle className="w-4 h-4" />
-                            <span>Show Less</span>
-                          </button>
-                        ) : (
-                          <div className="flex flex-row gap-x-5">
-                            <button
-                              onClick={() => setENum(Enum - 4)}
-                              className={`${
-                                Enum >= 6
-                                  ? "inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
-                                  : "hidden"
+                              className={`mt-3 rounded-lg  ${
+                                index % 2 === 0
+                                  ? "pr-3 w-full items-end justify-end flex"
+                                  : "pl-7 w-full"
                               }`}
                             >
-                              <MinusCircle className="w-4 h-4" />
-                              <span>Show Less</span>
-                            </button>
-                            <button
-                              onClick={() => setENum(Enum + 4)}
-                              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+                              <button
+                                onClick={() => setENum(Enum - 4)}
+                                className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+                              >
+                                <MinusCircle className="w-4 h-4" />
+                                <span>Show Less</span>
+                              </button>
+                            </div>
+                          ) : (
+                            <div
+                              className={`mt-3 rounded-lg  ${
+                                index % 2 === 0
+                                  ? "pr-3 w-full flex-row gap-x-5 items-end justify-end flex"
+                                  : "pl-6 w-full flex-row gap-x-5"
+                              }`}
                             >
-                              <PlusCircle className="w-4 h-4" />
-                              <span>Show More</span>
-                            </button>
-                          </div>
-                        )}
-                      </div>
+                              <button
+                                onClick={() => setENum(Enum - 4)}
+                                className={`${
+                                  Enum >= 6
+                                    ? "inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+                                    : "hidden"
+                                }`}
+                              >
+                                <MinusCircle className="w-4 h-4" />
+                                <span>Show Less</span>
+                              </button>
+                              <button
+                                onClick={() => setENum(Enum + 4)}
+                                className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-slate-600 rounded-lg hover:bg-red-700"
+                              >
+                                <PlusCircle className="w-4 h-4" />
+                                <span>Show More</span>
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </>
                   )}
                 </AnimatePresence>
@@ -703,7 +744,7 @@ function MovieDetails() {
         </h2>
         <div className="flex gap-6 pb-6 overflow-x-auto">
           {Casts?.map((person, index) => (
-            <div key={person.file_path + index} className="flex-shrink-0 w-48">
+            <div key={person.name + index} className="flex-shrink-0 w-48">
               <CastProfile
                 image={person?.profile_path}
                 name={person?.name}
@@ -774,7 +815,7 @@ function MovieDetails() {
                   <div className="flex items-center gap-1">
                     {[...Array(3)].map((_, i) => (
                       <div
-                        key={i}
+                        key={i + "Azcds"}
                         className="flex items-center justify-center w-6 h-6"
                       >
                         <div
@@ -891,7 +932,7 @@ function MovieDetails() {
                     <div className="flex gap-px">
                       {[...Array(3)].map((_, i) => (
                         <Star
-                          key={i}
+                          key={i + "erdf"}
                           className="w-2 h-2 text-yellow-400 fill-yellow-400 animate-pulse"
                           style={{ animationDelay: `${i * 200}ms` }}
                         />
@@ -933,7 +974,7 @@ function MovieDetails() {
                   <div className="flex items-end h-6 gap-1">
                     {[...Array(4)].map((_, i) => (
                       <div
-                        key={i}
+                        key={i + "tufy"}
                         className="w-1 rounded-full bg-red-500/60 animate-pulse"
                         style={{
                           height: `${(i + 1) * 6}px`,
@@ -956,7 +997,7 @@ function MovieDetails() {
             <div className="absolute top-0 right-0 hidden lg:block">
               {[...Array(3)].map((_, i) => (
                 <div
-                  key={i}
+                  key={i + "jfhjdh"}
                   className="absolute w-2 h-2 rounded-full bg-red-400/30 animate-ping"
                   style={{
                     top: `${i * 10}px`,
@@ -970,7 +1011,10 @@ function MovieDetails() {
           </div>
           <div className="space-y-6 max-h-[600px] overflow-y-auto pr-4">
             {Reviews?.map((review, index) => (
-              <div key={index} className="p-6 rounded-lg bg-gray-800/50">
+              <div
+                key={index + review?.author}
+                className="p-6 rounded-lg bg-gray-800/50"
+              >
                 <div className="flex items-center gap-3 mb-4">
                   <IoPersonCircleOutline className="text-3xl text-gray-400" />
                   <h3 className="text-xl font-semibold text-white">
