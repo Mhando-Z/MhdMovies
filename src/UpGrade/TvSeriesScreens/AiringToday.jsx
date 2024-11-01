@@ -1,6 +1,6 @@
 // export default AiringToday;
 import React, { useState, useEffect, useContext } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import TvSeriesContex from "../../Context/TvSeriesContext";
 import { Dots } from "react-activity";
 import { Rating } from "../Components/Collection";
