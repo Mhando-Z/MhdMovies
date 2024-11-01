@@ -33,7 +33,6 @@ function MovieDetails() {
   const [Trailer, setTrailer] = useState(false);
   const [Watch, setWatch] = useState(false);
   const [Page, setPage] = useState(1);
-  const [downloadStatus, setDownloadStatus] = useState(null);
   const { id } = useParams();
 
   //Logics
