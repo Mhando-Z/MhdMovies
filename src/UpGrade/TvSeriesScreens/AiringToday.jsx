@@ -3,7 +3,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import TvSeriesContex from "../../Context/TvSeriesContext";
 import { Dots } from "react-activity";
-import { AiFillStar } from "react-icons/ai";
 import { Rating } from "../Components/Collection";
 import { BsCalendarEvent } from "react-icons/bs";
 
@@ -63,15 +62,15 @@ const AiringToday = () => {
 
             {/* Content Container */}
             <div className="absolute bottom-0 left-0 right-0 z-10 px-5">
-              {/* Category Tag */}
-
-              {/*Series Title */}
+              {/* Series Title */}
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
                 className={`text-2xl font-bold text-white ${
                   index === activeIndex ? "" : "hidden"
-                } `}
+                }`}
               >
                 {day?.name}
                 <span className="flex items-center gap-2">
@@ -84,15 +83,17 @@ const AiringToday = () => {
                 </span>
               </motion.h2>
 
-              {/*Series Overview */}
+              {/* Series Overview */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`  ${
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className={`${
                   index === activeIndex
                     ? "text-white/80 line-clamp-2 md:line-clamp-none"
                     : "hidden"
-                } `}
+                }`}
               >
                 {day?.overview}
               </motion.p>
