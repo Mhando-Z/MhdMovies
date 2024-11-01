@@ -757,7 +757,7 @@ function MovieDetails() {
 
       {/* Tvseries Stills */}
       <section className="container px-4 py-12 mx-auto">
-        <h2 className="mb-6 text-2xl font-bold text-white">Movie Stills</h2>
+        <h2 className="mb-6 text-2xl font-bold text-white">TvSeries Stills</h2>
         <div className="grid grid-flow-col gap-4 pb-4 overflow-x-auto">
           {Images?.map((image, index) => (
             <div key={index + image?.file_path} className="w-[400px]">
