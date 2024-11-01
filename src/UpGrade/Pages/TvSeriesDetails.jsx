@@ -317,7 +317,7 @@ function MovieDetails() {
         </div>
       </div>
 
-      {/* movie mobile overlay view */}
+      {/* Tvseries mobile overlay view */}
       <div className="container flex gap-8 px-5 mx-auto md:hidden">
         <div className="flex-1">
           <div className="space-y-4">
@@ -437,45 +437,35 @@ function MovieDetails() {
 
       {/* list of seasosons  */}
       <div className="container flex flex-col px-5 mx-auto mt-16 md:px-0">
-        <table className="w-full bg-gray-800 rounded-lg bg-opacity-20 md:w-1/2">
+        <table className="w-full text-xs bg-gray-800 rounded-lg md:text-sm bg-opacity-20 md:w-1/2">
           <tbody className="">
             <tr className="border-b border-gray-700">
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                Status:
-              </td>
+              <td className="px-4 py-2 text-slate-200">Status:</td>
               <td className="px-4 py-2 text-base text-yellow-500 lg:text-lg">
                 {Details?.status}
               </td>
             </tr>
             <tr className="border-b border-gray-700">
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                Release Date:
-              </td>
+              <td className="px-4 py-2 text-slate-200">Release Date:</td>
               <td className="px-4 py-2 text-base text-yellow-500 lg:text-lg">
                 {Details?.first_air_date}
               </td>
             </tr>
             <tr className="border-b border-gray-700">
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                Number of Episodes:
-              </td>
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+              <td className="px-4 py-2 text-slate-200">Number of Episodes:</td>
+              <td className="px-4 py-2 text-slate-200">
                 {Details?.number_of_episodes}
               </td>
             </tr>
             <tr className="border-b border-gray-700">
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                Number of Seasons:
-              </td>
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+              <td className="px-4 py-2 text-slate-200">Number of Seasons:</td>
+              <td className="px-4 py-2 text-slate-200">
                 {Details?.number_of_seasons}
               </td>
             </tr>
             <tr className="border-b border-gray-700">
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                Companises{" "}
-              </td>
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+              <td className="px-4 py-2 text-slate-200">Companises </td>
+              <td className="px-4 py-2 text-slate-200">
                 <div className="flex flex-wrap gap-y-2 gap-x-3">
                   {Details?.production_companies?.map((comp, index) => {
                     return (
@@ -492,10 +482,8 @@ function MovieDetails() {
             </tr>
             {Details.episode_run_time.length !== 0 && (
               <tr className="border-b border-gray-700">
-                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                  Episode Runtime:
-                </td>
-                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                <td className="px-4 py-2 text-slate-200">Episode Runtime:</td>
+                <td className="px-4 py-2 text-slate-200">
                   {Math.floor(Details?.episode_run_time[0] / 60)}h{" "}
                   {Details?.episode_run_time[0] % 60}m
                 </td>
@@ -503,10 +491,10 @@ function MovieDetails() {
             )}
             {Details.next_episode_to_air !== null && (
               <tr className="border-b border-gray-700">
-                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                <td className="px-4 py-2 text-slate-200">
                   Next Episode Release:
                 </td>
-                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                <td className="px-4 py-2 text-slate-200">
                   {Details?.next_episode_to_air.air_date}
                 </td>
               </tr>
