@@ -91,7 +91,7 @@ const TvHeroSection = () => {
           <div className="flex flex-col h-full">
             {/* Main Content */}
             <div className="flex-1 flex flex-col justify-center max-w-2xl gap-4 md:gap-6 h-[70%] md:h-full">
-              {/* Movie Title */}
+              {/* Series Title */}
               <motion.h1
                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
                 animate={{
@@ -109,7 +109,7 @@ const TvHeroSection = () => {
                 {currentMovie?.name}
               </motion.h1>
 
-              {/* Movie Meta */}
+              {/* Series Meta */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}

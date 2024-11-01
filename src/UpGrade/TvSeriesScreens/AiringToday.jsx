@@ -3,6 +3,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import TvSeriesContex from "../../Context/TvSeriesContext";
 import { Dots } from "react-activity";
+import { AiFillStar } from "react-icons/ai";
+import { Rating } from "../Components/Collection";
+import { BsCalendarEvent } from "react-icons/bs";
 
 const AiringToday = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -61,23 +64,25 @@ const AiringToday = () => {
             {/* Content Container */}
             <div className="absolute bottom-0 left-0 right-0 z-10 px-5">
               {/* Category Tag */}
-              <motion.span
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="inline-block px-3 py-1 mb-4 text-sm text-white rounded-full bg-white/10"
-              >
-                {""}
-              </motion.span>
 
               {/*Series Title */}
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`mb-2 text-2xl font-bold text-white ${
+                className={`text-2xl font-bold text-white ${
                   index === activeIndex ? "" : "hidden"
                 } `}
               >
                 {day?.name}
+                <span className="flex items-center gap-2">
+                  <AiFillStar className="w-5 h-5 text-yellow-400" />
+                  <span className="font-medium">
+                    {day?.vote_average?.toFixed(1)}
+                  </span>
+                  <Rating value={day?.vote_average} />
+                  <BsCalendarEvent className="w-4 h-4" />
+                  <span>{day?.first_air_date?.split("-")[0]}</span>
+                </span>
               </motion.h2>
 
               {/*Series Overview */}
