@@ -200,12 +200,10 @@ function MovieDetails() {
   };
 
   const handleTrailer = () => {
-    scrollToTop();
     setWatch(false);
     setTrailer(!Trailer);
   };
   const handleWatch = () => {
-    scrollToTop();
     setTrailer(false);
     setWatch(!Watch);
   };
