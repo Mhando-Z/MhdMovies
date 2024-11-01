@@ -417,45 +417,33 @@ function MovieDetails() {
       {/* table stats */}
       <div className="container flex flex-col gap-5 px-5 mx-auto mt-16 md:flex-row md:px-0">
         {/* table one */}
-        <table className="w-full bg-gray-800 rounded-lg bg-opacity-20 md:w-1/2">
+        <table className="w-full text-xs bg-gray-800 rounded-lg md:text-sm bg-opacity-20 md:w-1/2">
           <tbody>
             <tr className="border-b border-gray-700">
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                Status:
-              </td>
-              <td className="px-4 py-2 text-base text-yellow-500 lg:text-lg">
-                {Details?.status}
-              </td>
+              <td className="px-4 py-2 text-slate-200">Status:</td>
+              <td className="px-4 py-2 text-yellow-500">{Details?.status}</td>
             </tr>
             <tr className="border-b border-gray-700">
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                Release Date:
-              </td>
-              <td className="px-4 py-2 text-base text-yellow-500 lg:text-lg">
+              <td className="px-4 py-2 text-slate-200">Release Date:</td>
+              <td className="px-4 py-2 text-yellow-500">
                 {Details?.release_date}
               </td>
             </tr>
             <tr className="border-b border-gray-700">
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                Budget:
-              </td>
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+              <td className="px-4 py-2 text-slate-200">Budget:</td>
+              <td className="px-4 py-2 text-slate-200">
                 $ {(Details?.budget).toLocaleString()}
               </td>
             </tr>
             <tr className="border-b border-gray-700">
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                Revenue{" "}
-              </td>
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+              <td className="px-4 py-2 text-slate-200">Revenue </td>
+              <td className="px-4 py-2 text-slate-200">
                 $ {Details?.revenue.toLocaleString()}
               </td>
             </tr>
             <tr className="border-b border-gray-700">
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                Companises{" "}
-              </td>
-              <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+              <td className="px-4 py-2 text-slate-200">Companises </td>
+              <td className="px-4 py-2 text-slate-200">
                 <div className="flex flex-wrap gap-y-2 gap-x-3">
                   {Details?.production_companies?.map((comp) => {
                     return (
@@ -478,15 +466,15 @@ function MovieDetails() {
             {mediaInfo?.torrents?.map((info, index) => {
               return (
                 <tr key={index} className="border-b border-gray-700">
-                  <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                  <td className="px-4 py-2 text-xs md:text-sm text-slate-200">
                     {info?.type}
                   </td>
-                  <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                  <td className="px-4 py-2 text-xs md:text-sm text-slate-200">
                     <p className="text-white">
                       {info?.quality} - {info?.size}
                     </p>
                   </td>
-                  <td className="px-4 py-2 text-base text-yellow-500 lg:text-lg">
+                  <td className="px-4 py-2 text-xs text-yellow-500 md:text-sm ">
                     <a
                       href={`magnet:?xt=urn:btih:${
                         info?.hash
