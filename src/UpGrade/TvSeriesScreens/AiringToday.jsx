@@ -41,7 +41,9 @@ const AiringToday = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.2 }}
             className={`relative rounded-xl p-8 h-[400px] flex flex-col justify-between overflow-hidden ${
-              index === activeIndex ? "min-w-[600px]" : "min-w-[250px]"
+              index === activeIndex
+                ? "min-w-[250px] md:min-w-[600px]"
+                : "min-w-[250px]"
             } transition-all duration-300`}
           >
             {/* poster image overlay  */}
@@ -82,7 +84,7 @@ const AiringToday = () => {
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`text-white/80  ${
+                className={`text-white/80 line-clamp-2 md:line-clamp-none  ${
                   index === activeIndex ? "" : "hidden"
                 } `}
               >
