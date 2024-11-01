@@ -1,28 +1,99 @@
-import React, { useContext } from "react";
+// export default AiringToday;
+import React, { useState, useEffect, useContext } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import TvSeriesContex from "../../Context/TvSeriesContext";
-import TvSeriesPoster from "../Components/TvSeriesPoster";
+import { Dots } from "react-activity";
 
-function AiringToday() {
+const AiringToday = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
   const { ToDay } = useContext(TvSeriesContex);
 
-  return (
-    <div className="">
-      <div className="grid grid-flow-col gap-1 mt-2 overflow-x-auto overflow-y-hidden">
-        {ToDay?.map((data) => {
-          return (
-            <div className="w-[15rem]" key={data.id}>
-              <TvSeriesPoster
-                name={data?.name}
-                image={data?.poster_path}
-                id={data.id}
-                rating={data?.vote_average}
-              />
-            </div>
-          );
-        })}
+  const slideWidth = 250; // Adjust this to the width of each slide
+
+  // Auto-slide logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % ToDay.length);
+    }, 3000); // Slide every 3 seconds
+
+    return () => clearInterval(interval); // Clear interval on component unmount
+  }, [ToDay.length]);
+
+  if (!ToDay || ToDay?.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Dots color="white" size={32} speed={1} animating={true} />
       </div>
+    );
+  }
+
+  return (
+    <div className="container relative flex py-6 mx-auto overflow-hidden">
+      <motion.div
+        className="flex gap-4"
+        animate={{ x: -activeIndex * slideWidth }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      >
+        {ToDay?.map((day, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.2 }}
+            className={`relative rounded-xl p-8 h-[400px] flex flex-col justify-between overflow-hidden ${
+              index === activeIndex ? "min-w-[600px]" : "min-w-[250px]"
+            } transition-all duration-300`}
+          >
+            {/* poster image overlay  */}
+            <div className="absolute top-0 bottom-0 left-0 right-0">
+              <img
+                src={`https://image.tmdb.org/t/p/original/${
+                  index === activeIndex ? day?.backdrop_path : day?.poster_path
+                }`}
+                alt={day?.name}
+                className="object-cover w-full h-full"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent via-50% to-transparent" />
+            </div>
+
+            {/* Content Container */}
+            <div className="absolute bottom-0 left-0 right-0 z-10 px-5">
+              {/* Category Tag */}
+              <motion.span
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-block px-3 py-1 mb-4 text-sm text-white rounded-full bg-white/10"
+              >
+                {""}
+              </motion.span>
+
+              {/*Series Title */}
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`mb-2 text-2xl font-bold text-white ${
+                  index === activeIndex ? "" : "hidden"
+                } `}
+              >
+                {day?.name}
+              </motion.h2>
+
+              {/*Series Overview */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`text-white/80  ${
+                  index === activeIndex ? "" : "hidden"
+                } `}
+              >
+                {day?.overview}
+              </motion.p>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   );
-}
+};
 
 export default AiringToday;

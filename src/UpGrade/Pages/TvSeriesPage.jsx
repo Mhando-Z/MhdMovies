@@ -25,10 +25,10 @@ function TvSeriesPage() {
       <TvHeroSection />
       {/* Trending this week */}
       <TodaySeies />
-      {/* top rated series */}
-      <TopRatedSeries />
       {/* Airing today */}
       <AiringToday />
+      {/* top rated series */}
+      <TopRatedSeries />
       {/* Popular TvSeries */}
       <TvSeriesList />
     </div>
