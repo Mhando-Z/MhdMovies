@@ -192,13 +192,6 @@ function MovieDetails() {
     getSimilar();
   }, [Page, id]);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
   const handleTrailer = () => {
     setWatch(false);
     setTrailer(!Trailer);
@@ -401,7 +394,7 @@ function MovieDetails() {
             <h2 className="text-xl font-bold text-gray-700">
               {Details.name || "TvSeries Player"}
             </h2>
-            <p className="text-sm text-gray-600">IMDB ID: {Details.imdb_id}</p>
+            <p className="text-sm text-gray-600">IMDB ID: {ID.imdb_id}</p>
           </div>
         </div>
       )}

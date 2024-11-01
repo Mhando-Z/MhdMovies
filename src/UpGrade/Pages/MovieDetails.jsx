@@ -142,20 +142,11 @@ function MovieDetails() {
     getSimilar();
   }, [Page, id]);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
   const handleTrailer = () => {
-    scrollToTop();
     setWatch(false);
     setTrailer(!Trailer);
   };
   const handleWatch = () => {
-    scrollToTop();
     setTrailer(false);
     setWatch(!Watch);
   };
