@@ -75,7 +75,6 @@ const AiringToday = () => {
               >
                 {day?.name}
                 <span className="flex items-center gap-2">
-                  <AiFillStar className="w-5 h-5 text-yellow-400" />
                   <span className="font-medium">
                     {day?.vote_average?.toFixed(1)}
                   </span>
