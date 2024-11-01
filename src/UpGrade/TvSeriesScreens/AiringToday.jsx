@@ -89,8 +89,10 @@ const AiringToday = () => {
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`text-white/80 line-clamp-2 md:line-clamp-none  ${
-                  index === activeIndex ? "" : "hidden"
+                className={`  ${
+                  index === activeIndex
+                    ? "text-white/80 line-clamp-2 md:line-clamp-none"
+                    : "hidden"
                 } `}
               >
                 {day?.overview}
