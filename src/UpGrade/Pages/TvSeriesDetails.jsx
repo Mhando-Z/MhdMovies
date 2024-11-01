@@ -35,6 +35,7 @@ function MovieDetails() {
   const [Selected, setSelect] = useState();
   const [count, setCount] = useState(14);
   const [Trailer, setTrailer] = useState(false);
+  const [Watch, setWatch] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
   const [show, setShow] = useState(false);
   const [num, setNum] = useState(4);
@@ -200,7 +201,13 @@ function MovieDetails() {
 
   const handleTrailer = () => {
     scrollToTop();
+    setWatch(false);
     setTrailer(!Trailer);
+  };
+  const handleWatch = () => {
+    scrollToTop();
+    setTrailer(false);
+    setWatch(!Watch);
   };
 
   const handleSelect = (key) => {
@@ -298,7 +305,8 @@ function MovieDetails() {
                 </p>
                 <div className="flex gap-4 pt-4">
                   <Link
-                    to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+                    onClick={handleWatch}
+                    // to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
                     className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
                   >
                     <FaRegCirclePlay className="text-xl" />
@@ -354,7 +362,8 @@ function MovieDetails() {
             </p>
             <div className="flex flex-row items-center justify-between pt-4">
               <Link
-                to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+                onClick={handleWatch}
+                // to={`https://vidsrc.xyz/embed/tv?imdb=${Details.imdb_id}`}
                 className="flex items-center gap-2 px-4 py-1.5 font-medium text-white transition-colors bg-red-600 rounded-lg"
               >
                 <FaRegCirclePlay className="text-xl" />
@@ -371,6 +380,33 @@ function MovieDetails() {
           </div>
         </div>
       </div>
+
+      {/* Watch Section */}
+      {Watch && (
+        <div className="container py-16 mx-auto">
+          <div className="movie-player">
+            {/* Iframe with improved styling */}
+            <iframe
+              src={`https://vidsrc.xyz/embed/tv?imdb=${ID.imdb_id}`}
+              width="100%"
+              height="500px"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="z-0 w-full transition-all duration-300 ease-in-out transform rounded-lg "
+              title="TV Player"
+            />
+          </div>
+
+          {/* Optional: Movie Information Overlay */}
+          <div className="mt-4 text-center">
+            <h2 className="text-xl font-bold text-gray-700">
+              {Details.name || "TvSeries Player"}
+            </h2>
+            <p className="text-sm text-gray-600">IMDB ID: {Details.imdb_id}</p>
+          </div>
+        </div>
+      )}
 
       {/* Trailer Section */}
       {Trailer && (
