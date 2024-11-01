@@ -34,6 +34,8 @@ function MovieDetails() {
   const [Watch, setWatch] = useState(false);
   const [Page, setPage] = useState(1);
   const { id } = useParams();
+  // torrents
+  const [mediaInfo, setMediaInfo] = useState("");
 
   //Logics
   async function getDetails() {
@@ -51,7 +53,6 @@ function MovieDetails() {
       setDetails(data);
     } catch (error) {}
   }
-
   async function getReview() {
     try {
       const { data } = await axios.get(
@@ -67,7 +68,6 @@ function MovieDetails() {
       setReview(data.results);
     } catch (error) {}
   }
-
   async function getSimilar() {
     try {
       const { data } = await axios.get(
@@ -83,7 +83,6 @@ function MovieDetails() {
       setSimilar(data.results);
     } catch (error) {}
   }
-
   async function getImages() {
     try {
       const { data } = await axios.get(
@@ -99,7 +98,6 @@ function MovieDetails() {
       setImage(data.backdrops);
     } catch (error) {}
   }
-
   async function getVideo() {
     try {
       const { data } = await axios.get(
@@ -116,7 +114,6 @@ function MovieDetails() {
       setSelect(data.results[0].key);
     } catch (error) {}
   }
-
   async function getCasts() {
     try {
       const { data } = await axios.get(
@@ -133,14 +130,37 @@ function MovieDetails() {
     } catch (error) {}
   }
 
+  // torrent Logics
+  const fetchMediaInfo = async () => {
+    try {
+      if (Details?.imdb_id) {
+        const movie = await fetchMovieData();
+        setMediaInfo(movie);
+      }
+    } catch (error) {}
+  };
+
+  const fetchMovieData = async () => {
+    try {
+      const movieResponse = await axios.get(
+        "https://yts.mx/api/v2/list_movies.json",
+        {
+          params: { query_term: Details?.imdb_id },
+        }
+      );
+      return movieResponse.data.data.movies?.[0] || null;
+    } catch {}
+  };
+
   useEffect(() => {
+    fetchMediaInfo();
     getCasts();
     getVideo();
     getImages();
     getReview();
     getDetails();
     getSimilar();
-  }, [Page, id]);
+  }, [Page, id, Details?.imdb_id]);
 
   const handleTrailer = () => {
     setWatch(false);
@@ -395,7 +415,8 @@ function MovieDetails() {
       )}
 
       {/* table stats */}
-      <div className="container flex flex-col px-5 mx-auto mt-16 md:px-0">
+      <div className="container flex flex-col gap-5 px-5 mx-auto mt-16 md:flex-row md:px-0">
+        {/* table one */}
         <table className="w-full bg-gray-800 rounded-lg bg-opacity-20 md:w-1/2">
           <tbody>
             <tr className="border-b border-gray-700">
@@ -449,16 +470,39 @@ function MovieDetails() {
                 </div>
               </td>
             </tr>
-            {/* {Details.next_episode_to_air !== null && (
-              <tr className="border-b border-gray-700">
-                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                  Next Episode Release:
-                </td>
-                <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
-                  {Details?.next_episode_to_air.air_date}
-                </td>
-              </tr>
-            )} */}
+          </tbody>
+        </table>
+        {/* table two Download torrents thingly */}
+        <table className="w-full bg-gray-800 rounded-lg bg-opacity-20 md:w-1/2">
+          <tbody>
+            {mediaInfo?.torrents?.map((info, index) => {
+              return (
+                <tr key={index} className="border-b border-gray-700">
+                  <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                    {info?.type}
+                  </td>
+                  <td className="px-4 py-2 text-base lg:text-lg text-slate-200">
+                    <p className="text-white">
+                      {info?.quality} - {info?.size}
+                    </p>
+                  </td>
+                  <td className="px-4 py-2 text-base text-yellow-500 lg:text-lg">
+                    <a
+                      href={`magnet:?xt=urn:btih:${
+                        info?.hash
+                      }&dn=${encodeURIComponent(
+                        mediaInfo.title
+                      )}&tr=udp://open.demonii.com:1337/announce&tr=udp://tracker.openbittorrent.com:80/announce&tr=udp://tracker.coppersurfer.tk:6969/announce&tr=udp://tracker.leechers-paradise.org:6969/announce`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block px-4 mt-2 text-yellow-500 hover:text-yellow-400"
+                    >
+                      Download
+                    </a>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
