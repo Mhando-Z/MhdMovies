@@ -7,9 +7,18 @@ import { FaRegCirclePlay } from "react-icons/fa6";
 import MoviePoster from "../Components/MoviePoster";
 import ReactPlayer from "react-player";
 import { Dots } from "react-activity";
-// import { Slider } from "../Components/slider";
 import CastProfile from "../Components/Cast";
+import { motion } from "framer-motion";
 import {
+  User,
+  Calendar,
+  MapPin,
+  Users,
+  TrendingUp,
+  Globe,
+  Film,
+  Heart,
+  Award,
   ChevronLeft,
   ChevronRight,
   MessageSquare,
@@ -18,8 +27,9 @@ import {
   Sparkles,
   Star,
   ThumbsUp,
-  Users,
 } from "lucide-react";
+import PosterExpands from "../Components/PosterExpands";
+import CastPoster from "../Components/CastPoster";
 
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
@@ -27,7 +37,15 @@ function MovieDetails() {
   const [Images, setImage] = useState([]);
   const [Videos, setVideo] = useState([]);
   const [Selected, setSelect] = useState();
-  const [Cast, setCast] = useState();
+  // cast
+  const [Cast, setCast] = useState([]);
+  const [CastId, setCastId] = useState("");
+  const [CastDetails, setCastDetails] = useState([]);
+  const [CastMovies, setCastMovies] = useState([]);
+  const [CastTvSeries, setCastTvSeries] = useState([]);
+  const [CastImages, setCastImage] = useState([]);
+  const [ShowCastDetails, setShowCastDetails] = useState(false);
+  //
   const [Similar, setSimilar] = useState([]);
   const [count, setCount] = useState(14);
   const [Trailer, setTrailer] = useState(false);
@@ -36,6 +54,7 @@ function MovieDetails() {
   const { id } = useParams();
   // torrents
   const [mediaInfo, setMediaInfo] = useState("");
+  const [hoveredId, setHoveredId] = useState(null);
 
   //Logics
   async function getDetails() {
@@ -152,6 +171,80 @@ function MovieDetails() {
     } catch {}
   };
 
+  // cast Logic
+  async function getCastsDetails() {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/person/${CastId}?language=en-US`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+      setCastDetails(data);
+    } catch (error) {}
+  }
+
+  async function getCastsMovies() {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/person/${CastId}/movie_credits?language=en-US`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+      setCastMovies(data);
+    } catch (error) {}
+  }
+
+  async function getCastsTvSeries() {
+    try {
+      const { data } = await axios.get(
+        `https://api.themoviedb.org/3/person/${CastId}/tv_credits?language=en-US`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+      setCastTvSeries(data);
+    } catch (error) {}
+  }
+
+  async function getCastsImages() {
+    try {
+      const { data } = await axios.get(
+        ` https://api.themoviedb.org/3/person/${CastId}/images`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
+          },
+        }
+      );
+      setCastImage(data);
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    if (CastId) {
+      getCastsImages();
+      getCastsMovies();
+      getCastsTvSeries();
+      getCastsDetails();
+    }
+  }, [CastId]);
+
   useEffect(() => {
     fetchMediaInfo();
     getCasts();
@@ -207,8 +300,45 @@ function MovieDetails() {
     );
   }
 
+  const handleCast = (id) => {
+    setCastId(id);
+    setShowCastDetails(true);
+  };
+
   const Similars = Similar?.filter((dt) => dt.poster_path !== null);
   const Casts = Cast?.filter((dt) => dt.profile_path !== null);
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { delay: 0.2, duration: 0.5 },
+    },
+  };
+
+  const tableRowVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: (i) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.4,
+      },
+    }),
+  };
+
+  const iconStyle = "w-5 h-5 text-blue-400";
 
   return (
     <div className="min-h-screen font-sans">
@@ -460,6 +590,7 @@ function MovieDetails() {
             </tr>
           </tbody>
         </table>
+
         {/* table two Download torrents thingly */}
         <table className="w-full bg-gray-800 rounded-lg bg-opacity-20 md:w-1/2">
           <tbody>
@@ -506,7 +637,11 @@ function MovieDetails() {
         </h2>
         <div className="flex gap-6 pb-6 overflow-x-auto">
           {Casts?.map((person, index) => (
-            <div key={person.file_path + index} className="flex-shrink-0 w-48">
+            <div
+              onClick={() => handleCast(person.id)}
+              key={person.file_path + index}
+              className="flex-shrink-0 w-48"
+            >
               <CastProfile
                 image={person?.profile_path}
                 name={person?.name}
@@ -516,6 +651,196 @@ function MovieDetails() {
           ))}
         </div>
       </div>
+
+      {/* Cast Details */}
+      {ShowCastDetails && (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="container p-6 mx-auto shadow-xl bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl"
+        >
+          <div className="flex flex-col gap-8 lg:flex-row">
+            {/* Left side - Poster Image */}
+            <motion.div variants={imageVariants} className="w-full lg:w-1/3">
+              <div className="relative overflow-hidden rounded-xl group">
+                <motion.img
+                  src={`https://image.tmdb.org/t/p/w500${CastDetails?.profile_path}`}
+                  alt={CastDetails?.name}
+                  className="object-cover w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                  whileHover={{ scale: 1.05 }}
+                />
+                <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/60 to-transparent group-hover:opacity-100" />
+              </div>
+            </motion.div>
+
+            {/* Right side - Cast Details */}
+            <div className="w-full lg:w-2/3">
+              <motion.h1
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 text-4xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text"
+              >
+                {CastDetails?.name}
+              </motion.h1>
+
+              <div className="space-y-4">
+                {[
+                  {
+                    icon: <Award className={iconStyle} />,
+                    label: "Known For",
+                    value: CastDetails?.known_for_department,
+                  },
+                  {
+                    icon: <Users className={iconStyle} />,
+                    label: "Also Known As",
+                    value: CastDetails?.also_known_as?.join(", "),
+                  },
+                  {
+                    icon: <Calendar className={iconStyle} />,
+                    label: "Birthday",
+                    value: CastDetails?.birthday,
+                  },
+                  {
+                    icon: <MapPin className={iconStyle} />,
+                    label: "Place of Birth",
+                    value: CastDetails?.place_of_birth,
+                  },
+                  {
+                    icon: <User className={iconStyle} />,
+                    label: "Gender",
+                    value: CastDetails?.gender === 2 ? "Male" : "Female",
+                  },
+                  {
+                    icon: <TrendingUp className={iconStyle} />,
+                    label: "Popularity",
+                    value: CastDetails?.popularity,
+                  },
+                  {
+                    icon: <Globe className={iconStyle} />,
+                    label: "Homepage",
+                    value: (
+                      <a
+                        href={CastDetails?.homepage}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
+                      >
+                        {CastDetails?.homepage}
+                      </a>
+                    ),
+                  },
+                  {
+                    icon: <Film className={iconStyle} />,
+                    label: "IMDB",
+                    value: (
+                      <a
+                        href={`https://www.imdb.com/name/${CastDetails?.imdb_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
+                      >
+                        {CastDetails?.imdb_id}
+                      </a>
+                    ),
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.label}
+                    variants={tableRowVariants}
+                    custom={index}
+                    initial="hidden"
+                    animate="visible"
+                    className="p-4 transition-colors duration-200 border-b rounded-lg border-gray-700/50 hover:bg-gray-800/30"
+                  >
+                    <div className="flex items-center gap-4">
+                      {item.icon}
+                      <div className="flex-1">
+                        <h3 className="text-sm font-medium text-gray-400">
+                          {item.label}
+                        </h3>
+                        <div className="mt-1 text-white">{item.value}</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+
+                <motion.div
+                  variants={tableRowVariants}
+                  custom={8}
+                  initial="hidden"
+                  animate="visible"
+                  className="p-4 transition-colors duration-200 border-b rounded-lg border-gray-700/50 hover:bg-gray-800/30"
+                >
+                  <div className="flex items-center gap-4">
+                    <Heart className={iconStyle} />
+                    <div className="flex-1">
+                      <h3 className="text-sm font-medium text-gray-400">
+                        Biography
+                      </h3>
+                      <div className="mt-1 leading-relaxed text-white">
+                        {CastDetails?.biography}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+
+          {/* Cast movies  */}
+          <div className="mt-2">
+            <h1 className="text-2xl text-gray-200 font-Raleway">
+              {CastMovies?.cast?.length} Movies
+            </h1>
+          </div>
+          <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
+            {CastMovies?.cast?.map((cmov, index) => {
+              return (
+                <PosterExpands
+                  key={cmov.id + index}
+                  movie={cmov}
+                  isHovered={hoveredId === cmov.id}
+                  onHover={() => setHoveredId(cmov.id)}
+                  onLeave={() => setHoveredId(null)}
+                />
+              );
+            })}
+          </div>
+
+          {/* Cast TvSeries  */}
+          <div className="mt-2">
+            <h1 className="text-2xl text-gray-200 font-Raleway">
+              {CastTvSeries?.cast?.length} TvSeries
+            </h1>
+          </div>
+          <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
+            {CastTvSeries?.cast?.map((cmov, index) => {
+              return (
+                <PosterExpands
+                  key={cmov.id + index}
+                  movie={cmov}
+                  isHovered={hoveredId === cmov.id}
+                  onHover={() => setHoveredId(cmov.id)}
+                  onLeave={() => setHoveredId(null)}
+                />
+              );
+            })}
+          </div>
+
+          {/* Cast Images */}
+          <div className="mt-2">
+            <h1 className="text-2xl text-gray-200 font-Raleway">
+              {CastImages?.profiles?.length} Images
+            </h1>
+          </div>
+          <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
+            {CastImages?.profiles?.map((cimg, index) => {
+              return <CastPoster key={cimg.width + index} actor={cimg} />;
+            })}
+          </div>
+        </motion.div>
+      )}
 
       {/* Movie Stills */}
       <section className="container px-4 py-12 mx-auto">
@@ -786,10 +1111,6 @@ function MovieDetails() {
               </div>
             ))}
           </div>
-
-          {/* <div className="py-12">
-            <Slider data={Similars} />
-          </div> */}
         </section>
       )}
     </div>
