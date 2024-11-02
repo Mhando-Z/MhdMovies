@@ -664,7 +664,7 @@ function MovieDetails() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="container mx-auto rounded-xl"
+          className="container px-4 md:px-0 mx-auto rounded-xl"
         >
           <div className="flex flex-col gap-8 lg:flex-row">
             {/* Left side - Poster Image */}
