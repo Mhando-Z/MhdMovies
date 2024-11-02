@@ -3,7 +3,6 @@ import Rating from "../Components/Rating";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
-import { FaRegCirclePlay } from "react-icons/fa6";
 import TvSeriesPoster from "./../Components/TvSeriesPoster";
 import ReactPlayer from "react-player";
 import { Dots } from "react-activity";
@@ -64,6 +63,7 @@ function MovieDetails() {
   const [num, setNum] = useState(4);
   const [Enum, setENum] = useState(5);
   const [Episodes, setEpisodes] = useState();
+  const [Loading, setLoading] = useState(false);
   const [showWatchOptions, setShowWatchOptions] = useState(false);
 
   //
@@ -224,7 +224,10 @@ function MovieDetails() {
         }
       );
       setCastDetails(data);
-    } catch (error) {}
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   }
 
   async function getCastsMovies() {
@@ -344,6 +347,7 @@ function MovieDetails() {
   const handleCast = (id) => {
     setCastId(id);
     setShowCastDetails(true);
+    setLoading(true);
   };
 
   if (!Details || Details?.length === 0) {
@@ -1019,188 +1023,199 @@ function MovieDetails() {
           animate="visible"
           className="container px-4 mx-auto md:px-0 rounded-xl"
         >
-          <div className="flex flex-col gap-8 lg:flex-row">
-            {/* Left side - Poster Image */}
-            <motion.div variants={imageVariants} className="w-full lg:w-1/3">
-              <div className="relative overflow-hidden rounded-xl group">
-                <motion.img
-                  src={`https://image.tmdb.org/t/p/w500${CastDetails?.profile_path}`}
-                  alt={CastDetails?.name}
-                  className="object-cover w-full h-auto transition-transform duration-300 group-hover:scale-105"
-                  whileHover={{ scale: 1.05 }}
-                />
-                <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/60 to-transparent group-hover:opacity-100" />
-              </div>
-            </motion.div>
-
-            {/* Right side - Cast Details */}
-            <div className="w-full lg:w-2/3">
-              <motion.h1
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex flex-row items-center justify-between mb-6 text-4xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text"
-              >
-                {CastDetails?.name}
-                <Link onClick={() => setShowCastDetails(false)}>
-                  <RxCrossCircled className="text-3xl text-gray-100" />
-                </Link>
-              </motion.h1>
-
-              <div className="space-y-4">
-                {[
-                  {
-                    icon: <Award className={iconStyle} />,
-                    label: "Known For",
-                    value: CastDetails?.known_for_department,
-                  },
-                  {
-                    icon: <Users className={iconStyle} />,
-                    label: "Also Known As",
-                    value: CastDetails?.also_known_as?.join(", "),
-                  },
-                  {
-                    icon: <Calendar className={iconStyle} />,
-                    label: "Birthday",
-                    value: CastDetails?.birthday,
-                  },
-                  {
-                    icon: <MapPin className={iconStyle} />,
-                    label: "Place of Birth",
-                    value: CastDetails?.place_of_birth,
-                  },
-                  {
-                    icon: <User className={iconStyle} />,
-                    label: "Gender",
-                    value: CastDetails?.gender === 2 ? "Male" : "Female",
-                  },
-                  {
-                    icon: <TrendingUp className={iconStyle} />,
-                    label: "Popularity",
-                    value: CastDetails?.popularity,
-                  },
-                  {
-                    icon: <Globe className={iconStyle} />,
-                    label: "Homepage",
-                    value: (
-                      <a
-                        href={CastDetails?.homepage}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
-                      >
-                        {CastDetails?.homepage}
-                      </a>
-                    ),
-                  },
-                  {
-                    icon: <Film className={iconStyle} />,
-                    label: "IMDB",
-                    value: (
-                      <a
-                        href={`https://www.imdb.com/name/${CastDetails?.imdb_id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
-                      >
-                        {CastDetails?.imdb_id}
-                      </a>
-                    ),
-                  },
-                ].map((item, index) => (
-                  <motion.div
-                    key={item.label + index}
-                    variants={tableRowVariants}
-                    custom={index}
-                    initial="hidden"
-                    animate="visible"
-                    className="p-4 transition-colors duration-200 border-b rounded-lg border-gray-700/50 hover:bg-gray-800/30"
-                  >
-                    <div className="flex items-center gap-4">
-                      {item.icon}
-                      <div className="flex-1">
-                        <h3 className="text-sm font-medium text-gray-400">
-                          {item.label}
-                        </h3>
-                        <div className="mt-1 text-white">{item.value}</div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-
+          {Loading ? (
+            <div className="flex items-center justify-center">
+              <Dots color="white" size={32} speed={1} animating={true} />
+            </div>
+          ) : (
+            <>
+              <div className="flex flex-col gap-8 lg:flex-row">
+                {/* Left side - Poster Image */}
                 <motion.div
-                  variants={tableRowVariants}
-                  custom={8}
-                  initial="hidden"
-                  animate="visible"
-                  className="p-4 transition-colors duration-200 border-b rounded-lg border-gray-700/50 hover:bg-gray-800/30"
+                  variants={imageVariants}
+                  className="w-full lg:w-1/3"
                 >
-                  <div className="flex items-center gap-4">
-                    <Heart className={iconStyle} />
-                    <div className="flex-1">
-                      <h3 className="text-sm font-medium text-gray-400">
-                        Biography
-                      </h3>
-                      <div className="mt-1 leading-relaxed text-white">
-                        {CastDetails?.biography}
-                      </div>
-                    </div>
+                  <div className="relative overflow-hidden rounded-xl group">
+                    <motion.img
+                      src={`https://image.tmdb.org/t/p/w500${CastDetails?.profile_path}`}
+                      alt={CastDetails?.name}
+                      className="object-cover w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                      whileHover={{ scale: 1.05 }}
+                    />
+                    <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/60 to-transparent group-hover:opacity-100" />
                   </div>
                 </motion.div>
+
+                {/* Right side - Cast Details */}
+                <div className="w-full lg:w-2/3">
+                  <motion.h1
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex flex-row items-center justify-between mb-6 text-4xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text"
+                  >
+                    {CastDetails?.name}
+                    <Link onClick={() => setShowCastDetails(false)}>
+                      <RxCrossCircled className="text-3xl text-gray-100" />
+                    </Link>
+                  </motion.h1>
+
+                  <div className="space-y-4">
+                    {[
+                      {
+                        icon: <Award className={iconStyle} />,
+                        label: "Known For",
+                        value: CastDetails?.known_for_department,
+                      },
+                      {
+                        icon: <Users className={iconStyle} />,
+                        label: "Also Known As",
+                        value: CastDetails?.also_known_as?.join(", "),
+                      },
+                      {
+                        icon: <Calendar className={iconStyle} />,
+                        label: "Birthday",
+                        value: CastDetails?.birthday,
+                      },
+                      {
+                        icon: <MapPin className={iconStyle} />,
+                        label: "Place of Birth",
+                        value: CastDetails?.place_of_birth,
+                      },
+                      {
+                        icon: <User className={iconStyle} />,
+                        label: "Gender",
+                        value: CastDetails?.gender === 2 ? "Male" : "Female",
+                      },
+                      {
+                        icon: <TrendingUp className={iconStyle} />,
+                        label: "Popularity",
+                        value: CastDetails?.popularity,
+                      },
+                      {
+                        icon: <Globe className={iconStyle} />,
+                        label: "Homepage",
+                        value: (
+                          <a
+                            href={CastDetails?.homepage}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
+                          >
+                            {CastDetails?.homepage}
+                          </a>
+                        ),
+                      },
+                      {
+                        icon: <Film className={iconStyle} />,
+                        label: "IMDB",
+                        value: (
+                          <a
+                            href={`https://www.imdb.com/name/${CastDetails?.imdb_id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
+                          >
+                            {CastDetails?.imdb_id}
+                          </a>
+                        ),
+                      },
+                    ].map((item, index) => (
+                      <motion.div
+                        key={item.label + index}
+                        variants={tableRowVariants}
+                        custom={index}
+                        initial="hidden"
+                        animate="visible"
+                        className="p-4 transition-colors duration-200 border-b rounded-lg border-gray-700/50 hover:bg-gray-800/30"
+                      >
+                        <div className="flex items-center gap-4">
+                          {item.icon}
+                          <div className="flex-1">
+                            <h3 className="text-sm font-medium text-gray-400">
+                              {item.label}
+                            </h3>
+                            <div className="mt-1 text-white">{item.value}</div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+
+                    <motion.div
+                      variants={tableRowVariants}
+                      custom={8}
+                      initial="hidden"
+                      animate="visible"
+                      className="p-4 transition-colors duration-200 border-b rounded-lg border-gray-700/50 hover:bg-gray-800/30"
+                    >
+                      <div className="flex items-center gap-4">
+                        <Heart className={iconStyle} />
+                        <div className="flex-1">
+                          <h3 className="text-sm font-medium text-gray-400">
+                            Biography
+                          </h3>
+                          <div className="mt-1 leading-relaxed text-white">
+                            {CastDetails?.biography}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          {/* Cast movies  */}
-          <div className="mt-2">
-            <h1 className="text-2xl text-gray-200 font-Raleway">
-              {CastMovies?.cast?.length} {CastDetails?.name} Movies
-            </h1>
-          </div>
-          <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
-            {CastMovies?.cast?.map((cmov, index) => {
-              return (
-                <PosterExpands
-                  key={cmov.id + index}
-                  movie={cmov}
-                  isHovered={hoveredId === cmov.id}
-                  onHover={() => setHoveredId(cmov.id)}
-                  onLeave={() => setHoveredId(null)}
-                />
-              );
-            })}
-          </div>
+              {/* Cast movies  */}
+              <div className="mt-2">
+                <h1 className="text-2xl text-gray-200 font-Raleway">
+                  {CastMovies?.cast?.length} {CastDetails?.name} Movies
+                </h1>
+              </div>
+              <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
+                {CastMovies?.cast?.map((cmov, index) => {
+                  return (
+                    <PosterExpands
+                      key={cmov.id + index}
+                      movie={cmov}
+                      isHovered={hoveredId === cmov.id}
+                      onHover={() => setHoveredId(cmov.id)}
+                      onLeave={() => setHoveredId(null)}
+                    />
+                  );
+                })}
+              </div>
 
-          {/* Cast TvSeries  */}
-          <div className="mt-2">
-            <h1 className="text-2xl text-gray-200 font-Raleway">
-              {CastTvSeries?.cast?.length} {CastDetails?.name} TvSeries
-            </h1>
-          </div>
-          <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
-            {CastTvSeries?.cast?.map((cmov, index) => {
-              return (
-                <TvPosterExpands
-                  key={cmov.id + index}
-                  movie={cmov}
-                  isHovered={hoveredId === cmov.id}
-                  onHover={() => setHoveredId(cmov.id)}
-                  onLeave={() => setHoveredId(null)}
-                />
-              );
-            })}
-          </div>
+              {/* Cast TvSeries  */}
+              <div className="mt-2">
+                <h1 className="text-2xl text-gray-200 font-Raleway">
+                  {CastTvSeries?.cast?.length} {CastDetails?.name} TvSeries
+                </h1>
+              </div>
+              <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
+                {CastTvSeries?.cast?.map((cmov, index) => {
+                  return (
+                    <TvPosterExpands
+                      key={cmov.id + index}
+                      movie={cmov}
+                      isHovered={hoveredId === cmov.id}
+                      onHover={() => setHoveredId(cmov.id)}
+                      onLeave={() => setHoveredId(null)}
+                    />
+                  );
+                })}
+              </div>
 
-          {/* Cast Images */}
-          <div className="mt-2">
-            <h1 className="text-2xl text-gray-200 font-Raleway">
-              {CastImages?.profiles?.length} Images of {CastDetails?.name}
-            </h1>
-          </div>
-          <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
-            {CastImages?.profiles?.map((cimg, index) => {
-              return <CastPoster key={cimg.width + index} actor={cimg} />;
-            })}
-          </div>
+              {/* Cast Images */}
+              <div className="mt-2">
+                <h1 className="text-2xl text-gray-200 font-Raleway">
+                  {CastImages?.profiles?.length} Images of {CastDetails?.name}
+                </h1>
+              </div>
+              <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
+                {CastImages?.profiles?.map((cimg, index) => {
+                  return <CastPoster key={cimg.width + index} actor={cimg} />;
+                })}
+              </div>
+            </>
+          )}
         </motion.div>
       )}
 
