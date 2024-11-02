@@ -537,22 +537,48 @@ function MovieDetails() {
             <p className="max-w-3xl text-lg text-gray-300">
               {Details?.overview}
             </p>
-            <div className="flex flex-row items-center justify-between pt-4">
-              <Link
-                onClick={handleWatch}
-                // to={`https://vidsrc.xyz/embed/tv?imdb=${Details.imdb_id}`}
-                className="flex items-center gap-2 px-4 py-1.5 font-medium text-white transition-colors bg-red-600 rounded-lg"
-              >
-                <FaRegCirclePlay className="text-xl" />
-                Watch Now
-              </Link>
-              <Link
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <div className="relative">
+                <button
+                  onClick={handleWatchClick}
+                  className="flex items-center justify-center w-full gap-2 px-6 py-3 font-medium text-white transition-all bg-red-600 rounded-lg hover:bg-red-700 group"
+                >
+                  <Play className="w-5 h-5" />
+                  <span>Watch Now</span>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-200 ${
+                      showWatchOptions ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {showWatchOptions && (
+                  <div className="absolute z-10 w-full mt-2 overflow-hidden bg-white rounded-lg shadow-lg">
+                    <div className="flex flex-col divide-y divide-gray-100">
+                      <Link
+                        className="px-4 py-3 text-left transition-colors hover:bg-gray-50"
+                        onClick={handleWatch}
+                      >
+                        Watch Link 1
+                      </Link>
+                      <Link
+                        className="px-4 py-3 text-left transition-colors hover:bg-gray-50"
+                        onClick={handleWatch2}
+                      >
+                        Watch Link 2
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <button
                 onClick={handleTrailer}
-                className="flex items-center gap-2 px-4 py-2 font-medium text-white transition-colors bg-gray-800 rounded-lg"
+                className="flex items-center justify-center gap-2 px-6 py-3 font-medium text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
               >
-                <FaRegCirclePlay className="text-xl" />
-                Watch Trailer
-              </Link>
+                <Play className="w-5 h-5" />
+                <span>Watch Trailer</span>
+              </button>
             </div>
           </div>
         </div>
