@@ -27,6 +27,8 @@ import {
   Sparkles,
   Star,
   ThumbsUp,
+  ChevronDown,
+  Play,
 } from "lucide-react";
 import PosterExpands from "../Components/PosterExpands";
 import CastPoster from "../Components/CastPoster";
@@ -52,11 +54,13 @@ function MovieDetails() {
   const [count, setCount] = useState(14);
   const [Trailer, setTrailer] = useState(false);
   const [Watch, setWatch] = useState(false);
+  const [Watch2, setWatch2] = useState(false);
   const [Page, setPage] = useState(1);
   const { id } = useParams();
   // torrents
   const [mediaInfo, setMediaInfo] = useState("");
   const [hoveredId, setHoveredId] = useState(null);
+  const [showWatchOptions, setShowWatchOptions] = useState(false);
 
   //Logics
   async function getDetails() {
@@ -265,9 +269,19 @@ function MovieDetails() {
     setWatch(false);
     setTrailer(!Trailer);
   };
+
   const handleWatch = () => {
+    setShowWatchOptions(false);
     setTrailer(false);
-    setWatch(!Watch);
+    setWatch2(false);
+    setWatch(true);
+  };
+
+  const handleWatch2 = () => {
+    setShowWatchOptions(false);
+    setTrailer(false);
+    setWatch(false);
+    setWatch2(true);
   };
 
   const handleSelect = (key) => {
@@ -346,6 +360,16 @@ function MovieDetails() {
 
   const iconStyle = "w-5 h-5 text-blue-400";
 
+  const handleWatchClick = () => {
+    setShowWatchOptions(!showWatchOptions);
+    if (Watch === true) {
+      setWatch(false);
+    }
+    if (Watch2 === true) {
+      setWatch2(false);
+    }
+  };
+
   return (
     <div className="min-h-screen font-sans">
       {/* Hero Section with Backdrop */}
@@ -405,21 +429,47 @@ function MovieDetails() {
                 <p className="max-w-3xl text-lg text-gray-300">
                   {Details?.overview}
                 </p>
-                <div className="flex gap-4 pt-4">
-                  <Link
-                    onClick={handleWatch}
-                    // to={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
-                    className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
-                  >
-                    <FaRegCirclePlay className="text-xl" />
-                    Watch Now
-                  </Link>
+                <div className="flex flex-col gap-4 sm:flex-row">
+                  <div className="relative">
+                    <button
+                      onClick={handleWatchClick}
+                      className="flex items-center justify-center w-full gap-2 px-6 py-3 font-medium text-white transition-all bg-red-600 rounded-lg hover:bg-red-700 group"
+                    >
+                      <Play className="w-5 h-5" />
+                      <span>Watch Now</span>
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-200 ${
+                          showWatchOptions ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {showWatchOptions && (
+                      <div className="absolute z-10 w-full mt-2 overflow-hidden bg-white rounded-lg shadow-lg">
+                        <div className="flex flex-col divide-y divide-gray-100">
+                          <Link
+                            className="px-4 py-3 text-left transition-colors hover:bg-gray-50"
+                            onClick={handleWatch}
+                          >
+                            Watch Link 1
+                          </Link>
+                          <Link
+                            className="px-4 py-3 text-left transition-colors hover:bg-gray-50"
+                            onClick={handleWatch2}
+                          >
+                            Watch Link 2
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                   <button
                     onClick={handleTrailer}
-                    className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
+                    className="flex items-center justify-center gap-2 px-6 py-3 font-medium text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
                   >
-                    <FaRegCirclePlay className="text-xl" />
-                    Watch Trailer
+                    <Play className="w-5 h-5" />
+                    <span>Watch Trailer</span>
                   </button>
                 </div>
               </div>
@@ -529,7 +579,32 @@ function MovieDetails() {
           <div className="movie-player">
             {/* Iframe with improved styling */}
             <iframe
-              // src={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+              src={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+              width="100%"
+              height="500px"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="z-0 w-full transition-all duration-300 ease-in-out transform rounded-lg "
+              title="Movie Player"
+            />
+          </div>
+
+          {/* Optional: Movie Information Overlay */}
+          <div className="mt-4 text-center">
+            <h2 className="text-xl font-bold text-gray-700">
+              {Details.title || "Movie Player"}
+            </h2>
+            <p className="text-sm text-gray-600">IMDB ID: {Details.imdb_id}</p>
+          </div>
+        </div>
+      )}
+      {/* Watch Section */}
+      {Watch2 && (
+        <div className="container py-16 mx-auto">
+          <div className="movie-player">
+            {/* Iframe with improved styling */}
+            <iframe
               src={`https://www.2embed.cc/embed/${Details.imdb_id}`}
               width="100%"
               height="500px"
