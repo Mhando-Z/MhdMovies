@@ -40,7 +40,7 @@ const TvPosterExpands = ({ movie, isHovered, onHover, onLeave }) => {
               <h2 className="mb-2 text-2xl font-bold hover:text-yellow-500">
                 {movie.name}
               </h2>
-              <p className="text-sm text-gray-300 line-clamp-6">
+              <p className="text-sm text-gray-300 line-clamp-3">
                 {movie.overview}
               </p>
             </div>
