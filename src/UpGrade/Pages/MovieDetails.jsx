@@ -529,7 +529,8 @@ function MovieDetails() {
           <div className="movie-player">
             {/* Iframe with improved styling */}
             <iframe
-              src={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+              // src={`https://vidsrc.xyz/embed/movie?imdb=${Details.imdb_id}`}
+              src={`https://www.2embed.cc/embed/${Details.imdb_id}`}
               width="100%"
               height="500px"
               frameBorder="0"
@@ -664,7 +665,7 @@ function MovieDetails() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="container px-4 md:px-0 mx-auto rounded-xl"
+          className="container px-4 mx-auto md:px-0 rounded-xl"
         >
           <div className="flex flex-col gap-8 lg:flex-row">
             {/* Left side - Poster Image */}

@@ -512,7 +512,8 @@ function MovieDetails() {
           <div className="movie-player">
             {/* Iframe with improved styling */}
             <iframe
-              src={`https://vidsrc.xyz/embed/tv?imdb=${ID.imdb_id}`}
+              // src={`https://vidsrc.xyz/embed/tv?imdb=${ID.imdb_id}`}
+              src={`https://www.2embed.cc/embedtv/${ID.imdb_id}`}
               width="100%"
               height="500px"
               frameBorder="0"
