@@ -253,6 +253,10 @@ function MovieDetails() {
     getReview();
     getDetails();
     getSimilar();
+
+    if (ShowCastDetails === true) {
+      setShowCastDetails(false);
+    }
   }, [Page, id, Details?.imdb_id]);
 
   const handleTrailer = () => {
