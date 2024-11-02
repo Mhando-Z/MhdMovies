@@ -433,9 +433,9 @@ function MovieDetails() {
               {Details?.tagline}
             </p>
             <div className="flex flex-wrap gap-2">
-              {Details?.genres?.map((genre) => (
+              {Details?.genres?.map((genre, index) => (
                 <span
-                  key={genre.id}
+                  key={genre.id + index}
                   className="px-3 py-1 text-sm text-gray-200 rounded-full bg-gray-800/80"
                 >
                   {genre.name}
@@ -497,7 +497,7 @@ function MovieDetails() {
             <div className="space-y-4 max-h-[500px] overflow-y-auto">
               {Videos?.map((video, index) => (
                 <button
-                  key={index}
+                  key={index + video.key}
                   onClick={() => handleSelect(video.key)}
                   className="w-full p-4 text-left transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
                 >
@@ -575,11 +575,11 @@ function MovieDetails() {
               <td className="px-4 py-2 text-slate-200">Companises </td>
               <td className="px-4 py-2 text-slate-200">
                 <div className="flex flex-wrap gap-y-2 gap-x-3">
-                  {Details?.production_companies?.map((comp) => {
+                  {Details?.production_companies?.map((comp, index) => {
                     return (
                       <div
                         className="px-2 bg-gray-700 rounded-xl"
-                        key={comp?.id}
+                        key={comp?.id + index}
                       >
                         <p>{comp?.name}</p>
                       </div>
@@ -746,7 +746,7 @@ function MovieDetails() {
                   },
                 ].map((item, index) => (
                   <motion.div
-                    key={item.label}
+                    key={item.label + index}
                     variants={tableRowVariants}
                     custom={index}
                     initial="hidden"
@@ -1098,7 +1098,10 @@ function MovieDetails() {
           </div>
           <div className="space-y-6 max-h-[600px] overflow-y-auto pr-4">
             {Reviews?.map((review, index) => (
-              <div key={index} className="p-6 rounded-lg bg-gray-800/50">
+              <div
+                key={index + review.author}
+                className="p-6 rounded-lg bg-gray-800/50"
+              >
                 <div className="flex items-center gap-3 mb-4">
                   <IoPersonCircleOutline className="text-3xl text-gray-400" />
                   <h3 className="text-xl font-semibold text-white">
