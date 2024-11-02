@@ -795,7 +795,7 @@ function MovieDetails() {
           {/* Cast movies  */}
           <div className="mt-2">
             <h1 className="text-2xl text-gray-200 font-Raleway">
-              {CastMovies?.cast?.length} Movies
+              {CastMovies?.cast?.length} {CastDetails?.name} Movies
             </h1>
           </div>
           <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
@@ -815,7 +815,7 @@ function MovieDetails() {
           {/* Cast TvSeries  */}
           <div className="mt-2">
             <h1 className="text-2xl text-gray-200 font-Raleway">
-              {CastTvSeries?.cast?.length} TvSeries
+              {CastTvSeries?.cast?.length} {CastDetails?.name} TvSeries
             </h1>
           </div>
           <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
@@ -835,7 +835,7 @@ function MovieDetails() {
           {/* Cast Images */}
           <div className="mt-2">
             <h1 className="text-2xl text-gray-200 font-Raleway">
-              {CastImages?.profiles?.length} Images
+              {CastImages?.profiles?.length} Images of {CastDetails?.name}
             </h1>
           </div>
           <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
