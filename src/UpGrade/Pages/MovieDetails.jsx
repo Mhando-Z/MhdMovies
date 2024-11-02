@@ -270,6 +270,7 @@ function MovieDetails() {
 
   const handleTrailer = () => {
     setWatch(false);
+    setWatch2(false);
     setTrailer(!Trailer);
   };
 
