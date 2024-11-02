@@ -34,6 +34,11 @@ import CastPoster from "../Components/CastPoster";
 import { RxCrossCircled } from "react-icons/rx";
 import TvPosterExpands from "../Components/TvPosterExpands";
 
+// function
+const getYouTubeThumbnail = (videoId) => {
+  return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+};
+
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
   const [Reviews, setReview] = useState([]);
@@ -262,6 +267,7 @@ function MovieDetails() {
     getReview();
     getDetails();
     getSimilar();
+    getYouTubeThumbnail();
 
     if (ShowCastDetails === true) {
       setShowCastDetails(false);
@@ -572,6 +578,7 @@ function MovieDetails() {
       {Trailer && (
         <div className="container px-4 py-16 mx-auto">
           <div className="grid gap-8 md:grid-cols-3">
+            {/* Main Video Player */}
             <div className="md:col-span-2">
               <ReactPlayer
                 width="100%"
@@ -581,21 +588,42 @@ function MovieDetails() {
                 className="overflow-hidden rounded-lg"
               />
             </div>
+
+            {/* Thumbnails Sidebar */}
             <div className="space-y-4 max-h-[500px] overflow-y-auto">
               {Videos?.map((video, index) => (
                 <button
                   key={index + video.key}
                   onClick={() => handleSelect(video.key)}
-                  className="w-full p-4 text-left transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
+                  className={`w-full transition-transform duration-200 ${
+                    Selected === video.key ? "ring-2 ring-yellow-500" : ""
+                  }`}
                 >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-yellow-500">{video.type}</span>
-                      <span className="text-gray-400">{video.site}</span>
+                  <div className="overflow-hidden bg-black border-b-2 border-gray-500 rounded-lg">
+                    {/* Thumbnail Container */}
+                    <div className="relative aspect-video">
+                      <img
+                        src={getYouTubeThumbnail(video.key)}
+                        alt={`${video.type} thumbnail`}
+                        className="object-cover w-full h-full"
+                      />
+                      {/* Overlay with video type badge */}
+                      <div className="absolute top-2 right-2">
+                        <span className="px-2 py-1 text-xs font-semibold text-white rounded-full bg-black/60">
+                          {video.type}
+                        </span>
+                      </div>
                     </div>
-                    <p className="text-sm text-blue-400">
-                      {video.published_at}
-                    </p>
+
+                    {/* Video Info */}
+                    <div className="p-3 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-white">{video.type}</span>
+                        <span className="px-2 py-1 text-xs font-bold text-white capitalize bg-red-700 rounded-md">
+                          {video.site}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </button>
               ))}
