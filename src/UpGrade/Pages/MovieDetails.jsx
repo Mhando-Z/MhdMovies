@@ -30,6 +30,8 @@ import {
 } from "lucide-react";
 import PosterExpands from "../Components/PosterExpands";
 import CastPoster from "../Components/CastPoster";
+import { RxCrossCircled } from "react-icons/rx";
+import TvPosterExpands from "../Components/TvPosterExpands";
 
 function MovieDetails() {
   const [Details, setDetails] = useState([]);
@@ -683,9 +685,12 @@ function MovieDetails() {
               <motion.h1
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mb-6 text-4xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text"
+                className="flex flex-row items-center justify-between mb-6 text-4xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text"
               >
                 {CastDetails?.name}
+                <Link onClick={() => setShowCastDetails(false)}>
+                  <RxCrossCircled className="text-3xl text-gray-100" />
+                </Link>
               </motion.h1>
 
               <div className="space-y-4">
@@ -821,7 +826,7 @@ function MovieDetails() {
           <div className="grid grid-flow-col gap-4 py-4 overflow-x-auto">
             {CastTvSeries?.cast?.map((cmov, index) => {
               return (
-                <PosterExpands
+                <TvPosterExpands
                   key={cmov.id + index}
                   movie={cmov}
                   isHovered={hoveredId === cmov.id}
