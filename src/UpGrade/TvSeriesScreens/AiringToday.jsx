@@ -55,7 +55,7 @@ const AiringToday = () => {
                 <img
                   src={`https://image.tmdb.org/t/p/original/${
                     index === activeIndex
-                      ? day?.backdrop_path
+                      ? day?.backdrop_path || day?.poster_path
                       : day?.poster_path
                   }`}
                   alt={day?.name}
