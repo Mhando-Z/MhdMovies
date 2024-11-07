@@ -492,7 +492,7 @@ function MovieDetails() {
                             className="px-4 py-3 text-left transition-colors hover:bg-gray-50"
                             onClick={handleWatch}
                           >
-                            Watch Link 1
+                            Watch Link 1 (Ads)
                           </Link>
                           <Link
                             className="px-4 py-3 text-left transition-colors hover:bg-gray-50"
@@ -575,7 +575,7 @@ function MovieDetails() {
                         className="px-4 py-3 text-left transition-colors hover:bg-gray-50"
                         onClick={handleWatch}
                       >
-                        Watch Link 1
+                        Watch Link 1 (Ads)
                       </Link>
                       <Link
                         className="px-4 py-3 text-left transition-colors hover:bg-gray-50"
