@@ -19,7 +19,9 @@ const TvPosterExpands = ({ movie, isHovered, onHover, onLeave }) => {
             }`}
           >
             <img
-              src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w500${
+                movie?.poster_path || movie?.backdrop_path
+              }`}
               alt={`${movie.name} Poster`}
               className="object-cover w-full h-full"
             />
