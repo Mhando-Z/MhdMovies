@@ -28,12 +28,12 @@ function TrendingMovies() {
     }
   };
   //Handle Pages Logic
-  const handlePages = () => {
+  const handleNextPages = () => {
     if (Page1 >= 1) {
       setPage1(Page1 + 1);
     }
   };
-  const handlePage = () => {
+  const handlePrevPage = () => {
     if (Page1 >= 1) {
       setPage1(Page1 - 1);
     }
@@ -106,7 +106,7 @@ function TrendingMovies() {
           {/* Navigation Buttons */}
           <div className="flex items-center gap-2">
             <button
-              onClick={handlePages}
+              onClick={handlePrevPage}
               className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -114,7 +114,7 @@ function TrendingMovies() {
             </button>
 
             <button
-              onClick={handlePage}
+              onClick={handleNextPages}
               className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
             >
               <span>Next</span>

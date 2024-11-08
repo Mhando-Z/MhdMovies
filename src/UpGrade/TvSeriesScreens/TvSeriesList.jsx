@@ -172,7 +172,7 @@ function TvSeriesList() {
           {/* Navigation Buttons */}
           <div className="flex items-center gap-2">
             <button
-              onClick={handlePages}
+              onClick={handlePage}
               className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -180,7 +180,7 @@ function TvSeriesList() {
             </button>
 
             <button
-              onClick={handlePage}
+              onClick={handlePages}
               className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
             >
               <span>Next</span>
