@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchPoster from "../Components/SearchPoster";
 import { motion } from "framer-motion";
-import { Dots } from 'react-activity';
+import { Dots } from "react-activity";
 
 function SearchResults() {
   const [Dataquery, setData] = useState();
@@ -50,7 +50,6 @@ function SearchResults() {
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div>
           <Dots color="gray" size={25} speed={1} animating={true} />
-
         </div>
       </div>
     );
@@ -61,10 +60,12 @@ function SearchResults() {
   // Conditional rendering for no results found
   if (Dataque.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-xl font-medium text-gray-100">
-          No results found for "{id}"
-        </h1>
+      <div className="flex flex-col items-center justify-center min-h-screen text-gray-100">
+        <h1 className="mb-4 text-2xl font-semibold">No results found</h1>
+        <p className="text-lg">
+          Your search for "<span className="font-medium">{id}</span>" did not
+          return any matches.
+        </p>
       </div>
     );
   }
