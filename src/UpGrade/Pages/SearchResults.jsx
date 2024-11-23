@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchPoster from "../Components/SearchPoster";
-import { motion } from "framer-motion";
 import { Dots } from "react-activity";
 import { MinusCircle, PlusCircle } from "lucide-react";
 
