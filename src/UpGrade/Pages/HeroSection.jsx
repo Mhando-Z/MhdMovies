@@ -18,7 +18,8 @@ const HeroSection = () => {
 
   // Preload image and set up image url
   useEffect(() => {
-    getTrending();
+    // getTrending();
+
     if (!Trending[value]?.backdrop_path) return;
 
     setIsLoaded(false);
