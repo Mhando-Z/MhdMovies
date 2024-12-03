@@ -9,7 +9,7 @@ import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 const TvHeroSection = () => {
-  const { Todaylist } = useContext(TvSeriesContex);
+  const { Todaylist, getTodays } = useContext(TvSeriesContex);
   const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1);
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -18,6 +18,8 @@ const TvHeroSection = () => {
 
   // Preload image and set up image url
   useEffect(() => {
+    getTodays();
+
     if (!Todaylist[value]?.backdrop_path) return;
 
     setIsLoaded(false);

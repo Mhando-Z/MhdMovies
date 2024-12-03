@@ -97,6 +97,7 @@ export function MovieProvider({ children }) {
         Collected,
         visible,
         setVisible,
+        getTrending,
         setPage1,
         setPage2,
         setPage3,

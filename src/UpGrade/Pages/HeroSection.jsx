@@ -9,7 +9,7 @@ import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 const HeroSection = () => {
-  const { Trending } = useContext(MovieListContext);
+  const { Trending, getTrending } = useContext(MovieListContext);
   const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1);
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -18,6 +18,7 @@ const HeroSection = () => {
 
   // Preload image and set up image url
   useEffect(() => {
+    getTrending();
     if (!Trending[value]?.backdrop_path) return;
 
     setIsLoaded(false);

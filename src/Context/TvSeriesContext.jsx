@@ -95,6 +95,7 @@ export function TvSeriesProvider({ children }) {
         ToDay,
         TopRated,
         TvCollected,
+        getTodays,
         setPage1,
         setPage3,
         TvHandlePages,
