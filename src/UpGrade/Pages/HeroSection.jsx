@@ -16,10 +16,12 @@ const HeroSection = () => {
   const [imageError, setImageError] = useState(false);
   const imageRef = useRef(null);
 
-  // Preload image and set up image url
   useEffect(() => {
     getTrending();
+  }, []);
 
+  // Preload image and set up image url
+  useEffect(() => {
     if (!Trending[value]?.backdrop_path) return;
 
     setIsLoaded(false);

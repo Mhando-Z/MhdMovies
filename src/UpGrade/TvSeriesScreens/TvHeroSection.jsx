@@ -16,10 +16,12 @@ const TvHeroSection = () => {
   const [imageError, setImageError] = useState(false);
   const imageRef = useRef(null);
 
-  // Preload image and set up image url
   useEffect(() => {
     getTodays();
+  }, []);
 
+  // Preload image and set up image url
+  useEffect(() => {
     if (!Todaylist[value]?.backdrop_path) return;
 
     setIsLoaded(false);
