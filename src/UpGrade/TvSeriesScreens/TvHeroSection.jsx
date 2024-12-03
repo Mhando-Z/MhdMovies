@@ -18,7 +18,7 @@ const TvHeroSection = () => {
 
   // Preload image and set up image url
   useEffect(() => {
-    // getTodays();
+    getTodays();
 
     if (!Todaylist[value]?.backdrop_path) return;
 
