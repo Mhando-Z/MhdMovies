@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import TvSeriesContex from "../../Context/TvSeriesContext";
-import { Dots } from "react-activity";
+import { Spinner } from "react-activity";
 import { Rating } from "../Components/Collection";
 import { BsCalendarEvent } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -25,7 +25,7 @@ const AiringToday = () => {
   if (!ToDay || ToDay?.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Dots color="white" size={32} speed={1} animating={true} />
+        <Spinner color="white" size={50} speed={3} animating={true} />
       </div>
     );
   }

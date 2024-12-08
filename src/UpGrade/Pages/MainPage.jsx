@@ -4,7 +4,7 @@ import TrendingMovies from "../MovieScreens/TrendingMovies";
 import TrendingSeries from "../TvSeriesScreens/TrendingSeries";
 import UpComingMovies from "../MovieScreens/UpComingMovies";
 import MovieListContext from "../../Context/MovieListContext";
-import { Dots } from "react-activity";
+import { Spinner } from "react-activity";
 
 function MainPage() {
   const { Trending } = useContext(MovieListContext);
@@ -13,7 +13,7 @@ function MainPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div>
-          <Dots color="gray" size={25} speed={1} animating={true} />
+          <Spinner color="gray" size={50} speed={3} animating={true} />
         </div>
       </div>
     );

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SearchPoster from "../Components/SearchPoster";
-import { Dots } from "react-activity";
+import { Spinner } from "react-activity";
 import { MinusCircle, PlusCircle } from "lucide-react";
 
 function SearchResults() {
@@ -49,7 +49,7 @@ function SearchResults() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div>
-          <Dots color="gray" size={25} speed={1} animating={true} />
+          <Spinner color="gray" size={50} speed={3} animating={true} />
         </div>
       </div>
     );

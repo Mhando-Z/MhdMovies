@@ -12,7 +12,7 @@ import MovieDetails from "./UpGrade/Pages/MovieDetails";
 import TvSeriesDetails from "./UpGrade/Pages/TvSeriesDetails";
 import Genres from "./UpGrade/Pages/Genres";
 import ClearHistoryScroll from "./UpGrade/Components/ClearHistoryScroll";
-import "react-activity/dist/Dots.css";
+import "react-activity/dist/Spinner.css";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);

@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import TvSeriesPoster from "./../Components/TvSeriesPoster";
 import ReactPlayer from "react-player";
-import { Dots } from "react-activity";
+import { Spinner } from "react-activity";
 // import { Slider } from "../Components/slider";
 import CastProfile from "../Components/Cast";
 import { AnimatePresence, motion } from "framer-motion";
@@ -365,7 +365,7 @@ function MovieDetails() {
   if (!Details || Details?.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Dots color="white" size={32} speed={1} animating={true} />
+        <Spinner color="white" size={50} speed={3} animating={true} />
       </div>
     );
   }
@@ -1059,7 +1059,7 @@ function MovieDetails() {
         >
           {Loading ? (
             <div className="flex items-center justify-center">
-              <Dots color="white" size={32} speed={1} animating={true} />
+              <Spinner color="white" size={50} speed={3} animating={true} />
             </div>
           ) : (
             <>
