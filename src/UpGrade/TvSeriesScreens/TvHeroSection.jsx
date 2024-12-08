@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const TvHeroSection = () => {
   const { Todaylist, getTodays } = useContext(TvSeriesContex);
-  const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1);
+  const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1 || 5);
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [imageError, setImageError] = useState(false);

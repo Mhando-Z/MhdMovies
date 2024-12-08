@@ -13,7 +13,6 @@ export default function Slider({ data, value, setValue }) {
   const [swiperRef, setSwiperRef] = useState(0);
 
   // Create array with 500 slides
-
   useEffect(() => {
     if (swiperRef) {
       setValue(swiperRef.activeIndex);
