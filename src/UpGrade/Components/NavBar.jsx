@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Search } from "lucide-react";
 import MovieListContext from "../../Context/MovieListContext";
@@ -62,7 +62,9 @@ function NavBar() {
         <div className="relative flex items-center justify-between h-16">
           {/* Logo */}
           <motion.div className="flex-shrink-0" whileHover={{ scale: 1.05 }}>
-            <img src={logo} alt="Mhd movies logo" className="w-auto h-9" />
+            <Link to={"/"}>
+              <img src={logo} alt="Mhd movies logo" className="w-auto h-9" />
+            </Link>
           </motion.div>
 
           {/* Desktop Navigation */}
