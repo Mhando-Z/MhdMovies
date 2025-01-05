@@ -1,3 +1,5 @@
+"use server";
+
 import React, { useContext } from "react";
 import HeroSection from "./HeroSection";
 import TrendingMovies from "../MovieScreens/TrendingMovies";

@@ -1,3 +1,5 @@
+"use server";
+
 import React, { useContext } from "react";
 import TvHeroSection from "../TvSeriesScreens/TvHeroSection";
 import TopRatedSeries from "../TvSeriesScreens/TopRatedSeries";
