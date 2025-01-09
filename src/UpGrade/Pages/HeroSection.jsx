@@ -67,14 +67,7 @@ const HeroSection = () => {
       <div className="relative h-[600px] sm:h-[700px] md:h-screen md:max-h-[970px] md:min-h-[450px]">
         {/* Background Image */}
         <AnimatePresence mode="wait">
-          <motion.div
-            key={imageUrl}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 bg-black"
-          >
+          <div key={imageUrl} className="absolute inset-0 bg-black">
             {!imageError && imageUrl && (
               <img
                 ref={imageRef}
@@ -87,7 +80,7 @@ const HeroSection = () => {
             {/* Gradient Overlays */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-transparent to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-          </motion.div>
+          </div>
         </AnimatePresence>
 
         {/* Content Container */}
@@ -96,30 +89,12 @@ const HeroSection = () => {
             {/* Main Content */}
             <div className="flex-1 flex flex-col justify-center max-w-2xl gap-4 md:gap-6 h-[70%] md:h-full">
               {/* Movie Title */}
-              <motion.h1
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                animate={{
-                  opacity: isLoaded ? 1 : 0,
-                  y: isLoaded ? 0 : 30,
-                  scale: isLoaded ? 1 : 0.95,
-                }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.2,
-                  ease: [0.42, 0, 0.58, 1],
-                }}
-                className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-6xl lg:text-7xl"
-              >
+              <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-6xl lg:text-7xl">
                 {currentMovie?.title}
-              </motion.h1>
+              </h1>
 
               {/* Movie Meta */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex flex-wrap items-center gap-4 md:gap-6 text-white/90"
-              >
+              <div className="flex flex-wrap items-center gap-4 md:gap-6 text-white/90">
                 <div className="flex items-center gap-2">
                   <AiFillStar className="w-5 h-5 text-yellow-400" />
                   <span className="font-medium">
@@ -131,35 +106,26 @@ const HeroSection = () => {
                   <BsCalendarEvent className="w-4 h-4" />
                   <span>{currentMovie?.release_date?.split("-")[0]}</span>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Movie Description */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="text-base md:text-lg text-white/80 line-clamp-3 md:line-clamp-5"
-              >
+              <p className="text-base md:text-lg text-white/80 line-clamp-3 md:line-clamp-5">
                 {currentMovie?.overview}
-              </motion.p>
+              </p>
 
               {/* CTA Button */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-              >
+              <div>
                 <Link to={`/MovieDetails/${currentMovie?.id}`}>
-                  <motion.button
+                  <button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="flex items-center gap-2 px-4 py-2 text-base font-medium text-white transition-colors bg-red-600 rounded-lg md:px-6 md:py-3 md:text-lg hover:bg-red-700"
                   >
                     <BiSolidMoviePlay className="w-5 h-5" />
                     Watch Now
-                  </motion.button>
+                  </button>
                 </Link>
-              </motion.div>
+              </div>
             </div>
 
             {/* Slider Container */}
