@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 const HeroSection = () => {
   const { Trending, getTrending } = useContext(MovieListContext);
   const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1 || 5);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [imageError, setImageError] = useState(false);
   const imageRef = useRef(null);
@@ -24,7 +23,6 @@ const HeroSection = () => {
   useEffect(() => {
     if (!Trending[value]?.backdrop_path) return;
 
-    setIsLoaded(false);
     setImageError(false);
 
     const newImageUrl = `https://image.tmdb.org/t/p/w1280/${Trending[value].backdrop_path}`;
@@ -35,12 +33,10 @@ const HeroSection = () => {
 
     img.onload = () => {
       setImageUrl(newImageUrl);
-      setIsLoaded(true);
     };
 
     img.onerror = () => {
       setImageError(true);
-      setIsLoaded(true);
     };
 
     // Clean up
