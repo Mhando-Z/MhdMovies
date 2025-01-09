@@ -132,7 +132,7 @@ const HeroSection = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
-              transition={{ duration: 0.6, delay: 1 }}
+              transition={{ duration: 0.6 }}
               className="h-[30%] md:absolute md:bottom-8 md:right-8 md:w-full md:max-w-md flex items-center justify-end"
             >
               <div className="w-full max-w-[400px] mx-auto md:mx-0">
