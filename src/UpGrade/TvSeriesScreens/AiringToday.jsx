@@ -95,7 +95,7 @@ const AiringToday = () => {
                   transition={{ duration: 0.6 }}
                   className={`${
                     index === activeIndex
-                      ? "text-white/80 hidden md:flex text-xm md:text-sm line-clamp-3"
+                      ? "text-white/80 text-xm md:text-sm line-clamp-3"
                       : "hidden"
                   }`}
                 >

@@ -12,7 +12,7 @@ function Rating({ value }) {
   return (
     <div className="flex flex-row items-center">
       {/* Rounded stars */}
-      {/* <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      {/* <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 1 ? (
           <FaStar />
         ) : value >= 0.5 ? (
@@ -21,7 +21,7 @@ function Rating({ value }) {
           <FaRegStar />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 2 ? (
           <FaStar />
         ) : value >= 1.5 ? (
@@ -30,7 +30,7 @@ function Rating({ value }) {
           <FaRegStar />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 3 ? (
           <FaStar />
         ) : value >= 2.5 ? (
@@ -39,7 +39,7 @@ function Rating({ value }) {
           <FaRegStar />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 4 ? (
           <FaStar />
         ) : value >= 3.5 ? (
@@ -48,7 +48,7 @@ function Rating({ value }) {
           <FaRegStar />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 5 ? (
           <FaStar />
         ) : value >= 4.5 ? (
@@ -57,7 +57,7 @@ function Rating({ value }) {
           <FaRegStar />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 6 ? (
           <FaStar />
         ) : value >= 5.5 ? (
@@ -66,7 +66,7 @@ function Rating({ value }) {
           <FaRegStar />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 7 ? (
           <FaStar />
         ) : value >= 6.5 ? (
@@ -75,7 +75,7 @@ function Rating({ value }) {
           <FaRegStar />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 8 ? (
           <FaStar />
         ) : value >= 7.5 ? (
@@ -84,7 +84,7 @@ function Rating({ value }) {
           <FaRegStar />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 9 ? (
           <FaStar />
         ) : value >= 8.5 ? (
@@ -93,7 +93,7 @@ function Rating({ value }) {
           <FaRegStar />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 10 ? (
           <FaStar />
         ) : value >= 9.5 ? (
@@ -103,7 +103,7 @@ function Rating({ value }) {
         )}
       </div> */}
       {/* Pointy Stars */}
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 1 ? (
           <IoIosStar />
         ) : value >= 0.5 ? (
@@ -112,7 +112,7 @@ function Rating({ value }) {
           <IoIosStarOutline />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 2 ? (
           <IoIosStar />
         ) : value >= 1.5 ? (
@@ -121,7 +121,7 @@ function Rating({ value }) {
           <IoIosStarOutline />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 3 ? (
           <IoIosStar />
         ) : value >= 2.5 ? (
@@ -130,7 +130,7 @@ function Rating({ value }) {
           <IoIosStarOutline />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 4 ? (
           <IoIosStar />
         ) : value >= 3.5 ? (
@@ -139,7 +139,7 @@ function Rating({ value }) {
           <IoIosStarOutline />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 5 ? (
           <IoIosStar />
         ) : value >= 4.5 ? (
@@ -148,7 +148,7 @@ function Rating({ value }) {
           <IoIosStarOutline />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 6 ? (
           <IoIosStar />
         ) : value >= 5.5 ? (
@@ -157,7 +157,7 @@ function Rating({ value }) {
           <IoIosStarOutline />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 7 ? (
           <IoIosStar />
         ) : value >= 6.5 ? (
@@ -166,7 +166,7 @@ function Rating({ value }) {
           <IoIosStarOutline />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 8 ? (
           <IoIosStar />
         ) : value >= 7.5 ? (
@@ -175,7 +175,7 @@ function Rating({ value }) {
           <IoIosStarOutline />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 9 ? (
           <IoIosStar />
         ) : value >= 8.5 ? (
@@ -184,7 +184,7 @@ function Rating({ value }) {
           <IoIosStarOutline />
         )}
       </div>
-      <div className="text-sm text-yellow-400 md:text-xl lg:text-2xl">
+      <div className="text-sm text-yellow-400 md:text-xl">
         {value >= 10 ? (
           <IoIosStar />
         ) : value >= 9.5 ? (
