@@ -77,7 +77,7 @@ const AiringToday = () => {
                   }`}
                 >
                   {day?.name}
-                  <span className="flex items-center gap-2">
+                  <span className="flex items-center gap-2 text-sm md:text-base">
                     <span className="font-medium">
                       {day?.vote_average?.toFixed(1)}
                     </span>
