@@ -39,7 +39,7 @@ function Footer() {
                 <Link to={"TvSeries/"} className="mb-2">
                   TvSeries
                 </Link>
-                <Link to={"Genres/"} className="mb-2">
+                <Link to={"/Genres/"} className="mb-2">
                   Genres
                 </Link>
               </div>

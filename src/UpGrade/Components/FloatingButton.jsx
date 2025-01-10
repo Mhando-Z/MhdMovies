@@ -38,7 +38,7 @@ const ScrollToTopButton = () => {
           onClick={scrollToTop}
           className="bg-red-600 bg-opacity-35 text-white p-2 rounded-full shadow-lg ring-2 ring-[#a46425] transition duration-300 ease-in-out"
         >
-          <h1 className="transition-all duration-700 ease-in-out animate-bounce md:text-xl md:py-1 ">
+          <h1 className="transition-all duration-700 ease-in-out md:text-xl md:py-1 ">
             {" "}
             ↑
           </h1>
