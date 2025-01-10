@@ -49,10 +49,10 @@ function NavBar() {
 
   return (
     <motion.div
-      className={`${
+      className={` ${view ? "bg-black fixed top-0 left-0 right-0 z-50" : ""} ${
         location?.pathname === "/Genres"
           ? "hidden"
-          : "fixed top-0 left-0 right-0 z-50"
+          : `fixed top-0 left-0 right-0 z-50`
       }${visible} z-50`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -174,16 +174,16 @@ function NavBar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden md:hidden backdrop-blur-md"
+              className="overflow-hidden bg-black md:hidden backdrop-blur-md "
             >
               <div className="px-2 pt-2 pb-3 space-y-1">
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
-                    `block px-4 py-1.5 rounded-full transition-all duration-200 ${
+                    `block px-4 py-1.5 rounded transition-all duration-200 ${
                       isActive
                         ? "bg-red-500 text-white"
-                        : "text-gray-300 hover:bg-red-500/10 hover:text-white"
+                        : "text-white hover:bg-red-500/10 hover:text-white"
                     }`
                   }
                   onClick={handleClick}
@@ -193,10 +193,10 @@ function NavBar() {
                 <NavLink
                   to="TvSeries/"
                   className={({ isActive }) =>
-                    `block px-4 py-1.5 rounded-full transition-all duration-200 ${
+                    `block px-4 py-1.5 rounded transition-all duration-200 ${
                       isActive
                         ? "bg-red-500 text-white"
-                        : "text-gray-300 hover:bg-red-500/10 hover:text-white"
+                        : "text-white hover:bg-red-500/10 hover:text-white"
                     }`
                   }
                   onClick={handleClick}
@@ -206,10 +206,10 @@ function NavBar() {
                 <NavLink
                   to="Genres"
                   className={({ isActive }) =>
-                    `block px-4 py-1.5 rounded-full transition-all duration-200 ${
+                    `block px-4 py-1.5 rounded transition-all duration-200 ${
                       isActive
                         ? "bg-red-500 text-white"
-                        : "text-gray-300 hover:bg-red-500/10 hover:text-white"
+                        : "text-white hover:bg-red-500/10 hover:text-white"
                     }`
                   }
                   onClick={handleClick}
@@ -222,7 +222,7 @@ function NavBar() {
                     value={query}
                     onChange={handleChange}
                     onKeyDown={handlePress}
-                    className="w-full px-4 py-1.5 pl-10 text-white placeholder-gray-400 rounded-full bg-white/10 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="w-full px-4 py-1.5 pl-10 text-white placeholder-gray-400 rounded bg-white/10 focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Search movies..."
                   />
                   <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
