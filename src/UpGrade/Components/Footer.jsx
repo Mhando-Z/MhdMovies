@@ -39,7 +39,9 @@ function Footer() {
                 <Link to={"TvSeries/"} className="mb-2">
                   TvSeries
                 </Link>
-                <Link className="mb-2">Genres</Link>
+                <Link to={"Genres/"} className="mb-2">
+                  Genres
+                </Link>
               </div>
             </div>
             <div className="w-full mb-6 ">
