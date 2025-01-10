@@ -5,6 +5,8 @@ import { Search } from "lucide-react";
 import MovieListContext from "../../Context/MovieListContext";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "../../Assets/Logo/mhd.png";
+// icons imports
+import { FaHome } from "react-icons/fa";
 
 function NavBar() {
   const [query, setQuery] = useState("");
@@ -182,12 +184,13 @@ function NavBar() {
                   className={({ isActive }) =>
                     `block px-4 py-1.5 rounded transition-all duration-200 ${
                       isActive
-                        ? "bg-red-500 text-white"
-                        : "text-white hover:bg-red-500/10 hover:text-white"
+                        ? "bg-red-500 text-white flex items-center"
+                        : "text-white flex items-center hover:bg-red-500/10 hover:text-white"
                     }`
                   }
                   onClick={handleClick}
                 >
+                  <FaHome className="inline-block mr-2 text-white" />
                   Home
                 </NavLink>
                 <NavLink
