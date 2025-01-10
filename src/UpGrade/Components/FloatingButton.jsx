@@ -77,7 +77,7 @@ const ScrollToTopButton = () => {
           >
             <FaArrowUpLong
               className={`${
-                progress.toFixed(0) === "100" ? "flex flex-col" : "hidden"
+                parseInt(progress) >= 80 ? "flex flex-col" : "hidden"
               }`}
             />
           </motion.div>
