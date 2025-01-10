@@ -72,7 +72,7 @@ const AiringToday = () => {
                   animate={{ opacity: 1, y: 0 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
-                  className={`text-2xl font-bold text-white ${
+                  className={`text-xl lg:text-2xl font-bold text-white ${
                     index === activeIndex ? "" : "hidden"
                   }`}
                 >
@@ -95,7 +95,7 @@ const AiringToday = () => {
                   transition={{ duration: 0.6 }}
                   className={`${
                     index === activeIndex
-                      ? "text-white/80 line-clamp-3"
+                      ? "text-white/80 hidden md:flex text-xm md:text-sm line-clamp-3"
                       : "hidden"
                   }`}
                 >
