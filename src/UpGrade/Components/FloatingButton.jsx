@@ -75,7 +75,11 @@ const ScrollToTopButton = () => {
             transition={{ duration: 1 }}
             className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center bg-red-600 bg-opacity-50 rounded-full"
           >
-            <FaArrowUpLong className="" />
+            <FaArrowUpLong
+              className={`${
+                progress.toFixed(0) === "100" ? "flex flex-col" : "hidden"
+              }`}
+            />
           </motion.div>
         </motion.button>
       )}
