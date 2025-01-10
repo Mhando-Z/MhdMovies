@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import logo from "../../Assets/Logo/mhd.png";
 // icons imports
 import { FaHome } from "react-icons/fa";
+import { PiTelevisionFill } from "react-icons/pi";
 
 function NavBar() {
   const [query, setQuery] = useState("");
@@ -198,12 +199,13 @@ function NavBar() {
                   className={({ isActive }) =>
                     `block px-4 py-1.5 rounded transition-all duration-200 ${
                       isActive
-                        ? "bg-red-500 text-white"
-                        : "text-white hover:bg-red-500/10 hover:text-white"
+                        ? "bg-red-500 flex items-center text-white"
+                        : "text-white flex items-center hover:bg-red-500/10 hover:text-white"
                     }`
                   }
                   onClick={handleClick}
                 >
+                  <PiTelevisionFill className="inline-block mr-2 text-white" />
                   TV Series
                 </NavLink>
                 <NavLink
