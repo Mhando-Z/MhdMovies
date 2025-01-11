@@ -22,15 +22,15 @@ function NavBar() {
 
   const handlePress = (e) => {
     if (query.length !== 0 && e.keyCode === 13) {
-      navigate(`/Results/${query}`);
       setIsSearchOpen(false);
+      navigate(`/Results/${query}`);
     }
   };
 
   const HandleSearch = () => {
     if (query.length !== 0) {
-      navigate(`/Results/${query}`);
       setIsSearchOpen(false);
+      navigate(`/Results/${query}`);
     }
   };
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 import Rating from "../Components/Rating";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import TvSeriesPoster from "./../Components/TvSeriesPoster";
@@ -34,6 +34,7 @@ import TvPosterExpands from "../Components/TvPosterExpands";
 import PosterExpands from "../Components/PosterExpands";
 import { RxCrossCircled } from "react-icons/rx";
 import CastPoster from "../Components/CastPoster";
+import TvSeriesContex from "../../Context/TvSeriesContext";
 
 // function
 const getYouTubeThumbnail = (videoId) => {
@@ -71,8 +72,9 @@ function MovieDetails() {
   const [Episodes, setEpisodes] = useState();
   const [Loading, setLoading] = useState(false);
   const [showWatchOptions, setShowWatchOptions] = useState(false);
-
   //
+  const { isMobile } = useContext(TvSeriesContex);
+
   const [hoveredId, setHoveredId] = useState(null);
   // const [EpData, setEpdata] = useState({
   //   season_id: "",
@@ -423,7 +425,11 @@ function MovieDetails() {
       <div className="relative">
         <div className="relative h-[80vh] w-full">
           <img
-            src={`https://image.tmdb.org/t/p/original/${Details?.backdrop_path}`}
+            src={
+              isMobile === true
+                ? `https://image.tmdb.org/t/p/w500/${Details?.poster_path}`
+                : `https://image.tmdb.org/t/p/original/${Details?.backdrop_path}`
+            }
             alt={Details?.title}
             className="object-cover w-full h-full"
           />
@@ -467,7 +473,7 @@ function MovieDetails() {
                   </div>
                   <span className="text-gray-400">•</span>
                 </div>
-                <p className="max-w-3xl text-lg text-gray-300">
+                <p className="max-w-3xl text-gray-300 md:text-lg">
                   {Details?.overview}
                 </p>
                 <div className="flex flex-col gap-4 sm:flex-row">
