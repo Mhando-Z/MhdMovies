@@ -14,6 +14,8 @@ const TvHeroSection = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageError, setImageError] = useState(false);
   const imageRef = useRef(null);
+  //
+  const { isMobile } = useContext(TvSeriesContex);
 
   useEffect(() => {
     getTodays();
@@ -25,7 +27,10 @@ const TvHeroSection = () => {
 
     setImageError(false);
 
-    const newImageUrl = `https://image.tmdb.org/t/p/w1280/${Todaylist[value].backdrop_path}`;
+    const newImageUrl =
+      isMobile === true
+        ? `https://image.tmdb.org/t/p/w500/${Todaylist[value]?.poster_path}`
+        : `https://image.tmdb.org/t/p/w1280/${Todaylist[value].backdrop_path}`;
 
     // Create new image object to preload
     const img = new Image();
@@ -83,7 +88,7 @@ const TvHeroSection = () => {
         <div className="container absolute inset-0 px-4 mx-auto lg:px-8">
           <div className="flex flex-col h-full">
             {/* Main Content */}
-            <div className="flex-1 flex flex-col justify-center max-w-2xl gap-4 md:gap-6 h-[70%] md:h-full">
+            <div className="flex-1 invisible md:visible flex flex-col justify-center max-w-2xl gap-4 md:gap-6 h-[70%] md:h-full">
               {/* Series Title */}
               <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-6xl lg:text-7xl">
                 {currentMovie?.name}
