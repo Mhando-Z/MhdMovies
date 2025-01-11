@@ -1,6 +1,6 @@
 import axios from "axios";
 import Rating from "../Components/Rating";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import MoviePoster from "../Components/MoviePoster";
@@ -33,6 +33,7 @@ import PosterExpands from "../Components/PosterExpands";
 import CastPoster from "../Components/CastPoster";
 import { RxCrossCircled } from "react-icons/rx";
 import TvPosterExpands from "../Components/TvPosterExpands";
+import TvSeriesContex from "../../Context/TvSeriesContext";
 
 // function
 const getYouTubeThumbnail = (videoId) => {
@@ -66,6 +67,8 @@ function MovieDetails() {
   const [hoveredId, setHoveredId] = useState(null);
   const [showWatchOptions, setShowWatchOptions] = useState(false);
   const [Loading, setLoading] = useState(false);
+  //
+  const { isMobile } = useContext(TvSeriesContex);
 
   //Logics
   async function getDetails() {
@@ -387,7 +390,11 @@ function MovieDetails() {
       <div className="relative">
         <div className="relative h-[80vh] w-full">
           <img
-            src={`https://image.tmdb.org/t/p/original/${Details?.backdrop_path}`}
+            src={
+              isMobile === true
+                ? `https://image.tmdb.org/t/p/w500/${Details?.poster_path}`
+                : `https://image.tmdb.org/t/p/original/${Details?.backdrop_path}`
+            }
             alt={Details?.title}
             className="object-cover w-full h-full"
           />
