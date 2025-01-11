@@ -7,9 +7,11 @@ import { BiSolidMoviePlay } from "react-icons/bi";
 import { BsCalendarEvent } from "react-icons/bs";
 import { AiFillStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import TvSeriesContex from "../../Context/TvSeriesContext";
 
 const HeroSection = () => {
   const { Trending, getTrending } = useContext(MovieListContext);
+  const { isMobile } = useContext(TvSeriesContex);
   const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1 || 5);
   const [imageUrl, setImageUrl] = useState("");
   const [imageError, setImageError] = useState(false);
@@ -25,7 +27,10 @@ const HeroSection = () => {
 
     setImageError(false);
 
-    const newImageUrl = `https://image.tmdb.org/t/p/w1280/${Trending[value].backdrop_path}`;
+    const newImageUrl =
+      isMobile !== true
+        ? `https://image.tmdb.org/t/p/w1280/${Trending[value].backdrop_path}`
+        : `https://image.tmdb.org/t/p/original/${Trending[value].poster_path}`;
 
     // Create new image object to preload
     const img = new Image();
@@ -83,7 +88,7 @@ const HeroSection = () => {
         <div className="container absolute inset-0 px-4 mx-auto lg:px-8">
           <div className="flex flex-col h-full">
             {/* Main Content */}
-            <div className="flex-1 flex flex-col justify-center max-w-2xl gap-4 md:gap-6 h-[70%] md:h-full">
+            <div className="flex-1 invisible md:visible flex flex-col justify-center max-w-2xl gap-4 md:gap-6 h-[70%] md:h-full">
               {/* Movie Title */}
               <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-6xl lg:text-7xl">
                 {currentMovie?.title}

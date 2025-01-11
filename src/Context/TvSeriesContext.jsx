@@ -11,6 +11,24 @@ export function TvSeriesProvider({ children }) {
   const [Page1, setPage1] = useState(1);
   const [Page3, setPage3] = useState(2);
   const TvCollected = [...Tvlist, ...TopRated, ...Todaylist];
+  //
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Check if the window object is available
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768);
+      };
+
+      handleResize(); // Set initial state
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
 
   const TvHandlePages = () => {
     setPage1(Page1 + 1);
@@ -95,6 +113,7 @@ export function TvSeriesProvider({ children }) {
         ToDay,
         TopRated,
         TvCollected,
+        isMobile,
         getTodays,
         setPage1,
         setPage3,
