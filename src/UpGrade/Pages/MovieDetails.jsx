@@ -444,7 +444,7 @@ function MovieDetails() {
                   <span className="text-gray-400">•</span>
                   <span className="text-gray-300">{Details?.release_date}</span>
                 </div>
-                <p className="max-w-3xl text-lg text-gray-300">
+                <p className="max-w-3xl text-gray-300 md:text-lg">
                   {Details?.overview}
                 </p>
                 <div className="flex flex-col gap-4 sm:flex-row">
