@@ -51,12 +51,12 @@ export function EpisodeStatus({ episode }) {
       {isReleased ? (
         <>
           <CheckCircle className="w-6 h-6 text-green-500" />
-          <span className="text-lg font-semibold text-gray-700">Released</span>
+          <span className="font-semibold text-gray-700 ">Released</span>
         </>
       ) : (
         <>
           <Clock className="w-6 h-6 text-yellow-500" />
-          <span className="text-lg font-semibold text-gray-700">Pending</span>
+          <span className="font-semibold text-gray-700 ">Pending</span>
         </>
       )}
     </motion.div>
