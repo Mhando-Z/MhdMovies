@@ -828,7 +828,7 @@ function MovieDetails() {
               <h3 className="text-sm font-semibold tracking-wider text-center uppercase text-slate-300">
                 Episode
               </h3>
-              <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-300">
+              <h3 className="text-sm font-semibold tracking-wider text-left uppercase md:text-right text-slate-300">
                 Status
               </h3>
             </div>
