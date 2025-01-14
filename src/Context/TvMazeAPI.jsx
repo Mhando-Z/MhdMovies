@@ -9,8 +9,6 @@ export function MazeAPIProvider({ children }) {
   const [schedule, setSchedule] = useState([]);
   const [date, setDate] = useState("");
 
-  console.log(schedule);
-
   async function getSchedule() {
     try {
       const { data } = await axios.get(

@@ -818,7 +818,7 @@ function MovieDetails() {
         <div className="w-full overflow-hidden rounded-lg shadow-xl md:w-1/2 bg-slate-800/20">
           {/* Header */}
           <div className="sticky top-0 border-b backdrop-blur-sm border-slate-700">
-            <div className="grid grid-cols-4 px-6 py-3">
+            <div className="grid grid-cols-4 py-3">
               <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-300">
                 Date
               </h3>
@@ -835,7 +835,7 @@ function MovieDetails() {
           </div>
 
           {/* Table Body */}
-          <div className="h-[460px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-800">
+          <div className="h-[460px] overflow-x-hidden overflow-y-auto">
             <motion.div
               className="divide-y divide-slate-700"
               initial="hidden"
@@ -875,7 +875,7 @@ function MovieDetails() {
                     backgroundColor: "rgba(255, 255, 255, 0.05)",
                     transition: { duration: 0.2 },
                   }}
-                  className="grid grid-cols-4 px-6 py-4 transition-colors hover:bg-slate-700/30"
+                  className="grid grid-cols-4 py-4 transition-colors hover:bg-slate-700/30"
                 >
                   <span className="text-sm text-slate-300">
                     {item?.airdate}
