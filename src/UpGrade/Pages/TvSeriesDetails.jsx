@@ -818,14 +818,14 @@ function MovieDetails() {
         <div className="w-full overflow-hidden rounded-lg shadow-xl md:w-1/2 bg-slate-800/20">
           {/* Header */}
           <div className="sticky top-0 border-b backdrop-blur-sm border-slate-700">
-            <div className="grid grid-cols-4 py-3">
+            <div className="grid grid-cols-4 px-2 py-3 md:px-0">
               <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-300">
                 Date
               </h3>
-              <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-300">
+              <h3 className="text-sm font-semibold tracking-wider text-center uppercase text-slate-300">
                 Season
               </h3>
-              <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-300">
+              <h3 className="text-sm font-semibold tracking-wider text-center uppercase text-slate-300">
                 Episode
               </h3>
               <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-300">
@@ -835,7 +835,7 @@ function MovieDetails() {
           </div>
 
           {/* Table Body */}
-          <div className="h-[460px] overflow-x-hidden overflow-y-auto">
+          <div className="h-[460px]  overflow-x-hidden overflow-y-auto">
             <motion.div
               className="divide-y divide-slate-700"
               initial="hidden"
@@ -875,13 +875,17 @@ function MovieDetails() {
                     backgroundColor: "rgba(255, 255, 255, 0.05)",
                     transition: { duration: 0.2 },
                   }}
-                  className="grid grid-cols-4 py-4 transition-colors hover:bg-slate-700/30"
+                  className="grid grid-cols-4 px-2 py-4 transition-colors md:px-0 hover:bg-slate-700/30"
                 >
                   <span className="text-sm text-slate-300">
                     {item?.airdate}
                   </span>
-                  <span className="text-sm text-slate-300">{item.season}</span>
-                  <span className="text-sm text-slate-300">{item.number}</span>
+                  <span className="text-sm text-center text-slate-300">
+                    {item.season}
+                  </span>
+                  <span className="text-sm text-center text-slate-300">
+                    {item.number}
+                  </span>
                   <span className="text-sm">
                     <EpisodeStatus episode={item} />
                   </span>
