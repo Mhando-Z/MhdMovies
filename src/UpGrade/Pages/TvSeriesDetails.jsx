@@ -50,12 +50,12 @@ export function EpisodeStatus({ episode }) {
     >
       {isReleased ? (
         <>
-          <CheckCircle className="w-6 h-6 text-green-500" />
+          <CheckCircle className="text-green-500 " />
           <span className="font-semibold text-gray-700 ">Released</span>
         </>
       ) : (
         <>
-          <Clock className="w-6 h-6 text-yellow-500" />
+          <Clock className="text-yellow-500 " />
           <span className="font-semibold text-gray-700 ">Pending</span>
         </>
       )}
