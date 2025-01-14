@@ -50,7 +50,7 @@ export function EpisodeStatus({ episode }) {
     >
       {isReleased ? (
         <>
-          <CheckCircle className="text-green-500 " />
+          <CheckCircle className="text-green-500" />
           <span className="font-semibold text-gray-700 ">Released</span>
         </>
       ) : (
@@ -828,7 +828,7 @@ function MovieDetails() {
               <h3 className="text-sm font-semibold tracking-wider text-center uppercase text-slate-300">
                 Episode
               </h3>
-              <h3 className="text-sm font-semibold tracking-wider text-left uppercase md:text-right text-slate-300">
+              <h3 className="w-full text-sm font-semibold tracking-wider text-right uppercase md:text-left text-slate-300">
                 Status
               </h3>
             </div>
