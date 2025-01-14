@@ -35,6 +35,33 @@ import PosterExpands from "../Components/PosterExpands";
 import { RxCrossCircled } from "react-icons/rx";
 import CastPoster from "../Components/CastPoster";
 import TvSeriesContex from "../../Context/TvSeriesContext";
+import { CheckCircle, Clock } from "lucide-react";
+
+export function EpisodeStatus({ episode }) {
+  // Determine if the episode is released
+  const isReleased = new Date() >= new Date(episode.airdate);
+
+  return (
+    <motion.div
+      className="flex items-center gap-2"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {isReleased ? (
+        <>
+          <CheckCircle className="w-6 h-6 text-green-500" />
+          <span className="text-lg font-semibold text-gray-700">Released</span>
+        </>
+      ) : (
+        <>
+          <Clock className="w-6 h-6 text-yellow-500" />
+          <span className="text-lg font-semibold text-gray-700">Pending</span>
+        </>
+      )}
+    </motion.div>
+  );
+}
 
 // function
 const getYouTubeThumbnail = (videoId) => {
@@ -66,7 +93,6 @@ function MovieDetails() {
   const [Watch2, setWatch2] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
   const [show, setShow] = useState(false);
-  const [Show, setShows] = useState(false);
   const [num, setNum] = useState(4);
   const [Enum, setENum] = useState(5);
   const [Episodes, setEpisodes] = useState();
@@ -76,10 +102,6 @@ function MovieDetails() {
   const { isMobile } = useContext(TvSeriesContex);
 
   const [hoveredId, setHoveredId] = useState(null);
-  // const [EpData, setEpdata] = useState({
-  //   season_id: "",
-  //   season_number: "",
-  // });
 
   const toggleExpand = (index, item) => {
     setExpandedItem(expandedItem === index ? null : index);
@@ -93,23 +115,6 @@ function MovieDetails() {
     setShow(!show);
   };
 
-  //Logics
-  // async function getEpisodes() {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `https://api.themoviedb.org/3/tv/${EpData?.season_id}/season/${EpData?.season_number}?language=en-US`,
-  //       {
-  //         headers: {
-  //           accept: "application/json",
-  //           Authorization:
-  //             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2NmOWU3ZTA3ZGVkODBmNTA2MDk5NjRmMWQwNjI4NCIsInN1YiI6IjY1ZmQ3MjkyMGMxMjU1MDE3ZTBjZWEwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.r6zxCCnlxPnW6Ba5JCN7rcheNfpl5upzLUmFZ07fZpI",
-  //         },
-  //       }
-  //     );
-  //     console.log(data?.episodes);
-  //     setEpisodes(data?.episodes);
-  //   } catch (error) {}
-  // }
   async function getDetails() {
     try {
       const { data } = await axios.get(
@@ -285,6 +290,35 @@ function MovieDetails() {
       setCastImage(data);
     } catch (error) {}
   }
+
+  const [showData, setShowData] = useState([]);
+  const [EpiList, setEpList] = useState([]);
+
+  console.log(EpiList);
+
+  // The TvMaize API Calls Logic
+  async function getShow() {
+    try {
+      const { data } = await axios.get(
+        `https://api.tvmaze.com/lookup/shows?thetvdb=${ID.tvdb_id}`
+      );
+      setShowData(data.id);
+    } catch (error) {}
+  }
+
+  async function getEpisodes() {
+    try {
+      const { data } = await axios.get(
+        `https://api.tvmaze.com/shows/${showData}/episodes`
+      );
+      setEpList(data);
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    getShow();
+    getEpisodes();
+  }, [ID.tvdb_id, showData]);
 
   useEffect(() => {
     if (CastId) {
@@ -657,7 +691,6 @@ function MovieDetails() {
           </div>
         </div>
       )}
-
       {/* Trailer Section */}
       {Trailer && (
         <div className="container px-4 py-16 mx-auto">
@@ -717,7 +750,7 @@ function MovieDetails() {
       )}
 
       {/* list of seasosons  */}
-      <div className="container flex flex-col px-5 mx-auto mt-16 md:px-0">
+      <div className="container flex flex-col gap-5 mx-auto mt-16 md:flex-row md:px-0">
         <table className="w-full text-xs bg-gray-800 rounded-lg md:text-sm bg-opacity-20 md:w-1/2">
           <tbody className="">
             <tr className="border-b border-gray-700">
@@ -782,6 +815,82 @@ function MovieDetails() {
             )}
           </tbody>
         </table>
+        {/* list of all episodes of the season */}
+        <div className="w-full overflow-hidden rounded-lg shadow-xl md:w-1/2 bg-slate-800/20">
+          {/* Header */}
+          <div className="sticky top-0 border-b backdrop-blur-sm border-slate-700">
+            <div className="grid grid-cols-4 px-6 py-3">
+              <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-300">
+                Date
+              </h3>
+              <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-300">
+                Season
+              </h3>
+              <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-300">
+                Episode
+              </h3>
+              <h3 className="text-sm font-semibold tracking-wider uppercase text-slate-300">
+                Status
+              </h3>
+            </div>
+          </div>
+
+          {/* Table Body */}
+          <div className="h-[460px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-800">
+            <motion.div
+              className="divide-y divide-slate-700"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.05,
+                    delayChildren: 0.1,
+                  },
+                },
+              }}
+            >
+              {EpiList?.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  variants={{
+                    hidden: {
+                      opacity: 0,
+                      y: 20,
+                      scale: 0.95,
+                    },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 12,
+                      },
+                    },
+                  }}
+                  whileHover={{
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                    transition: { duration: 0.2 },
+                  }}
+                  className="grid grid-cols-4 px-6 py-4 transition-colors hover:bg-slate-700/30"
+                >
+                  <span className="text-sm text-slate-300">
+                    {item?.airdate}
+                  </span>
+                  <span className="text-sm text-slate-300">{item.season}</span>
+                  <span className="text-sm text-slate-300">{item.number}</span>
+                  <span className="text-sm">
+                    <EpisodeStatus episode={item} />
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
       </div>
 
       <div className="relative flex-grow space-y-6">

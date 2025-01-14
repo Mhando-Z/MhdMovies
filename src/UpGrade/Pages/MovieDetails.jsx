@@ -638,7 +638,6 @@ function MovieDetails() {
           </div>
         </div>
       )}
-
       {/* Watch Section */}
       {Watch && (
         <div className="container py-16 mx-auto">

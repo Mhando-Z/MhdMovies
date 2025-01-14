@@ -13,6 +13,7 @@ import TvSeriesDetails from "./UpGrade/Pages/TvSeriesDetails";
 import Genres from "./UpGrade/Pages/Genres";
 import ClearHistoryScroll from "./UpGrade/Components/ClearHistoryScroll";
 import "react-activity/dist/Spinner.css";
+import { MazeAPIProvider } from "./Context/TvMazeAPI";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
@@ -39,25 +40,27 @@ function App() {
   return (
     <div className="flex flex-col justify-between min-h-screen overflow-x-hidden overflow-y-scroll">
       <TvSeriesProvider>
-        <MovieProvider>
-          <BrowserRouter>
-            <NavBar />
-            <ClearHistoryScroll />
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              <Route path="TvSeries/" element={<TvSeriesPage />} />
-              <Route path="/Results/:id" element={<SearchResults />} />
-              <Route path="Genres/" element={<Genres />} />
-              <Route path="/MovieDetails/:id" element={<MovieDetails />} />
-              <Route
-                path="/TvSeriesDetails/:id"
-                element={<TvSeriesDetails />}
-              />
-            </Routes>
-            <Footer />
-            <ScrollToTopButton />
-          </BrowserRouter>
-        </MovieProvider>
+        <MazeAPIProvider>
+          <MovieProvider>
+            <BrowserRouter>
+              <NavBar />
+              <ClearHistoryScroll />
+              <Routes>
+                <Route path="/" element={<MainPage />} />
+                <Route path="TvSeries/" element={<TvSeriesPage />} />
+                <Route path="/Results/:id" element={<SearchResults />} />
+                <Route path="Genres/" element={<Genres />} />
+                <Route path="/MovieDetails/:id" element={<MovieDetails />} />
+                <Route
+                  path="/TvSeriesDetails/:id"
+                  element={<TvSeriesDetails />}
+                />
+              </Routes>
+              <Footer />
+              <ScrollToTopButton />
+            </BrowserRouter>
+          </MovieProvider>
+        </MazeAPIProvider>
       </TvSeriesProvider>
     </div>
   );
