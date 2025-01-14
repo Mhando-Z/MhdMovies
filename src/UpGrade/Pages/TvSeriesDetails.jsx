@@ -98,7 +98,11 @@ function MovieDetails() {
   const [Episodes, setEpisodes] = useState();
   const [Loading, setLoading] = useState(false);
   const [showWatchOptions, setShowWatchOptions] = useState(false);
+  const [showData, setShowData] = useState([]);
+  const [EpiList, setEpList] = useState([]);
+
   //
+
   const { isMobile } = useContext(TvSeriesContex);
 
   const [hoveredId, setHoveredId] = useState(null);
@@ -290,11 +294,6 @@ function MovieDetails() {
       setCastImage(data);
     } catch (error) {}
   }
-
-  const [showData, setShowData] = useState([]);
-  const [EpiList, setEpList] = useState([]);
-
-  console.log(EpiList);
 
   // The TvMaize API Calls Logic
   async function getShow() {
