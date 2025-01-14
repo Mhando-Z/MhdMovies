@@ -749,7 +749,7 @@ function MovieDetails() {
       )}
 
       {/* list of seasosons  */}
-      <div className="container flex flex-col gap-5 mx-auto mt-16 md:flex-row md:px-0">
+      <div className="container flex flex-col gap-10 mx-auto mt-16 md:flex-row md:px-0">
         <table className="w-full text-xs bg-gray-800 rounded-lg md:text-sm bg-opacity-20 md:w-1/2">
           <tbody className="">
             <tr className="border-b border-gray-700">
