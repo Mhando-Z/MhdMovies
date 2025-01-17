@@ -834,7 +834,7 @@ function MovieDetails() {
               className="block w-40 px-3 py-1 text-sm text-gray-300 rounded-md outline-none ring-1 bg-inherit"
             >
               {seasons.map((season) => (
-                <option key={season} value={season}>
+                <option className="text-gray-900 " key={season} value={season}>
                   Season {season}
                 </option>
               ))}
