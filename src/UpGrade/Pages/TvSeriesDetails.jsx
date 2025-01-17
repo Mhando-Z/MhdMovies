@@ -831,7 +831,7 @@ function MovieDetails() {
               id="seasonSelect"
               value={selectedSeason}
               onChange={(e) => setSelectedSeason(Number(e.target.value))}
-              className="block w-40 px-3 py-1 text-sm text-gray-300 rounded-md outline-none ring-2 bg-inherit"
+              className="block w-40 px-3 py-1 text-sm text-gray-300 rounded-md outline-none ring-1 bg-inherit"
             >
               {seasons.map((season) => (
                 <option key={season} value={season}>
