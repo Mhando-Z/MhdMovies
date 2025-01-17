@@ -100,11 +100,8 @@ function MovieDetails() {
   const [showWatchOptions, setShowWatchOptions] = useState(false);
   const [showData, setShowData] = useState([]);
   const [EpiList, setEpList] = useState([]);
-
   //
-
   const { isMobile } = useContext(TvSeriesContex);
-
   const [hoveredId, setHoveredId] = useState(null);
 
   const toggleExpand = (index, item) => {
@@ -246,7 +243,6 @@ function MovieDetails() {
       setLoading(false);
     }
   }
-
   async function getCastsMovies() {
     try {
       const { data } = await axios.get(
@@ -262,7 +258,6 @@ function MovieDetails() {
       setCastMovies(data);
     } catch (error) {}
   }
-
   async function getCastsTvSeries() {
     try {
       const { data } = await axios.get(
@@ -278,7 +273,6 @@ function MovieDetails() {
       setCastTvSeries(data);
     } catch (error) {}
   }
-
   async function getCastsImages() {
     try {
       const { data } = await axios.get(
@@ -313,6 +307,16 @@ function MovieDetails() {
       setEpList(data);
     } catch (error) {}
   }
+
+  const [selectedSeason, setSelectedSeason] = useState(1);
+
+  // Get unique seasons
+  const seasons = [...new Set(EpiList?.map((episode) => episode.season))];
+
+  // Filter episodes based on the selected season
+  const filteredEpisodes = EpiList?.filter(
+    (episode) => episode.season === selectedSeason
+  );
 
   useEffect(() => {
     getShow();
@@ -815,7 +819,27 @@ function MovieDetails() {
           </tbody>
         </table>
         {/* list of all episodes of the season */}
-        <div className="w-full overflow-hidden rounded-lg shadow-xl md:w-1/2 bg-slate-800/20">
+        <div className="w-full overflow-hidden rounded-lg md:w-1/2 bg-slate-800/20">
+          <div className="flex items-center gap-4">
+            <label
+              htmlFor="seasonSelect"
+              className="text-sm font-medium text-gray-500"
+            >
+              Select Season:
+            </label>
+            <select
+              id="seasonSelect"
+              value={selectedSeason}
+              onChange={(e) => setSelectedSeason(Number(e.target.value))}
+              className="block w-40 px-3 py-1 text-sm text-gray-300 rounded-md outline-none ring-2 bg-inherit"
+            >
+              {seasons.map((season) => (
+                <option key={season} value={season}>
+                  Season {season}
+                </option>
+              ))}
+            </select>
+          </div>
           {/* Header */}
           <div className="sticky top-0 border-b backdrop-blur-sm border-slate-700">
             <div className="grid grid-cols-4 px-2 py-3 md:px-0">
@@ -851,7 +875,7 @@ function MovieDetails() {
                 },
               }}
             >
-              {EpiList?.map((item, index) => (
+              {filteredEpisodes?.map((item, index) => (
                 <motion.div
                   key={item.id}
                   variants={{
