@@ -820,7 +820,7 @@ function MovieDetails() {
         </table>
         {/* list of all episodes of the season */}
         <div className="w-full overflow-hidden rounded-lg md:w-1/2 bg-slate-800/20">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 mb-2">
             <label
               htmlFor="seasonSelect"
               className="text-sm font-medium text-gray-500"
