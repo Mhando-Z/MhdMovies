@@ -1413,7 +1413,7 @@ function MovieDetails() {
 
       {/* Similar TVseries */}
       {Similar.length > 0 && (
-        <section className="container px-4 py-12 mx-auto">
+        <section className="px-4 py-12 md:container md:px-0 md:mx-auto">
           <div className="relative py-4 mb-6">
             {/* Animated background effect */}
             <div className="absolute inset-0 transition-transform duration-300 transform rounded-lg bg-gradient-to-r from-red-950/30 via-red-900/20 to-transparent hover:scale-105" />
