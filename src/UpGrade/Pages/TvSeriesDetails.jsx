@@ -1555,7 +1555,7 @@ function MovieDetails() {
 
       {/* Reviews section */}
       {Reviews?.length > 0 && (
-        <section className="container py-12 mx-auto">
+        <section className="px-4 py-12 md:container md:px-0 md:mx-auto">
           <div className="relative py-5 mb-6 group">
             {/* Animated background glow */}
             <div className="absolute inset-0 transition-opacity duration-300 rounded-lg opacity-75 bg-gradient-to-r from-red-950/30 via-red-900/20 to-transparent group-hover:opacity-100" />
