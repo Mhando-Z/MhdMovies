@@ -22,7 +22,7 @@ function TodaySeies() {
   //Handle Pages Logic
 
   return (
-    <div className="container flex flex-col mx-auto">
+    <div className="flex flex-col px-4 md:container md:px-0 md:mx-auto">
       <div className="relative mb-8">
         {/* Decorative background element */}
         <div className="absolute -skew-y-3 -inset-1 bg-gradient-to-r from-red-600 to-red-900 opacity-20 blur-xl" />

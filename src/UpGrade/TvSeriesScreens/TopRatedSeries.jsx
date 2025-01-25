@@ -41,7 +41,7 @@ function TopRatedSeries() {
     }
   };
   return (
-    <div className="container flex flex-col mx-auto">
+    <div className="flex flex-col px-4 md:container md:px-0 md:mx-auto">
       <div className="relative">
         {/* Subtle gradient background */}
         <div className="absolute inset-0 bg-gradient-to-r from-red-900/20 via-red-900/10 to-transparent blur-2xl" />

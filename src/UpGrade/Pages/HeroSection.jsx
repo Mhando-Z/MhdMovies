@@ -85,7 +85,7 @@ const HeroSection = () => {
         </AnimatePresence>
 
         {/* Content Container */}
-        <div className="container absolute inset-0 px-4 mx-auto lg:px-8">
+        <div className="absolute inset-0 px-4 md:container md:px-0 md:mx-auto lg:px-8">
           <div className="flex flex-col h-full">
             {/* Main Content */}
             <div className="flex-1 invisible md:visible flex flex-col justify-center max-w-2xl gap-4 md:gap-6 h-[70%] md:h-full">

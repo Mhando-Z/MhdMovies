@@ -20,7 +20,7 @@ function TrendingSeries() {
     }
   };
   return (
-    <div className="container flex flex-col mx-auto">
+    <div className="flex flex-col px-4 md:container md:px-0 md:mx-auto">
       <div className="relative py-6">
         {/* Background glow effect */}
         <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 via-red-500/5 to-transparent blur-xl" />
