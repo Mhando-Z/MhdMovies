@@ -62,7 +62,7 @@ function NavBar() {
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 100 }}
     >
-      <div className="container z-50 mx-auto">
+      <div className="z-50 px-4 md:container md:mx-auto">
         <div className="relative flex items-center justify-between h-16">
           {/* Logo */}
           <motion.div className="flex-shrink-0" whileHover={{ scale: 1.05 }}>
