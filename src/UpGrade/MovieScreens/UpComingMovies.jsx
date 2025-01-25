@@ -39,7 +39,7 @@ function UpComingMovies() {
     }
   };
   return (
-    <div className="container flex flex-col mx-auto">
+    <div className="flex flex-col px-4 md:container md:px-0 md:mx-auto">
       <div className="relative py-4">
         {/* Floating decorative elements */}
         <div className="absolute top-0 right-0 hidden md:block">
