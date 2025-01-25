@@ -475,7 +475,7 @@ function MovieDetails() {
 
         {/* TvSeries Info Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-8">
-          <div className="container hidden gap-8 mx-auto md:flex">
+          <div className="hidden gap-8 px-4 md:container md:px-0 md:mx-auto md:flex">
             <div className="hidden w-64 translate-y-16 md:block">
               <img
                 src={`https://image.tmdb.org/t/p/w500/${Details?.poster_path}`}
@@ -563,7 +563,7 @@ function MovieDetails() {
       </div>
 
       {/* Tvseries mobile overlay view */}
-      <div className="container flex gap-8 px-5 mx-auto md:hidden">
+      <div className="flex gap-8 px-4 md:container md:mx-auto md:hidden">
         <div className="flex-1">
           <div className="space-y-4">
             <h1 className="text-4xl font-bold text-white md:text-6xl">
@@ -645,7 +645,7 @@ function MovieDetails() {
 
       {/* Watch Section */}
       {Watch2 && (
-        <div className="container py-16 mx-auto">
+        <div className="py-16 md:container md:mx-auto">
           <div className="movie-player">
             {/* Iframe with improved styling */}
             <iframe
@@ -753,7 +753,7 @@ function MovieDetails() {
       )}
 
       {/* list of seasosons  */}
-      <div className="container flex flex-col gap-10 mx-auto mt-16 md:flex-row md:px-0">
+      <div className="flex flex-col gap-10 px-4 mt-16 md:container md:px-0 md:mx-auto md:flex-row">
         <table className="w-full text-xs bg-gray-800 rounded-lg md:text-sm bg-opacity-20 md:w-1/2">
           <tbody className="">
             <tr className="border-b border-gray-700">
@@ -1166,7 +1166,7 @@ function MovieDetails() {
       </div>
 
       {/* Cast Section */}
-      <div className="container px-4 py-16 mx-auto">
+      <div className="px-4 py-16 md:container md:px-0 md:mx-auto">
         <h2 className="relative py-2 mb-8 overflow-hidden text-2xl font-bold text-white font-scifi group">
           <span className="relative z-10 inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-cyan-400 after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 group-hover:after:scale-x-100">
             Cast
@@ -1396,7 +1396,7 @@ function MovieDetails() {
       )}
 
       {/* Tvseries Stills */}
-      <section className="container px-4 py-12 mx-auto">
+      <section className="px-4 py-12 md:container md:px-0 md:mx-auto">
         <h2 className="mb-6 text-2xl font-bold text-white">TvSeries Stills</h2>
         <div className="grid grid-flow-col gap-4 pb-4 overflow-x-auto">
           {Images?.map((image, index) => (

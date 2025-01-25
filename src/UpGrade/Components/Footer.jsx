@@ -22,7 +22,7 @@ function Footer() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="container px-4 mx-auto">
+      <div className="flex flex-col px-4 md:container md:px-0 md:mx-auto">
         <div className="flex flex-col justify-between w-full md:flex-row gap-x-20">
           <div className="flex flex-col items-center justify-center flex-grow mb-6 md:justify-start md:items-start">
             <Link to={"/"}>
