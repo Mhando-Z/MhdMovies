@@ -819,7 +819,7 @@ function MovieDetails() {
                   variants={imageVariants}
                   className="w-full lg:w-1/3"
                 >
-                  <div className="relative overflow-hidden rounded-xl group">
+                  <div className="container relative flex flex-col mx-auto overflow-hidden rounded-xl group">
                     <motion.img
                       src={`https://image.tmdb.org/t/p/w500${CastDetails?.profile_path}`}
                       alt={CastDetails?.name}
