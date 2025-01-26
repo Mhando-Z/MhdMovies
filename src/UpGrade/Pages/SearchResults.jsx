@@ -71,7 +71,7 @@ function SearchResults() {
   }
 
   return (
-    <div className="container flex flex-col min-h-screen mx-auto mt-20">
+    <div className="flex flex-col min-h-screen px-4 mt-20 md:container md:px-0 md:mx-auto">
       <h1 className="mt-3 text-lg font-medium text-gray-100 mb-7 font-roboto">
         Search Results for... "{id}"
       </h1>
