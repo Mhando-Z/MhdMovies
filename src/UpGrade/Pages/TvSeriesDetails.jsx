@@ -1197,7 +1197,7 @@ function MovieDetails() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="container px-4 mx-auto md:px-0 rounded-xl"
+          className="px-4 md:container md:px-0 md:mx-auto rounded-xl"
         >
           {Loading ? (
             <div className="flex items-center justify-center">
@@ -1211,7 +1211,7 @@ function MovieDetails() {
                   variants={imageVariants}
                   className="w-full lg:w-1/3"
                 >
-                  <div className="relative overflow-hidden rounded-xl group">
+                  <div className="container relative flex flex-col mx-auto overflow-hidden rounded-xl group">
                     <motion.img
                       src={`https://image.tmdb.org/t/p/w500${CastDetails?.profile_path}`}
                       alt={CastDetails?.name}
