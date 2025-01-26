@@ -32,14 +32,14 @@ function SearchPoster({ image, rating, name, title, id, type }) {
       }`}
     >
       <Link className="group">
-        <div className="w-full relative group md:h-[330px] h-[200px]  overflow-hidden bg-gray-200 rounded-lg aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
+        <div className="w-full relative group md:h-[330px] h-[200px] sm:h-[350px]  overflow-hidden bg-gray-200 rounded-lg aspect-h-1 aspect-w-1 xl:aspect-h-8 xl:aspect-w-7">
           <img
             alt={title || name}
             loading="lazy"
             src={`https://image.tmdb.org/t/p/w500/${image}`}
             className="object-cover object-center w-full h-full group-hover:opacity-75"
           />
-          <div className="absolute top-0 bottom-0 left-0 right-0 flex-col items-center justify-center hidden transition-all duration-700 bg-black rounded-lg bg-opacity-80 group-hover:flex">
+          <div className="absolute top-0 bottom-0 left-0 right-0 flex-col items-center justify-center hidden transition-all duration-700 bg-black rounded bg-opacity-80 group-hover:flex">
             <motion.img
               initial={{ opacity: 0, scale: 0, y: 30 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
