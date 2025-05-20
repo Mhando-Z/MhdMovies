@@ -57,17 +57,21 @@ function NavBar() {
         location?.pathname === "/Genres"
           ? "hidden"
           : `fixed top-0 left-0 right-0 z-50`
-      }${visible} z-50`}
+      } z-50`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 100 }}
     >
-      <div className="z-50 px-4 md:container md:mx-auto">
+      <div
+        className={`z-50 px-4 md:container md:mx-auto ${
+          visible ? "bg-black bg-opacity-80" : ""
+        } ${view ? "bg-black" : ""}`}
+      >
         <div className="relative flex items-center justify-between h-16">
           {/* Logo */}
           <motion.div className="flex-shrink-0" whileHover={{ scale: 1.05 }}>
             <Link to={"/"}>
-              <img src={logo} alt="Mhd movies logo" className="w-auto h-9" />
+              <img src={logo} alt="Mhd movies logo" className="w-auto h-8" />
             </Link>
           </motion.div>
 
@@ -76,7 +80,7 @@ function NavBar() {
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `px-4 py-1.5 rounded-full transition-all duration-200 ${
+                `px-4 py-1.5 rounded-full transition-all text-sm duration-200 ${
                   isActive
                     ? "bg-red-500 text-white"
                     : "text-gray-300 hover:bg-red-500/10 hover:text-white"
@@ -88,7 +92,7 @@ function NavBar() {
             <NavLink
               to="TvSeries/"
               className={({ isActive }) =>
-                `px-4 py-1.5 rounded-full transition-all duration-200 ${
+                `px-4 py-1.5 rounded-full transition-all text-sm duration-200 ${
                   isActive
                     ? "bg-red-500 text-white"
                     : "text-gray-300 hover:bg-red-500/10 hover:text-white"
@@ -100,7 +104,7 @@ function NavBar() {
             <NavLink
               to="Genres"
               className={({ isActive }) =>
-                `px-4 py-1.5 rounded-full transition-all duration-200 ${
+                `px-4 py-1.5 rounded-full transition-all text-sm duration-200 ${
                   isActive
                     ? "bg-red-500 text-white"
                     : "text-gray-300 hover:bg-red-500/10 hover:text-white"
@@ -178,13 +182,13 @@ function NavBar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden bg-black md:hidden backdrop-blur-md "
+              className="overflow-hidden bg-black md:hidden"
             >
               <div className="px-2 pt-2 pb-3 space-y-1">
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
-                    `block px-4 py-1.5 rounded transition-all duration-200 ${
+                    `block px-4 py-1.5 text-xs rounded transition-all duration-200 ${
                       isActive
                         ? "bg-red-500 text-white flex items-center"
                         : "text-white flex items-center hover:bg-red-500/10 hover:text-white"
@@ -198,7 +202,7 @@ function NavBar() {
                 <NavLink
                   to="TvSeries/"
                   className={({ isActive }) =>
-                    `block px-4 py-1.5 rounded transition-all duration-200 ${
+                    `block px-4 py-1.5 rounded transition-all text-xs duration-200 ${
                       isActive
                         ? "bg-red-500 flex items-center text-white"
                         : "text-white flex items-center hover:bg-red-500/10 hover:text-white"
@@ -212,7 +216,7 @@ function NavBar() {
                 <NavLink
                   to="Genres"
                   className={({ isActive }) =>
-                    `block px-4 py-1.5 rounded transition-all duration-200 ${
+                    `block px-4 py-1.5 rounded transition-all text-xs duration-200 ${
                       isActive
                         ? "bg-red-500 flex items-center text-white"
                         : "text-white flex items-center hover:bg-red-500/10 hover:text-white"
@@ -229,10 +233,10 @@ function NavBar() {
                     value={query}
                     onChange={handleChange}
                     onKeyDown={handlePress}
-                    className="w-full px-4 py-1.5 pl-10 text-white placeholder-gray-400 rounded bg-white/10 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="w-full px-4 py-1.5 pl-10 text-xs text-white placeholder-gray-400 rounded bg-white/10 focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Search movies..."
                   />
-                  <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                  <Search className="absolute w-4 h-4 text-gray-400 left-3 top-1.5" />
                 </div>
               </div>
             </motion.div>
