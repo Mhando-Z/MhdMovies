@@ -67,11 +67,15 @@ function NavBar() {
           visible ? "bg-black bg-opacity-80" : ""
         } ${view ? "bg-black" : ""}`}
       >
-        <div className="relative flex items-center justify-between h-16">
+        <div className="relative flex items-center justify-between h-12 md:h-16">
           {/* Logo */}
           <motion.div className="flex-shrink-0" whileHover={{ scale: 1.05 }}>
             <Link to={"/"}>
-              <img src={logo} alt="Mhd movies logo" className="w-auto h-8" />
+              <img
+                src={logo}
+                alt="Mhd movies logo"
+                className="w-auto h-6 md:h-8"
+              />
             </Link>
           </motion.div>
 
@@ -168,9 +172,9 @@ function NavBar() {
             onClick={handleClick}
           >
             {view ? (
-              <HiX className="text-3xl text-red-500" />
+              <HiX className="text-2xl text-red-500" />
             ) : (
-              <HiMenu className="text-3xl text-red-500" />
+              <HiMenu className="text-2xl text-red-500" />
             )}
           </motion.button>
         </div>

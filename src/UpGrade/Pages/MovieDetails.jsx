@@ -501,17 +501,17 @@ function MovieDetails() {
       <div className="flex gap-8 px-4 md:container md:px-0 md:mx-auto md:hidden">
         <div className="flex-1">
           <div className="space-y-4">
-            <h1 className="text-4xl font-bold text-white md:text-6xl">
+            <h1 className="text-2xl font-bold text-white md:text-6xl">
               {Details?.title}
             </h1>
-            <p className="text-xl font-light font-Raleway text-cyan-400">
+            <p className="text-sm font-light font-Raleway text-cyan-400">
               {Details?.tagline}
             </p>
             <div className="flex flex-wrap gap-2">
               {Details?.genres?.map((genre, index) => (
                 <span
                   key={genre.id + index}
-                  className="px-3 py-1 text-sm text-gray-200 rounded-full bg-gray-800/80"
+                  className="px-3 py-1 text-xs text-gray-200 rounded-full bg-gray-800/80"
                 >
                   {genre.name}
                 </span>
@@ -520,26 +520,26 @@ function MovieDetails() {
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <Rating value={Details?.vote_average} />
-                <span className="text-gray-300">
+                <span className="text-xs text-gray-300">
                   {Details?.vote_average?.toFixed(1)}
                 </span>
               </div>
               <span className="text-gray-400">••••••</span>
-              <span className="text-gray-300">
+              <span className="text-xs text-gray-300">
                 {Math.floor(Details?.runtime / 60)}h {Details?.runtime % 60}m
               </span>
-              <span className="text-sm text-gray-300">
+              <span className="text-xs text-gray-300">
                 {Details?.release_date}
               </span>
             </div>
-            <p className="max-w-3xl text-lg text-gray-300">
+            <p className="max-w-3xl text-sm text-gray-300">
               {Details?.overview}
             </p>
             <div className="flex flex-col gap-4 sm:flex-row">
               <div className="relative">
                 <button
                   onClick={handleWatchClick}
-                  className="flex items-center justify-center w-full gap-2 px-6 py-3 font-medium text-white transition-all bg-red-600 rounded-lg hover:bg-red-700 group"
+                  className="flex items-center justify-center w-full gap-2 px-6 py-1 text-xs font-medium text-white transition-all bg-red-600 rounded hover:bg-red-700 group"
                 >
                   <Play className="w-5 h-5" />
                   <span>Watch Now</span>
@@ -554,13 +554,13 @@ function MovieDetails() {
                   <div className="absolute z-10 w-full mt-2 overflow-hidden bg-white rounded-lg shadow-lg">
                     <div className="flex flex-col divide-y divide-gray-100">
                       <Link
-                        className="px-4 py-3 text-left transition-colors hover:bg-gray-50"
+                        className="px-4 py-3 text-xs text-left transition-colors hover:bg-gray-50"
                         onClick={handleWatch}
                       >
                         Watch Link 1 (Ads)
                       </Link>
                       <Link
-                        className="px-4 py-3 text-left transition-colors hover:bg-gray-50"
+                        className="px-4 py-3 text-xs text-left transition-colors hover:bg-gray-50"
                         onClick={handleWatch2}
                       >
                         Watch Link 2
@@ -572,7 +572,7 @@ function MovieDetails() {
 
               <button
                 onClick={handleTrailer}
-                className="flex items-center justify-center gap-2 px-6 py-3 font-medium text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700"
+                className="flex items-center justify-center gap-2 px-6 py-1 text-xs font-medium text-white transition-colors bg-gray-800 rounded hover:bg-gray-700"
               >
                 <Play className="w-5 h-5" />
                 <span>Watch Trailer</span>
@@ -776,7 +776,7 @@ function MovieDetails() {
 
       {/* Cast Section */}
       <div className="px-4 py-16 md:container md:px-0 md:mx-auto">
-        <h2 className="relative py-2 mb-8 overflow-hidden text-2xl font-bold text-white font-scifi group">
+        <h2 className="relative py-2 mb-8 overflow-hidden text-base font-bold text-white md:text-2xl font-scifi group">
           <span className="relative z-10 inline-block after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-cyan-400 after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 group-hover:after:scale-x-100">
             Cast
           </span>
@@ -810,7 +810,7 @@ function MovieDetails() {
         >
           {Loading ? (
             <div className="flex items-center justify-center">
-              <Spinner color="white" size={50} speed={3} animating={true} />
+              <LuLoader className="animate-spin text-3xl md:text-5xl text-white [animation-duration:0.6s]" />
             </div>
           ) : (
             <>
@@ -836,11 +836,11 @@ function MovieDetails() {
                   <motion.h1
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex flex-row items-center justify-between mb-6 text-4xl font-bold text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text"
+                    className="flex flex-row items-center justify-between mb-6 text-2xl font-bold text-transparent md:text-4xl bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text"
                   >
                     {CastDetails?.name}
                     <Link onClick={() => setShowCastDetails(false)}>
-                      <RxCrossCircled className="text-3xl text-gray-100" />
+                      <RxCrossCircled className="text-2xl text-gray-100 md:text-3xl" />
                     </Link>
                   </motion.h1>
 
@@ -911,15 +911,17 @@ function MovieDetails() {
                         custom={index}
                         initial="hidden"
                         animate="visible"
-                        className="p-4 transition-colors duration-200 border-b rounded-lg border-gray-700/50 hover:bg-gray-800/30"
+                        className="py-3 transition-colors duration-200 border-b rounded-lg md:p-4 border-gray-700/50 hover:bg-gray-800/30"
                       >
                         <div className="flex items-center gap-4">
                           {item.icon}
                           <div className="flex-1">
-                            <h3 className="text-sm font-medium text-gray-400">
+                            <h3 className="text-sm font-medium text-gray-400 ">
                               {item.label}
                             </h3>
-                            <div className="mt-1 text-white">{item.value}</div>
+                            <div className="mt-1 text-xs text-white md:text-sm">
+                              {item.value}
+                            </div>
                           </div>
                         </div>
                       </motion.div>
@@ -930,7 +932,7 @@ function MovieDetails() {
                       custom={8}
                       initial="hidden"
                       animate="visible"
-                      className="p-4 transition-colors duration-200 border-b rounded-lg border-gray-700/50 hover:bg-gray-800/30"
+                      className="py-3 transition-colors duration-200 border-b rounded-lg md:p-4 border-gray-700/50 hover:bg-gray-800/30"
                     >
                       <div className="flex items-center gap-4">
                         <Heart className={iconStyle} />
@@ -938,7 +940,7 @@ function MovieDetails() {
                           <h3 className="text-sm font-medium text-gray-400">
                             Biography
                           </h3>
-                          <div className="mt-1 leading-relaxed text-white">
+                          <div className="mt-1 text-xs leading-relaxed text-white md:text-sm">
                             {CastDetails?.biography}
                           </div>
                         </div>
@@ -950,7 +952,7 @@ function MovieDetails() {
 
               {/* Cast movies  */}
               <div className="mt-2">
-                <h1 className="text-2xl text-gray-200 font-Raleway">
+                <h1 className="text-base text-gray-200 md:text-2xl font-Raleway">
                   {CastMovies?.cast?.length} {CastDetails?.name} Movies
                 </h1>
               </div>
@@ -970,7 +972,7 @@ function MovieDetails() {
 
               {/* Cast TvSeries  */}
               <div className="mt-2">
-                <h1 className="text-2xl text-gray-200 font-Raleway">
+                <h1 className="text-base text-gray-200 md:text-2xl font-Raleway">
                   {CastTvSeries?.cast?.length} {CastDetails?.name} TvSeries
                 </h1>
               </div>
@@ -990,7 +992,7 @@ function MovieDetails() {
 
               {/* Cast Images */}
               <div className="mt-2">
-                <h1 className="text-2xl text-gray-200 font-Raleway">
+                <h1 className="text-base text-gray-200 md:text-2xl font-Raleway">
                   {CastImages?.profiles?.length} Images of {CastDetails?.name}
                 </h1>
               </div>
@@ -1006,7 +1008,9 @@ function MovieDetails() {
 
       {/* Movie Stills */}
       <section className="px-4 py-12 md:container md:px-0 md:mx-auto">
-        <h2 className="mb-6 text-2xl font-bold text-white">Movie Stills</h2>
+        <h2 className="mb-6 text-base font-bold text-white md:text-2xl">
+          Movie Stills
+        </h2>
         <div className="grid grid-flow-col gap-4 pb-4 overflow-x-auto">
           {Images?.map((image, index) => (
             <div key={index} className="w-[400px]">
@@ -1038,7 +1042,7 @@ function MovieDetails() {
 
                 {/* Heading text */}
                 <div className="flex flex-col">
-                  <h2 className="text-2xl font-bold">
+                  <h2 className="text-base font-bold md:text-2xl">
                     <span className="relative">
                       {/* Gradient text effect */}
                       <span className="text-transparent bg-gradient-to-r from-white via-gray-100 to-red-100 bg-clip-text">
@@ -1051,7 +1055,7 @@ function MovieDetails() {
                   </h2>
 
                   {/* Optional subtitle */}
-                  <p className="mt-1 text-sm text-gray-400">
+                  <p className="mt-1 text-xs text-gray-400 md:text-xs">
                     Personalized picks for you
                   </p>
                 </div>
@@ -1119,12 +1123,12 @@ function MovieDetails() {
             ))}
           </div>
           <div className="w-full mt-10">
-            <div className="flex items-center justify-end gap-3">
+            <div className="flex items-center justify-between gap-3 md:justify-end">
               {/* Less/More Button */}
               {count === 20 ? (
                 <button
                   onClick={handleDecrease}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+                  className="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium transition-colors rounded-lg md:text-sm hover:bg-slate-700 text-slate-200"
                 >
                   <MinusCircle className="w-4 h-4" />
                   <span>Show Less</span>
@@ -1132,7 +1136,7 @@ function MovieDetails() {
               ) : (
                 <button
                   onClick={handleIncrese}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+                  className="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium text-white transition-colors bg-red-600 rounded-lg md:text-sm hover:bg-red-700"
                 >
                   <PlusCircle className="w-4 h-4" />
                   <span>Show More</span>
@@ -1143,7 +1147,7 @@ function MovieDetails() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handlePage}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+                  className="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium text-white transition-colors bg-red-600 rounded-lg md:text-sm hover:bg-red-700"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span>Previous</span>
@@ -1151,7 +1155,7 @@ function MovieDetails() {
 
                 <button
                   onClick={handlePages}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+                  className="inline-flex items-center gap-2 px-3 py-1 text-xs font-medium text-white transition-colors bg-red-600 rounded-lg md:text-sm hover:bg-red-700"
                 >
                   <span>Next</span>
                   <ChevronRight className="w-4 h-4" />
@@ -1195,7 +1199,7 @@ function MovieDetails() {
                   <h2 className="text-2xl font-bold tracking-tight">
                     <span className="relative inline-block">
                       {/* Gradient text */}
-                      <span className="text-transparent bg-gradient-to-r from-white via-gray-100 to-red-100 bg-clip-text">
+                      <span className="text-base text-transparent md:text-lg bg-gradient-to-r from-white via-gray-100 to-red-100 bg-clip-text">
                         Reviews
                       </span>
 
@@ -1205,7 +1209,7 @@ function MovieDetails() {
                   </h2>
 
                   {/* Subtitle with stats */}
-                  <p className="flex items-center gap-2 mt-1 text-sm text-gray-400">
+                  <p className="flex items-center gap-2 mt-1 text-xs text-gray-400 md:text-sm">
                     <span>User Feedback & Ratings</span>
                     <span className="flex items-center gap-1">
                       <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
@@ -1262,15 +1266,15 @@ function MovieDetails() {
             {Reviews?.map((review, index) => (
               <div
                 key={index + review.author}
-                className="p-6 rounded-lg bg-gray-800/50"
+                className="p-3 rounded-lg md:p-6 bg-gray-800/50"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <IoPersonCircleOutline className="text-3xl text-gray-400" />
-                  <h3 className="text-xl font-semibold text-white">
+                  <IoPersonCircleOutline className="text-2xl text-gray-400 md:text-3xl" />
+                  <h3 className="text-sm font-semibold text-white md:text-xl">
                     {review.author}
                   </h3>
                 </div>
-                <p className="leading-relaxed text-gray-300 font-Raleway">
+                <p className="text-xs leading-relaxed text-gray-300 md:text-sm font-Raleway">
                   {review.content}
                 </p>
               </div>
