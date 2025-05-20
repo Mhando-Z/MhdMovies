@@ -7,7 +7,7 @@ import TodaySeies from "../TvSeriesScreens/TodaySeries";
 import TvSeriesList from "../TvSeriesScreens/TvSeriesList";
 import TvSeriesContex from "../../Context/TvSeriesContext";
 import AiringToday from "../TvSeriesScreens/AiringToday";
-import { Spinner } from "react-activity";
+import { LuLoader } from "react-icons/lu";
 
 function TvSeriesPage() {
   const { Todaylist } = useContext(TvSeriesContex);
@@ -16,7 +16,7 @@ function TvSeriesPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div>
-          <Spinner color="gray" size={50} speed={3} animating={true} />
+          <LuLoader className="animate-spin text-3xl md:text-5xl text-white [animation-duration:0.6s]" />
         </div>
       </div>
     );

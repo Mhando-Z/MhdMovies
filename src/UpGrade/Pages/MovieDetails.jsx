@@ -34,6 +34,7 @@ import CastPoster from "../Components/CastPoster";
 import { RxCrossCircled } from "react-icons/rx";
 import TvPosterExpands from "../Components/TvPosterExpands";
 import TvSeriesContex from "../../Context/TvSeriesContext";
+import { LuLoader } from "react-icons/lu";
 
 // function
 const getYouTubeThumbnail = (videoId) => {
@@ -328,7 +329,7 @@ function MovieDetails() {
   if (!Details || Details?.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Spinner color="white" size={50} speed={3} animating={true} />
+        <LuLoader className="animate-spin text-3xl md:text-5xl text-white [animation-duration:0.6s]" />
       </div>
     );
   }

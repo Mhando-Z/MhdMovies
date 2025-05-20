@@ -6,7 +6,7 @@ import TrendingMovies from "../MovieScreens/TrendingMovies";
 import TrendingSeries from "../TvSeriesScreens/TrendingSeries";
 import UpComingMovies from "../MovieScreens/UpComingMovies";
 import MovieListContext from "../../Context/MovieListContext";
-import { Spinner } from "react-activity";
+import { LuLoader } from "react-icons/lu";
 
 function MainPage() {
   const { Trending } = useContext(MovieListContext);
@@ -15,7 +15,7 @@ function MainPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div>
-          <Spinner color="gray" size={50} speed={3} animating={true} />
+          <LuLoader className="animate-spin text-3xl md:text-5xl text-white [animation-duration:0.6s]" />
         </div>
       </div>
     );

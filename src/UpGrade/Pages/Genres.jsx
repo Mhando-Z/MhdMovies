@@ -72,7 +72,7 @@ function Genres() {
   };
 
   return (
-    <div className="flex h-screen ">
+    <div className="flex min-h-screen md:h-screen">
       {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 w-72 bg-gray-800 h-full transform ${
@@ -81,10 +81,10 @@ function Genres() {
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-4 border-b border-gray-700">
-            <h1 className="text-xl font-bold text-white">Genre Explorer</h1>
+            <h1 className="text-base font-bold text-white">Genre Explorer</h1>
             <FaHome
               onClick={handleNavigate}
-              className="text-xl text-white cursor-pointer hover:text-yellow-400"
+              className="text-lg text-white cursor-pointer hover:text-yellow-400"
             />
             <button
               className="p-2 text-gray-400 rounded-lg md:hidden hover:bg-gray-700"
@@ -98,15 +98,15 @@ function Genres() {
             <div className="p-4">
               <div className="mb-6">
                 <div className="flex items-center mb-4 space-x-2">
-                  <Film className="text-yellow-500" size={20} />
-                  <h2 className="text-lg font-semibold text-white">Movies</h2>
+                  <Film className="text-yellow-500" size={16} />
+                  <h2 className="text-base font-semibold text-white">Movies</h2>
                 </div>
                 <div className="space-y-1">
                   {genres?.map((data) => (
                     <button
                       key={data.id}
                       onClick={() => HandleSelect(data.id, data.name)}
-                      className={`w-full px-4 py-2 text-sm text-left transition-colors rounded-lg ${
+                      className={`w-full px-4 py-1.5 text-xs md:text-sm text-left transition-colors rounded ${
                         data.name === Gname
                           ? "bg-yellow-500 text-gray-900 font-medium"
                           : "text-gray-300 hover:bg-gray-700"
@@ -120,8 +120,8 @@ function Genres() {
 
               <div className="mb-6">
                 <div className="flex items-center mb-4 space-x-2">
-                  <Tv className="text-yellow-500" size={20} />
-                  <h2 className="text-lg font-semibold text-white">
+                  <Tv className="text-yellow-500" size={16} />
+                  <h2 className="text-base font-semibold text-white">
                     TV Series
                   </h2>
                 </div>
@@ -130,7 +130,7 @@ function Genres() {
                     <button
                       key={data.id}
                       onClick={() => HandleTvSelect(data.id, data.name)}
-                      className={`w-full px-4 py-2 text-sm text-left transition-colors rounded-lg ${
+                      className={`w-full px-4 py-1.5 text-xs md:text-sm text-left transition-colors rounded ${
                         data.name === Gnames
                           ? "bg-yellow-500 text-gray-900 font-medium"
                           : "text-gray-300 hover:bg-gray-700"
@@ -157,22 +157,22 @@ function Genres() {
       {/* Main Content */}
       <div className="flex-1 ml-0 md:ml-72">
         {/* Header */}
-        <header className="sticky top-0 z-30 bg-gray-800 shadow-lg">
-          <div className="flex items-center justify-between px-4 py-4">
+        <header className="fixed top-0 z-30 w-full bg-gray-800 shadow-lg md:sticky">
+          <div className="flex items-center justify-between px-4 py-2 md:py-4">
             <button
               className="p-2 text-gray-400 rounded-lg md:hidden hover:bg-gray-700"
               onClick={() => setIsSidebarOpen(true)}
             >
               <Menu size={24} />
             </button>
-            <h1 className="text-xl font-bold text-white">
+            <h1 className="text-base font-bold text-white">
               {ShowContent1 ? Gname : Gnames}
             </h1>
           </div>
         </header>
 
         {/* Content */}
-        <main className="p-4">
+        <main className="p-4 mt-20 md:mt-0">
           {ShowContent1 && (
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
@@ -194,11 +194,13 @@ function Genres() {
                 ))}
               </div>
 
-              <div className="flex items-center justify-between px-4 py-4 mt-6 bg-gray-800 rounded-lg">
-                <span className="text-gray-400">Page {Page1}</span>
+              <div className="flex items-center justify-between px-4 py-2 mt-6 bg-gray-800 rounded">
+                <span className="text-xs text-gray-400 md:text-sm">
+                  Page {Page1}
+                </span>
                 <button
                   onClick={handleIncrese}
-                  className="flex items-center px-4 py-2 space-x-2 text-sm font-medium text-white transition-colors bg-yellow-500 rounded-lg hover:bg-yellow-600"
+                  className="flex items-center px-4 py-1 space-x-2 text-xs font-medium transition-colors bg-yellow-500 rounded-lg md:text-sm hover:bg-yellow-600"
                 >
                   <span>Load More</span>
                   <ChevronRight size={16} />
@@ -228,11 +230,13 @@ function Genres() {
                 ))}
               </div>
 
-              <div className="flex items-center justify-between px-4 py-4 mt-6 bg-gray-800 rounded-lg">
-                <span className="text-gray-400">Page {Page1}</span>
+              <div className="flex items-center justify-between px-4 py-2 mt-6 bg-gray-800 rounded">
+                <span className="text-xs text-gray-400 md:text-sm">
+                  Page {Page1}
+                </span>
                 <button
                   onClick={handleIncreses}
-                  className="flex items-center px-4 py-2 space-x-2 text-sm font-medium text-white transition-colors bg-yellow-500 rounded-lg hover:bg-yellow-600"
+                  className="flex items-center px-4 py-1 space-x-2 text-xs font-medium transition-colors bg-yellow-500 rounded-lg md:text-sm hover:bg-yellow-600"
                 >
                   <span>Load More</span>
                   <ChevronRight size={16} />

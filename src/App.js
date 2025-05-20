@@ -38,7 +38,7 @@ function App() {
     );
   }
   return (
-    <div className="flex flex-col justify-between min-h-screen overflow-x-hidden overflow-y-scroll">
+    <div className="flex flex-col justify-between min-h-screen overflow-x-hidden overflow-y-scroll ">
       <TvSeriesProvider>
         <MazeAPIProvider>
           <MovieProvider>

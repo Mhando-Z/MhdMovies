@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import TvSeriesPoster from "./../Components/TvSeriesPoster";
 import ReactPlayer from "react-player";
-import { Spinner } from "react-activity";
 // import { Slider } from "../Components/slider";
 import CastProfile from "../Components/Cast";
 import { AnimatePresence, motion } from "framer-motion";
@@ -36,6 +35,7 @@ import { RxCrossCircled } from "react-icons/rx";
 import CastPoster from "../Components/CastPoster";
 import TvSeriesContex from "../../Context/TvSeriesContext";
 import { CheckCircle, Clock } from "lucide-react";
+import { LuLoader } from "react-icons/lu";
 
 export function EpisodeStatus({ episode }) {
   // Determine if the episode is released
@@ -404,7 +404,7 @@ function MovieDetails() {
   if (!Details || Details?.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Spinner color="white" size={50} speed={3} animating={true} />
+        <LuLoader className="animate-spin text-3xl md:text-5xl text-white [animation-duration:0.6s]" />
       </div>
     );
   }
@@ -1201,7 +1201,7 @@ function MovieDetails() {
         >
           {Loading ? (
             <div className="flex items-center justify-center">
-              <Spinner color="white" size={50} speed={3} animating={true} />
+              <LuLoader className="animate-spin text-3xl md:text-5xl text-white [animation-duration:0.6s]" />
             </div>
           ) : (
             <>
