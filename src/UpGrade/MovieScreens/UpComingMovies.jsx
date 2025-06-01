@@ -101,12 +101,12 @@ function UpComingMovies() {
         })}
       </div>
       <div className="w-full mt-10">
-        <div className="flex items-center justify-end gap-3">
+        <div className="flex items-center justify-between gap-3">
           {/* Less/More Button */}
           {count === 20 ? (
             <button
               onClick={handleDecrease}
-              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+              className="inline-flex items-center gap-2 px-4 py-1 text-xs font-medium transition-colors rounded-lg md:text-sm hover:bg-slate-700 text-slate-200"
             >
               <MinusCircle className="w-4 h-4" />
               <span>Show Less</span>
@@ -114,7 +114,7 @@ function UpComingMovies() {
           ) : (
             <button
               onClick={handleIncrese}
-              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+              className="inline-flex items-center gap-2 px-4 py-1 text-xs font-medium text-white transition-colors bg-red-600 rounded-lg md:text-sm hover:bg-red-700"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Show More</span>
@@ -125,7 +125,7 @@ function UpComingMovies() {
           <div className="flex items-center gap-2">
             <button
               onClick={handlePage}
-              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+              className="inline-flex items-center gap-2 px-4 py-1 text-xs font-medium text-white transition-colors bg-red-600 rounded-lg md:text-sm hover:bg-red-700"
             >
               <ChevronLeft className="w-4 h-4" />
               <span>Previous</span>
@@ -133,7 +133,7 @@ function UpComingMovies() {
 
             <button
               onClick={handlePages}
-              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+              className="inline-flex items-center gap-2 px-4 py-1 text-xs font-medium text-white transition-colors bg-red-600 rounded-lg md:text-sm hover:bg-red-700"
             >
               <span>Next</span>
               <ChevronRight className="w-4 h-4" />
