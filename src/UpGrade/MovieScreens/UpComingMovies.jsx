@@ -58,14 +58,14 @@ function UpComingMovies() {
 
             {/* Heading text with gradient */}
             <div className="flex flex-col">
-              <h1 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
+              <h1 className="text-xl font-bold tracking-tight sm:text-3xl md:text-4xl">
                 <span className="text-transparent bg-gradient-to-r from-red-200 via-white to-rose-200 bg-clip-text">
                   Upcoming Movies
                 </span>
               </h1>
 
               {/* Subtitle */}
-              <p className="mt-1 text-sm font-normal text-gray-400">
+              <p className="mt-1 text-xs font-normal text-gray-400 md:text-sm">
                 Get ready for these upcoming releases
               </p>
             </div>
