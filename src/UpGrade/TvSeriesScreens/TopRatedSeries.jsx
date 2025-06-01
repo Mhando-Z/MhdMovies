@@ -62,7 +62,7 @@ function TopRatedSeries() {
             {/* Header content */}
             <div className="flex-1">
               <div className="relative inline-block">
-                <h1 className="text-2xl font-bold sm:text-3xl md:text-4xl">
+                <h1 className="text-xl font-bold sm:text-2xl md:text-4xl">
                   <span className="relative inline-block">
                     {/* Gradient text */}
                     <span className="relative text-transparent bg-gradient-to-r from-white via-red-100 to-red-100 bg-clip-text">
@@ -151,12 +151,12 @@ function TopRatedSeries() {
       </div>
       {/* action buttons */}
       <div className="w-full mt-10">
-        <div className="flex items-center justify-end gap-3">
+        <div className="flex items-center justify-between gap-3">
           {/* Less/More Button */}
           {count === 20 ? (
             <button
               onClick={handleDecrease}
-              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+              className="inline-flex items-center gap-2 px-4 py-1 text-xs font-medium transition-colors rounded-lg md:text-sm hover:bg-slate-700 text-slate-200"
             >
               <MinusCircle className="w-4 h-4" />
               <span>Show Less</span>
@@ -164,7 +164,7 @@ function TopRatedSeries() {
           ) : (
             <button
               onClick={handleIncrese}
-              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+              className="inline-flex items-center gap-2 px-4 py-1 text-xs font-medium text-white transition-colors bg-red-600 rounded-lg md:text-sm hover:bg-red-700"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Show More</span>
@@ -175,7 +175,7 @@ function TopRatedSeries() {
           <div className="flex items-center gap-2">
             <button
               onClick={handlePage}
-              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+              className="inline-flex items-center gap-2 px-4 py-1 text-xs font-medium text-white transition-colors bg-red-600 rounded-lg md:text-sm hover:bg-red-700"
             >
               <ChevronLeft className="w-4 h-4" />
               <span>Previous</span>
@@ -183,7 +183,7 @@ function TopRatedSeries() {
 
             <button
               onClick={handlePages}
-              className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+              className="inline-flex items-center gap-2 px-4 py-1 text-xs font-medium text-white transition-colors bg-red-600 rounded-lg md:text-sm hover:bg-red-700"
             >
               <span>Next</span>
               <ChevronRight className="w-4 h-4" />
