@@ -311,7 +311,7 @@ function MovieDetails() {
   const [selectedSeason, setSelectedSeason] = useState(1);
 
   // Get unique seasons
-  const seasons = [...new Set(EpiList?.map((episode) => episode.season))];
+  const seasons = [...new Set(EpiList?.map((episode) => episode?.season))];
 
   // Filter episodes based on the selected season
   const filteredEpisodes = EpiList?.filter(
