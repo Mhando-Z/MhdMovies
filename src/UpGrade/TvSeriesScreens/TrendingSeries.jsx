@@ -38,7 +38,7 @@ function TrendingSeries() {
             <div className="flex flex-col">
               <div className="relative">
                 {/* Main heading with gradient */}
-                <h1 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
+                <h1 className="text-xl font-bold tracking-tight sm:text-2xl md:text-4xl">
                   <span className="relative">
                     {/* Gradient underline */}
                     <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-red-500 via-red-400 to-transparent transform translate-y-2" />
@@ -50,7 +50,7 @@ function TrendingSeries() {
                 </h1>
 
                 {/* Subtitle */}
-                <p className="mt-4 text-sm text-gray-400">
+                <p className="mt-4 text-xs text-gray-400 md:text-sm">
                   Most watched shows right now
                 </p>
               </div>
@@ -117,7 +117,7 @@ function TrendingSeries() {
         {count === 20 ? (
           <button
             onClick={handleDecrease}
-            className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium transition-colors rounded-lg hover:bg-slate-700 text-slate-200"
+            className="inline-flex items-center gap-2 px-4 py-1 text-xs font-medium transition-colors rounded-lg md:text-sm hover:bg-slate-700 text-slate-200"
           >
             <MinusCircle className="w-4 h-4" />
             <span>Show Less</span>
@@ -125,7 +125,7 @@ function TrendingSeries() {
         ) : (
           <button
             onClick={handleIncrese}
-            className="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-white transition-colors bg-red-600 rounded-lg hover:bg-red-700"
+            className="inline-flex items-center gap-2 px-4 py-1 text-xs font-medium text-white transition-colors bg-red-600 rounded-lg md:text-sm hover:bg-red-700"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Show More</span>
