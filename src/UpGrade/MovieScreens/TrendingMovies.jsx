@@ -48,10 +48,10 @@ function TrendingMovies() {
         {/* Main heading container */}
         <div className="relative flex items-center gap-3">
           {/* Icon */}
-          <Flame className="w-8 h-8 text-red-500 animate-pulse" />
+          <Flame className="text-red-500 md:w-8 md:h-8 size-7 animate-pulse" />
 
           {/* Heading text */}
-          <h1 className="text-2xl font-bold tracking-tight text-transparent sm:text-3xl md:text-4xl bg-gradient-to-r from-white to-gray-300 bg-clip-text">
+          <h1 className="text-xl font-bold tracking-tight text-transparent sm:text-2xl md:text-4xl bg-gradient-to-r from-white to-gray-300 bg-clip-text">
             Trending Movies
           </h1>
 
@@ -62,7 +62,7 @@ function TrendingMovies() {
         </div>
 
         {/* Optional subtitle or description */}
-        <p className="mt-2 text-sm text-gray-400 md:text-base">
+        <p className="mt-2 text-xs text-gray-400 md:text-base">
           Discover the most popular movies right now
         </p>
       </div>
