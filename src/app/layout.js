@@ -1,17 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
+// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import Footer from "@/components/footer";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { MovieProvider } from "@/context/movieContext";
 
 const siteUrl = "https://mhd-movies.vercel.app/";
 const title = "MhdMovies - Your Ultimate Movie and Series Reference";
@@ -107,8 +98,7 @@ export default function RootLayout({ children }) {
             ),
           }}
         />
-        <div>Navbar</div>
-        {children}
+        <MovieProvider>{children}</MovieProvider>
         <Footer />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-VBF77Y76H7"

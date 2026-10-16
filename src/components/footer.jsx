@@ -34,7 +34,7 @@ export default function Footer() {
 
   return (
     <footer className="mt-10 border-t border-gray-800 bg-black text-gray-100">
-      <div className="mx-auto container px-6 sm:px-8 lg:px-12">
+      <div className="xl:mx-auto xl:container px-6 sm:px-8 lg:px-12">
         <div className="grid gap-x-12 gap-y-10 py-12 sm:grid-cols-2 sm:py-16 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr]">
           <div className="sm:col-span-2 lg:col-span-1">
             <Link
