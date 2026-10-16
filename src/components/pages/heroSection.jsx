@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BiSolidMoviePlay } from "react-icons/bi";
 import { BsCalendarEvent } from "react-icons/bs";
@@ -12,10 +12,18 @@ import Slider from "../Swipper/swiper";
 
 const HeroSection = () => {
   const { Trending, getTrending, isMobile } = useMovies();
-  const [value, setValue] = useState(Math.floor(Math.random() * 20) + 1 || 5);
+  const [value, setValue] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [imageError, setImageError] = useState(false);
   const imageRef = useRef(null);
+  const hasSelectedInitialMovie = useRef(false);
+
+  useEffect(() => {
+    if (Trending.length === 0 || hasSelectedInitialMovie.current) return;
+
+    hasSelectedInitialMovie.current = true;
+    setValue(Math.floor(Math.random() * Trending.length));
+  }, [Trending.length]);
 
   useEffect(() => {
     getTrending();
