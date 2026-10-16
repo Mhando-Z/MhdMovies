@@ -3,6 +3,7 @@ import "./globals.css";
 import Script from "next/script";
 import Footer from "@/components/footer";
 import { MovieProvider } from "@/context/movieContext";
+import Navbar from "@/components/navbar";
 
 const siteUrl = "https://mhd-movies.vercel.app/";
 const title = "MhdMovies - Your Ultimate Movie and Series Reference";
@@ -98,6 +99,7 @@ export default function RootLayout({ children }) {
             ),
           }}
         />
+        <Navbar />
         <MovieProvider>{children}</MovieProvider>
         <Footer />
         <Script
