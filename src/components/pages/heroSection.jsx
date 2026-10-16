@@ -10,9 +10,9 @@ import Link from "next/link";
 import Slider from "../Swipper/swiper";
 import {
   Creepster,
-  Genos,
   Cinzel,
   Lobster_Two,
+  Bricolage_Grotesque,
   Oswald,
 } from "next/font/google";
 
@@ -21,9 +21,9 @@ const horrorFont = Creepster({
   weight: "400",
   display: "swap",
 });
-const sciFiFont = Genos({
+const sciFiFont = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: "700",
+  weight: "800",
   display: "swap",
 });
 const fantasyFont = Cinzel({
