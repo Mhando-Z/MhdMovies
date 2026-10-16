@@ -93,12 +93,12 @@ const HeroSection = () => {
         </AnimatePresence>
 
         {/* Content Container */}
-        <div className="absolute inset-0 px-4 md:container md:px-0 md:mx-auto lg:px-8">
+        <div className="absolute inset-0 px-4 xl:container md:px-0 xl:mx-auto lg:px-8">
           <div className="flex flex-col h-full">
             {/* Main Content */}
             <div className="flex-1 invisible md:visible flex flex-col justify-center max-w-2xl gap-4 md:gap-6 h-[70%] md:h-full">
               {/* Movie Title */}
-              <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-6xl lg:text-7xl">
+              <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-6xl  lg:text-7xl">
                 {currentMovie?.title}
               </h1>
 
@@ -144,7 +144,7 @@ const HeroSection = () => {
               transition={{ duration: 0.6 }}
               className="h-[30%] md:absolute md:bottom-8 md:right-8 md:w-full md:max-w-md flex items-center justify-end"
             >
-              <div className="w-full max-w-[400px] mx-auto md:mx-0">
+              <div className="w-full max-w-100 mx-auto md:mx-0">
                 <Slider data={Trending} value={value} setValue={setValue} />
               </div>
             </motion.div>
