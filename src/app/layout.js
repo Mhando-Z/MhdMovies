@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://www.mhdmovies.com";
+const siteUrl = "https://mhd-movies.vercel.app/";
 const title = "MhdMovies - Your Ultimate Movie and Series Reference";
 const description =
   "Discover movies and TV series with MhdMovies. Explore detailed information, cast, ratings, and where to watch online, powered by TMDB.";
@@ -92,10 +92,7 @@ const websiteStructuredData = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`h-full  antialiased`}>
       <body
         className="min-h-full flex flex-col"
         style={{ backgroundColor: "#000000" }}
@@ -110,6 +107,7 @@ export default function RootLayout({ children }) {
             ),
           }}
         />
+        <div>Navbar</div>
         {children}
         <Footer />
         <Script

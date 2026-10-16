@@ -129,7 +129,7 @@ export default function Footer() {
                   disabled
                   aria-label={`${label} (coming soon)`}
                   title={`${label} - coming soon`}
-                  className="flex size-11 cursor-default items-center justify-center rounded-full border border-gray-800 text-gray-500"
+                  className="flex cursor-pointer size-11 items-center justify-center rounded-full border border-gray-800 text-gray-500"
                 >
                   <Icon size={17} aria-hidden="true" />
                 </button>
