@@ -8,6 +8,7 @@ import { useMovies } from "@/context/movieContext";
 import Rating from "../rating";
 import Link from "next/link";
 import Slider from "../Swipper/swiper";
+import MovieTitle, { preloadMovieLogo } from "./movieTitle";
 import {
   Creepster,
   Cinzel,
@@ -108,11 +109,34 @@ const GENRE_NAMES = {
 const MAX_GENRES = 4;
 
 const HeroSection = () => {
-  const { Trending, getTrending, isMobile } = useMovies();
+  const { Trending, isMobile } = useMovies();
   const [value, setValue] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [imageError, setImageError] = useState(false);
   const hasSelectedInitialMovie = useRef(false);
+  const [movieLogos, setMovieLogos] = useState({});
+  const logosReady = Trending.length > 0 && Trending.every(
+    (movie) => Object.hasOwn(movieLogos, movie.id),
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    // Load the whole lineup before starting the slider. A missing or failed
+    // logo resolves to the text fallback without blocking the other movies.
+    Promise.all(
+      Trending.map(async (movie) => [
+        movie.id,
+        await preloadMovieLogo(movie.id).catch(() => null),
+      ]),
+    ).then((entries) => {
+      if (!cancelled) setMovieLogos(Object.fromEntries(entries));
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [Trending]);
 
   // Pick a random starting movie once the list arrives.
   useEffect(() => {
@@ -121,11 +145,6 @@ const HeroSection = () => {
     hasSelectedInitialMovie.current = true;
     setValue(Math.floor(Math.random() * Trending.length));
   }, [Trending.length]);
-
-  useEffect(() => {
-    getTrending();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // Preload the image for the selected movie before swapping it in.
   useEffect(() => {
@@ -230,7 +249,7 @@ const HeroSection = () => {
             {/* Main Content */}
             <div className="flex-1 invisible md:visible flex flex-col justify-center max-w-2xl gap-4 md:gap-5 h-[70%] md:h-full md:pl-8 lg:pl-0">
               <AnimatePresence mode="wait">
-                {currentMovie && (
+                {currentMovie && logosReady && (
                   <motion.div
                     key={currentMovie.id}
                     initial={{ opacity: 0, y: 16 }}
@@ -251,12 +270,11 @@ const HeroSection = () => {
                     </div>
 
                     {/* Movie Title */}
-                    <h1
-                      style={{ ...titleStyle.font.style }}
-                      className={`${titleStyle.className} text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-7xl line-clamp-3 drop-shadow-[0_4px_16px_rgba(0,0,0,0.65)]`}
-                    >
-                      {currentMovie.title}
-                    </h1>
+                    <MovieTitle
+                      movie={currentMovie}
+                      titleStyle={titleStyle}
+                      logo={movieLogos[currentMovie.id]}
+                    />
 
                     {/* Movie Meta */}
                     <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/90">
@@ -323,7 +341,13 @@ const HeroSection = () => {
               className="h-[30%] md:absolute md:bottom-8 md:right-8 md:w-full md:max-w-md flex items-center justify-end"
             >
               <div className="w-full max-w-100 mx-auto md:mx-0">
-                <Slider data={Trending} value={value} setValue={setValue} />
+                {logosReady ? (
+                  <Slider data={Trending} value={value} setValue={setValue} />
+                ) : (
+                  <p role="status" className="text-sm text-white/70">
+                    Preparing featured movies…
+                  </p>
+                )}
               </div>
             </motion.div>
           </div>

@@ -10,7 +10,7 @@ function Navbar() {
         <img
           src="https://inpdtdlijpglmifrebbg.supabase.co/storage/v1/object/public/images/logos/mhd.png"
           alt="logo"
-          className="h-10 w-auto"
+          className="h-8 w-auto"
         />
       </div>
     </div>
