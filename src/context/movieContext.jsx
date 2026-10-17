@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -16,7 +17,7 @@ const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 // Store your TMDB Read Access Token in .env.local
 const TMDB_TOKEN = process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
 
-async function fetchMovies(endpoint, page = 1) {
+async function fetchMovies(endpoint, page = 1, includePagination = false) {
   const separator = endpoint.includes("?") ? "&" : "?";
 
   const response = await fetch(
@@ -36,12 +37,18 @@ async function fetchMovies(endpoint, page = 1) {
   }
 
   const data = await response.json();
+  if (includePagination) return data;
   return data.results ?? [];
 }
 
 export function MovieProvider({ children }) {
   const [Movielists, setList] = useState([]);
   const [Trending, setTrend] = useState([]);
+  const [trendingPage, setTrendingPage] = useState(0);
+  const [trendingTotalPages, setTrendingTotalPages] = useState(1);
+  const [trendingLoading, setTrendingLoading] = useState(true);
+  const [trendingError, setTrendingError] = useState(null);
+  const trendingRequest = useRef(false);
   const [TopRated, setTopRated] = useState([]);
   const [UpComingMovies, setUFuture] = useState([]);
 
@@ -80,6 +87,31 @@ export function MovieProvider({ children }) {
     return fetchMovies("/trending/movie/day");
   }, []);
 
+  const loadMoreTrending = useCallback(async () => {
+    if (trendingRequest.current || trendingPage >= trendingTotalPages) return;
+    trendingRequest.current = true;
+    setTrendingLoading(true);
+    setTrendingError(null);
+    try {
+      const data = await fetchMovies("/trending/movie/day", trendingPage + 1, true);
+      setTrend((previous) => {
+        const ids = new Set(previous.map((movie) => movie.id));
+        return [...previous, ...(data.results ?? []).filter((movie) => !ids.has(movie.id))];
+      });
+      setTrendingPage(data.page);
+      setTrendingTotalPages(data.total_pages);
+    } catch (err) {
+      setTrendingError(err.message || "Failed to load trending movies.");
+    } finally {
+      trendingRequest.current = false;
+      setTrendingLoading(false);
+    }
+  }, [trendingPage, trendingTotalPages]);
+
+  useEffect(() => {
+    if (trendingPage === 0) loadMoreTrending();
+  }, [trendingPage, loadMoreTrending]);
+
   const HandlePages = useCallback(() => {
     setPage1((page) => page + 1);
     setPage2((page) => page + 1);
@@ -94,11 +126,10 @@ export function MovieProvider({ children }) {
       setError(null);
 
       try {
-        const [popular, topRated, upcoming, trending] = await Promise.all([
+        const [popular, topRated, upcoming] = await Promise.all([
           fetchMovies("/movie/popular", Page1),
           fetchMovies("/movie/top_rated", Page3),
           fetchMovies("/movie/upcoming", Page2),
-          fetchMovies("/trending/movie/day"),
         ]);
 
         if (cancelled) return;
@@ -106,7 +137,6 @@ export function MovieProvider({ children }) {
         setList(popular);
         setTopRated(topRated);
         setUFuture(upcoming);
-        setTrend(trending);
       } catch (err) {
         if (!cancelled) {
           setError(err.message || "Failed to load movies.");
@@ -139,6 +169,10 @@ export function MovieProvider({ children }) {
       HandlePages,
       TopRated,
       Trending,
+      loadMoreTrending,
+      trendingLoading,
+      trendingError,
+      hasMoreTrending: trendingPage < trendingTotalPages,
       Page1,
       Page2,
       Page3,
@@ -155,11 +189,17 @@ export function MovieProvider({ children }) {
       HandlePages,
       TopRated,
       Trending,
+      loadMoreTrending,
+      trendingLoading,
+      trendingError,
+      trendingPage,
+      trendingTotalPages,
       Page1,
       Page2,
       Page3,
       loading,
       error,
+      isMobile,
     ],
   );
 

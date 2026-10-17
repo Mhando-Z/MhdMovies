@@ -1,0 +1,81 @@
+.ambient {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse at 50% 38%, rgb(127 29 29 / 16%), transparent 55%);
+}
+.grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: .18;
+  background-image: linear-gradient(#ffffff0a 1px, transparent 1px), linear-gradient(90deg, #ffffff0a 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse, black, transparent 70%);
+}
+.frame {
+  display: flex;
+  gap: 12px;
+  width: min(100%, 390px);
+  margin: auto;
+  padding: 12px 10px;
+  border: 1px solid #ffffff12;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff08, #ffffff02);
+  box-shadow: 0 24px 80px #0008, 0 0 70px #dc262608;
+  transform: rotate(-3deg);
+}
+.perforations {
+  flex: 0 0 9px;
+  background: repeating-linear-gradient(to bottom, #ffffff14 0 10px, transparent 10px 23px);
+  mask-image: linear-gradient(transparent, black 5%, black 95%, transparent);
+}
+.screen {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  height: 210px;
+  overflow: hidden;
+  border: 1px solid #ffffff0d;
+  border-radius: 5px;
+  background: radial-gradient(circle, #ffffff08, #0005);
+}
+.countdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  border: 1px solid #ffffff30;
+  border-radius: 50%;
+}
+.crosshair {
+  position: absolute;
+  inset: -40px;
+  background: linear-gradient(90deg, transparent calc(50% - .5px), #ffffff10 50%, transparent calc(50% + .5px)), linear-gradient(transparent calc(50% - .5px), #ffffff10 50%, transparent calc(50% + .5px));
+}
+.innerRing { position: absolute; inset: 9px; border: 1px solid #ffffff12; border-radius: 50%; }
+.sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg 220deg, #ef44442a 355deg, #ef444480 360deg);
+  animation: rotate 3s linear infinite;
+}
+.errorCode {
+  font-size: clamp(78px, 16vw, 120px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.08em;
+  color: #ffffff08;
+  -webkit-text-stroke: 1px #ffffff30;
+}
+.progress { height: 100%; width: 45%; background: #ef4444; animation: traverse 1.8s ease-in-out infinite; }
+@keyframes rotate { to { transform: rotate(360deg); } }
+@keyframes traverse { from { transform: translateX(-110%); } to { transform: translateX(330%); } }
+@media (min-width: 640px) { .screen { height: 240px; } }
+@media (prefers-reduced-motion: reduce) { .sweep, .progress { animation: none; } .progress { width: 100%; opacity: .5; } }
