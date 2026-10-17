@@ -68,7 +68,7 @@ export default function TrendingMovies() {
           <div aria-hidden="true" className={GRID_CLASSES}>
             {Array.from({ length: INITIAL_COUNT }, (_, index) => (
               <div key={index} className="motion-safe:animate-pulse">
-                <div className="aspect-[2/3] rounded-xl bg-white/10 ring-1 ring-white/10" />
+                <div className="aspect-2/3 rounded-xl bg-white/10 ring-1 ring-white/10" />
                 <div className="mt-3 h-3 w-3/4 rounded bg-white/10" />
                 <div className="mt-2 h-3 w-1/3 rounded bg-white/5" />
               </div>
