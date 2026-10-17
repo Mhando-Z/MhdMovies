@@ -1,5 +1,7 @@
 "use client";
 
+import { collectUpcomingMovies, filterUpcomingMovies } from "@/lib/upcomingMovies";
+
 import {
   createContext,
   useCallback,
@@ -51,6 +53,12 @@ export function MovieProvider({ children }) {
   const trendingRequest = useRef(false);
   const [TopRated, setTopRated] = useState([]);
   const [UpComingMovies, setUFuture] = useState([]);
+  const [upcomingPage, setUpcomingPage] = useState(0);
+  const [upcomingTotalPages, setUpcomingTotalPages] = useState(1);
+  const [upcomingLoading, setUpcomingLoading] = useState(true);
+  const [upcomingError, setUpcomingError] = useState(null);
+  const upcomingRequest = useRef(false);
+  const [upcomingBuffer, setUpcomingBuffer] = useState([]);
 
   const [visible, setVisible] = useState(false);
 
@@ -112,6 +120,37 @@ export function MovieProvider({ children }) {
     if (trendingPage === 0) loadMoreTrending();
   }, [trendingPage, loadMoreTrending]);
 
+  const loadMoreUpcoming = useCallback(async () => {
+    if (upcomingRequest.current || (upcomingPage >= upcomingTotalPages && upcomingBuffer.length === 0)) return false;
+    upcomingRequest.current = true;
+    setUpcomingLoading(true);
+    setUpcomingError(null);
+    try {
+      const data = await collectUpcomingMovies({
+        fetchPage: (page) => fetchMovies("/movie/upcoming", page, true),
+        page: upcomingPage,
+        totalPages: upcomingTotalPages,
+        buffered: upcomingBuffer,
+        existing: UpComingMovies,
+      });
+      setUFuture((previous) => [...filterUpcomingMovies(previous), ...data.movies]);
+      setUpcomingBuffer(data.buffered);
+      setUpcomingPage(data.page);
+      setUpcomingTotalPages(data.totalPages);
+      return true;
+    } catch (err) {
+      setUpcomingError(err.message || "Failed to load upcoming movies.");
+      return false;
+    } finally {
+      upcomingRequest.current = false;
+      setUpcomingLoading(false);
+    }
+  }, [upcomingPage, upcomingTotalPages, upcomingBuffer, UpComingMovies]);
+
+  useEffect(() => {
+    if (upcomingPage === 0) loadMoreUpcoming();
+  }, [upcomingPage, loadMoreUpcoming]);
+
   const HandlePages = useCallback(() => {
     setPage1((page) => page + 1);
     setPage2((page) => page + 1);
@@ -126,17 +165,15 @@ export function MovieProvider({ children }) {
       setError(null);
 
       try {
-        const [popular, topRated, upcoming] = await Promise.all([
+        const [popular, topRated] = await Promise.all([
           fetchMovies("/movie/popular", Page1),
           fetchMovies("/movie/top_rated", Page3),
-          fetchMovies("/movie/upcoming", Page2),
         ]);
 
         if (cancelled) return;
 
         setList(popular);
         setTopRated(topRated);
-        setUFuture(upcoming);
       } catch (err) {
         if (!cancelled) {
           setError(err.message || "Failed to load movies.");
@@ -153,12 +190,16 @@ export function MovieProvider({ children }) {
     return () => {
       cancelled = true;
     };
-  }, [Page1, Page2, Page3]);
+  }, [Page1, Page3]);
 
   const value = useMemo(
     () => ({
       Movielists,
       UpComingMovies,
+      loadMoreUpcoming,
+      upcomingLoading,
+      upcomingError,
+      hasMoreUpcoming: upcomingBuffer.length > 0 || upcomingPage < upcomingTotalPages,
       Collected,
       visible,
       setVisible,
@@ -183,6 +224,12 @@ export function MovieProvider({ children }) {
     [
       Movielists,
       UpComingMovies,
+      loadMoreUpcoming,
+      upcomingLoading,
+      upcomingError,
+      upcomingPage,
+      upcomingTotalPages,
+      upcomingBuffer,
       Collected,
       visible,
       getTrending,
