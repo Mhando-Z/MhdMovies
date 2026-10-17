@@ -21,10 +21,16 @@ export default function TrendingMovies() {
       <div className="mb-8">
         <div className="flex items-center gap-3">
           <Flame aria-hidden="true" className="size-7 text-red-500 md:size-8" />
-          <h2 id="trending-movies-heading" className="text-2xl font-bold tracking-tight md:text-4xl">
+          <h2
+            id="trending-movies-heading"
+            className="text-2xl font-bold tracking-tight md:text-4xl"
+          >
             Trending Movies
           </h2>
-          <div aria-hidden="true" className="ml-4 hidden h-px flex-1 bg-linear-to-r from-red-600/50 to-transparent md:block" />
+          <div
+            aria-hidden="true"
+            className="ml-4 hidden h-px flex-1 bg-linear-to-r from-red-600/50 to-transparent md:block"
+          />
         </div>
         <p className="mt-2 text-sm text-white/60 md:text-base">
           Discover the movies trending today.
@@ -34,15 +40,26 @@ export default function TrendingMovies() {
       {loading && Trending.length === 0 ? (
         <div role="status">
           <span className="sr-only">Loading trending movies...</span>
-          <div aria-hidden="true" className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+          <div
+            aria-hidden="true"
+            className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+          >
             {Array.from({ length: INITIAL_COUNT }, (_, index) => (
-              <div key={index} className="aspect-[2/3] rounded-lg bg-white/10 motion-safe:animate-pulse" />
+              <div
+                key={index}
+                className="aspect-[2/3] rounded-lg bg-white/10 motion-safe:animate-pulse"
+              />
             ))}
           </div>
         </div>
       ) : Trending.length === 0 ? (
-        <p role={error ? "alert" : "status"} className="rounded-lg border border-white/10 bg-white/5 p-6 text-sm text-white/70">
-          {error ? "Unable to load trending movies. Please try again later." : "No trending movies are available right now."}
+        <p
+          role={error ? "alert" : "status"}
+          className="rounded-lg border border-white/10 bg-white/5 p-6 text-sm text-white/70"
+        >
+          {error
+            ? "Unable to load trending movies. Please try again later."
+            : "No trending movies are available right now."}
         </p>
       ) : (
         <>
@@ -55,6 +72,7 @@ export default function TrendingMovies() {
                 image={movie.poster_path}
                 image2={movie.backdrop_path}
                 rating={movie.vote_average}
+                overview={movie.overview}
               />
             ))}
           </div>
@@ -66,7 +84,11 @@ export default function TrendingMovies() {
                 onClick={() => setExpanded((value) => !value)}
                 className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-red-600 px-5 py-2 text-sm font-medium transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
-                {expanded ? <MinusCircle aria-hidden="true" className="size-4" /> : <PlusCircle aria-hidden="true" className="size-4" />}
+                {expanded ? (
+                  <MinusCircle aria-hidden="true" className="size-4" />
+                ) : (
+                  <PlusCircle aria-hidden="true" className="size-4" />
+                )}
                 {expanded ? "Show Less" : "Show More"}
               </button>
             </div>
