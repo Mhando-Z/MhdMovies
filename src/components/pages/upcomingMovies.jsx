@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Flame, MinusCircle, PlusCircle } from "lucide-react";
+import { CalendarClock, MinusCircle, PlusCircle } from "lucide-react";
 import { useMovies } from "@/context/movieContext";
 import MoviePoster from "@/components/moviePoster";
 import {
@@ -49,7 +49,7 @@ export default function UpcomingMovies() {
             aria-hidden="true"
             className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-red-600/10  md:size-12"
           >
-            <Flame className="size-6 text-red-500 md:size-12" />
+            <CalendarClock className="size-6 text-red-500 md:size-12" />
           </span>
 
           <div className="min-w-0">
