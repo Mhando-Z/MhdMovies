@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarClock, MinusCircle, PlusCircle } from "lucide-react";
 import { useMovies } from "@/context/movieContext";
 import MoviePoster from "@/components/moviePoster";
@@ -22,7 +22,19 @@ export default function UpcomingMovies() {
     hasMoreUpcoming,
     loadMoreUpcoming,
   } = useMovies();
-  const UpComingMovies = filterUpcomingMovies(loadedUpcomingMovies);
+  const [currentDate, setCurrentDate] = useState(null);
+
+  useEffect(() => {
+    const updateDate = () => setCurrentDate(new Date());
+    updateDate();
+    // Refresh the cutoff when a visit spans midnight.
+    const interval = window.setInterval(updateDate, 60_000);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const UpComingMovies = currentDate
+    ? filterUpcomingMovies(loadedUpcomingMovies, currentDate)
+    : [];
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
   const expanded = visibleCount > INITIAL_COUNT;
   const movies = UpComingMovies.slice(0, visibleCount);

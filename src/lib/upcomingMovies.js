@@ -6,7 +6,7 @@ export async function collectUpcomingMovies({
   totalPages,
   buffered = [],
   existing = [],
-  now = new Date(),
+  now,
 }) {
   const ids = new Set(existing.map((movie) => movie.id));
   const collected = [];
@@ -36,7 +36,7 @@ export async function collectUpcomingMovies({
   };
 }
 
-export function filterUpcomingMovies(movies, now = new Date()) {
+export function filterUpcomingMovies(movies, now) {
   // Compare calendar dates in the viewer's timezone, without UTC conversion.
   const today = [
     now.getFullYear(),

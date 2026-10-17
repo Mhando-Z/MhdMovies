@@ -126,14 +126,16 @@ export function MovieProvider({ children }) {
     setUpcomingLoading(true);
     setUpcomingError(null);
     try {
+      const now = new Date();
       const data = await collectUpcomingMovies({
         fetchPage: (page) => fetchMovies("/movie/upcoming", page, true),
         page: upcomingPage,
         totalPages: upcomingTotalPages,
         buffered: upcomingBuffer,
         existing: UpComingMovies,
+        now,
       });
-      setUFuture((previous) => [...filterUpcomingMovies(previous), ...data.movies]);
+      setUFuture((previous) => [...filterUpcomingMovies(previous, now), ...data.movies]);
       setUpcomingBuffer(data.buffered);
       setUpcomingPage(data.page);
       setUpcomingTotalPages(data.totalPages);
