@@ -118,7 +118,7 @@ export default function TrendingMovies() {
           {/* Footer controls */}
           {(Trending.length > INITIAL_COUNT || hasMoreTrending) && (
             <div className="mt-12 flex flex-row justify-between items-center gap-5">
-              <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col  gap-2">
                 <p
                   className="text-xs text-white/50 md:text-sm"
                   aria-live="polite"
@@ -127,7 +127,7 @@ export default function TrendingMovies() {
                 </p>
                 <div
                   aria-hidden="true"
-                  className="h-1 w-40 overflow-hidden rounded-full bg-white/10"
+                  className="h-1 w-44 overflow-hidden rounded-full bg-white/10"
                 >
                   <div
                     className="h-full rounded-full bg-red-600 transition-all duration-500"
