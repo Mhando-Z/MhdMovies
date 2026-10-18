@@ -131,7 +131,7 @@ export default function MoviePlayer({
           </p>
           <h2
             id="movie-player-title"
-            className="text-2xl font-semibold tracking-tight md:text-3xl"
+            className="text-xl font-semibold tracking-tight"
           >
             Watch {movie.title}
           </h2>
