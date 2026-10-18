@@ -559,32 +559,34 @@ export default function MovieDetails() {
           </aside>
         </div>
 
-        {images.length > 0 && (
+        {images?.length > 0 && (
           <section>
             <SectionHeading eyebrow="Inside the frame" title="Gallery">
               <span className="text-xs text-white/40">
                 {images?.length} images
               </span>
             </SectionHeading>
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-              {images.slice(0, 6).map((image, index) => (
-                <button
-                  key={image.file_path}
-                  type="button"
-                  onClick={() =>
-                    setModal({ type: "image", path: image.file_path, index })
-                  }
-                  aria-label={`Enlarge ${movie.title} image ${index + 1}`}
-                  className={`overflow-hidden rounded-lg ${focus}`}
-                >
-                  <Artwork
-                    path={image.file_path}
-                    alt={`${movie.title}, scene ${index + 1}`}
-                    size="w780"
-                    className="aspect-video w-full object-cover transition-opacity hover:opacity-75"
-                  />
-                </button>
-              ))}
+            <div className="h-135 overflow-y-auto">
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                {images?.map((image, index) => (
+                  <button
+                    key={image.file_path}
+                    type="button"
+                    onClick={() =>
+                      setModal({ type: "image", path: image.file_path, index })
+                    }
+                    aria-label={`Enlarge ${movie.title} image ${index + 1}`}
+                    className={`overflow-hidden cursor-pointer rounded-lg ${focus}`}
+                  >
+                    <Artwork
+                      path={image.file_path}
+                      alt={`${movie.title}, scene ${index + 1}`}
+                      size="w780"
+                      className="aspect-video w-full object-cover transition-opacity hover:opacity-75"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
           </section>
         )}
