@@ -508,35 +508,38 @@ export default function MovieDetails() {
                   eyebrow="A closer look"
                   title="Trailers & extras"
                 />
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {videos.slice(0, 4).map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setModal({ type: "video", video: item })}
-                      className={`group overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] text-left ${focus}`}
-                    >
-                      <div className="relative aspect-video overflow-hidden">
-                        <img
-                          src={`https://i.ytimg.com/vi/${item.key}/hqdefault.jpg`}
-                          alt=""
-                          loading="lazy"
-                          className="h-full w-full object-cover opacity-65 transition-opacity group-hover:opacity-90"
-                        />
-                        <span className="absolute inset-0 flex items-center justify-center">
-                          <span className="rounded-full border border-white/30 bg-black/40 p-4 backdrop-blur-sm">
-                            <Play className="size-5 fill-white" />
+
+                <div className="overflow-y-auto h-135">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {videos?.map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => setModal({ type: "video", video: item })}
+                        className={`group overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] text-left ${focus}`}
+                      >
+                        <div className="relative aspect-video overflow-hidden">
+                          <img
+                            src={`https://i.ytimg.com/vi/${item.key}/hqdefault.jpg`}
+                            alt=""
+                            loading="lazy"
+                            className="h-full w-full object-cover opacity-65 transition-opacity group-hover:opacity-90"
+                          />
+                          <span className="absolute inset-0 flex items-center justify-center">
+                            <span className="rounded-full border border-white/30 bg-black/40 p-4 backdrop-blur-sm">
+                              <Play className="size-5 fill-white" />
+                            </span>
                           </span>
-                        </span>
-                      </div>
-                      <div className="p-4">
-                        <p className="mb-1 text-[10px] uppercase tracking-widest text-red-400">
-                          {item.type}
-                        </p>
-                        <p className="line-clamp-2 text-sm">{item.name}</p>
-                      </div>
-                    </button>
-                  ))}
+                        </div>
+                        <div className="p-4">
+                          <p className="mb-1 text-[10px] uppercase tracking-widest text-red-400">
+                            {item.type}
+                          </p>
+                          <p className="line-clamp-2 text-sm">{item.name}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </section>
             )}
