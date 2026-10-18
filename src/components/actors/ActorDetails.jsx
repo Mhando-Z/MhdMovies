@@ -46,10 +46,10 @@ function CreditCard({ credit }) {
           alt=""
           className="h-full w-full object-cover"
         />
-        <span className="actor-credit-type">
+        <div className="absolute left-2 top-2 flex flex-row items-center gap-0.5 rounded bg-black/60 px-1.5 py-1 text-[10px] font-semibold text-white/80 backdrop-blur-sm">
           {isMovie ? <Film className="size-3" /> : <Tv className="size-3" />}
-          {isMovie ? "Movie" : "TV series"}
-        </span>
+          <div className="mt-0.5">{isMovie ? "Movie" : "TV series"}</div>
+        </div>
         {credit.vote_average > 0 && credit.vote_count > 0 && (
           <span className="actor-credit-rating">
             <Star className="size-3 fill-amber-300 text-amber-300" />
