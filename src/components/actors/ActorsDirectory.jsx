@@ -85,7 +85,7 @@ export default function ActorsDirectory() {
   return (
     <main className="actors-page">
       <section className="actors-hero" aria-labelledby="actors-title">
-        <div className="actor-container relative z-10">
+        <div className="xl:mx-auto xl:container px-8 relative z-10">
           <div className="actors-hero-copy actor-reveal">
             <p className="actor-eyebrow">
               <span /> The people behind the stories
@@ -128,7 +128,7 @@ export default function ActorsDirectory() {
 
       <section
         id="actors-list"
-        className="actor-container scroll-mt-24 pb-16 pt-10 sm:pt-16"
+        className="xl:mx-auto xl:container px-8 scroll-mt-24 pb-16 pt-10 sm:pt-16"
         aria-labelledby="actors-list-title"
       >
         <div className="actors-directory-heading">
