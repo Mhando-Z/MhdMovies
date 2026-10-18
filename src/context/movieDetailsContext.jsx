@@ -42,6 +42,7 @@ export function MovieDetailsProvider({ id, children }) {
   const [castDetails, setCastDetails] = useState(null);
   const [castLoading, setCastLoading] = useState(false);
   const [castError, setCastError] = useState(null);
+  const [castAttempt, setCastAttempt] = useState(0);
 
   const retry = useCallback(() => setAttempt((value) => value + 1), []);
   const handleCast = useCallback((personId) => {
@@ -50,6 +51,13 @@ export function MovieDetailsProvider({ id, children }) {
     setCastLoading(Boolean(personId));
     setCastId(personId);
   }, []);
+
+  const retryCast = useCallback(() => {
+    if (!castId) return;
+    setCastError(null);
+    setCastLoading(true);
+    setCastAttempt((value) => value + 1);
+  }, [castId]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -129,7 +137,7 @@ export function MovieDetailsProvider({ id, children }) {
 
     loadCast();
     return () => controller.abort();
-  }, [castId]);
+  }, [castId, castAttempt]);
 
   return (
     <MovieDetailsContext.Provider value={{
@@ -154,6 +162,7 @@ export function MovieDetailsProvider({ id, children }) {
       CastLoading: castLoading,
       CastError: castError,
       handleCast,
+      retryCast,
       retry,
     }}>
       {children}

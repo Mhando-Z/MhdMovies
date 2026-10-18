@@ -1,18 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
-import Link from "next/link";
+import { useCallback, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   CalendarDays,
   Clock3,
-  Film,
-  Loader2,
   Play,
   Star,
   UserRound,
-  X,
 } from "lucide-react";
 import { useMovieDetails } from "@/context/movieDetailsContext";
 import MovieTitle from "./movieTitle";
@@ -20,6 +15,8 @@ import MoviePoster from "../moviePoster";
 import Loading from "@/app/movies/[id]/loading";
 import MovieState from "../movieState";
 import MoviePlayer from "../moviePlayer";
+import MovieModal from "./movieModal";
+import { Artwork, formatMovieDate as date } from "./movieDetailsUI";
 //
 
 import {
@@ -96,18 +93,6 @@ const fallbackTitleStyle = {
   className: "uppercase tracking-[0.04em]",
 };
 
-const VidstackPlayer = dynamic(() => import("../vidstackPlayer"), {
-  ssr: false,
-  loading: () => (
-    <div
-      role="status"
-      className="flex aspect-video items-center justify-center text-white/60"
-    >
-      Loading player...
-    </div>
-  ),
-});
-
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500";
 const button = `inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition-colors ${focus}`;
@@ -119,90 +104,6 @@ const money = (value) =>
         maximumFractionDigits: 0,
       }).format(value)
     : "Not reported";
-const date = (value) =>
-  value
-    ? new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        timeZone: "UTC",
-      }).format(new Date(`${value}T00:00:00Z`))
-    : "Not announced";
-
-function Artwork({
-  path,
-  alt = "",
-  className = "",
-  size = "w500",
-  eager = false,
-}) {
-  const [failed, setFailed] = useState(false);
-  if (!path || failed)
-    return (
-      <div
-        className={`flex items-center justify-center bg-zinc-900 text-white/20 ${className}`}
-      >
-        <Film aria-hidden="true" className="size-10" />
-        <span className="sr-only">
-          {alt ? `${alt}: image unavailable` : "Image unavailable"}
-        </span>
-      </div>
-    );
-  return (
-    <img
-      src={`https://image.tmdb.org/t/p/${size}${path}`}
-      alt={alt}
-      className={className}
-      loading={eager ? "eager" : "lazy"}
-      decoding="async"
-      onError={() => setFailed(true)}
-    />
-  );
-}
-
-function Modal({ title, onClose, children, wide = false }) {
-  const ref = useRef(null);
-  useEffect(() => {
-    const dialog = ref.current;
-    const previous = document.body.style.overflow;
-    dialog.showModal();
-    document.body.style.overflow = "hidden";
-    const close = () => {
-      // Strict Mode reopens the dialog before cleanup's queued close event.
-      if (!dialog.open) onClose();
-    };
-    dialog.addEventListener("close", close);
-    return () => {
-      dialog.removeEventListener("close", close);
-      dialog.close();
-      document.body.style.overflow = previous;
-    };
-  }, [onClose]);
-  return (
-    <dialog
-      ref={ref}
-      aria-label={title}
-      onClick={(event) => {
-        if (event.target === event.currentTarget) onClose();
-      }}
-      className={`fixed inset-0 m-auto max-h-[90dvh] w-[calc(100%-2rem)] overflow-y-auto rounded-2xl border border-white/10 bg-zinc-950 p-0 text-white shadow-2xl backdrop:bg-black/85 ${wide ? "max-w-5xl" : "max-w-2xl"}`}
-    >
-      <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4">
-        <h2 className="text-base font-semibold">{title}</h2>
-        <button
-          type="button"
-          aria-label="Close dialog"
-          onClick={onClose}
-          className={`rounded-full p-2 text-white/70 hover:bg-white/10 hover:text-white ${focus}`}
-        >
-          <X className="size-5" />
-        </button>
-      </div>
-      {children}
-    </dialog>
-  );
-}
-
 function SectionHeading({ eyebrow, title, children }) {
   return (
     <div className="mb-6 flex items-end justify-between gap-4">
@@ -235,19 +136,16 @@ export default function MovieDetails() {
     CastLoading,
     CastError,
     handleCast,
+    retryCast,
   } = useMovieDetails();
   const [modal, setModal] = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [playRequest, setPlayRequest] = useState(0);
   const reduceMotion = useReducedMotion();
-  // Stable callback keeps the native dialog and its focus trap mounted while data loads.
-  const closeRef = useRef(null);
-  if (!closeRef.current)
-    closeRef.current = () => {
-      setModal(null);
-      handleCast(null);
-    };
-  const closeModal = closeRef.current;
+  const closeModal = useCallback(() => {
+    setModal(null);
+    handleCast(null);
+  }, [handleCast]);
 
   if (loading) return <Loading />;
   if (!movie) return <MovieState error={error} onRetry={retry} />;
@@ -683,117 +581,17 @@ export default function MovieDetails() {
         )}
       </div>
 
-      {modal && (
-        <Modal
-          title={
-            modal.type === "video"
-              ? modal.video.name
-              : modal.type === "cast"
-                ? modal.name
-                : `${movie.title} - Gallery`
-          }
-          onClose={closeModal}
-          wide={modal.type !== "cast"}
-        >
-          {modal.type === "video" && (
-            <VidstackPlayer
-              key={modal.video.key}
-              src={`youtube/${modal.video.key}`}
-              title={modal.video.name}
-              poster={`https://i.ytimg.com/vi/${modal.video.key}/hqdefault.jpg`}
-              autoPlay
-            />
-          )}
-          {modal.type === "image" && (
-            <Artwork
-              path={modal.path}
-              size="original"
-              alt={`${movie.title}, scene ${modal.index + 1}`}
-              eager
-              className="max-h-[75dvh] w-full object-contain"
-            />
-          )}
-          {modal.type === "cast" && (
-            <div className="p-6">
-              {CastLoading ? (
-                <div
-                  role="status"
-                  className="flex items-center justify-center gap-3 py-16 text-white/60"
-                >
-                  <Loader2 className="size-6 motion-safe:animate-spin" />
-                  Loading profile...
-                </div>
-              ) : CastError ? (
-                <p role="alert" className="text-sm text-white/60">
-                  {CastError}
-                </p>
-              ) : (
-                CastDetails && (
-                  <>
-                    <div className="mb-6 flex items-start gap-5">
-                      <Artwork
-                        path={CastDetails.profile_path}
-                        alt={CastDetails.name}
-                        className="aspect-[3/4] w-24 rounded-lg object-cover"
-                      />
-                      <div>
-                        <h3 className="text-xl font-semibold">
-                          {CastDetails.name}
-                        </h3>
-                        <p className="mt-2 text-sm text-red-400">
-                          {CastDetails.known_for_department}
-                        </p>
-                        {CastDetails.birthday && (
-                          <p className="mt-3 text-xs text-white/50">
-                            Born {date(CastDetails.birthday)}
-                          </p>
-                        )}
-                        {CastDetails.place_of_birth && (
-                          <p className="mt-1 text-xs text-white/50">
-                            {CastDetails.place_of_birth}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <p className="whitespace-pre-line text-sm leading-7 text-white/65">
-                      {CastDetails.biography ||
-                        "A biography is not available yet."}
-                    </p>
-                    {CastDetails.movie_credits?.cast?.length > 0 && (
-                      <div className="mt-8">
-                        <h3 className="mb-4 font-semibold">Also known for</h3>
-                        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                          {[
-                            ...new Map(
-                              [...CastDetails.movie_credits.cast]
-                                .filter(
-                                  (item) =>
-                                    item.poster_path && item.id !== movie.id,
-                                )
-                                .sort((a, b) => b.popularity - a.popularity)
-                                .map((item) => [item.id, item]),
-                            ).values(),
-                          ]
-                            .slice(0, 3)
-                            .map((item) => (
-                              <MoviePoster
-                                key={item.id}
-                                id={item.id}
-                                title={item.title}
-                                image={item.poster_path}
-                                rating={item.vote_average}
-                              />
-                            ))}
-                        </div>
-                      </div>
-                    )}
-                  </>
-                )
-              )}
-            </div>
-          )}
-        </Modal>
-      )}
+      <MovieModal
+        modal={modal}
+        closeModal={closeModal}
+        movie={movie}
+        gallery={images.map((image) => image.file_path)}
+        setModal={setModal}
+        CastLoading={CastLoading}
+        CastError={CastError}
+        CastDetails={CastDetails}
+        retryCast={retryCast}
+      />
     </main>
   );
 }
