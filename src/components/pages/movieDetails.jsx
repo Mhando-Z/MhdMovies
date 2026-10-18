@@ -20,6 +20,81 @@ import MoviePoster from "../moviePoster";
 import Loading from "@/app/movies/[id]/loading";
 import MovieState from "../movieState";
 import MoviePlayer from "../moviePlayer";
+//
+
+import {
+  Creepster,
+  Cinzel,
+  Lobster_Two,
+  Bricolage_Grotesque,
+  Oswald,
+} from "next/font/google";
+
+const horrorFont = Creepster({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+const sciFiFont = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: "800",
+  display: "swap",
+});
+const fantasyFont = Cinzel({
+  subsets: ["latin"],
+  weight: "700",
+  display: "swap",
+});
+const romanceFont = Lobster_Two({
+  subsets: ["latin"],
+  weight: "700",
+  display: "swap",
+});
+const actionFont = Oswald({
+  subsets: ["latin"],
+  weight: "700",
+  display: "swap",
+});
+
+/**
+ * Title treatments, Netflix-style: each genre gets its own typeface plus
+ * casing / tracking tuned to that face. First matching genre wins for movies
+ * with multiple genres (order matters). `fallback` is used when nothing matches.
+ */
+const titleFonts = [
+  { genreId: 27, font: horrorFont, className: "tracking-wide" },
+  {
+    genreId: 878,
+    font: sciFiFont,
+    className: "uppercase tracking-[0.12em]",
+  },
+  {
+    genreId: 14,
+    font: fantasyFont,
+    className: "uppercase tracking-[0.08em]",
+  },
+  { genreId: 10749, font: romanceFont, className: "tracking-normal" },
+  {
+    genreId: 28,
+    font: actionFont,
+    className: "uppercase tracking-[0.04em]",
+  },
+  {
+    genreId: 12,
+    font: fantasyFont,
+    className: "uppercase tracking-[0.08em]",
+  },
+  {
+    genreId: 53,
+    font: actionFont,
+    className: "uppercase tracking-[0.04em]",
+  },
+];
+
+const fallbackTitleStyle = {
+  font: actionFont,
+  className: "uppercase tracking-[0.04em]",
+};
 
 const VidstackPlayer = dynamic(() => import("../vidstackPlayer"), {
   ssr: false,
@@ -226,6 +301,13 @@ export default function MovieDetails() {
     ],
   ];
 
+  const titleStyle =
+    titleFonts.find(
+      ({ genreId }) =>
+        movie.genres?.some((genre) => genre.id === genreId) ||
+        movie.genre_ids?.includes(genreId),
+    ) ?? fallbackTitleStyle;
+
   return (
     <main className="w-full bg-black font-roboto text-white">
       <section className="relative isolate overflow-hidden border-b border-white/10">
@@ -250,7 +332,7 @@ export default function MovieDetails() {
               path={movie.poster_path}
               alt={`${movie.title} poster`}
               eager
-              className="hidden aspect-[2/3] w-full rounded-xl object-cover shadow-2xl ring-1 ring-white/15 md:block"
+              className="hidden aspect-2/3 w-full rounded-xl object-cover shadow-2xl ring-1 ring-white/15 md:block"
             />
             <div className="max-w-3xl space-y-5">
               <div className="flex flex-wrap items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/65">
@@ -264,10 +346,11 @@ export default function MovieDetails() {
               <MovieTitle
                 movie={movie}
                 logo={logo}
-                titleStyle={{
-                  font: { style: {} },
-                  className: "tracking-tight",
-                }}
+                // titleStyle={{
+                //   font: { style: {} },
+                //   className: "tracking-tight",
+                // }}
+                titleStyle={titleStyle}
               />
               {movie.tagline && (
                 <p className="text-base italic text-white/60 md:text-lg">
