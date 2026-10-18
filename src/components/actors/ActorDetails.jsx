@@ -51,10 +51,10 @@ function CreditCard({ credit }) {
           <div className="mt-0.5">{isMovie ? "Movie" : "TV series"}</div>
         </div>
         {credit.vote_average > 0 && credit.vote_count > 0 && (
-          <span className="actor-credit-rating">
+          <div className="absolute right-2 bottom-2 flex flex-row items-center gap-0.5 rounded bg-black/60 px-1.5 py-1 text-[10px] font-semibold text-white/80 backdrop-blur-sm">
             <Star className="size-3 fill-amber-300 text-amber-300" />
-            {credit.vote_average.toFixed(1)}
-          </span>
+            <div className="mt-0.5">{credit.vote_average.toFixed(1)}</div>
+          </div>
         )}
       </div>
       <h3 className="mt-3 text-sm font-semibold leading-6">
