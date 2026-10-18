@@ -58,7 +58,7 @@ export default function MovieState({ loading = false, error, onRetry }) {
             aria-live="polite"
             className="mx-auto mt-9 max-w-md"
           >
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            <h1 className="text-3xl font-semibold tracking-tight  ">
               Setting the scene.
             </h1>
             <p className="mt-3 text-sm leading-6 text-white/45">
@@ -89,7 +89,7 @@ export default function MovieState({ loading = false, error, onRetry }) {
             </p>
             <h1
               id="movie-state-title"
-              className="text-3xl font-semibold tracking-tight sm:text-5xl"
+              className="text-3xl font-semibold tracking-tight"
             >
               {notFound ? "A plot twist. No movie." : "Let's take that again."}
             </h1>
