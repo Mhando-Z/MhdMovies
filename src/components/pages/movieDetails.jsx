@@ -243,7 +243,7 @@ export default function MovieDetails() {
           <div className="absolute inset-0 bg-linear-to-r from-black via-black/65 to-black/10" />
           <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-black/30" />
         </div>
-        <div className="mx-auto max-w-[1446px] px-5 pb-12 pt-24 md:px-10 md:pb-16 md:pt-32">
+        <div className="xl:mx-auto xl:container px-5 pb-12 pt-24 md:px-10 md:pb-16 md:pt-32">
           <motion.div
             initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -366,7 +366,7 @@ export default function MovieDetails() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1446px] space-y-14 px-5 py-12 md:space-y-20 md:px-10 md:py-16">
+      <div className="xl:mx-auto xl:container space-y-14 px-5 py-12 md:space-y-20 md:px-10 md:py-16">
         {PartialError && (
           <div
             role="status"
