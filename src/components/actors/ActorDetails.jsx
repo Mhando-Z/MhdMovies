@@ -350,8 +350,7 @@ function ProfileContent({ person, retry }) {
           />
         )}
         <div className="actor-profile-shade" aria-hidden="true" />
-        <div className="actor-container relative z-10">
-          <BackToActors />
+        <div className="xl:mx-auto xl:container px-6 relative z-10">
           <div className="actor-profile-intro actor-reveal">
             <div className="actor-profile-portrait">
               <Portrait
@@ -398,7 +397,7 @@ function ProfileContent({ person, retry }) {
         </div>
       </section>
 
-      <div className="actor-container">
+      <div className="xl:mx-auto xl:container px-6">
         <nav className="actor-profile-nav" aria-label="Actor profile sections">
           <a href="#biography">Biography</a>
           <a href="#filmography">
@@ -640,7 +639,7 @@ export default function ActorDetails({ id }) {
   if (error)
     return (
       <main className="actors-page min-h-[80vh] px-6 pb-20 pt-28">
-        <div className="actor-container">
+        <div className="xl:mx-auto xl:container px-6">
           <BackToActors />
           <ActorError message={error} onRetry={retry} />
         </div>
