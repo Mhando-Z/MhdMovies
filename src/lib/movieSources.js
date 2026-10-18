@@ -25,20 +25,24 @@ export function getMovieSources(movie) {
       name: "SuperEmbed",
       src: `https://multiembed.mov/?${superEmbedParams}`,
     },
-    {
-      id: "superembed-vip",
-      name: "SuperEmbed VIP",
-      src: `https://multiembed.mov/directstream.php?${superEmbedParams}`,
-    },
+    // {
+    //   id: "superembed-vip",
+    //   name: "SuperEmbed VIP",
+    //   src: `https://multiembed.mov/directstream.php?${superEmbedParams}`,
+    // },
     {
       id: "vidsrc-cc",
       name: "VidSrc CC",
       src: `https://vidsrc.cc/v2/embed/movie/${id}`,
     },
-    ...(tmdb ? [{
-      id: "videasy",
-      name: "Videasy",
-      src: `https://player.videasy.net/movie/${tmdb}`,
-    }] : []),
+    ...(tmdb
+      ? [
+          {
+            id: "videasy",
+            name: "Videasy",
+            src: `https://player.videasy.net/movie/${tmdb}`,
+          },
+        ]
+      : []),
   ];
 }
