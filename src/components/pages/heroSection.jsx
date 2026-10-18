@@ -115,9 +115,9 @@ const HeroSection = () => {
   const [imageError, setImageError] = useState(false);
   const hasSelectedInitialMovie = useRef(false);
   const [movieLogos, setMovieLogos] = useState({});
-  const logosReady = Trending.length > 0 && Trending.every(
-    (movie) => Object.hasOwn(movieLogos, movie.id),
-  );
+  const logosReady =
+    Trending.length > 0 &&
+    Trending.every((movie) => Object.hasOwn(movieLogos, movie.id));
 
   useEffect(() => {
     let cancelled = false;
@@ -321,7 +321,7 @@ const HeroSection = () => {
                     {/* CTA Button */}
                     <div className="pt-1">
                       <Link
-                        href={`/MovieDetails/${currentMovie.id}`}
+                        href={`/movies/${currentMovie.id}`}
                         className="inline-flex items-center gap-2 px-4 py-2 text-base font-semibold text-white transition-all duration-200 bg-red-600 rounded-lg shadow-lg shadow-black/40 md:px-6 md:py-3 md:text-lg hover:bg-red-700 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                       >
                         <BiSolidMoviePlay className="w-5 h-5" />

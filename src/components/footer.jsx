@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ArrowUpRight, Film, MapPin } from "lucide-react";
 import { FaFacebook, FaSquareXTwitter, FaYoutube } from "react-icons/fa6";
 import { RiInstagramFill } from "react-icons/ri";
@@ -21,16 +20,11 @@ const socialPlatforms = [
 ];
 
 export default function Footer() {
-  const pathname = usePathname();
   const [currentYear, setCurrentYear] = useState(null);
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
   }, []);
-
-  if (pathname?.replace(/\/$/, "").toLowerCase() === "/genres") {
-    return null;
-  }
 
   return (
     <footer className="mt-10 border-t border-gray-800 bg-black text-gray-100">
@@ -69,8 +63,8 @@ export default function Footer() {
               Explore
             </h2>
             <ul className="mt-5 space-y-1">
-              {navigation.map(({ label, href }) => (
-                <li key={href}>
+              {navigation?.map(({ label, href }) => (
+                <li key={href+label}>
                   <Link
                     href={href}
                     className="group inline-flex min-h-11 items-center gap-2 rounded-sm text-sm text-gray-400 transition-colors hover:text-gray-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gray-100"
