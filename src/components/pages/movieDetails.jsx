@@ -25,7 +25,14 @@ import MoviePlayer from "../moviePlayer";
 
 const VidstackPlayer = dynamic(() => import("../vidstackPlayer"), {
   ssr: false,
-  loading: () => <div role="status" className="flex aspect-video items-center justify-center text-white/60">Loading player...</div>,
+  loading: () => (
+    <div
+      role="status"
+      className="flex aspect-video items-center justify-center text-white/60"
+    >
+      Loading player...
+    </div>
+  ),
 });
 
 const focus =
@@ -87,7 +94,10 @@ function Modal({ title, onClose, children, wide = false }) {
     const previous = document.body.style.overflow;
     dialog.showModal();
     document.body.style.overflow = "hidden";
-    const close = () => onClose();
+    const close = () => {
+      // Strict Mode reopens the dialog before cleanup's queued close event.
+      if (!dialog.open) onClose();
+    };
     dialog.addEventListener("close", close);
     return () => {
       dialog.removeEventListener("close", close);
@@ -234,12 +244,6 @@ export default function MovieDetails() {
           <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-black/30" />
         </div>
         <div className="mx-auto max-w-[1446px] px-5 pb-12 pt-24 md:px-10 md:pb-16 md:pt-32">
-          <Link
-            href="/"
-            className={`mb-10 inline-flex items-center gap-2 rounded text-xs text-white/60 hover:text-white ${focus}`}
-          >
-            <ArrowLeft className="size-4" /> Back to discover
-          </Link>
           <motion.div
             initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -372,12 +376,25 @@ export default function MovieDetails() {
 
       <div className="mx-auto max-w-[1446px] space-y-14 px-5 py-12 md:space-y-20 md:px-10 md:py-16">
         {PartialError && (
-          <div role="status" className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-white/10 px-5 py-3 text-sm text-white/60">
+          <div
+            role="status"
+            className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-white/10 px-5 py-3 text-sm text-white/60"
+          >
             <p>{PartialError}</p>
-            <button type="button" onClick={retry} className={`min-h-10 rounded px-3 text-red-400 hover:text-red-300 ${focus}`}>Try again</button>
+            <button
+              type="button"
+              onClick={retry}
+              className={`min-h-10 rounded px-3 text-red-400 hover:text-red-300 ${focus}`}
+            >
+              Try again
+            </button>
           </div>
         )}
-        <MoviePlayer movie={movie} playRequest={playRequest} suspended={modal?.type === "video"} />
+        <MoviePlayer
+          movie={movie}
+          playRequest={playRequest}
+          suspended={modal?.type === "video"}
+        />
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-14">
           <div className="min-w-0 space-y-14">
             <section>
@@ -483,7 +500,7 @@ export default function MovieDetails() {
           <section>
             <SectionHeading eyebrow="Inside the frame" title="Gallery">
               <span className="text-xs text-white/40">
-                {images.length} images
+                {images?.length} images
               </span>
             </SectionHeading>
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
