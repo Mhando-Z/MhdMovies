@@ -475,14 +475,6 @@ export default function MovieDetails() {
                   ),
               )}
             </dl>
-            <a
-              href={`https://www.themoviedb.org/movie/${movie.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`mt-6 inline-flex items-center gap-2 text-xs text-red-400 hover:text-red-300 ${focus}`}
-            >
-              Explore on TMDB <ArrowUpRight className="size-3.5" />
-            </a>
           </aside>
         </div>
 
