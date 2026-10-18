@@ -45,7 +45,10 @@ export function filterUpcomingMovies(movies, now) {
   ].join("-");
 
   return movies.filter(({ release_date }) => {
-    if (typeof release_date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(release_date)) {
+    if (
+      typeof release_date !== "string" ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(release_date)
+    ) {
       return false;
     }
     const parsed = new Date(`${release_date}T00:00:00Z`);
