@@ -2,8 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
-import { ChevronLeft, ChevronRight, Loader2, RotateCw } from "lucide-react";
-import MoviePoster from "../moviePoster";
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, CalendarDays, ChevronLeft, ChevronRight, Film, Loader2, MapPin, RotateCw, Tv } from "lucide-react";
+import { personAge as ageFrom, personCredits, sortCredits } from "@/lib/people";
 import { Artwork, Modal, formatMovieDate as date } from "./movieDetailsUI";
 
 const VidstackPlayer = dynamic(() => import("../vidstackPlayer"), {
@@ -21,16 +23,6 @@ const VidstackPlayer = dynamic(() => import("../vidstackPlayer"), {
 /* ------------------------------------------------------------------ */
 /* Helpers                                                            */
 /* ------------------------------------------------------------------ */
-
-function ageFrom(birthday, deathday) {
-  const end = deathday ? new Date(deathday) : new Date();
-  const start = new Date(birthday);
-  let age = end.getFullYear() - start.getFullYear();
-  const hadBirthday =
-    end.getMonth() > start.getMonth() ||
-    (end.getMonth() === start.getMonth() && end.getDate() >= start.getDate());
-  return hadBirthday ? age : age - 1;
-}
 
 /* ------------------------------------------------------------------ */
 /* Gallery: prev / next, counter, arrow-key support                   */
@@ -149,47 +141,41 @@ function CastError({ message, onRetry }) {
 
 function CastProfile({ details, currentMovieId, onNavigate }) {
   const [expanded, setExpanded] = useState(false);
-
-  // Dedupe, drop the current film, sort by popularity, keep the top 3.
-  const knownFor = useMemo(() => {
-    const credits = details.movie_credits?.cast ?? [];
-    const unique = new Map(
-      credits
-        .filter((c) => c.poster_path && c.id !== currentMovieId)
-        .sort((a, b) => b.popularity - a.popularity)
-        .map((c) => [c.id, c]),
-    );
-    return [...unique.values()].slice(0, 3);
-  }, [details, currentMovieId]);
-
+  const reducedMotion = useReducedMotion();
+  const credits = useMemo(() => personCredits(details), [details]);
+  const knownFor = useMemo(() => sortCredits(credits.filter((credit) => credit.acting &&
+    !(credit.media_type === "movie" && credit.id === currentMovieId)), "popular").slice(0, 3), [credits, currentMovieId]);
+  const movieCount = credits.filter((credit) => credit.media_type === "movie").length;
+  const tvCount = credits.filter((credit) => credit.media_type === "tv").length;
+  const age = ageFrom(details.birthday, details.deathday);
   const bio = details.biography?.trim();
   const isLongBio = bio && bio.length > 420;
 
   return (
-    <div className="p-5 sm:p-6">
-      <div className="flex items-start gap-5">
+    <motion.div initial={reducedMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: reducedMotion ? 0 : 0.3, ease: "easeOut" }} className="p-5 sm:p-7">
+      <div className="flex items-start gap-5 sm:gap-6">
         <Artwork
           path={details.profile_path}
-          alt=""
-          className="aspect-3/4 w-24 shrink-0 rounded-lg object-cover sm:w-32"
+          alt={details.name}
+          eager
+          className="aspect-[3/4] w-28 shrink-0 rounded-xl border border-white/10 object-cover object-top shadow-xl sm:w-36"
         />
 
-        <div className="min-w-0">
-          {/* The modal header already shows the name, so don't repeat it. */}
+        <div className="min-w-0 flex-1 pt-1">
           {details.known_for_department && (
-            <span className="inline-block rounded-full bg-red-500/15 px-3 py-1 text-xs font-medium text-red-300">
+            <span className="inline-block rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-red-300">
               {details.known_for_department}
             </span>
           )}
 
-          <dl className="mt-3 space-y-1.5 text-sm text-white/65">
+          <dl className="mt-4 space-y-3 text-xs leading-6 text-white/65 sm:text-sm">
             {details.birthday && (
               <div>
-                <dt className="sr-only">Born</dt>
-                <dd>
+                <dt className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-white/35"><CalendarDays className="size-3.5" aria-hidden="true" />Born</dt>
+                <dd className="pl-5.5">
                   {date(details.birthday)}
-                  {!details.deathday &&
-                    ` · ${ageFrom(details.birthday)} years old`}
+                  {!details.deathday && age !== null && <span className="block text-xs text-white/45">{age} years old</span>}
                 </dd>
               </div>
             )}
@@ -198,26 +184,32 @@ function CastProfile({ details, currentMovieId, onNavigate }) {
                 <dt className="sr-only">Died</dt>
                 <dd>
                   Died {date(details.deathday)}
-                  {details.birthday &&
-                    ` (aged ${ageFrom(details.birthday, details.deathday)})`}
+                  {age !== null && ` (aged ${age})`}
                 </dd>
               </div>
             )}
             {details.place_of_birth && (
               <div>
-                <dt className="sr-only">Birthplace</dt>
-                <dd>{details.place_of_birth}</dd>
+                <dt className="flex items-center gap-2 text-[10px] uppercase tracking-wider text-white/35"><MapPin className="size-3.5" aria-hidden="true" />Birthplace</dt>
+                <dd className="pl-5.5">{details.place_of_birth}</dd>
               </div>
             )}
           </dl>
         </div>
       </div>
 
+      <div className="mt-6 grid grid-cols-3 divide-x divide-white/10 rounded-xl border border-white/10 bg-white/[0.025] py-4 text-center">
+        {[[movieCount, "Movies"], [tvCount, "TV series"], [details.images?.profiles?.length ?? 0, "Portraits"]].map(([count, label]) => (
+          <div key={label}><p className="text-xl font-medium tabular-nums tracking-tight text-white">{count}</p><p className="mt-1 text-[10px] text-white/40">{label}</p></div>
+        ))}
+      </div>
+
       <section className="mt-6" aria-label="Biography">
+        <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-white/45">The story so far</h3>
         {bio ? (
           <>
             <p
-              className={` text-justify whitespace-pre-line text-sm leading-7 text-white/75 ${
+              className={`whitespace-pre-line text-sm leading-7 text-white/65 ${
                 expanded || !isLongBio ? "" : "line-clamp-5"
               }`}
             >
@@ -239,26 +231,34 @@ function CastProfile({ details, currentMovieId, onNavigate }) {
         )}
       </section>
 
+      <Link href={`/actors/${details.id}`} onClick={onNavigate}
+        className="mt-6 flex min-h-12 w-full items-center justify-center gap-3 rounded-lg bg-red-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400">
+        Explore full profile <ArrowUpRight className="size-4" aria-hidden="true" />
+      </Link>
+      <p className="mt-2 text-center text-[10px] text-white/35">Biography, complete filmography &amp; photo gallery</p>
+
       {knownFor.length > 0 && (
         <section className="mt-8 border-t border-white/10 pt-6">
           <h3 className="mb-4 text-base font-semibold">Also known for</h3>
-          {/* Three items, three columns at every width: no orphaned poster. */}
           <div className="grid grid-cols-3 gap-3 sm:gap-4">
-            {knownFor.map((item) => (
-              <div key={item.id} onClick={onNavigate}>
-                <MoviePoster
-                  id={item.id}
-                  title={item.title}
-                  image={item.poster_path}
-                  rating={item.vote_average}
-                  overview={item.overview}
-                />
-              </div>
-            ))}
+            {knownFor.map((item) => {
+              const isMovie = item.media_type === "movie";
+              const content = <>
+                <div className="relative aspect-[2/3] overflow-hidden rounded-lg border border-white/10">
+                  <Artwork path={item.poster_path} alt="" className="h-full w-full object-cover transition-transform duration-300 motion-safe:group-hover:scale-105 motion-reduce:transition-none" />
+                  <span className="absolute bottom-2 left-2 inline-flex items-center gap-1 rounded bg-black/80 px-1.5 py-1 text-[9px] text-white/80">{isMovie ? <Film className="size-2.5" /> : <Tv className="size-2.5" />}{isMovie ? "Movie" : "TV"}</span>
+                </div>
+                <p className="mt-2 line-clamp-2 text-xs font-medium leading-5 text-white/80">{item.title}</p>
+                {!isMovie && <span className="sr-only">Opens on TMDB in a new tab</span>}
+              </>;
+              const className = "group min-w-0 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400";
+              return isMovie ? <Link key={item.key} href={`/movies/${item.id}`} onClick={onNavigate} className={className}>{content}</Link>
+                : <a key={item.key} href={`https://www.themoviedb.org/tv/${item.id}`} target="_blank" rel="noreferrer" className={className}>{content}</a>;
+            })}
           </div>
         </section>
       )}
-    </div>
+    </motion.div>
   );
 }
 
@@ -322,6 +322,7 @@ export default function MovieModal({
         ) : (
           CastDetails && (
             <CastProfile
+              key={CastDetails.id}
               details={CastDetails}
               currentMovieId={movie.id}
               onNavigate={closeModal}
