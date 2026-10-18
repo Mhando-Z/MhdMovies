@@ -258,7 +258,7 @@ export default function MovieDetails() {
             />
             <div className="max-w-3xl space-y-5">
               <div className="flex flex-wrap items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/65">
-                <span className="h-px w-8 bg-red-500" /> The movie collection{" "}
+                The movie collection{" "}
                 {certification && (
                   <span className="rounded border border-white/30 px-2 py-1 tracking-normal">
                     {certification}
