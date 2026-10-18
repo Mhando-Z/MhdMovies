@@ -356,7 +356,6 @@ html:has(.actors-page) {
   height: 100%;
   object-fit: cover;
   object-position: center 25%;
-  opacity: 0.45;
 }
 .actor-profile-shade {
   position: absolute;
