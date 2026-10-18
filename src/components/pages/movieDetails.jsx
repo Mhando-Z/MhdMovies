@@ -5,8 +5,6 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  ArrowLeft,
-  ArrowUpRight,
   CalendarDays,
   Clock3,
   Film,
