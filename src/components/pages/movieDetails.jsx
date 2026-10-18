@@ -238,7 +238,7 @@ export default function MovieDetails() {
             path={movie.backdrop_path || movie.poster_path}
             size="original"
             eager
-            className="h-full w-full object-cover object-top opacity-55"
+            className="h-full w-full object-cover object-top  "
           />
           <div className="absolute inset-0 bg-linear-to-r from-black via-black/65 to-black/10" />
           <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-black/30" />
@@ -329,7 +329,7 @@ export default function MovieDetails() {
                       block: "start",
                     });
                   }}
-                  className={`${button} bg-red-600 hover:bg-red-700`}
+                  className={`${button} cursor-pointer bg-red-600 hover:bg-red-700`}
                 >
                   <Play className="size-4 fill-current" /> Watch now
                 </button>
@@ -337,19 +337,11 @@ export default function MovieDetails() {
                   type="button"
                   disabled={!trailer}
                   onClick={() => setModal({ type: "video", video: trailer })}
-                  className={`${button} border border-white/20 bg-white/5 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40`}
+                  className={`${button} cursor-pointer border border-white/20 bg-white/5 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40`}
                 >
                   <Play className="size-4 fill-current" />
                   {trailer ? "Watch trailer" : "Trailer unavailable"}
                 </button>
-                <a
-                  href={`https://www.themoviedb.org/movie/${movie.id}/watch`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${button} border border-white/20 bg-white/5 hover:bg-white/10`}
-                >
-                  Where to watch <ArrowUpRight className="size-4" />
-                </a>
               </div>
               {(directors.length > 0 || writers.length > 0) && (
                 <div className="flex flex-wrap gap-x-12 gap-y-4 border-t border-white/10 pt-5 text-sm">
