@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -20,6 +21,12 @@ import MovieTitle from "./movieTitle";
 import MoviePoster from "../moviePoster";
 import Loading from "@/app/movies/[id]/loading";
 import MovieState from "../movieState";
+import MoviePlayer from "../moviePlayer";
+
+const VidstackPlayer = dynamic(() => import("../vidstackPlayer"), {
+  ssr: false,
+  loading: () => <div role="status" className="flex aspect-video items-center justify-center text-white/60">Loading player...</div>,
+});
 
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500";
@@ -141,6 +148,7 @@ export default function MovieDetails() {
     Similar,
     Loading: loading,
     Error: error,
+    PartialError,
     retry,
     CastDetails,
     CastLoading,
@@ -149,6 +157,7 @@ export default function MovieDetails() {
   } = useMovieDetails();
   const [modal, setModal] = useState(null);
   const [expanded, setExpanded] = useState(false);
+  const [playRequest, setPlayRequest] = useState(0);
   const reduceMotion = useReducedMotion();
   // Stable callback keeps the native dialog and its focus trap mounted while data loads.
   const closeRef = useRef(null);
@@ -309,9 +318,22 @@ export default function MovieDetails() {
               <div className="flex flex-wrap gap-3 pt-2">
                 <button
                   type="button"
+                  onClick={() => {
+                    setPlayRequest((value) => value + 1);
+                    document.getElementById("movie-player")?.scrollIntoView({
+                      behavior: reduceMotion ? "instant" : "smooth",
+                      block: "start",
+                    });
+                  }}
+                  className={`${button} bg-red-600 hover:bg-red-700`}
+                >
+                  <Play className="size-4 fill-current" /> Watch now
+                </button>
+                <button
+                  type="button"
                   disabled={!trailer}
                   onClick={() => setModal({ type: "video", video: trailer })}
-                  className={`${button} bg-red-600 hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40`}
+                  className={`${button} border border-white/20 bg-white/5 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40`}
                 >
                   <Play className="size-4 fill-current" />
                   {trailer ? "Watch trailer" : "Trailer unavailable"}
@@ -349,6 +371,13 @@ export default function MovieDetails() {
       </section>
 
       <div className="mx-auto max-w-[1446px] space-y-14 px-5 py-12 md:space-y-20 md:px-10 md:py-16">
+        {PartialError && (
+          <div role="status" className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-white/10 px-5 py-3 text-sm text-white/60">
+            <p>{PartialError}</p>
+            <button type="button" onClick={retry} className={`min-h-10 rounded px-3 text-red-400 hover:text-red-300 ${focus}`}>Try again</button>
+          </div>
+        )}
+        <MoviePlayer movie={movie} playRequest={playRequest} suspended={modal?.type === "video"} />
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-14">
           <div className="min-w-0 space-y-14">
             <section>
@@ -573,13 +602,12 @@ export default function MovieDetails() {
           wide={modal.type !== "cast"}
         >
           {modal.type === "video" && (
-            <iframe
-              className="aspect-video w-full"
-              src={`https://www.youtube-nocookie.com/embed/${modal.video.key}?autoplay=1`}
+            <VidstackPlayer
+              key={modal.video.key}
+              src={`youtube/${modal.video.key}`}
               title={modal.video.name}
-              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-              allowFullScreen
-              referrerPolicy="strict-origin-when-cross-origin"
+              poster={`https://i.ytimg.com/vi/${modal.video.key}/hqdefault.jpg`}
+              autoPlay
             />
           )}
           {modal.type === "image" && (
