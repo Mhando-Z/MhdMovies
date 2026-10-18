@@ -103,7 +103,7 @@ export default function UpcomingMovies() {
           role={error ? "alert" : "status"}
           className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-white/15 bg-white/5 px-6 py-16 text-center"
         >
-          <Flame aria-hidden="true" className="size-8 text-white/40" />
+          <CalendarClock aria-hidden="true" className="size-8 text-white/40" />
           <p className="max-w-sm text-sm text-white/70 md:text-base">
             {error
               ? "Unable to load upcoming movies. Please try again later."

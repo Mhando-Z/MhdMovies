@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Virtual, Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -12,28 +11,16 @@ import "swiper/css/navigation";
 import "./styles.css";
 
 export default function Slider({ data, value, setValue }) {
-  const [swiperRef, setSwiperRef] = useState(0);
-
-  // Create array with 500 slides
-  useEffect(() => {
-    if (swiperRef) {
-      setValue(swiperRef.activeIndex);
-      swiperRef.on("slideChange", () => {
-        setValue(swiperRef.activeIndex);
-      });
-    }
-  }, [swiperRef, setValue]);
-
   return (
     <>
       <Swiper
-        modules={[Virtual, Autoplay, Navigation, Pagination]}
+        modules={[Autoplay, Pagination]}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
         }}
-        // onSwiper={() => setValue(setSwiperRef.activeIndex)}
-        onSwiper={setSwiperRef}
+        onSwiper={(swiper) => setValue(swiper.activeIndex)}
+        onSlideChange={(swiper) => setValue(swiper.activeIndex)}
         slidesPerView={3}
         initialSlide={value}
         centeredSlides={true}
@@ -41,13 +28,12 @@ export default function Slider({ data, value, setValue }) {
         pagination={{
           type: "fraction",
         }}
-        virtual
       >
-        {data?.map((dt, index) => (
-          <SwiperSlide key={dt.id + index}>
+        {data?.map((dt) => (
+          <SwiperSlide key={dt.id}>
             <div>
               <img
-                src={`https://image.tmdb.org/t/p/w500/${dt?.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w500${dt?.poster_path}`}
                 alt={dt?.title}
                 className="h-full bg-cover max-w-screen"
               />

@@ -64,7 +64,7 @@ export default function Footer() {
             </h2>
             <ul className="mt-5 space-y-1">
               {navigation?.map(({ label, href }) => (
-                <li key={href+label}>
+                <li key={href + label}>
                   <Link
                     href={href}
                     className="group inline-flex min-h-11 items-center gap-2 rounded-sm text-sm text-gray-400 transition-colors hover:text-gray-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gray-100"
