@@ -171,7 +171,7 @@ function CastProfile({ details, currentMovieId, onNavigate }) {
         <Artwork
           path={details.profile_path}
           alt=""
-          className="aspect-[3/4] w-24 shrink-0 rounded-lg object-cover sm:w-32"
+          className="aspect-3/4 w-24 shrink-0 rounded-lg object-cover sm:w-32"
         />
 
         <div className="min-w-0">
@@ -217,7 +217,7 @@ function CastProfile({ details, currentMovieId, onNavigate }) {
         {bio ? (
           <>
             <p
-              className={`max-w-prose whitespace-pre-line text-sm leading-7 text-white/75 ${
+              className={` text-justify whitespace-pre-line text-sm leading-7 text-white/75 ${
                 expanded || !isLongBio ? "" : "line-clamp-5"
               }`}
             >
@@ -228,7 +228,7 @@ function CastProfile({ details, currentMovieId, onNavigate }) {
                 type="button"
                 onClick={() => setExpanded((v) => !v)}
                 aria-expanded={expanded}
-                className="mt-2 text-sm font-medium text-red-300 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300"
+                className="mt-2 cursor-pointer text-sm font-medium text-red-300 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300"
               >
                 {expanded ? "Show less" : "Read more"}
               </button>
@@ -251,6 +251,7 @@ function CastProfile({ details, currentMovieId, onNavigate }) {
                   title={item.title}
                   image={item.poster_path}
                   rating={item.vote_average}
+                  overview={item.overview}
                 />
               </div>
             ))}

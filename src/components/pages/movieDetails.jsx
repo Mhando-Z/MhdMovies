@@ -2,13 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import {
-  CalendarDays,
-  Clock3,
-  Play,
-  Star,
-  UserRound,
-} from "lucide-react";
+import { CalendarDays, Clock3, Play, Star, UserRound } from "lucide-react";
 import { useMovieDetails } from "@/context/movieDetailsContext";
 import MovieTitle from "./movieTitle";
 import MoviePoster from "../moviePoster";
@@ -241,15 +235,7 @@ export default function MovieDetails() {
                   </span>
                 )}
               </div>
-              <MovieTitle
-                movie={movie}
-                logo={logo}
-                // titleStyle={{
-                //   font: { style: {} },
-                //   className: "tracking-tight",
-                // }}
-                titleStyle={titleStyle}
-              />
+              <MovieTitle movie={movie} logo={logo} titleStyle={titleStyle} />
               {movie.tagline && (
                 <p className="text-base italic text-white/60 md:text-lg">
                   {movie.tagline}
