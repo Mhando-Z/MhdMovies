@@ -573,23 +573,32 @@ export default function MovieDetails() {
           <section>
             <SectionHeading eyebrow="Keep discovering" title="More like this" />
             <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-              {related.slice(0, expanded ? 18 : 6).map((item) => (
-                <MoviePoster
-                  key={item.id}
-                  id={item.id}
-                  title={item.title}
-                  image={item.poster_path}
-                  image2={item.backdrop_path}
-                  rating={item.vote_average}
-                />
-              ))}
+              {related
+                ?.filter(
+                  (item) =>
+                    item.poster_path &&
+                    item.poster_path !== "null" &&
+                    item.poster_path !== "undefined",
+                )
+                .slice(0, expanded ? 18 : 6)
+                .map((item) => (
+                  <MoviePoster
+                    key={item.id}
+                    id={item.id}
+                    title={item.title}
+                    image={item.poster_path}
+                    image2={item.backdrop_path}
+                    rating={item.vote_average}
+                    overview={item.overview}
+                  />
+                ))}
             </div>
             {related.length > 6 && (
               <button
                 type="button"
                 onClick={() => setExpanded((value) => !value)}
                 aria-expanded={expanded}
-                className={`${button} mx-auto mt-8 flex border border-white/15 hover:bg-white/5`}
+                className={`${button} cursor-pointer mx-auto mt-8 flex border border-white/15 hover:bg-white/5`}
               >
                 {expanded ? "Show less" : "Discover more"}
               </button>
