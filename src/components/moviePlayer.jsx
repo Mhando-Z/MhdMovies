@@ -140,7 +140,7 @@ export default function MoviePlayer({
           <button
             type="button"
             onClick={() => setPlaying(false)}
-            className={`inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-xs text-white/60 hover:bg-white/5 hover:text-white ${focus}`}
+            className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-lg px-3 text-xs text-white/60 hover:bg-white/5 hover:text-white ${focus}`}
           >
             <X className="size-4" /> Close player
           </button>
