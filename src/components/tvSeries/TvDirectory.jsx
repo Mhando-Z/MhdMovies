@@ -224,7 +224,15 @@ export default function TvDirectory() {
         ) : catalogue.data?.results?.length ? (
           <div className={grid}>
             {catalogue.data.results.map((show) => (
-              <TvSeriesPoster key={show.id} show={show} />
+              <TvSeriesPoster
+                key={show.id}
+                id={show.id}
+                title={show.name}
+                image={show.poster_path}
+                image2={show.backdrop_path}
+                rating={show.vote_average}
+                overview={show.overview}
+              />
             ))}
           </div>
         ) : (

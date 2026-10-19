@@ -635,7 +635,15 @@ export default function TvDetails({ id }) {
                 .filter((item) => item.id !== show.id && !item.adult)
                 .slice(0, 12)
                 .map((item) => (
-                  <TvSeriesPoster key={item.id} show={item} />
+                  <TvSeriesPoster
+                    key={item.id}
+                    id={item.id}
+                    title={item.name}
+                    image={item.poster_path}
+                    image2={item.backdrop_path}
+                    rating={item.vote_average}
+                    overview={item.overview}
+                  />
                 ))}
             </div>
           </section>
