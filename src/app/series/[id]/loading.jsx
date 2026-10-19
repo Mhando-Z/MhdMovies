@@ -1,2 +1,5 @@
-import { TvDetailsLoading } from "@/components/tvSeries/TvDetails";
-export default TvDetailsLoading;
+import SeriesState from "@/components/seriesState";
+
+export default function Loading() {
+  return <SeriesState loading />;
+}

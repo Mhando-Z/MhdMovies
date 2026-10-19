@@ -21,6 +21,7 @@ import MovieModal from "@/components/pages/movieModal";
 import { isEpisodeReleased } from "@/lib/tvseries";
 import TvSeriesPoster from "./TvSeriesPoster";
 import { button, focus, grid, useResource, ResourceError } from "./TvUI";
+import SeriesState from "../seriesState";
 
 function Heading({ title, eyebrow }) {
   return (
@@ -32,32 +33,6 @@ function Heading({ title, eyebrow }) {
         {title}
       </h2>
     </div>
-  );
-}
-
-export function TvDetailsLoading() {
-  return (
-    <main
-      role="status"
-      className="min-h-screen bg-black px-5 pb-20 pt-32 text-white md:px-10 xl:container xl:mx-auto"
-    >
-      <span className="sr-only">Loading series details...</span>
-      <div
-        aria-hidden="true"
-        className="grid gap-10 motion-safe:animate-pulse md:grid-cols-[240px_1fr]"
-      >
-        <div className="hidden aspect-2/3 rounded-xl bg-white/10 md:block" />
-        <div className="space-y-6 py-10">
-          <div className="h-4 w-32 rounded bg-red-500/20" />
-          <div className="h-16 max-w-xl rounded bg-white/10" />
-          <div className="h-24 max-w-2xl rounded bg-white/5" />
-        </div>
-      </div>
-      <div
-        aria-hidden="true"
-        className="mt-16 h-72 rounded-xl bg-white/5 motion-safe:animate-pulse"
-      />
-    </main>
   );
 }
 
@@ -351,18 +326,15 @@ export default function TvDetails({ id }) {
   } = useResource(`/api/tvseries/${id}`);
   const [modal, setModal] = useState(null);
   const closeModal = useCallback(() => setModal(null), []);
-  if (loading) return <TvDetailsLoading />;
+
   if (!show)
     return (
-      <main className="min-h-[70vh] px-5 pb-20 pt-32 text-white md:px-10 xl:container xl:mx-auto">
-        <h1 className="mb-6 text-3xl font-bold">Series unavailable</h1>
-        <ResourceError message={error} retry={retry} />
-        <Link href="/series" className={`${button} mt-6`}>
-          Back to TV Series
-        </Link>
-      </main>
+      <div>
+        <SeriesState loading={loading} error={error} />
+      </div>
     );
-  const videos = (show.videos?.results || []).filter(
+
+  const videos = (show?.videos?.results || [])?.filter(
     (video) => video.site === "YouTube" && /^[\w-]+$/.test(video.key),
   );
   const trailer =
@@ -405,12 +377,6 @@ export default function TvDetails({ id }) {
           <div className="absolute inset-0 bg-linear-to-t from-black via-black/15 to-black/30" />
         </div>
         <div className="px-5 pb-12 pt-28 md:px-10 md:pb-16 md:pt-36 xl:container xl:mx-auto">
-          <Link
-            href="/series"
-            className={`mb-8 inline-flex min-h-11 items-center gap-2 text-xs text-white/50 hover:text-white ${focus}`}
-          >
-            <ChevronLeft className="size-4" /> Back to series
-          </Link>
           <div className="grid items-end gap-10 md:grid-cols-[210px_1fr] lg:grid-cols-[260px_1fr] lg:gap-14">
             <Artwork
               path={show.poster_path}
@@ -648,18 +614,6 @@ export default function TvDetails({ id }) {
             </div>
           </section>
         )}
-        <p className="text-xs leading-6 text-white/35">
-          Series information and artwork from TMDB. Episode schedules from{" "}
-          <a
-            href="https://www.tvmaze.com"
-            target="_blank"
-            rel="noreferrer"
-            className={`underline underline-offset-4 ${focus}`}
-          >
-            TVmaze
-          </a>{" "}
-          (CC BY-SA).
-        </p>
       </div>
       <MovieModal
         modal={modal}
