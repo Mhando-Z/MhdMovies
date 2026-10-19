@@ -332,6 +332,7 @@ function ProfileContent({ person, retry }) {
     (item) => item.media_type === "movie",
   ).length;
   const tvCount = credits.filter((item) => item.media_type === "tv").length;
+
   const backdrop = highlights.find(
     (credit) => credit.backdrop_path,
   )?.backdrop_path;
