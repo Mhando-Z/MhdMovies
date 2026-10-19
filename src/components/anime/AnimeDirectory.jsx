@@ -81,7 +81,7 @@ function Featured({ resource }) {
             <Sparkles className="size-4" />
             The animation collection
           </p>
-          <h1 className="text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl">
             {anime?.title || "Extraordinary worlds. Unforgettable stories."}
           </h1>
           {anime && (
@@ -168,7 +168,7 @@ export default function AnimeDirectory() {
   return (
     <main className="min-h-screen font-roboto text-white">
       <Featured resource={home} />
-      <div className="xl:mx-auto xl:container px-5 py-10 md:px-10 md:py-14">
+      <div className="xl:mx-auto xl:container px-6 py-10   md:py-14">
         {!filtered && (
           <>
             <LibraryRows />
