@@ -10,6 +10,7 @@ const navigation = [
   { label: "Home", href: "/" },
   { label: "Actors", href: "/actors" },
   { label: "TV series", href: "/series" },
+  { label: "Anime & Donghua", href: "/anime" },
   { label: "Genres", href: "/Genres/" },
 ];
 

@@ -3,7 +3,7 @@
 import { Suspense, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Film, Search, Tv, UsersRound } from "lucide-react";
+import { Film, Search, Sparkles, Tv, UsersRound } from "lucide-react";
 import CatalogueSearch from "./CatalogueSearch";
 import { focus } from "./tvSeries/TvUI";
 
@@ -16,6 +16,7 @@ function NavigationLinks({ pathname = "" }) {
       {[
         ["/", "Movies", Film],
         ["/series", "TV Series", Tv],
+        ["/anime", "Anime", Sparkles],
         ["/actors", "Actors", UsersRound],
       ].map(([href, label, Icon]) => {
         const active =
