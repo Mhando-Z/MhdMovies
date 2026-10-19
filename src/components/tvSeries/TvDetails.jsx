@@ -173,7 +173,7 @@ function EpisodeBrowser({ show, suspended }) {
                 setSeason(Number(event.target.value));
                 setSelection({ number: null, request: 0 });
               }}
-              className={`min-h-11 rounded-lg border border-white/15 bg-zinc-950 px-4 text-sm text-white ${focus}`}
+              className={`min-h-11 cursor-pointer rounded-lg border border-white/15 bg-zinc-950 px-4 text-sm text-white focus:outline-0`}
             >
               {seasons.map((item) => (
                 <option key={item.id} value={item.season_number}>
