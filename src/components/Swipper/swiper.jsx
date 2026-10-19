@@ -34,7 +34,7 @@ export default function Slider({ data, value, setValue }) {
             <div>
               <img
                 src={`https://image.tmdb.org/t/p/w500${dt?.poster_path}`}
-                alt={dt?.title}
+                alt={dt?.title || dt?.name}
                 className="h-full bg-cover max-w-screen"
               />
             </div>

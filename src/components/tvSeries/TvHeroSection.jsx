@@ -8,7 +8,7 @@ import Link from "next/link";
 
 import Slider from "../Swipper/swiper";
 import Rating from "../rating";
-import MovieTitle, { preloadMovieLogo } from "../pages/movieTitle";
+import MovieTitle, { preloadSeriesLogo } from "../pages/movieTitle";
 
 import {
   Creepster,
@@ -117,10 +117,10 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageError, setImageError] = useState(false);
   const hasSelectedInitialMovie = useRef(false);
-  const [movieLogos, setMovieLogos] = useState({});
+  const [seriesLogos, setSeriesLogos] = useState({});
   const logosReady =
     Trending.length > 0 &&
-    Trending.every((movie) => Object.hasOwn(movieLogos, movie.id));
+    Trending.every((movie) => Object.hasOwn(seriesLogos, movie.id));
 
   useEffect(() => {
     let cancelled = false;
@@ -130,10 +130,10 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
     Promise.all(
       Trending.map(async (movie) => [
         movie.id,
-        await preloadMovieLogo(movie.id).catch(() => null),
+        await preloadSeriesLogo(movie.id).catch(() => null),
       ]),
     ).then((entries) => {
-      if (!cancelled) setMovieLogos(Object.fromEntries(entries));
+      if (!cancelled) setSeriesLogos(Object.fromEntries(entries));
     });
 
     return () => {
@@ -276,7 +276,7 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
                     <MovieTitle
                       movie={currentSeries}
                       titleStyle={titleStyle}
-                      logo={movieLogos[currentSeries.id]}
+                      logo={seriesLogos[currentSeries.id]}
                     />
 
                     {/* Movie Meta */}
@@ -324,7 +324,7 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
                     {/* CTA Button */}
                     <div className="pt-1">
                       <Link
-                        href={`/movies/${currentSeries.id}`}
+                        href={`/series/${currentSeries.id}`}
                         className="inline-flex items-center gap-2 px-4 py-2 text-base font-semibold text-white transition-all duration-200 bg-red-600 rounded-lg shadow-lg shadow-black/40 md:px-6 md:py-3 md:text-lg hover:bg-red-700 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                       >
                         <BiSolidMoviePlay className="w-5 h-5" />
