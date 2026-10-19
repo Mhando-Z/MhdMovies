@@ -12,6 +12,7 @@ function NavigationLinks({ pathname = "" }) {
     >
       {[
         ["/", "Movies"],
+        ["/tvseries", "TvSeries"],
         ["/actors", "Actors"],
       ].map(([href, label]) => {
         const active =
