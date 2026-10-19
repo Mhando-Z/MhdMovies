@@ -35,7 +35,10 @@ export function preloadMovieLogo(movieId) {
         // their title immediately without starting another image request.
         await new Promise((resolve, reject) => {
           const image = new Image();
-          const timeout = setTimeout(() => finish(new Error("Logo load timed out")), 10000);
+          const timeout = setTimeout(
+            () => finish(new Error("Logo load timed out")),
+            10000,
+          );
           const finish = (error) => {
             clearTimeout(timeout);
             image.onload = null;
@@ -78,14 +81,14 @@ export default function MovieTitle({ movie, titleStyle, logo: preloadedLogo }) {
       {logo ? (
         <img
           src={logo.src}
-          alt={movie.title}
+          alt={movie.title || movie.name}
           width={logo.width}
           height={logo.height}
           className="h-auto max-h-[180px] w-auto max-w-full object-contain object-left lg:max-h-[220px]"
           onError={() => setFailedSrc(logo.src)}
         />
       ) : (
-        movie.title
+        movie.title || movie.name
       )}
     </h1>
   );

@@ -15,6 +15,7 @@ import { useTvSeries } from "@/context/tvseriesContext";
 import { Artwork } from "@/components/pages/movieDetailsUI";
 import TvSeriesPoster from "./TvSeriesPoster";
 import { button, focus, grid, ResourceError, CardSkeletons } from "./TvUI";
+import TvHeroSection from "./TvHeroSection";
 
 const categories = [
   ["trending", "Trending this week"],
@@ -158,9 +159,12 @@ export default function TvDirectory() {
       .getElementById("series-catalogue")
       ?.scrollIntoView({ behavior: "instant" });
   }
+
   return (
     <main className="min-h-screen bg-black font-roboto text-white">
-      <TvHero resource={{ ...featured, genres: genres.data?.genres }} />
+      {/* TvHero section */}
+      <TvHeroSection Trending={featured?.data?.results} />
+
       <section
         id="series-catalogue"
         aria-labelledby="series-heading"
