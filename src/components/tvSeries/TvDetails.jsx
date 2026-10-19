@@ -497,7 +497,7 @@ export default function TvDetails({ id }) {
                   className="aspect-2/3 w-full rounded-xl object-cover object-top"
                 />
                 <h3 className="mt-3 text-sm font-medium">{person.name}</h3>
-                <p className="mt-1 text-xs leading-5 text-white/40">
+                <p className="mt-1 line-clamp-1 text-xs leading-5 text-white/40">
                   {person.roles
                     ?.map((role) => role.character)
                     .filter(Boolean)
