@@ -75,7 +75,7 @@ function Featured({ resource }) {
           <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-black/30" />
         </div>
       )}
-      <div className="mx-auto max-w-[1446px] px-5 pb-14 pt-32 md:px-10 md:pb-20 md:pt-44">
+      <div className="xl:mx-auto xl:container px-6 pb-14 pt-32 md:pb-20 md:pt-44">
         <div className="max-w-2xl">
           <p className="mb-5 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-red-400">
             <Sparkles className="size-4" />
@@ -166,9 +166,9 @@ export default function AnimeDirectory() {
   }
   const selectClass = `min-h-11 w-full rounded-lg border border-white/15 bg-zinc-950 px-3 text-sm text-white ${focus}`;
   return (
-    <main className="min-h-screen bg-black font-roboto text-white">
+    <main className="min-h-screen font-roboto text-white">
       <Featured resource={home} />
-      <div className="mx-auto max-w-[1446px] px-5 py-10 md:px-10 md:py-14">
+      <div className="xl:mx-auto xl:container px-5 py-10 md:px-10 md:py-14">
         {!filtered && (
           <>
             <LibraryRows />
@@ -405,18 +405,6 @@ export default function AnimeDirectory() {
             </nav>
           )}
         </section>
-        <p className="mt-12 text-xs leading-6 text-white/35">
-          Catalog information from{" "}
-          <a
-            href="https://anilist.co"
-            target="_blank"
-            rel="noreferrer"
-            className="underline underline-offset-4"
-          >
-            AniList
-          </a>
-          . Broadcast dates and episode availability may differ.
-        </p>
       </div>
     </main>
   );
