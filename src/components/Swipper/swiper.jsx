@@ -25,9 +25,6 @@ export default function Slider({ data, value, setValue }) {
         initialSlide={value}
         centeredSlides={true}
         spaceBetween={20}
-        pagination={{
-          type: "fraction",
-        }}
       >
         {data?.map((dt) => (
           <SwiperSlide key={dt.id}>
