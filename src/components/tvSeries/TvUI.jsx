@@ -5,7 +5,7 @@ import { RotateCcw } from "lucide-react";
 
 export const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400";
-export const button = `inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-sm font-medium transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40 ${focus}`;
+export const button = `inline-flex cursor-pointer min-h-11 items-center justify-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-sm font-medium transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40 ${focus}`;
 export const grid =
   "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6";
 

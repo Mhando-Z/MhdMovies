@@ -190,7 +190,7 @@ export default function TvDirectory() {
             <select
               value={genre}
               onChange={(event) => changeGenre(event.target.value)}
-              className={`min-h-11 max-w-52 rounded-lg border border-white/15 bg-zinc-950 px-3 text-sm text-white ${focus}`}
+              className={`min-h-11 max-w-52 rounded-lg border border-white/15 bg-zinc-950 px-3 text-sm text-white focus:outline-0`}
             >
               <option value="">All genres</option>
               {genres.data?.genres?.map((item) => (
@@ -211,7 +211,7 @@ export default function TvDirectory() {
               key={value}
               onClick={() => changeCategory(value)}
               aria-pressed={!genre && category === value}
-              className={`min-h-11 shrink-0 rounded-lg px-4 text-sm transition-colors ${focus} ${!genre && category === value ? "bg-red-600 text-white" : "border border-white/10 text-white/55 hover:bg-white/5 hover:text-white"}`}
+              className={`min-h-11 cursor-pointer shrink-0 rounded-lg px-4 text-sm transition-colors ${focus} ${!genre && category === value ? "bg-red-600 text-white" : "border border-white/10 text-white/55 hover:bg-white/5 hover:text-white"}`}
             >
               {label}
             </button>
