@@ -317,6 +317,10 @@ function EpisodeBrowser({ show, suspended }) {
   );
 }
 
+export function TvDetailsLoading() {
+  return <SeriesState loading />;
+}
+
 export default function TvDetails({ id }) {
   const {
     data: show,

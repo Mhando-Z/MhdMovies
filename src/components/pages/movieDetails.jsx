@@ -389,12 +389,12 @@ export default function MovieDetails() {
                       handleCast(person.id);
                       setModal({ type: "cast", name: person.name });
                     }}
-                    className={`w-28 shrink-0 snap-start rounded-lg text-left sm:w-36 ${focus}`}
+                    className={`w-28 cursor-pointer shrink-0 snap-start rounded-lg text-left sm:w-36 ${focus}`}
                   >
                     <Artwork
                       path={person.profile_path}
                       alt={person.name}
-                      className="mb-3 aspect-[3/4] w-full rounded-lg object-cover transition-opacity hover:opacity-75"
+                      className="mb-3 aspect-3/4 w-full rounded-lg object-cover transition-opacity hover:opacity-75"
                     />
                     <p className="text-sm font-medium">{person.name}</p>
                     <p className="mt-1 line-clamp-2 text-xs text-white/40">
