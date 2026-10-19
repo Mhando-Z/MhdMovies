@@ -113,7 +113,7 @@ function NextEpisode({ id }) {
         }
         target="_blank"
         rel="noreferrer"
-        className={`mt-4 inline-block text-[10px] text-white/40 underline underline-offset-4 ${focus}`}
+        className={`mt-4 hidden   text-[10px] text-white/40 underline underline-offset-4 ${focus}`}
       >
         Episode schedule from TVmaze · CC BY-SA
       </a>
@@ -435,7 +435,7 @@ export default function TvDetails({ id }) {
                     onClick={() => setModal({ type: "video", video: trailer })}
                     className={button}
                   >
-                    <Play className="size-4" /> Watch trailer
+                    <Play className="size-4 fill-current" /> Watch trailer
                   </button>
                 )}
               </div>
