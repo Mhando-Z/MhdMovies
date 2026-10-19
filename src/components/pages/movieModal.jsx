@@ -326,25 +326,15 @@ function CastProfile({ details, currentMovieId, onNavigate }) {
               );
               const className =
                 "group min-w-0 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400";
-              return isMovie ? (
+              return (
                 <Link
                   key={item.key}
-                  href={`/movies/${item.id}`}
+                  href={`/${isMovie ? "movies" : "series"}/${item.id}`}
                   onClick={onNavigate}
                   className={className}
                 >
                   {content}
                 </Link>
-              ) : (
-                <a
-                  key={item.key}
-                  href={`https://www.themoviedb.org/tv/${item.id}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={className}
-                >
-                  {content}
-                </a>
               );
             })}
           </div>

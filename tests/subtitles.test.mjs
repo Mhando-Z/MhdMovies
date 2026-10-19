@@ -54,6 +54,30 @@ function configure() {
   process.env.OPENSUBTITLES_API_KEY = "test-open";
 }
 
+test("TV subtitle searches scope each provider to the selected series, season and episode", async () => {
+  configure();
+  const calls = [];
+  globalThis.fetch = async (input) => {
+    const url = new URL(input);
+    calls.push(url);
+    return url.hostname === "api.subdl.com"
+      ? Response.json({ status: true, subtitles: [] })
+      : Response.json(openResult);
+  };
+  await searchSubtitles("1399", "en", 1, undefined, signal(), {
+    season: 2,
+    number: 3,
+  });
+  assert.equal(calls[0].searchParams.get("type"), "tv");
+  assert.equal(calls[0].searchParams.get("season"), "2");
+  assert.equal(calls[0].searchParams.get("episode"), "3");
+  assert.equal(calls[1].searchParams.get("parent_tmdb_id"), "1399");
+  assert.equal(calls[1].searchParams.get("tmdb_id"), null);
+  assert.equal(calls[1].searchParams.get("season_number"), "2");
+  assert.equal(calls[1].searchParams.get("episode_number"), "3");
+  assert.equal(calls[1].searchParams.get("type"), "episode");
+});
+
 test("release gating handles future dates, unreleased statuses and missing dates", () => {
   const now = new Date("2026-10-19T12:00:00Z");
   for (const movie of [

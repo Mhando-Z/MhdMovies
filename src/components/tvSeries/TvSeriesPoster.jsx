@@ -1,106 +1,38 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { BiSolidMoviePlay } from "react-icons/bi";
+"use client";
 
-const MoviePoster = ({ name, rating, image, image2, id, preview = false }) => {
-  const [isHovered, setIsHovered] = useState(preview);
-  const navigate = useNavigate();
+import Link from "next/link";
+import { ArrowUpRight, Star } from "lucide-react";
+import { Artwork } from "@/components/pages/movieDetailsUI";
+import { focus } from "./TvUI";
 
-  // handle navigation logic
-  const handleNavigation = () => {
-    navigate(`/TvSeriesDetails/${id}`);
-  };
-
+export default function TvSeriesPoster({ show }) {
   return (
-    <motion.div
-      className="max-w-sm mx-auto"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(preview)}
+    <Link
+      href={`/series/${show.id}`}
+      className={`group min-w-0 rounded-xl ${focus}`}
     >
-      <motion.div
-        className="relative overflow-hidden bg-gray-900 rounded group"
-        whileHover={{ scale: 1.03 }}
-        transition={{ type: "spring", stiffness: 200, damping: 10 }}
-      >
-        <div className="aspect-[2/3] overflow-hidden bg-gray-800">
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${image}`}
-            alt={name}
-            className={`w-full h-full object-cover transition-all duration-500 
-              ${isHovered ? "scale-110 opacity-30" : "scale-100 opacity-100"}`}
-          />
-        </div>
-
-        <div className="absolute px-2 py-1 rounded-md top-2 right-2 bg-black/60 backdrop-blur-sm">
-          <div className="flex items-center gap-1">
-            <svg
-              className="w-4 h-4 text-yellow-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-            <span className="text-xs font-semibold text-white">
-              {Number(rating).toFixed(1)}
-            </span>
-          </div>
-        </div>
-
-        {/* Overlay Content */}
-        <motion.div
-          className={`absolute inset-0 transition-all duration-300 flex flex-col items-center justify-center p-4 
-          ${isHovered ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-        >
-          <motion.img
-            initial={{ opacity: 0, scale: 0, y: 30 }}
-            animate={
-              isHovered
-                ? { opacity: 1, scale: 1, y: 0 }
-                : { opacity: 0, scale: 0, y: 30 }
-            }
-            transition={{
-              duration: 0.6,
-              delay: 0.1,
-              type: "spring",
-              damping: 15,
-            }}
-            src={`https://image.tmdb.org/t/p/w500/${image2}`}
-            alt={name}
-            className="object-cover w-20 h-20 mt-5 rounded-full ring-2 ring-white md:w-28 md:h-28"
-          />
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ delay: 0.15 }}
-            className="px-1 mt-4 text-xs font-bold text-center text-white font-Raleway md:text-sm line-clamp-2 md:line-clamp-2"
-          >
-            {name}
-          </motion.h1>
-          <motion.button
-            whileHover={{ scale: 1.08 }}
-            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 120 }}
-            onClick={handleNavigation}
-            className="flex px-3 py-1 mt-3 font-medium text-center text-black bg-gray-100 md:px-5 md:py-2 hover:ring-green-700 rounded-3xl hover:bg-slate-50 hover:ring-1"
-          >
-            <Link
-              className="flex flex-row items-center w-full gap-1 text-xs"
-              to={`/TvSeriesDetails/${id}`}
-            >
-              <BiSolidMoviePlay />
-              Watch
-            </Link>
-          </motion.button>
-        </motion.div>
-      </motion.div>
-
-      {/* Mobile Title */}
-      <div className="p-2 text-white md:hidden">
-        <h3 className="text-xs font-medium line-clamp-1">{name}</h3>
+      <div className="relative aspect-2/3 overflow-hidden rounded-xl bg-zinc-900 ring-1 ring-white/10">
+        <Artwork
+          path={show.poster_path}
+          alt={`${show.name} poster`}
+          className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent" />
+        <span className="absolute right-2 top-2 flex items-center gap-1 rounded-md bg-black/75 px-2 py-1 text-xs font-medium text-white">
+          <Star className="size-3 fill-amber-400 text-amber-400" />
+          {show.vote_average > 0 ? show.vote_average.toFixed(1) : "NR"}
+        </span>
+        <span className="absolute bottom-3 left-3 rounded border border-white/20 bg-black/40 px-2 py-1 text-[9px] font-semibold uppercase tracking-widest text-white/85">
+          Series
+        </span>
+        <ArrowUpRight className="absolute bottom-3 right-3 size-5 text-white/70 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
       </div>
-    </motion.div>
+      <h3 className="mt-3 truncate text-sm font-semibold text-white transition-colors group-hover:text-red-400">
+        {show.name}
+      </h3>
+      <p className="mt-1 text-xs text-white/45">
+        {show.first_air_date?.slice(0, 4) || "Date TBA"}
+      </p>
+    </Link>
   );
-};
-
-export default MoviePoster;
+}

@@ -30,10 +30,7 @@ import {
 
 function CreditCard({ credit }) {
   const isMovie = credit.media_type === "movie";
-  // Television has no local detail route yet; link to the correct TMDB title.
-  const href = isMovie
-    ? `/movies/${credit.id}`
-    : `https://www.themoviedb.org/tv/${credit.id}`;
+  const href = isMovie ? `/movies/${credit.id}` : `/series/${credit.id}`;
   const roles = [
     ...credit.characters.map((role) => `as ${role}`),
     ...credit.jobs,
@@ -57,12 +54,7 @@ function CreditCard({ credit }) {
           </div>
         )}
       </div>
-      <h3 className="mt-3 text-sm font-semibold leading-6">
-        {credit.title}
-        {!isMovie && (
-          <span className="sr-only"> (opens on TMDB in a new tab)</span>
-        )}
-      </h3>
+      <h3 className="mt-3 text-sm font-semibold leading-6">{credit.title}</h3>
       <p className="mt-1 text-xs text-white/45">
         {credit.date ? credit.date.slice(0, 4) : "Date not announced"}
       </p>
@@ -74,19 +66,10 @@ function CreditCard({ credit }) {
       </p>
     </>
   );
-  return isMovie ? (
+  return (
     <Link href={href} className="actor-credit-card">
       {content}
     </Link>
-  ) : (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="actor-credit-card"
-    >
-      {content}
-    </a>
   );
 }
 

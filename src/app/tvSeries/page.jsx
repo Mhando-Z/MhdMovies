@@ -1,12 +1,2 @@
-import React from "react";
-
-export const metadata = {
-  title: "TvSeries",
-  description: "",
-};
-
-function page() {
-  return <div>page</div>;
-}
-
-export default page;
+// Preserve the existing entry point; new links use the portable /series route.
+export { default, metadata } from "../series/page";

@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { getMovieSources } from "@/lib/movieSources";
+import { getTvSources } from "@/lib/tvseries";
 
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500";
@@ -80,10 +81,13 @@ export default function MoviePlayer({
   playRequest = 0,
   suspended = false,
   sources: directSources = [],
+  episode,
 }) {
   const sources = [
     ...directSources.map((source) => ({ ...source, kind: "media" })),
-    ...getMovieSources(movie),
+    ...(episode
+      ? getTvSources(movie, episode.season_number, episode.episode_number)
+      : getMovieSources(movie)),
   ];
   const [selectedId, setSelectedId] = useState("vidfast");
   const [playing, setPlaying] = useState(false);
@@ -223,7 +227,7 @@ export default function MoviePlayer({
           </div>
           <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-4">
             <p className="max-w-2xl text-xs leading-6 text-white/45">
-              If a movie is unavailable or playback stops, select another
+              If a title is unavailable or playback stops, select another
               server. Quality, subtitles and availability vary by server.
             </p>
             {playing && selected && (

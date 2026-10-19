@@ -8,7 +8,9 @@ const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500";
 const action = `inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-lg border border-white/15 px-4 py-2 text-xs font-medium transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40 ${focus}`;
 
-export default function MovieSubtitles({ movie, released }) {
+export default function MovieSubtitles({ movie, released, episode }) {
+  const seasonNumber = episode?.season_number;
+  const episodeNumber = episode?.episode_number;
   const [language, setLanguage] = useState("en");
   const [query, setQuery] = useState(null);
   const [result, setResult] = useState(null);
@@ -37,6 +39,11 @@ export default function MovieSubtitles({ movie, released }) {
           page: String(query.page),
         });
         if (query.provider) params.set("provider", query.provider);
+        if (episodeNumber != null) {
+          params.set("type", "tv");
+          params.set("season", String(seasonNumber));
+          params.set("episode", String(episodeNumber));
+        }
         const response = await fetch(`/api/subtitles?${params}`, {
           signal: controller.signal,
         });
@@ -52,7 +59,7 @@ export default function MovieSubtitles({ movie, released }) {
     }
     search();
     return () => controller.abort();
-  }, [movie.id, query, released]);
+  }, [movie.id, query, released, seasonNumber, episodeNumber]);
 
   const subtitles = useMemo(
     () =>
@@ -139,12 +146,18 @@ export default function MovieSubtitles({ movie, released }) {
       <div className="rounded-xl border border-white/10 bg-white/[0.025] p-5 md:p-6">
         {!released ? (
           <p className="text-sm leading-7 text-white/60">
-            Subtitle downloads will be available to search after this movie is
+            Subtitle downloads will be available to search after this title is
             released.
           </p>
         ) : (
           <>
             <p className="mb-5 max-w-3xl text-sm leading-7 text-white/60">
+              {episode && (
+                <span className="mb-2 block font-medium text-white/85">
+                  {movie.title} · S{String(seasonNumber).padStart(2, "0")} E
+                  {String(episodeNumber).padStart(2, "0")} · {episode.name}
+                </span>
+              )}
               Choose a language, then find a subtitle that matches your video
               release. Download the original file or a WebVTT version for
               compatible players.
