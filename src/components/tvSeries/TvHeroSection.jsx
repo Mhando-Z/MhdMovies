@@ -53,7 +53,7 @@ const actionFont = Oswald({
 const titleFonts = [
   { genreId: 27, font: horrorFont, className: "tracking-wide" },
   {
-    genreId: 878,
+    genreId: 10765, // Sci-Fi & Fantasy
     font: sciFiFont,
     className: "uppercase tracking-[0.12em]",
   },
@@ -64,14 +64,9 @@ const titleFonts = [
   },
   { genreId: 10749, font: romanceFont, className: "tracking-normal" },
   {
-    genreId: 28,
+    genreId: 10759, // Action & Adventure
     font: actionFont,
     className: "uppercase tracking-[0.04em]",
-  },
-  {
-    genreId: 12,
-    font: fantasyFont,
-    className: "uppercase tracking-[0.08em]",
   },
   {
     genreId: 53,
@@ -85,27 +80,26 @@ const fallbackTitleStyle = {
   className: "uppercase tracking-[0.04em]",
 };
 
-// TMDB movie genre ids -> display names.
 const GENRE_NAMES = {
-  28: "Action",
-  12: "Adventure",
+  10759: "Action & Adventure",
   16: "Animation",
   35: "Comedy",
   80: "Crime",
   99: "Documentary",
   18: "Drama",
   10751: "Family",
-  14: "Fantasy",
-  36: "History",
-  27: "Horror",
-  10402: "Music",
+  10762: "Kids",
   9648: "Mystery",
-  10749: "Romance",
-  878: "Sci-Fi",
-  10770: "TV Movie",
-  53: "Thriller",
-  10752: "War",
+  10763: "News",
+  10764: "Reality",
+  10765: "Sci-Fi & Fantasy",
+  10766: "Soap",
+  10767: "Talk",
+  10768: "War & Politics",
   37: "Western",
+  10749: "Romance",
+  27: "Horror",
+  53: "Thriller",
 };
 
 const MAX_GENRES = 4;
@@ -124,13 +118,12 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
 
   useEffect(() => {
     let cancelled = false;
-
     // Load the whole lineup before starting the slider. A missing or failed
     // logo resolves to the text fallback without blocking the other movies.
     Promise.all(
-      Trending.map(async (movie) => [
-        movie.id,
-        await preloadSeriesLogo(movie.id).catch(() => null),
+      Trending.map(async (series) => [
+        series.id,
+        await preloadSeriesLogo(series.id).catch(() => null),
       ]),
     ).then((entries) => {
       if (!cancelled) setSeriesLogos(Object.fromEntries(entries));
@@ -208,13 +201,13 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
     [currentSeries],
   );
 
-  const year = currentSeries?.release_date?.split("-")[0];
+  const year = currentSeries?.first_air_date?.split("-")[0];
   const hasRating = typeof currentSeries?.vote_average === "number";
 
   return (
     <section
       className="relative w-full overflow-hidden font-roboto"
-      aria-label="Featured trending movie"
+      aria-label="Featured trending TV series"
     >
       {/* Hero Container */}
       <div className="relative h-[600px] sm:h-[700px] md:h-screen md:max-h-[970px] md:min-h-[450px]">
@@ -348,7 +341,7 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
                   <Slider data={Trending} value={value} setValue={setValue} />
                 ) : (
                   <p role="status" className="text-sm text-white/70">
-                    Preparing featured movies…
+                    Preparing featured Series..
                   </p>
                 )}
               </div>
