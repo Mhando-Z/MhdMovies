@@ -28,6 +28,16 @@ export function getTvSources(series, season, episode) {
     e: String(episode),
   });
   if (!imdb) params.set("tmdb", "1");
+
+  const vidfastParams = new URLSearchParams({
+    autoPlay: "false",
+    title: "true",
+    poster: "true",
+    theme: "dc2626",
+    nextButton: "true",
+    autoNext: "false",
+  });
+
   return [
     {
       id: "vidsrc",
@@ -35,9 +45,29 @@ export function getTvSources(series, season, episode) {
       src: `https://vidsrc.to/embed/tv/${id}/${season}/${episode}`,
     },
     {
+      id: "vidfast",
+      name: "VidFast",
+      src: `https://vidfast.vc/tv/${id}/${season}/${episode}?${vidfastParams}`,
+    },
+    {
       id: "superembed",
       name: "SuperEmbed",
       src: `https://multiembed.mov/?${params}`,
+    },
+    {
+      id: "vidsrc-sh",
+      name: "VidSrc SH",
+      src: `https://vidsrc.sh/embed/tv/${id}/${season}/${episode}`,
+    },
+    {
+      id: "vidsrc-link",
+      name: "VidSrc Link",
+      src: `https://vidsrc.link/embed/tv/${id}/${season}/${episode}`,
+    },
+    {
+      id: "vidsrc-pk",
+      name: "VidSrc PK",
+      src: `https://embed.vidsrc.pk/tv/${id}/${season}/${episode}`,
     },
   ];
 }
