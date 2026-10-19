@@ -314,10 +314,14 @@ export default function MovieDetails() {
               </div>
               {!released && (
                 <p className="flex items-center gap-2 text-sm text-amber-200/90">
-                  <CalendarDays aria-hidden="true" className="size-4 shrink-0" />
+                  <CalendarDays
+                    aria-hidden="true"
+                    className="size-4 shrink-0"
+                  />
                   {movie.status === "Canceled"
                     ? "This movie has been canceled."
-                    : movie.release_date && new Date(`${movie.release_date}T00:00:00Z`) > new Date()
+                    : movie.release_date &&
+                        new Date(`${movie.release_date}T00:00:00Z`) > new Date()
                       ? `Coming ${date(movie.release_date)}`
                       : "Release date to be announced"}
                 </p>
