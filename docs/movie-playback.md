@@ -12,6 +12,48 @@ profile does not replace the entire page with its loading screen.
 
 ## Player integration
 
+The movie details page shows Watch now and the movie player only when the movie
+has been released: its status must be Released (if provided) and its release
+date must not be in the future. Trailers remain available before release.
+
+## Subtitle downloads
+
+The Tailwind subtitle section searches by the current TMDB movie ID and selected
+language on demand. It shows release names, hearing-impaired (SDH) markers,
+frame rates and download counts when supplied. Users can filter the current
+page by release name or SDH, browse result pages, and download original files
+or convert SRT to WebVTT. ZIP archives remain ZIP downloads.
+
+Set `SUBDL_API_KEY` in `.env.local` to use SubDL API v2 as the primary provider.
+Set `OPENSUBTITLES_API_KEY` for the fallback; the existing `OPEN_SUBS_APIKEYS`
+variable is also supported. Either provider works independently. Restart Next.js
+after changing environment variables. Keys stay in server route handlers.
+
+`GET /api/subtitles?tmdb_id=550&language=en` searches subtitles. SubDL is tried
+first, then OpenSubtitles when SubDL fails or has no results. Pagination stays
+with the provider that returned the results. Search responses from providers
+are cached for five minutes; client download tokens expire after one hour.
+
+`POST /api/subtitles/download` accepts a signed search token and `format`
+(`original` or `vtt`). Downloads validate provider hosts and all redirects,
+limit file size to 5 MiB, and bypass caching. They start only on a user's click,
+since providers apply download allowances. OpenSubtitles returns its remaining
+allowance, which is shown after a download. Its configured application key uses
+the anonymous provider allowance; no user account login is implemented.
+
+External movie embeds manage their own subtitle controls; this section does
+not inject downloaded tracks into those embeds or attach full-movie subtitles
+to trailers. Vidstack can already accept `tracks` for directly hosted media.
+
+Provider documentation: [SubDL API v2](https://subdl.com/developers),
+[SubDL file metadata](https://subdl.com/api-doc),
+[OpenSubtitles integration guide](https://blog.opensubtitles.com/opensubtitles/how-to-build-a-movie-subtitle-finder-cli-with-python-and-the-opensubtitles-api).
+
+Run `node --test tests/subtitles.test.mjs` for release rules, fallback, subtitle
+conversion, signed downloads, redirect checks and quota handling.
+
+## Playback sources
+
 The public integrations below return **HTML embed players**, not MP4/HLS/DASH
 media URLs. They use an iframe. They cannot be supplied as `src` to Vidstack or
 controlled by Vidstack's play, subtitle, quality, or seek controls. No scraping,

@@ -10,6 +10,8 @@ import Loading from "@/app/movies/[id]/loading";
 import MovieState from "../movieState";
 import MoviePlayer from "../moviePlayer";
 import MovieModal from "./movieModal";
+import MovieSubtitles from "./movieSubtitles";
+import { isMovieReleased } from "@/lib/movieRelease";
 import { Artwork, formatMovieDate as date } from "./movieDetailsUI";
 //
 
@@ -143,6 +145,8 @@ export default function MovieDetails() {
 
   if (loading) return <Loading />;
   if (!movie) return <MovieState error={error} onRetry={retry} />;
+
+  const released = isMovieReleased(movie);
 
   const logoData = [...Logos]
     .filter(
@@ -283,19 +287,21 @@ export default function MovieDetails() {
                   "An overview has not been added for this movie yet."}
               </p>
               <div className="flex flex-wrap gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPlayRequest((value) => value + 1);
-                    document.getElementById("movie-player")?.scrollIntoView({
-                      behavior: reduceMotion ? "instant" : "smooth",
-                      block: "start",
-                    });
-                  }}
-                  className={`${button} cursor-pointer bg-red-600 hover:bg-red-700`}
-                >
-                  <Play className="size-4 fill-current" /> Watch now
-                </button>
+                {released && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPlayRequest((value) => value + 1);
+                      document.getElementById("movie-player")?.scrollIntoView({
+                        behavior: reduceMotion ? "instant" : "smooth",
+                        block: "start",
+                      });
+                    }}
+                    className={`${button} cursor-pointer bg-red-600 hover:bg-red-700`}
+                  >
+                    <Play className="size-4 fill-current" /> Watch now
+                  </button>
+                )}
                 <button
                   type="button"
                   disabled={!trailer}
@@ -306,6 +312,16 @@ export default function MovieDetails() {
                   {trailer ? "Watch trailer" : "Trailer unavailable"}
                 </button>
               </div>
+              {!released && (
+                <p className="flex items-center gap-2 text-sm text-amber-200/90">
+                  <CalendarDays aria-hidden="true" className="size-4 shrink-0" />
+                  {movie.status === "Canceled"
+                    ? "This movie has been canceled."
+                    : movie.release_date && new Date(`${movie.release_date}T00:00:00Z`) > new Date()
+                      ? `Coming ${date(movie.release_date)}`
+                      : "Release date to be announced"}
+                </p>
+              )}
               {(directors.length > 0 || writers.length > 0) && (
                 <div className="flex flex-wrap gap-x-12 gap-y-4 border-t border-white/10 pt-5 text-sm">
                   {[
@@ -345,11 +361,14 @@ export default function MovieDetails() {
             </button>
           </div>
         )}
-        <MoviePlayer
-          movie={movie}
-          playRequest={playRequest}
-          suspended={modal?.type === "video"}
-        />
+        {released && (
+          <MoviePlayer
+            movie={movie}
+            playRequest={playRequest}
+            suspended={modal?.type === "video"}
+          />
+        )}
+        <MovieSubtitles key={movie.id} movie={movie} released={released} />
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-14">
           <div className="min-w-0 space-y-14">
             <section>
