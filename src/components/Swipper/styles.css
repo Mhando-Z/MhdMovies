@@ -16,3 +16,98 @@
   width: 100%;
   height: 300px;
 }
+
+.anime-slider {
+  width: 100%;
+  padding: 8px 0 30px;
+}
+
+.anime-slider .swiper-slide {
+  height: auto;
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease;
+  opacity: 0.65;
+}
+
+.anime-slider .swiper-slide-active {
+  opacity: 1;
+  transform: scale(1.04);
+  z-index: 2;
+}
+
+.anime-cover-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #18181b;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 25%);
+}
+
+.anime-cover-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+
+.anime-cover-card:hover .anime-cover-image {
+  transform: scale(1.06);
+}
+
+.anime-cover-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+  background: linear-gradient(to top, rgb(0 0 0 / 85%), transparent 55%);
+}
+
+.anime-cover-title {
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.anime-slider .swiper-pagination {
+  bottom: 0;
+}
+
+.anime-slider .swiper-pagination-bullet {
+  background: white;
+  opacity: 0.45;
+}
+
+.anime-slider .swiper-pagination-bullet-active {
+  background: #dc2626;
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .anime-slider {
+    padding-bottom: 24px;
+  }
+
+  .anime-cover-card {
+    border-radius: 8px;
+  }
+
+  .anime-cover-overlay {
+    padding: 6px;
+  }
+
+  .anime-cover-title {
+    font-size: 10px;
+  }
+}

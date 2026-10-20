@@ -25,6 +25,7 @@ export default function Slider({ data, value, setValue }) {
         initialSlide={value}
         centeredSlides={true}
         spaceBetween={20}
+        // className="anime-slider"
       >
         {data?.map((dt) => (
           <SwiperSlide key={dt.id}>

@@ -24,6 +24,7 @@ import {
   SectionHeading,
 } from "./AnimeUI";
 import { LibraryRows } from "./AnimeLibrary";
+import AnimeHeroSection from "./AnimeHeroSection";
 
 function SearchForm({ search, onSearch, pending }) {
   const [value, setValue] = useState(search);
@@ -63,65 +64,9 @@ function Featured({ resource }) {
     resource.data?.trending?.find((item) => item.banner) ||
     resource.data?.trending?.[0];
 
-  console.log(resource);
   return (
     <section className="relative isolate overflow-hidden border-b border-white/5">
-      {anime && (
-        <div className="absolute inset-0 -z-10">
-          <AnimeArtwork
-            src={anime.banner || anime.cover}
-            className="h-full w-full"
-            eager
-          />
-          <div className="absolute inset-0 bg-linear-to-r from-black via-black/70 to-black/20" />
-          <div className="absolute inset-0 bg-linear-to-t from-black via-black/20 to-black/30" />
-        </div>
-      )}
-      <div className="xl:mx-auto xl:container px-6 pb-14 pt-32 md:pb-20 md:pt-44">
-        <div className="max-w-2xl">
-          <p className="mb-5 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-red-400">
-            The animation collection
-          </p>
-          <h1 className="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl">
-            {anime?.title || "Extraordinary worlds. Unforgettable stories."}
-          </h1>
-          {anime && (
-            <div className="mt-5 flex flex-wrap gap-4 text-sm text-white/70">
-              {anime.score && (
-                <span className="flex items-center gap-1.5">
-                  <Star className="size-4 fill-amber-400 text-amber-400" />
-                  {anime.score.toFixed(1)}
-                </span>
-              )}
-              <span>{anime.year}</span>
-              <span>{label(anime.format)}</span>
-              <span>{anime.country === "CN" ? "Donghua" : "Anime"}</span>
-            </div>
-          )}
-          <p className="mt-5 line-clamp-3 max-w-xl text-sm leading-7 text-white/65">
-            {anime?.description ||
-              "Discover Japanese anime and Chinese donghua, from the next big adventure to your new comfort watch."}
-          </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            {anime && (
-              <Link
-                href={`/anime/${anime.id}`}
-                className={`${button} border-red-600 bg-red-600 hover:bg-red-700`}
-              >
-                View details <ArrowRight className="size-4" />
-              </Link>
-            )}
-            <a href="#anime-catalogue" className={button}>
-              Explore the collection
-            </a>
-          </div>
-        </div>
-        <div className="mt-10 flex flex-wrap gap-6 border-t border-white/10 pt-5 text-[10px] uppercase tracking-[0.2em] text-white/45">
-          <span>Japanese anime</span>
-          <span>Chinese donghua</span>
-          <span>One collection. Endless worlds.</span>
-        </div>
-      </div>
+      <AnimeHeroSection Trending={resource?.data?.trending} />
     </section>
   );
 }
