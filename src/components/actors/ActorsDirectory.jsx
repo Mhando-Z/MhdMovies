@@ -295,10 +295,6 @@ export default function ActorsDirectory() {
             </button>
           </nav>
         )}
-        <p className="mt-8 text-xs leading-6 text-white/35">
-          Discover actors worldwide through TMDB's people collection. Search by
-          name to find more of your favorites.
-        </p>
       </section>
     </main>
   );
