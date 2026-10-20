@@ -177,7 +177,7 @@ export default function TvDirectory() {
             </p>
             <h2
               id="series-heading"
-              className="flex items-center gap-3 text-3xl font-bold tracking-tight md:text-4xl"
+              className="flex items-center gap-3 text-3xl font-bold tracking-tight"
             >
               <Flame className="size-8 text-red-500" /> TV Series
             </h2>
