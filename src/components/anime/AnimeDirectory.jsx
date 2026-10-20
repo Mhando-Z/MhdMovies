@@ -170,7 +170,7 @@ export default function AnimeDirectory() {
             </p>
             <h2
               id="anime-heading"
-              className="text-3xl font-bold tracking-tight md:text-4xl"
+              className="text-2xl font-bold tracking-tight md:text-3xl"
             >
               {country === "CN" ? "Explore donghua" : "Explore anime"}
             </h2>
