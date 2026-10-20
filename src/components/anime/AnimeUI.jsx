@@ -78,9 +78,7 @@ export function SectionHeading({ eyebrow, title, href }) {
             {eyebrow}
           </p>
         )}
-        <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
-          {title}
-        </h2>
+        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
       </div>
       {href && (
         <Link
