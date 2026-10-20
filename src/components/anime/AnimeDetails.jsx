@@ -89,14 +89,7 @@ export default function AnimeDetails({ anime }) {
           <div className="absolute inset-0 bg-linear-to-r from-black/95 via-black/80 to-black/50" />
           <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-black/20" />
         </div>
-        <div className="mx-auto max-w-[1446px] px-5 pb-12 pt-28 md:px-10 md:pt-36">
-          <Link
-            href="/anime"
-            className={`mb-8 inline-flex min-h-11 items-center gap-2 rounded text-xs text-white/65 hover:text-white ${focus}`}
-          >
-            <ArrowLeft className="size-4" />
-            Back to anime
-          </Link>
+        <div className="xl:mx-auto xl:container px-6 pb-12 pt-28 md:pt-36">
           <div className="flex items-start gap-6 md:gap-10">
             <AnimeArtwork
               src={anime.cover}
@@ -172,7 +165,7 @@ export default function AnimeDetails({ anime }) {
           </div>
         </div>
       </section>
-      <div className="mx-auto max-w-[1446px] px-5 py-10 md:px-10 md:py-14">
+      <div className="xl:mx-auto xl:container px-6 py-10 md:py-14">
         {trailer && anime.trailer && (
           <section className="mb-12">
             <SectionHeading title="Official trailer" />
