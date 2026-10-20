@@ -83,12 +83,12 @@ export default function CatalogueSearch({ onClose }) {
     <Modal title="Search movies and TV series" onClose={onClose} wide>
       <div className="p-5 md:p-8">
         {/* Header */}
-        <header className="flex items-start gap-4">
+        <header className="flex items-center gap-4">
           <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-red-500/30 bg-red-600/10">
             <Clapperboard aria-hidden="true" className="size-5 text-red-400" />
           </span>
           <div className="min-w-0">
-            <h2 className="text-2xl font-semibold tracking-tight">
+            <h2 className="text-xl font-semibold tracking-tight">
               Search movies & series
             </h2>
             <p className="mt-1 text-sm text-white/40">
