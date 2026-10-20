@@ -58,7 +58,7 @@ export function AnimeCard({ anime, subtitle, href }) {
           )}
         </div>
       </div>
-      <h3 className="mt-3 line-clamp-2 text-sm font-medium leading-6 text-white/90 group-hover:text-red-400">
+      <h3 className="mt-3 text-sm line-clamp-1 font-medium leading-6 text-white/90 group-hover:text-red-400">
         {anime.title}
       </h3>
       <p className="mt-1 text-xs leading-5 text-white/50">
