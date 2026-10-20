@@ -25,15 +25,16 @@ export default function Slider({ data, value, setValue }) {
         initialSlide={value}
         centeredSlides={true}
         spaceBetween={20}
-        // className="anime-slider"
+        className="anime-slider"
       >
         {data?.map((dt) => (
           <SwiperSlide key={dt.id}>
-            <div>
+            <div className="anime-cover-card">
               <img
                 src={`https://image.tmdb.org/t/p/w500${dt?.poster_path}`}
                 alt={dt?.title || dt?.name}
-                className="h-full bg-cover max-w-screen"
+                className="anime-cover-image"
+                loading="lazy"
               />
             </div>
           </SwiperSlide>
