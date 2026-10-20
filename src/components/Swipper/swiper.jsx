@@ -25,6 +25,10 @@ export default function Slider({ data, value, setValue }) {
         initialSlide={value}
         centeredSlides={true}
         spaceBetween={20}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
         className="anime-slider"
       >
         {data?.map((dt) => (
