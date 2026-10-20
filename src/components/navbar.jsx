@@ -3,7 +3,7 @@
 import { Suspense, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Film, Search, Sparkles, Tv, UsersRound } from "lucide-react";
+import { Film, Search, Panda, Tv, UsersRound } from "lucide-react";
 import CatalogueSearch from "./CatalogueSearch";
 import { focus } from "./tvSeries/TvUI";
 
@@ -16,7 +16,7 @@ function NavigationLinks({ pathname = "" }) {
       {[
         ["/", "Movies", Film],
         ["/series", "TV Series", Tv],
-        ["/anime", "Anime", Sparkles],
+        ["/anime", "Anime", Panda],
         ["/actors", "Actors", UsersRound],
       ].map(([href, label, Icon]) => {
         const active =
@@ -93,7 +93,7 @@ export default function Navbar() {
               aria-label="Search movies and TV series"
               aria-haspopup="dialog"
               aria-expanded={searchOpen}
-              className={`flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-lg px-2 text-white/70 transition-colors hover:text-white ${focus}`}
+              className={`flex min-h-11 cursor-pointer min-w-11 items-center justify-center gap-2 rounded-lg px-2 text-white/70 transition-colors hover:text-white ${focus}`}
             >
               <Search aria-hidden="true" className="size-5" />
               <span className="hidden text-sm lg:inline">Search</span>

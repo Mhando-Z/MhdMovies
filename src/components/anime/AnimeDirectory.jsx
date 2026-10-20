@@ -62,6 +62,8 @@ function Featured({ resource }) {
   const anime =
     resource.data?.trending?.find((item) => item.banner) ||
     resource.data?.trending?.[0];
+
+  console.log(resource);
   return (
     <section className="relative isolate overflow-hidden border-b border-white/5">
       {anime && (
@@ -78,7 +80,6 @@ function Featured({ resource }) {
       <div className="xl:mx-auto xl:container px-6 pb-14 pt-32 md:pb-20 md:pt-44">
         <div className="max-w-2xl">
           <p className="mb-5 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-red-400">
-            <Sparkles className="size-4" />
             The animation collection
           </p>
           <h1 className="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl">
