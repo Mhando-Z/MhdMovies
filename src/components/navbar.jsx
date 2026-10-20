@@ -70,7 +70,7 @@ export default function Navbar() {
   }, []);
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-40 px-3 py-4 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] sm:px-5 md:px-10">
+      <header className="fixed inset-x-0 top-0 z-40 px-3 py-4 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] sm:px-5">
         <div className="flex items-center xl:px-6 justify-between gap-2 xl:container xl:mx-auto">
           <Link
             href="/"
