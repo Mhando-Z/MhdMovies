@@ -27,12 +27,96 @@ const { getAnimeSources, readPlayerEvent } =
 const { canWatchEpisode, getChineseDetails, getCatalogue, getAnime, getHome } =
   await import("../src/lib/anime/catalogue.js");
 const { GET: catalogueRoute } = await import("../src/app/api/anime/route.js");
+const { getAnimeLogo } = await import("../src/lib/anime/tmdb.js");
 const originalFetch = globalThis.fetch;
 const originalMappings = process.env.ANIME_BANGUMI_MAPPINGS;
+const logoEnvKeys = ["TMDB_ACCESS_TOKEN", "NEXT_PUBLIC_TMDB_ACCESS_TOKEN", "ANIME_TMDB_MAPPINGS"];
+const originalLogoEnv = Object.fromEntries(logoEnvKeys.map((key) => [key, process.env[key]]));
 afterEach(() => {
   globalThis.fetch = originalFetch;
   if (originalMappings === undefined) delete process.env.ANIME_BANGUMI_MAPPINGS;
   else process.env.ANIME_BANGUMI_MAPPINGS = originalMappings;
+  for (const key of logoEnvKeys) {
+    if (originalLogoEnv[key] === undefined) delete process.env[key];
+    else process.env[key] = originalLogoEnv[key];
+  }
+});
+
+const logoAnime = {
+  id: 1, title: "Example Anime", nativeTitle: "", aliases: [],
+  year: 2024, country: "JP", format: "TV",
+};
+const tmdbMatch = {
+  id: 42, name: "Example Anime", first_air_date: "2024-01-01",
+  genre_ids: [16], origin_country: ["JP"], original_language: "ja",
+};
+
+test("anime logos search TV and movies separately and prefer English artwork", async () => {
+  process.env.TMDB_ACCESS_TOKEN = "test-token";
+  delete process.env.ANIME_TMDB_MAPPINGS;
+  for (const type of ["tv", "movie"]) {
+    const paths = [];
+    globalThis.fetch = async (input, options) => {
+      const url = new URL(input);
+      paths.push(url.pathname);
+      assert.equal(options.headers.Authorization, "Bearer test-token");
+      if (url.pathname.includes("/search/")) {
+        assert.equal(url.searchParams.get("query"), logoAnime.title);
+        return Response.json({ results: [tmdbMatch] });
+      }
+      assert.equal(url.searchParams.get("language"), "");
+      return Response.json({ logos: [
+        { file_path: "/native.png", iso_639_1: "ja", vote_average: 10 },
+        { file_path: "/english.svg", iso_639_1: "en", width: 500, height: 200 },
+      ] });
+    };
+    assert.deepEqual(await getAnimeLogo({ ...logoAnime, format: type === "movie" ? "MOVIE" : "TV" }), {
+      url: "https://image.tmdb.org/t/p/original/english.svg", width: 500, height: 200,
+    });
+    assert.deepEqual(paths, [`/3/search/${type}`, `/3/${type}/42/images`]);
+  }
+});
+
+test("anime logo matching rejects unrelated, live-action, wrong-year, and ambiguous results", async () => {
+  process.env.TMDB_ACCESS_TOKEN = "test-token";
+  delete process.env.ANIME_TMDB_MAPPINGS;
+  for (const results of [
+    [], [{ ...tmdbMatch, name: "Another show" }],
+    [{ ...tmdbMatch, genre_ids: [18] }],
+    [{ ...tmdbMatch, first_air_date: "2001-01-01" }],
+    [{ ...tmdbMatch, origin_country: ["US"], original_language: "en" }],
+    [tmdbMatch, { ...tmdbMatch, id: 43 }],
+  ]) {
+    globalThis.fetch = async (input) => {
+      assert.match(new URL(input).pathname, /search/);
+      return Response.json({ results });
+    };
+    assert.equal(await getAnimeLogo(logoAnime), null);
+  }
+});
+
+test("verified anime mappings support grouped sequels and native logo fallback", async () => {
+  process.env.TMDB_ACCESS_TOKEN = "test-token";
+  process.env.ANIME_TMDB_MAPPINGS = '{"1":{"type":"tv","id":42}}';
+  globalThis.fetch = async (input) => {
+    assert.equal(new URL(input).pathname, "/3/tv/42/images");
+    return Response.json({ logos: [{ file_path: "/native.png", iso_639_1: "ja", width: 300, height: 100 }] });
+  };
+  assert.equal((await getAnimeLogo({ ...logoAnime, year: 2026 })).url,
+    "https://image.tmdb.org/t/p/original/native.png");
+});
+
+test("optional logos tolerate missing credentials, errors, and empty image lists", async () => {
+  delete process.env.TMDB_ACCESS_TOKEN;
+  delete process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
+  globalThis.fetch = () => { throw new Error("Unexpected fetch"); };
+  assert.equal(await getAnimeLogo(logoAnime), null);
+  process.env.TMDB_ACCESS_TOKEN = "test-token";
+  process.env.ANIME_TMDB_MAPPINGS = '{"1":{"type":"tv","id":42}}';
+  globalThis.fetch = async () => new Response(null, { status: 429 });
+  assert.equal(await getAnimeLogo(logoAnime), null);
+  globalThis.fetch = async () => Response.json({ logos: [] });
+  assert.equal(await getAnimeLogo(logoAnime), null);
 });
 
 test("anime IDs remain separate and missing MAL IDs use AniList routes", () => {

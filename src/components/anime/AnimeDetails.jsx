@@ -74,6 +74,28 @@ function ChineseDetails({ anime }) {
   );
 }
 
+function AnimeTitle({ anime }) {
+  const { data } = useResource(`/api/anime/${anime.id}/logo`);
+  const [failedUrl, setFailedUrl] = useState(null);
+  const logo = data?.logo;
+  return (
+    <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-5xl">
+      {logo && failedUrl !== logo.url ? (
+        <img
+          src={logo.url}
+          alt={anime.title}
+          width={logo.width}
+          height={logo.height}
+          onError={() => setFailedUrl(logo.url)}
+          className="max-h-36 w-auto max-w-full object-contain object-left drop-shadow-lg lg:max-h-44"
+        />
+      ) : (
+        anime.title
+      )}
+    </h1>
+  );
+}
+
 export default function AnimeDetails({ anime }) {
   const [trailer, setTrailer] = useState(false);
   const count = releasedEpisodeCount(anime);
@@ -105,9 +127,7 @@ export default function AnimeDetails({ anime }) {
                     ? "Japanese anime"
                     : "Animation"}
               </p>
-              <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-5xl">
-                {anime.title}
-              </h1>
+              <AnimeTitle key={anime.id} anime={anime} />
               {anime.nativeTitle && anime.nativeTitle !== anime.title && (
                 <p className="mt-3 text-base text-white/40">
                   {anime.nativeTitle}
@@ -208,6 +228,7 @@ export default function AnimeDetails({ anime }) {
             <ChineseDetails anime={anime} />
           </div>
         </div>
+        {/* Anime Episodes listing Section */}
         <AnimeEpisodes anime={anime} />
         {anime.related.length > 0 && (
           <section className="mt-16">
