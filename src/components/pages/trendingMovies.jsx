@@ -45,7 +45,7 @@ export default function TrendingMovies() {
           <div className="min-w-0">
             <h2
               id="trending-movies-heading"
-              className="text-2xl font-bold leading-tight tracking-tight md:text-4xl"
+              className="text-2xl font-bold leading-tight tracking-tight"
             >
               Trending Movies
             </h2>

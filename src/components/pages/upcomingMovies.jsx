@@ -67,7 +67,7 @@ export default function UpcomingMovies() {
           <div className="min-w-0">
             <h2
               id="upcoming-movies-heading"
-              className="text-2xl font-bold leading-tight tracking-tight md:text-4xl"
+              className="text-2xl font-bold leading-tight tracking-tight"
             >
               Upcoming Movies
             </h2>
