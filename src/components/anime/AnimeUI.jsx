@@ -430,10 +430,6 @@ export function SectionHeading({ eyebrow, title, href }) {
       className="mb-6 flex items-end justify-between gap-4"
     >
       <div className="flex items-stretch gap-3">
-        <span
-          aria-hidden="true"
-          className="w-1 shrink-0 rounded-full bg-red-400"
-        />
         <div>
           {eyebrow && (
             <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-red-400">
