@@ -369,7 +369,7 @@ export default function TvDetails({ id }) {
   ];
   return (
     <main className="min-h-screen bg-black font-roboto text-white">
-      <section className="relative isolate overflow-hidden border-b border-white/10">
+      <section className="relative isolate overflow-hidden  ">
         <div aria-hidden="true" className="absolute inset-0 -z-10">
           <Artwork
             path={show.backdrop_path || show.poster_path}

@@ -79,15 +79,15 @@ export default function AnimeDetails({ anime }) {
   const count = releasedEpisodeCount(anime);
   return (
     <main className="min-h-screen bg-black font-roboto text-white">
-      <section className="relative isolate overflow-hidden border-b border-white/5">
+      <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <AnimeArtwork
             src={anime.banner || anime.cover}
-            className="h-full w-full"
+            className="h-full w-full object-cover object-top"
             eager
           />
-          <div className="absolute inset-0 bg-linear-to-r from-black/95 via-black/60 to-black/30" />
-          <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-black/20" />
+          <div className="absolute inset-0 bg-linear-to-r from-black via-black/70 to-black/20" />
+          <div className="absolute inset-0 bg-linear-to-t from-black via-black/15 to-black/30" />
         </div>
         <div className="xl:mx-auto xl:container px-6 pb-12 pt-28 md:pt-36">
           <div className="flex items-start gap-6 md:gap-10">
