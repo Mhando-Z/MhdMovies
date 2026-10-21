@@ -7,11 +7,10 @@ import { FaFacebook, FaSquareXTwitter, FaYoutube } from "react-icons/fa6";
 import { RiInstagramFill } from "react-icons/ri";
 
 const navigation = [
-  { label: "Home", href: "/" },
+  { label: "Movies", href: "/" },
   { label: "Actors", href: "/actors" },
   { label: "TV series", href: "/series" },
   { label: "Anime & Donghua", href: "/anime" },
-  { label: "Genres", href: "/Genres/" },
 ];
 
 const socialPlatforms = [
