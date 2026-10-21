@@ -536,8 +536,8 @@ export default function TvDetails({ id }) {
                         className="h-full w-full object-cover opacity-65 transition-opacity group-hover:opacity-90"
                       />
                       <span className="absolute inset-0 flex items-center justify-center">
-                        <div className="border rounded-full hover:border-0 hover:bg-red-600 cursor-pointer border-gray-100  size-16 flex flex-col items-center justify-center">
-                          <Play className="size-8 fill-white" />
+                        <div className="border bg-black/40 rounded-full hover:border-0 hover:bg-red-600 cursor-pointer border-gray-100  size-12 flex flex-col items-center justify-center">
+                          <Play className="size-5 fill-white" />
                         </div>
                       </span>
                     </div>
