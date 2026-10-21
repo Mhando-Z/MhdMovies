@@ -108,6 +108,65 @@ const GENRE_NAMES = {
 
 const MAX_GENRES = 4;
 
+/**
+ * Placeholder shown while the slider's data loads.
+ * `progress` is 0-100. Pass undefined for an indeterminate bar
+ * (e.g. while the movie list itself is still being fetched).
+ */
+const SliderSkeleton = ({ progress }) => {
+  const determinate = typeof progress === "number";
+
+  return (
+    <div className="flex flex-col w-full gap-3">
+      {/* Ghost cards that mimic the slider's shape */}
+      <div className="flex gap-3 overflow-hidden">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="relative w-20 sm:w-28 shrink-0 aspect-[2/3] overflow-hidden rounded-xl bg-white/10"
+            style={{ opacity: 1 - i * 0.2 }}
+          >
+            <motion.div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent"
+              initial={{ x: "-100%" }}
+              animate={{ x: "100%" }}
+              transition={{
+                duration: 1.4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.15,
+              }}
+            />
+            <div className="absolute space-y-1.5 inset-x-2 bottom-2">
+              <div className="w-3/4 h-2 rounded bg-white/20" />
+              <div className="w-1/2 h-2 rounded bg-white/10" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Progress bar */}
+      <div className="w-full h-1 overflow-hidden rounded-full bg-white/10">
+        {determinate ? (
+          <motion.div
+            className="h-full rounded-full bg-red-600"
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          />
+        ) : (
+          <motion.div
+            className="w-1/3 h-full rounded-full bg-red-600"
+            animate={{ x: ["-100%", "300%"] }}
+            transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
 const HeroSection = () => {
   const { Trending, isMobile } = useMovies();
   const [value, setValue] = useState(0);
@@ -115,20 +174,32 @@ const HeroSection = () => {
   const [imageError, setImageError] = useState(false);
   const hasSelectedInitialMovie = useRef(false);
   const [movieLogos, setMovieLogos] = useState({});
+  const [loadedCount, setLoadedCount] = useState(0);
+
   const logosReady =
     Trending.length > 0 &&
     Trending.every((movie) => Object.hasOwn(movieLogos, movie.id));
 
+  // undefined = indeterminate (movie list not fetched yet)
+  const loadProgress =
+    Trending.length > 0
+      ? Math.round((loadedCount / Trending.length) * 100)
+      : undefined;
+
   useEffect(() => {
     let cancelled = false;
+    setLoadedCount(0);
 
     // Load the whole lineup before starting the slider. A missing or failed
     // logo resolves to the text fallback without blocking the other movies.
+    // Each movie bumps the counter as it finishes so the skeleton can show
+    // real progress.
     Promise.all(
-      Trending.map(async (movie) => [
-        movie.id,
-        await preloadMovieLogo(movie.id).catch(() => null),
-      ]),
+      Trending.map(async (movie) => {
+        const logo = await preloadMovieLogo(movie.id).catch(() => null);
+        if (!cancelled) setLoadedCount((n) => n + 1);
+        return [movie.id, logo];
+      }),
     ).then((entries) => {
       if (!cancelled) setMovieLogos(Object.fromEntries(entries));
     });
@@ -341,13 +412,33 @@ const HeroSection = () => {
               className="h-[30%] md:absolute md:bottom-8 md:right-8 md:w-full md:max-w-md flex items-center justify-end"
             >
               <div className="w-full max-w-100 mx-auto md:mx-0">
-                {logosReady ? (
-                  <Slider data={Trending} value={value} setValue={setValue} />
-                ) : (
-                  <p role="status" className="text-sm text-white/70">
-                    Preparing featured movies…
-                  </p>
-                )}
+                <AnimatePresence mode="wait">
+                  {logosReady ? (
+                    <motion.div
+                      key="slider"
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                    >
+                      <Slider
+                        data={Trending}
+                        value={value}
+                        setValue={setValue}
+                      />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="skeleton"
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      role="status"
+                      aria-busy="true"
+                    >
+                      <SliderSkeleton progress={loadProgress} />
+                      <span className="sr-only">Loading featured movies</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           </div>

@@ -105,6 +105,65 @@ const GENRE_NAMES = {
 const MAX_GENRES = 4;
 const EMPTY_TRENDING = [];
 
+/**
+ * Placeholder shown while the slider's data loads.
+ * `progress` is 0-100. Pass undefined for an indeterminate bar
+ * (e.g. while the series list itself is still being fetched).
+ */
+const SliderSkeleton = ({ progress }) => {
+  const determinate = typeof progress === "number";
+
+  return (
+    <div className="flex flex-col w-full gap-3">
+      {/* Ghost cards that mimic the slider's shape */}
+      <div className="flex gap-3 overflow-hidden">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="relative w-20 sm:w-28 shrink-0 aspect-[2/3] overflow-hidden rounded-xl bg-white/10"
+            style={{ opacity: 1 - i * 0.2 }}
+          >
+            <motion.div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent"
+              initial={{ x: "-100%" }}
+              animate={{ x: "100%" }}
+              transition={{
+                duration: 1.4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.15,
+              }}
+            />
+            <div className="absolute space-y-1.5 inset-x-2 bottom-2">
+              <div className="w-3/4 h-2 rounded bg-white/20" />
+              <div className="w-1/2 h-2 rounded bg-white/10" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Progress bar */}
+      <div className="w-full h-1 overflow-hidden rounded-full bg-white/10">
+        {determinate ? (
+          <motion.div
+            className="h-full rounded-full bg-red-600"
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          />
+        ) : (
+          <motion.div
+            className="w-1/3 h-full rounded-full bg-red-600"
+            animate={{ x: ["-100%", "300%"] }}
+            transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
 const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
   const { isMobile } = useMovies();
   const [value, setValue] = useState(0);
@@ -112,19 +171,32 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
   const [imageError, setImageError] = useState(false);
   const hasSelectedInitialMovie = useRef(false);
   const [seriesLogos, setSeriesLogos] = useState({});
+  const [loadedCount, setLoadedCount] = useState(0);
+
   const logosReady =
     Trending.length > 0 &&
     Trending.every((movie) => Object.hasOwn(seriesLogos, movie.id));
 
+  // undefined = indeterminate (series list not fetched yet)
+  const loadProgress =
+    Trending.length > 0
+      ? Math.round((loadedCount / Trending.length) * 100)
+      : undefined;
+
   useEffect(() => {
     let cancelled = false;
+    setLoadedCount(0);
+
     // Load the whole lineup before starting the slider. A missing or failed
-    // logo resolves to the text fallback without blocking the other movies.
+    // logo resolves to the text fallback without blocking the other series.
+    // Each series bumps the counter as it finishes so the skeleton can show
+    // real progress.
     Promise.all(
-      Trending.map(async (series) => [
-        series.id,
-        await preloadSeriesLogo(series.id).catch(() => null),
-      ]),
+      Trending.map(async (series) => {
+        const logo = await preloadSeriesLogo(series.id).catch(() => null);
+        if (!cancelled) setLoadedCount((n) => n + 1);
+        return [series.id, logo];
+      }),
     ).then((entries) => {
       if (!cancelled) setSeriesLogos(Object.fromEntries(entries));
     });
@@ -134,7 +206,7 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
     };
   }, [Trending]);
 
-  // Pick a random starting movie once the list arrives.
+  // Pick a random starting series once the list arrives.
   useEffect(() => {
     if (Trending.length === 0 || hasSelectedInitialMovie.current) return;
 
@@ -142,7 +214,7 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
     setValue(Math.floor(Math.random() * Trending.length));
   }, [Trending.length]);
 
-  // Preload the image for the selected movie before swapping it in.
+  // Preload the image for the selected series before swapping it in.
   useEffect(() => {
     const movie = Trending[value];
     // Choose the path first so the guard matches what we actually load
@@ -265,14 +337,14 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
                       </span>
                     </div>
 
-                    {/* Movie Title */}
+                    {/* Series Title */}
                     <MovieTitle
                       movie={currentSeries}
                       titleStyle={titleStyle}
                       logo={seriesLogos[currentSeries.id]}
                     />
 
-                    {/* Movie Meta */}
+                    {/* Series Meta */}
                     <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/90">
                       {hasRating && (
                         <div className="flex items-center gap-2">
@@ -307,7 +379,7 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
                       </ul>
                     )}
 
-                    {/* Movie Description */}
+                    {/* Series Description */}
                     {currentSeries.overview && (
                       <p className="max-w-xl text-base leading-relaxed md:text-lg text-white/80 line-clamp-3 md:line-clamp-4 xl:line-clamp-5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
                         {currentSeries.overview}
@@ -337,13 +409,33 @@ const TvHeroSection = ({ Trending = EMPTY_TRENDING }) => {
               className="h-[30%] md:absolute md:bottom-8 md:right-8 md:w-full md:max-w-md flex items-center justify-end"
             >
               <div className="w-full max-w-100 mx-auto md:mx-0">
-                {logosReady ? (
-                  <Slider data={Trending} value={value} setValue={setValue} />
-                ) : (
-                  <p role="status" className="text-sm text-white/70">
-                    Preparing featured Series..
-                  </p>
-                )}
+                <AnimatePresence mode="wait">
+                  {logosReady ? (
+                    <motion.div
+                      key="slider"
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                    >
+                      <Slider
+                        data={Trending}
+                        value={value}
+                        setValue={setValue}
+                      />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="skeleton"
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      role="status"
+                      aria-busy="true"
+                    >
+                      <SliderSkeleton progress={loadProgress} />
+                      <span className="sr-only">Loading featured series</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           </div>
