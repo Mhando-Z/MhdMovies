@@ -138,12 +138,6 @@ export default function Footer() {
             &copy; {currentYear !== null ? `${currentYear} ` : ""}MhdMovies. All
             rights reserved.
           </p>
-          <div className="max-w-sm">
-            <p className="mt-1 text-[10px] leading-5">
-              This product uses the TMDB API but is not endorsed or certified by
-              TMDB.
-            </p>
-          </div>
         </div>
       </div>
     </footer>
