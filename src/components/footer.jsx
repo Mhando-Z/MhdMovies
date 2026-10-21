@@ -139,21 +139,6 @@ export default function Footer() {
             rights reserved.
           </p>
           <div className="max-w-sm">
-            <a
-              href="https://www.themoviedb.org"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            >
-              <img
-                src="/tmdb-logo.svg"
-                alt="The Movie Database"
-                width={80}
-                height={11}
-                loading="lazy"
-              />
-              <span>Data &amp; images</span>
-            </a>
             <p className="mt-1 text-[10px] leading-5">
               This product uses the TMDB API but is not endorsed or certified by
               TMDB.
