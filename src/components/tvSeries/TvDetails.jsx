@@ -341,18 +341,22 @@ export default function TvDetails({ id }) {
   const videos = (show?.videos?.results || [])?.filter(
     (video) => video.site === "YouTube" && /^[\w-]+$/.test(video.key),
   );
+
   const trailer =
     videos.find((video) => video.type === "Trailer" && video.official) ||
     videos.find((video) => video.type === "Trailer") ||
     videos[0];
+
   const logos = (show.images?.logos || [])
     .filter((image) => image.iso_639_1 === "en" || !image.iso_639_1)
     .sort(
       (a, b) => Number(b.iso_639_1 === "en") - Number(a.iso_639_1 === "en"),
     );
-  const gallery = (show.images?.backdrops || [])
-    .slice(0, 8)
-    .map((image) => image.file_path);
+
+  const gallery = (show.images?.backdrops || [])?.map(
+    (image) => image.file_path,
+  );
+
   const facts = [
     ["Status", show.status],
     ["First aired", date(show.first_air_date)],
@@ -515,53 +519,56 @@ export default function TvDetails({ id }) {
         {videos.length > 0 && (
           <section>
             <Heading eyebrow="A closer look" title="Trailers & extras" />
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {videos.slice(0, 6).map((video) => (
-                <button
-                  key={video.id}
-                  type="button"
-                  onClick={() => setModal({ type: "video", video })}
-                  className={`group overflow-hidden rounded-xl border border-white/10 text-left ${focus}`}
-                >
-                  <div className="relative aspect-video bg-zinc-900">
-                    <img
-                      src={`https://i.ytimg.com/vi/${video.key}/hqdefault.jpg`}
-                      alt=""
-                      loading="lazy"
-                      className="h-full w-full object-cover opacity-65 transition-opacity group-hover:opacity-90"
-                    />
-                    <span className="absolute inset-0 flex items-center justify-center">
-                      <Play className="size-9 fill-white" />
-                    </span>
-                  </div>
-                  <p className="truncate p-4 text-sm text-white/75">
-                    {video.name}
-                  </p>
-                </button>
-              ))}
+            <div className="overflow-y-auto h-104">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {videos?.map((video) => (
+                  <button
+                    key={video.id}
+                    type="button"
+                    onClick={() => setModal({ type: "video", video })}
+                    className={`group overflow-hidden rounded-xl border border-white/10 text-left ${focus}`}
+                  >
+                    <div className="relative aspect-video bg-zinc-900">
+                      <img
+                        src={`https://i.ytimg.com/vi/${video.key}/hqdefault.jpg`}
+                        alt=""
+                        loading="lazy"
+                        className="h-full w-full object-cover opacity-65 transition-opacity group-hover:opacity-90"
+                      />
+                      <span className="absolute inset-0 flex items-center justify-center">
+                        <div className="border rounded-full hover:border-0 hover:bg-red-600 cursor-pointer border-gray-100  size-16 flex flex-col items-center justify-center">
+                          <Play className="size-8 fill-white" />
+                        </div>
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
           </section>
         )}
-        {gallery.length > 0 && (
+        {gallery?.length > 0 && (
           <section>
             <Heading eyebrow="Inside the world" title="Gallery" />
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {gallery.map((path, index) => (
-                <button
-                  key={path}
-                  type="button"
-                  aria-label={`Enlarge ${show.name} image ${index + 1}`}
-                  onClick={() => setModal({ type: "image", path, index })}
-                  className={`overflow-hidden rounded-xl ${focus}`}
-                >
-                  <Artwork
-                    path={path}
-                    size="w780"
-                    alt={`${show.name}, scene ${index + 1}`}
-                    className="aspect-video w-full object-cover transition-opacity hover:opacity-75"
-                  />
-                </button>
-              ))}
+            <div className="overflow-y-auto h-104">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {gallery.map((path, index) => (
+                  <button
+                    key={path}
+                    type="button"
+                    aria-label={`Enlarge ${show.name} image ${index + 1}`}
+                    onClick={() => setModal({ type: "image", path, index })}
+                    className={`overflow-hidden rounded-xl ${focus}`}
+                  >
+                    <Artwork
+                      path={path}
+                      size="w780"
+                      alt={`${show.name}, scene ${index + 1}`}
+                      className="aspect-video w-full object-cover transition-opacity hover:opacity-75"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
           </section>
         )}

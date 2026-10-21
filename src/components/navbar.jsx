@@ -4,8 +4,8 @@ import { Suspense, useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Film, Search, Panda, Tv, UsersRound } from "lucide-react";
-import CatalogueSearch from "./CatalogueSearch";
 import { focus } from "./tvSeries/TvUI";
+import CatalogueSearch from "./CatalogueSearch";
 
 function NavigationLinks({ pathname = "" }) {
   return (
