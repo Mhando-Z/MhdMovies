@@ -163,9 +163,11 @@ export default function MovieDetails() {
         src: `https://image.tmdb.org/t/p/original${logoData.file_path}`,
       }
     : null;
+
   const videos = Video.filter(
     (item) => item.site === "YouTube" && /^[\w-]+$/.test(item.key),
   );
+
   const trailer =
     videos.find((item) => item.type === "Trailer" && item.official) ??
     videos.find((item) => item.type === "Trailer") ??
@@ -433,7 +435,7 @@ export default function MovieDetails() {
                             className="h-full w-full object-cover opacity-65 transition-opacity group-hover:opacity-90"
                           />
                           <span className="absolute inset-0 flex items-center justify-center">
-                            <span className="rounded-full border border-white/30 bg-black/40 p-4 backdrop-blur-sm">
+                            <span className="rounded-full cursor-pointer hover:border-0 hover:bg-red-600 border border-white/30 bg-black/40 p-4 backdrop-blur-sm">
                               <Play className="size-5 fill-white" />
                             </span>
                           </span>
