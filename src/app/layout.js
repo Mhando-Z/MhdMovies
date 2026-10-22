@@ -1,4 +1,3 @@
-// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import Footer from "@/components/footer";
@@ -14,7 +13,7 @@ export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: title,
-    template: "%s | MhdMovies",
+    // template: "%s | MhdMovies",
   },
   description,
   applicationName: "MhdMovies",
@@ -84,7 +83,11 @@ const websiteStructuredData = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`h-full  antialiased`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`h-full antialiased`}
+    >
       <body
         className="min-h-full overflow-x-hidden flex flex-col"
         style={{ backgroundColor: "#000000" }}
