@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 import { MovieProvider } from "@/context/movieContext";
 import Navbar from "@/components/navbar";
 
-const siteUrl = "https://mhd-movies.vercel.app/";
+const siteUrl = "https://mhdmovies.vercel.app/";
 const title = "MhdMovies - Your Ultimate Movie and Series Reference";
 const description =
   "Discover movies and TV series with MhdMovies. Explore detailed information, cast, ratings, and where to watch online, powered by TMDB.";
