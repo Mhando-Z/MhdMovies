@@ -23,6 +23,7 @@ import { AnimeArtwork, button, focus } from "./AnimeUI";
 import AnimeTitle from "./AnimeTitle";
 import { WatchlistButton } from "./AnimeLibrary";
 import { useAnimeResource } from "./useAnimeResource";
+import { BiSolidMoviePlay } from "react-icons/bi";
 
 const SLIDE_DURATION = 8; // seconds each slide stays on screen
 const EASE = [0.22, 1, 0.36, 1];
@@ -149,7 +150,6 @@ function FeaturedSlide({ anime, direction, reduced }) {
             variants={itemVariants}
             className="mb-5 inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-red-400 backdrop-blur-sm"
           >
-            <Sparkles className="size-3.5" aria-hidden="true" />
             The season’s spotlight
           </motion.p>
 
@@ -222,11 +222,8 @@ function FeaturedSlide({ anime, direction, reduced }) {
                 prefetch={false}
                 className={`${button} group border-red-600 bg-red-600 shadow-lg shadow-red-950/40 hover:bg-red-700`}
               >
-                Explore this anime
-                <ArrowRight
-                  className="size-4 transition-transform duration-200 group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
+                <BiSolidMoviePlay className="w-5 h-5" />
+                Watch now
               </Link>
             </motion.div>
             <WatchlistButton anime={anime} />
