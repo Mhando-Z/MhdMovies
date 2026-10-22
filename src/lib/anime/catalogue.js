@@ -1,5 +1,7 @@
 import "server-only";
 import { cache } from "react";
+import { animeTransport } from "./transport";
+import { currentSeason, getMalAnime, getMalCatalogue, getMalHome, mapLegacyId } from "./mal";
 import {
   formats,
   genres,
@@ -8,6 +10,7 @@ import {
   sorts,
   statuses,
   validAnimeId,
+  validAnimeKey,
 } from "./model";
 
 const fields = `id idMal title { english romaji native } description(asHtml: false)
@@ -18,23 +21,9 @@ const failure = (message, status = 502) =>
   Object.assign(new Error(message), { status });
 
 async function requestJson(url, options = {}, signal) {
-  const response = await fetch(url, {
-    ...options,
-    next: { revalidate: 900 },
-    signal: signal
-      ? AbortSignal.any([signal, AbortSignal.timeout(15000)])
-      : AbortSignal.timeout(15000),
+  return animeTransport.request(url, options, {
+    validate: (data) => data && !data.errors?.length && !data.error && (data.data !== undefined || Number.isInteger(data.id)),
   });
-  if (!response.ok)
-    throw failure(
-      response.status === 429
-        ? "The anime collection is busy. Please try again shortly."
-        : response.status === 404
-          ? "This anime could not be found."
-          : "The anime service is temporarily unavailable. Please try again.",
-      [404, 429].includes(response.status) ? response.status : 502,
-    );
-  return response.json();
 }
 
 async function anilist(query, variables, signal) {
@@ -56,7 +45,7 @@ async function anilist(query, variables, signal) {
     );
   if (!result.data)
     throw failure("The anime service returned an incomplete response.");
-  return result.data;
+  return { ...result.data, _stale: Boolean(result._stale) };
 }
 
 export function parseFilters(params) {
@@ -72,6 +61,7 @@ export function parseFilters(params) {
   };
   if (
     filters.search.length > 150 ||
+    (filters.search && filters.search.length < 2) ||
     !["", "JP", "CN"].includes(filters.country) ||
     (filters.genre && !genres.includes(filters.genre)) ||
     (filters.format && !formats.includes(filters.format)) ||
@@ -92,13 +82,17 @@ export function parseFilters(params) {
   return filters;
 }
 
-export async function getCatalogue(params, signal) {
+async function getAniListCatalogue(params, signal) {
   const filters = parseFilters(params);
+  if (filters.sort === "airing" && !filters.status) filters.status = "RELEASING";
+  if (filters.sort === "upcoming" && !filters.status) filters.status = "NOT_YET_RELEASED";
+  if (filters.sort === "movies" && !filters.format) filters.format = "MOVIE";
+  const seasonal = !filters.search && !filters.country && !filters.year && ["trending", "seasonal"].includes(filters.sort);
   const data = await anilist(
-    `query ($page: Int, $search: String, $country: CountryCode, $genre: String, $format: MediaFormat, $status: MediaStatus, $sort: [MediaSort], $year: Int) {
+    `query ($page: Int, $search: String, $country: CountryCode, $genre: String, $format: MediaFormat, $status: MediaStatus, $sort: [MediaSort], $year: Int, $season: MediaSeason) {
     Page(page: $page, perPage: 24) {
       pageInfo { currentPage hasNextPage }
-      media(type: ANIME, isAdult: false, search: $search, countryOfOrigin: $country, genre: $genre, format: $format, status: $status, sort: $sort, seasonYear: $year) { ${fields} }
+      media(type: ANIME, isAdult: false, search: $search, countryOfOrigin: $country, genre: $genre, format: $format, status: $status, sort: $sort, seasonYear: $year, season: $season) { ${fields} }
     }
   }`,
     {
@@ -111,6 +105,7 @@ export async function getCatalogue(params, signal) {
       ),
       sort: [sorts[filters.sort]],
       ...(filters.year ? { year: Number(filters.year) } : {}),
+      ...(seasonal ? { year: currentSeason().year, season: currentSeason().season.toUpperCase() } : {}),
     },
     signal,
   );
@@ -118,10 +113,11 @@ export async function getCatalogue(params, signal) {
     results: (data.Page.media || []).map(normalizeAnime),
     page: filters.page,
     hasNextPage: data.Page.pageInfo.hasNextPage,
+    stale: Boolean(data._stale),
   };
 }
 
-export async function getHome(signal) {
+async function getAniListHome(signal) {
   const data = await anilist(
     `query {
     trending: Page(perPage: 6) { media(type: ANIME, isAdult: false, sort: TRENDING_DESC) { ${fields} } }
@@ -131,38 +127,80 @@ export async function getHome(signal) {
     {},
     signal,
   );
-  return Object.fromEntries(
-    Object.entries(data).map(([key, value]) => [
+  return { stale: Boolean(data._stale), ...Object.fromEntries(
+    Object.entries(data).filter(([key]) => key !== "_stale").map(([key, value]) => [
       key,
       value.media.map(normalizeAnime),
     ]),
-  );
+  ) };
 }
 
-export const getAnime = cache(async (id) => {
-  if (!validAnimeId(id)) throw failure("This anime could not be found.", 404);
-  const { Media } = await anilist(
+async function getAniListAnime(id, byMalId = false) {
+  const data = await anilist(
     `query ($id: Int) {
-    Media(id: $id, type: ANIME, isAdult: false) {
+    Media(${byMalId ? "idMal" : "id"}: $id, type: ANIME, isAdult: false) {
       ${fields} synonyms studios(isMain: true) { nodes { name } } trailer { id site }
       relations { edges { relationType node { ${fields} type isAdult } } }
     }
   }`,
     { id: Number(id) },
   );
+  const { Media } = data;
   if (!Media) throw failure("This anime could not be found.", 404);
-  return normalizeAnime(Media);
+  if (byMalId && Media.idMal !== Number(id)) throw failure("The anime service returned an incomplete response.");
+  return { ...normalizeAnime(Media), stale: Boolean(data._stale) };
+}
+
+export async function getCatalogue(params, signal) {
+  const filters = parseFilters(params);
+  // Country is only supported by AniList. MAL/Jikan must not guess origins.
+  if (filters.country) return getAniListCatalogue(params, signal);
+  try { return await getMalCatalogue(filters); }
+  catch (error) {
+    try { return { ...await getAniListCatalogue(params, signal), provider: "anilist" }; }
+    catch { throw error; }
+  }
+}
+
+export async function getHome(signal) {
+  try { return await getMalHome(); }
+  catch (error) {
+    try { return await getAniListHome(signal); }
+    catch { throw error; }
+  }
+}
+
+export const getAnime = cache(async (id) => {
+  if (!validAnimeKey(id)) throw failure("This anime could not be found.", 404);
+  if (String(id).startsWith("mal-")) {
+    const malId = Number(String(id).slice(4));
+    try { return await getMalAnime(malId); }
+    catch (error) {
+      if (error.status === 404) throw error;
+      try { return { ...await getAniListAnime(malId, true), id: `mal-${malId}` }; }
+      catch { throw error; }
+    }
+  }
+  try {
+    const malId = await mapLegacyId(id);
+    return { ...await getMalAnime(malId), id: Number(id), anilistId: Number(id) };
+  } catch (error) {
+    try { return await getAniListAnime(id); }
+    catch { throw error; }
+  }
 });
 
 export async function getEpisodes(anime, page, signal) {
   if (!anime.malId)
     return { results: [], hasNextPage: false, unavailable: true };
-  const data = await requestJson(
+  try {
+    const data = await requestJson(
     `https://api.jikan.moe/v4/anime/${anime.malId}/episodes?page=${page}`,
     {},
     signal,
   );
-  return {
+    if (!Array.isArray(data.data)) throw failure("Episode information is temporarily unavailable.");
+    return {
     results: (data.data || []).map((episode) => ({
       number: episode.mal_id,
       title: episode.title || `Episode ${episode.mal_id}`,
@@ -172,7 +210,21 @@ export async function getEpisodes(anime, page, signal) {
     })),
     hasNextPage: Boolean(data.pagination?.has_next_page),
     unavailable: false,
-  };
+    };
+  } catch {
+    try {
+      const data = await animeTransport.request(`https://api.ani.zip/mappings?mal_id=${anime.malId}`, {}, {
+        ttl: 3600, validate: (value) => value.mappings?.mal_id === anime.malId && Boolean(value.episodes),
+      });
+      const start = (page - 1) * 100 + 1;
+      const all = Object.entries(data.episodes).filter(([number]) => /^[1-9]\d*$/.test(number))
+        .map(([number, episode]) => ({ number: Number(number), title: episode.title?.en || `Episode ${number}`,
+          // Only exact timestamps can establish a broadcast date for playback.
+          aired: episode.airDateUtc || null, filler: false, recap: false }));
+      return { results: all.filter(({ number }) => number >= start && number < start + 100),
+        hasNextPage: all.some(({ number }) => number >= start + 100), unavailable: false };
+    } catch { return { results: [], hasNextPage: false, unavailable: true }; }
+  }
 }
 
 export async function canWatchEpisode(anime, episode) {
@@ -191,7 +243,9 @@ export async function canWatchEpisode(anime, episode) {
       new Date(data.aired).getTime() <= Date.now()
     );
   } catch {
-    return false;
+    const data = await getEpisodes(anime, Math.floor((episode - 1) / 100) + 1);
+    const item = data.results.find((item) => item.number === episode);
+    return Boolean(item?.aired) && new Date(item.aired).getTime() <= Date.now();
   }
 }
 
@@ -203,8 +257,8 @@ export async function getChineseDetails(anime, signal) {
   } catch {
     return null;
   }
-  const id = mappings?.[anime.id];
-  if (anime.country !== "CN" || !validAnimeId(id)) return null;
+  const id = mappings?.[anime.id] || mappings?.[anime.anilistId];
+  if (anime.country === "JP" || !validAnimeId(id)) return null;
   const data = await requestJson(
     `https://api.bgm.tv/v0/subjects/${id}`,
     {
@@ -231,6 +285,6 @@ export function animeError(error) {
         ? error.message
         : "We couldn't load this anime information. Please try again.",
     },
-    { status: error.status || 502 },
+    { status: error.status || 502, headers: { "Cache-Control": "no-store" } },
   );
 }

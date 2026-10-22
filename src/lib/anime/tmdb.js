@@ -43,18 +43,19 @@ async function findTitle(anime, signal) {
   return matches.size === 1 ? [...matches.values()][0] : null;
 }
 
-export async function getAnimeLogo(anime, signal) {
+export async function getAnimeVisuals(anime, signal) {
+  const empty = { logo: null, backdrop: null };
   if (!(process.env.TMDB_ACCESS_TOKEN || process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN))
-    return null;
+    return empty;
   try {
     // Verified overrides support sequels that TMDB groups under one series.
     const mappings = JSON.parse(process.env.ANIME_TMDB_MAPPINGS || "{}");
-    const mapped = mappings?.[anime.id];
+    const mapped = mappings?.[anime.id] || mappings?.[anime.anilistId];
     const match =
       mapped && validId(mapped.id) && ["tv", "movie"].includes(mapped.type)
         ? mapped
         : await findTitle(anime, signal);
-    if (!match) return null;
+    if (!match) return empty;
     const images = await tmdb(
       `/${match.type}/${match.id}/images`,
       { language: "" },
@@ -74,15 +75,22 @@ export async function getAnimeLogo(anime, signal) {
         (b.vote_average || 0) - (a.vote_average || 0) ||
         (b.width || 0) - (a.width || 0),
       )[0];
-    return logo
+    const backdrop = (images.backdrops || [])
+      .filter((image) => /^\/[\w.-]+\.(jpg|png|webp)$/i.test(image.file_path || "") && image.aspect_ratio > 1.3)
+      .sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0))[0];
+    return { logo: logo
       ? {
           url: `https://image.tmdb.org/t/p/original${logo.file_path}`,
           width: logo.width,
           height: logo.height,
         }
-      : null;
+      : null, backdrop: backdrop ? `https://image.tmdb.org/t/p/w1280${backdrop.file_path}` : null };
   } catch {
     // Optional artwork must never make the anime page unavailable.
-    return null;
+    return empty;
   }
+}
+
+export async function getAnimeLogo(anime, signal) {
+  return (await getAnimeVisuals(anime, signal)).logo;
 }

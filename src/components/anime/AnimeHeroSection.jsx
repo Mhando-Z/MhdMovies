@@ -1,409 +1,181 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { BiSolidMoviePlay } from "react-icons/bi";
-import { BsCalendarEvent } from "react-icons/bs";
-import { Clapperboard, Tv, Star } from "lucide-react";
+import { useState } from "react";
 import Link from "next/link";
-
-import AnimeSlider from "../Swipper/AniSwiper";
-import Rating from "../rating";
-
 import {
-  Creepster,
-  Cinzel,
-  Lobster_Two,
-  Bricolage_Grotesque,
-  Oswald,
-} from "next/font/google";
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  Star,
+} from "lucide-react";
+import { label } from "@/lib/anime/model";
+import { AnimeArtwork, button, focus } from "./AnimeUI";
+import AnimeTitle from "./AnimeTitle";
+import { WatchlistButton } from "./AnimeLibrary";
+import { useAnimeResource } from "./useAnimeResource";
 
-import { useMovies } from "@/context/movieContext";
-
-const horrorFont = Creepster({
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
-
-const sciFiFont = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: "800",
-  display: "swap",
-});
-
-const fantasyFont = Cinzel({
-  subsets: ["latin"],
-  weight: "700",
-  display: "swap",
-});
-
-const romanceFont = Lobster_Two({
-  subsets: ["latin"],
-  weight: "700",
-  display: "swap",
-});
-
-const actionFont = Oswald({
-  subsets: ["latin"],
-  weight: "700",
-  display: "swap",
-});
-
-const titleFonts = [
-  {
-    genres: ["Horror"],
-    font: horrorFont,
-    className: "tracking-wide",
-  },
-  {
-    genres: ["Sci-Fi", "Science Fiction"],
-    font: sciFiFont,
-    className: "uppercase tracking-[0.12em]",
-  },
-  {
-    genres: ["Fantasy"],
-    font: fantasyFont,
-    className: "uppercase tracking-[0.08em]",
-  },
-  {
-    genres: ["Romance"],
-    font: romanceFont,
-    className: "tracking-normal",
-  },
-  {
-    genres: ["Action", "Thriller"],
-    font: actionFont,
-    className: "uppercase tracking-[0.04em]",
-  },
-];
-
-const fallbackTitleStyle = {
-  font: actionFont,
-  className: "uppercase tracking-[0.04em]",
-};
-
-const MAX_GENRES = 4;
-const EMPTY_ANIME = [];
-
-const AnimeHeroSection = ({ Trending = EMPTY_ANIME }) => {
-  const { isMobile } = useMovies();
-
-  const [value, setValue] = useState(0);
-  const [imageUrl, setImageUrl] = useState("");
-  const [imageError, setImageError] = useState(false);
-
-  const hasSelectedInitialAnime = useRef(false);
-
-  // Keep the selected index valid if the API data changes.
-  useEffect(() => {
-    if (Trending.length === 0) {
-      setValue(0);
-      setImageUrl("");
-      setImageError(false);
-      hasSelectedInitialAnime.current = false;
-      return;
-    }
-
-    setValue((previous) => Math.min(previous, Trending.length - 1));
-  }, [Trending]);
-
-  // Select a random starting anime when the list first arrives.
-  useEffect(() => {
-    if (Trending.length === 0 || hasSelectedInitialAnime.current) {
-      return;
-    }
-
-    hasSelectedInitialAnime.current = true;
-
-    setValue(Math.floor(Math.random() * Trending.length));
-  }, [Trending.length]);
-
-  const currentSeries = Trending[value];
-
-  // Select the appropriate image from the new API response.
-  const backgroundImage = useMemo(() => {
-    if (!currentSeries) return "";
-
-    return isMobile === true
-      ? currentSeries.cover
-      : currentSeries.banner || currentSeries.cover;
-  }, [currentSeries, isMobile]);
-
-  // Preload the selected image before displaying it.
-  useEffect(() => {
-    if (!backgroundImage) {
-      setImageUrl("");
-      setImageError(true);
-      return;
-    }
-
-    let cancelled = false;
-
-    setImageError(false);
-
-    const img = new Image();
-
-    img.onload = () => {
-      if (!cancelled) {
-        setImageUrl(backgroundImage);
-        setImageError(false);
-      }
-    };
-
-    img.onerror = () => {
-      if (cancelled) return;
-
-      // Fall back to the cover if the banner fails.
-      if (backgroundImage !== currentSeries?.cover && currentSeries?.cover) {
-        const fallbackImage = new Image();
-
-        fallbackImage.onload = () => {
-          if (!cancelled) {
-            setImageUrl(currentSeries.cover);
-            setImageError(false);
-          }
-        };
-
-        fallbackImage.onerror = () => {
-          if (!cancelled) {
-            setImageUrl("");
-            setImageError(true);
-          }
-        };
-
-        fallbackImage.src = currentSeries.cover;
-        return;
-      }
-
-      setImageUrl("");
-      setImageError(true);
-    };
-
-    img.src = backgroundImage;
-
-    return () => {
-      cancelled = true;
-      img.onload = null;
-      img.onerror = null;
-    };
-  }, [backgroundImage, currentSeries]);
-
-  // Match title typography using genre names rather than TMDB genre IDs.
-  const titleStyle = useMemo(() => {
-    const genres = currentSeries?.genres ?? [];
-
-    return (
-      titleFonts.find(({ genres: matchingGenres }) =>
-        genres.some((genre) =>
-          matchingGenres.some(
-            (matchingGenre) =>
-              genre.toLowerCase() === matchingGenre.toLowerCase(),
-          ),
-        ),
-      ) ?? fallbackTitleStyle
-    );
-  }, [currentSeries]);
-
-  const genres = useMemo(
-    () => (currentSeries?.genres ?? []).slice(0, MAX_GENRES),
-    [currentSeries],
+function FeaturedTitle({ anime }) {
+  const { data: artwork } = useAnimeResource(`/api/anime/${anime.id}/logo`);
+  const [failed, setFailed] = useState(null);
+  const background = artwork?.backdrop || anime.banner || anime.cover;
+  return (
+    <>
+      <div className="absolute inset-0 bg-zinc-950" aria-hidden="true">
+        {background && failed !== background && (
+          <img
+            src={background}
+            alt=""
+            fetchPriority="high"
+            decoding="async"
+            onError={() => setFailed(background)}
+            className={`size-full object-cover object-top ${!artwork?.backdrop && !anime.banner ? "opacity-45" : "opacity-80"}`}
+          />
+        )}
+        <div className="absolute inset-0 bg-linear-to-r from-black/95 via-black/65 to-black/10" />
+        <div className="absolute inset-0 bg-linear-to-t from-black via-black/10 to-black/25" />
+      </div>
+      <div className="relative xl:mx-auto grid xl:container items-center gap-10 px-6 pb-10 pt-32 md:min-h-[620px] md:grid-cols-[1fr_240px] md:pb-14 md:pt-40 lg:grid-cols-[1fr_300px] lg:gap-24">
+        <div className="min-w-0 max-w-2xl">
+          <p className="mb-5 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-red-400">
+            The season’s spotlight
+          </p>
+          <AnimeTitle
+            anime={anime}
+            artwork={artwork || null}
+            className="min-h-20 text-balance md:min-h-28 md:text-6xl"
+          />
+          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-white/75 md:text-sm">
+            {anime.score && (
+              <span className="flex items-center gap-1.5 font-semibold text-amber-300">
+                <Star className="size-4 fill-current" />
+                {anime.score.toFixed(1)}
+                <span className="font-normal text-white/40">/ 10</span>
+              </span>
+            )}
+            {anime.year && <span>{anime.year}</span>}
+            {anime.format && <span>{label(anime.format)}</span>}
+            {anime.status && (
+              <span className="rounded-full border border-white/15 px-2.5 py-1 text-[11px]">
+                {label(anime.status)}
+              </span>
+            )}
+          </div>
+          <p className="mt-5 line-clamp-3 max-w-xl text-sm leading-7 text-white/65">
+            {anime.description ||
+              "A new world, a different perspective. Discover the story and find your next favourite."}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {anime.genres.slice(0, 3).map((genre) => (
+              <span key={genre} className="text-xs text-white/45">
+                {genre}
+              </span>
+            ))}
+          </div>
+          <div className="mt-7 flex flex-wrap items-start gap-3">
+            <Link
+              href={`/anime/${anime.id}`}
+              prefetch={false}
+              className={`${button} border-red-600 bg-red-600 hover:bg-red-700`}
+            >
+              Explore this anime
+              <ArrowRight className="size-4" />
+            </Link>
+            <WatchlistButton anime={anime} />
+          </div>
+        </div>
+        <Link
+          href={`/anime/${anime.id}`}
+          prefetch={false}
+          aria-label={`${anime.title} details`}
+          className={`hidden rotate-3 rounded-2xl shadow-2xl shadow-black/50 md:block ${focus}`}
+        >
+          <AnimeArtwork
+            key={anime.cover}
+            src={anime.cover}
+            alt={`${anime.title} poster`}
+            eager
+            className="aspect-2/3 rounded-2xl border border-white/15"
+          />
+        </Link>
+      </div>
+    </>
   );
+}
 
-  const year = currentSeries?.year;
-
-  // The API score can be null. Normalize scores above 10 if needed.
-  const score =
-    typeof currentSeries?.score === "number" &&
-    Number.isFinite(currentSeries.score)
-      ? currentSeries.score > 10
-        ? currentSeries.score / 10
-        : currentSeries.score
-      : null;
-
-  const hasRating = score !== null;
-
-  if (Trending.length === 0) {
-    return null;
-  }
-
+export default function AnimeHeroSection({ Trending = [], loading = false }) {
+  const [selected, setSelected] = useState(0);
+  const index = Math.min(selected, Math.max(0, Trending.length - 1));
+  const anime = Trending[index];
+  if (!anime)
+    return loading ? (
+      <section
+        aria-label="Loading featured anime"
+        role="status"
+        className="min-h-[520px] bg-linear-to-br from-zinc-900 to-black px-6 pb-12 pt-40"
+      >
+        <div className="mx-auto max-w-7xl space-y-6 motion-safe:animate-pulse">
+          <div className="h-3 w-36 rounded bg-white/10" />
+          <div className="h-24 max-w-lg rounded bg-white/10" />
+          <div className="h-12 max-w-xl rounded bg-white/5" />
+          <span className="sr-only">Loading featured anime...</span>
+        </div>
+      </section>
+    ) : null;
   return (
     <section
-      className="relative w-full overflow-hidden font-roboto"
-      aria-label="Featured trending anime"
+      aria-label="Featured anime"
+      aria-roledescription="carousel"
+      className="relative isolate overflow-hidden border-b border-white/10 bg-black"
     >
-      <div className="relative h-[600px] sm:h-[700px] md:h-screen md:max-h-[970px] md:min-h-[450px]">
-        {/* Background image */}
-        <div className="absolute inset-0 bg-black">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={imageUrl || currentSeries?.id || "empty"}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              className="absolute inset-0"
-            >
-              {!imageError && imageUrl && (
-                <img
-                  src={imageUrl}
-                  alt={currentSeries?.title ?? "Featured anime"}
-                  className="h-full w-full object-cover"
-                  loading="eager"
-                  decoding="async"
-                />
-              )}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Image overlays */}
-          <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/40 to-transparent" />
-          <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-black/40" />
+      <FeaturedTitle key={anime.id} anime={anime} />
+      <div className="relative xl:mx-auto flex xl:container items-center gap-4 px-6 pb-8">
+        <div className="flex shrink-0 items-center gap-1">
+          <button
+            type="button"
+            aria-label="Previous featured anime"
+            onClick={() =>
+              setSelected((index + Trending.length - 1) % Trending.length)
+            }
+            className={`${button} size-11 p-0`}
+          >
+            <ChevronLeft className="size-4" />
+          </button>
+          <button
+            type="button"
+            aria-label="Next featured anime"
+            onClick={() => setSelected((index + 1) % Trending.length)}
+            className={`${button} size-11 p-0`}
+          >
+            <ChevronRight className="size-4" />
+          </button>
         </div>
-
-        {/* Hero content */}
-        <div className="absolute inset-0 px-4 xl:container md:px-0 xl:mx-auto lg:px-8">
-          <div className="flex h-full flex-col">
-            <div className="invisible flex h-[70%] max-w-2xl flex-1 flex-col justify-center gap-4 md:visible md:h-full md:gap-5 md:pl-8 lg:pl-0">
-              <AnimatePresence mode="wait">
-                {currentSeries && (
-                  <motion.div
-                    key={currentSeries.id}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{
-                      duration: 0.4,
-                      ease: "easeOut",
-                    }}
-                    className="flex flex-col gap-4 md:gap-5"
-                  >
-                    {/* Trending label */}
-                    <div className="flex items-center gap-2">
-                      <span
-                        aria-hidden="true"
-                        className="h-5 w-1 rounded-full bg-red-600"
-                      />
-
-                      <span className="text-sm font-medium tracking-wide text-white/80">
-                        Trending Anime
-                      </span>
-                    </div>
-
-                    {/* Anime title */}
-                    <div className="space-y-2">
-                      <h1
-                        className={`${titleStyle.font.className} ${titleStyle.className} text-4xl font-extrabold leading-tight text-white drop-shadow-lg sm:text-5xl md:text-6xl`}
-                      >
-                        {currentSeries.title}
-                      </h1>
-
-                      {currentSeries.nativeTitle &&
-                        currentSeries.nativeTitle !== currentSeries.title && (
-                          <p className="text-sm text-white/65 sm:text-base">
-                            {currentSeries.nativeTitle}
-                          </p>
-                        )}
-                    </div>
-
-                    {/* Anime metadata */}
-                    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/90 sm:text-base">
-                      {hasRating && (
-                        <div className="flex items-center gap-2">
-                          <Star
-                            className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                            aria-hidden="true"
-                          />
-
-                          <span className="font-semibold">
-                            {score.toFixed(1)}
-                          </span>
-
-                          <Rating value={score} />
-                        </div>
-                      )}
-
-                      {year && (
-                        <div className="flex items-center gap-2">
-                          <BsCalendarEvent className="h-4 w-4" />
-                          <span>{year}</span>
-                        </div>
-                      )}
-
-                      {currentSeries.format && (
-                        <div className="flex items-center gap-2">
-                          <Clapperboard className="h-4 w-4" />
-                          <span>{currentSeries.format}</span>
-                        </div>
-                      )}
-
-                      {typeof currentSeries.episodes === "number" && (
-                        <div className="flex items-center gap-2">
-                          <Tv className="h-4 w-4" />
-                          <span>{currentSeries.episodes} Episodes</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Genres */}
-                    {genres.length > 0 && (
-                      <ul
-                        aria-label="Genres"
-                        className="flex flex-wrap items-center gap-2"
-                      >
-                        {genres.map((genre) => (
-                          <li
-                            key={genre}
-                            className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white/90 backdrop-blur-sm sm:text-sm"
-                          >
-                            {genre}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    {/* Description */}
-                    {currentSeries.description && (
-                      <p className="line-clamp-3 max-w-xl text-base leading-relaxed text-white/80 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] md:line-clamp-4 md:text-lg xl:line-clamp-5">
-                        {currentSeries.description}
-                      </p>
-                    )}
-
-                    {/* Watch button */}
-                    <div className="pt-1">
-                      <Link
-                        href={`/anime/${currentSeries.id}`}
-                        className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-base font-semibold text-white shadow-lg shadow-black/40 transition-all duration-200 hover:scale-105 hover:bg-red-700 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black md:px-6 md:py-3 md:text-lg"
-                      >
-                        <BiSolidMoviePlay className="h-5 w-5" />
-                        Watch Now
-                      </Link>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Keep the existing AnimeSlider */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="flex h-[30%] items-center justify-end md:absolute md:bottom-8 md:right-8 md:w-full md:max-w-md"
+        <div
+          className="flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1"
+          role="group"
+          aria-label="Choose featured anime"
+        >
+          {Trending.map((item, position) => (
+            <button
+              key={item.id}
+              type="button"
+              aria-pressed={position === index}
+              aria-label={`Feature ${item.title}`}
+              onClick={() => setSelected(position)}
+              className={`flex min-h-14 min-w-32 max-w-48 flex-1 shrink-0 items-center gap-3 rounded-lg border p-2 text-left transition-colors ${focus} ${position === index ? "border-red-500/70 bg-red-500/10" : "border-white/10 bg-black/30 hover:bg-white/10"}`}
             >
-              <div className="mx-auto w-full max-w-100 md:mx-0">
-                <AnimeSlider
-                  data={Trending}
-                  value={value}
-                  setValue={setValue}
-                />
-              </div>
-            </motion.div>
-          </div>
+              <span
+                className={`text-xs tabular-nums ${position === index ? "text-red-400" : "text-white/30"}`}
+              >
+                {String(position + 1).padStart(2, "0")}
+              </span>
+              <span className="line-clamp-2 text-[11px] leading-4 text-white/75">
+                {item.title}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default AnimeHeroSection;
+}

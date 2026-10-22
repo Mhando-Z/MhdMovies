@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { canWatchEpisode, getAnime } from "@/lib/anime/catalogue";
 import AnimeWatch from "@/components/anime/AnimeWatch";
 import { AnimeLoading } from "@/components/anime/AnimeUI";
@@ -10,6 +11,8 @@ export const metadata = {
 };
 
 async function AnimeWatchContent({ params, searchParams }) {
+  // Cache freshness and episode release checks must use the live request clock.
+  await connection();
   const [{ id }, query] = await Promise.all([params, searchParams]);
   const episode = query.episode === undefined ? 1 : Number(query.episode);
   const audio = query.audio || "sub";

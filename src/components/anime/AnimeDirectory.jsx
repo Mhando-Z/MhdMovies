@@ -11,7 +11,7 @@ import {
   Sparkles,
   Star,
 } from "lucide-react";
-import { useResource } from "@/components/tvSeries/TvUI";
+import { useAnimeResource as useResource } from "./useAnimeResource";
 import { formats, genres, label, statuses } from "@/lib/anime/model";
 import {
   AnimeArtwork,
@@ -42,6 +42,7 @@ function SearchForm({ search, onSearch, pending }) {
         <span className="sr-only">Search anime and donghua</span>
         <input
           type="search"
+          minLength={2}
           maxLength={150}
           value={value}
           onChange={(event) => setValue(event.target.value)}
@@ -60,22 +61,13 @@ function SearchForm({ search, onSearch, pending }) {
 }
 
 function Featured({ resource }) {
-  const anime =
-    resource.data?.trending?.find((item) => item.banner) ||
-    resource.data?.trending?.[0];
-
-  return (
-    <section className="relative isolate overflow-hidden border-b border-white/5">
-      <AnimeHeroSection Trending={resource?.data?.trending} />
-    </section>
-  );
+  return <AnimeHeroSection Trending={resource.data?.trending} loading={resource.loading} />;
 }
 
 export default function AnimeDirectory() {
   const params = useSearchParams();
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const home = useResource("/api/anime?view=home");
   const query = params.toString();
   const previousQuery = useRef(query);
   useEffect(() => {
@@ -100,6 +92,7 @@ export default function AnimeDirectory() {
       "page",
     ].includes(key),
   );
+  const home = useResource(filtered ? null : "/api/anime?view=home");
   function change(values) {
     const next = new URLSearchParams(params);
     next.delete("page");
@@ -113,8 +106,8 @@ export default function AnimeDirectory() {
   const selectClass = `min-h-11 w-full rounded-lg border border-white/15 bg-zinc-950 px-3 text-sm text-white ${focus}`;
   return (
     <main className="min-h-screen font-roboto text-white">
-      <Featured resource={home} />
-      <div className="xl:mx-auto xl:container px-6 py-10   md:py-14">
+      {!filtered && <Featured resource={home} />}
+      <div className={`xl:mx-auto xl:container px-6 py-10 md:py-14 ${filtered || home.error ? "pt-28 md:pt-32" : ""}`}>
         {!filtered && (
           <>
             <LibraryRows />
@@ -131,14 +124,14 @@ export default function AnimeDirectory() {
                 [
                   "trending",
                   "In the spotlight",
-                  "Trending now",
+                  "This season",
                   "/anime?sort=trending",
                 ],
                 [
-                  "donghua",
-                  "Stories from China",
-                  "Popular donghua",
-                  "/anime?country=CN&sort=popular",
+                  "popular",
+                  "The stories everyone knows",
+                  "All-time favourites",
+                  "/anime?sort=popular",
                 ],
                 [
                   "airing",
@@ -146,8 +139,10 @@ export default function AnimeDirectory() {
                   "Currently airing",
                   "/anime?status=RELEASING&sort=popular",
                 ],
+                ["top", "Worth your time", "Top rated", "/anime?sort=score"],
+                ["upcoming", "Something to look forward to", "Coming soon", "/anime?sort=upcoming"],
               ].map(([key, eyebrow, title, href]) => (
-                <section key={key} className="mb-14">
+                home.data?.[key]?.length > 0 && <section key={key} className="mb-14">
                   <SectionHeading eyebrow={eyebrow} title={title} href={href} />
                   <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
                     {home.data?.[key]?.map((anime) => (
@@ -179,20 +174,23 @@ export default function AnimeDirectory() {
             </p>
           </header>
           <div
-            aria-label="Animation origin"
+            aria-label="Discover anime collections"
             className="mb-6 flex gap-2 overflow-x-auto pb-2"
           >
             {[
-              ["", "All animation"],
-              ["JP", "Japanese anime"],
-              ["CN", "Donghua"],
+              ["trending", "This season"],
+              ["popular", "Most popular"],
+              ["score", "Top rated"],
+              ["airing", "Airing now"],
+              ["upcoming", "Coming soon"],
+              ["movies", "Anime movies"],
             ].map(([value, title]) => (
               <button
                 key={value}
                 type="button"
-                aria-pressed={country === value}
-                onClick={() => change({ country: value })}
-                className={`${button} shrink-0 ${country === value ? "border-red-600 bg-red-600 hover:bg-red-700" : "text-white/60"}`}
+                aria-pressed={(params.get("sort") || "trending") === value}
+                onClick={() => change({ sort: value, country: "", status: "" })}
+                className={`${button} shrink-0 ${(params.get("sort") || "trending") === value ? "border-red-600 bg-red-600 hover:bg-red-700" : "text-white/60"}`}
               >
                 {title}
               </button>
@@ -221,10 +219,13 @@ export default function AnimeDirectory() {
                 "sort",
                 "Sort by",
                 [
-                  ["trending", "Trending"],
+                  ["trending", "This season"],
                   ["popular", "Most popular"],
                   ["score", "Top rated"],
                   ["newest", "Newest"],
+                  ["airing", "Airing now"],
+                  ["upcoming", "Coming soon"],
+                  ["movies", "Anime movies"],
                 ],
               ],
             ].map(([key, title, options]) => (
@@ -236,7 +237,7 @@ export default function AnimeDirectory() {
                   className={selectClass}
                 >
                   {key !== "sort" && (
-                    <option value="">All {title.toLowerCase()}s</option>
+                    <option value="">Any {title.toLowerCase()}</option>
                   )}
                   {options.map(([value, text]) => (
                     <option key={value} value={value}>
@@ -279,6 +280,8 @@ export default function AnimeDirectory() {
               </Link>
             </div>
           </div>
+          {(catalogue.data?.stale || home.data?.stale) && <p role="status" className="mb-5 rounded-lg border border-amber-400/20 bg-amber-400/5 p-3 text-xs text-amber-200">Showing saved titles while the catalog reconnects.</p>}
+          {catalogue.data?.notice && <p role="status" className="mb-5 text-xs text-white/55">{catalogue.data.notice}</p>}
           <div
             aria-live="polite"
             className="mb-5 flex min-h-6 items-center justify-between text-xs text-white/45"

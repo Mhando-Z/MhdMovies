@@ -94,3 +94,15 @@
 [1018/122849.661:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
 [1018/122849.661:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
 [1018/135503.572:WARNING:net\spdy\spdy_session.cc:3188] Received HEADERS for invalid stream 1
+[1021/181925.430:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/181930.450:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/181940.463:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/182000.470:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/192539.966:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/192545.034:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/192555.050:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/192615.087:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/195017.742:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/195022.781:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/195032.786:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.
+[1021/195052.802:WARNING:net\dns\dns_config_service_win.cc:609] Failed to read DnsConfig.

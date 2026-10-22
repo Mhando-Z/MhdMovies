@@ -9,7 +9,7 @@ export function getAnimeSources(anime, episode, audio = "sub") {
   )
     return [];
   const mal = validAnimeId(anime?.malId) ? anime.malId : null;
-  const ani = validAnimeId(anime?.id) ? anime.id : null;
+  const ani = validAnimeId(anime?.anilistId) ? anime.anilistId : validAnimeId(anime?.id) ? anime.id : null;
   if (!mal && !ani) return [];
   return [
     {

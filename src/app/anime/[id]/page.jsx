@@ -1,10 +1,12 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { getAnime } from "@/lib/anime/catalogue";
 import AnimeDetails from "@/components/anime/AnimeDetails";
 import { AnimeLoading } from "@/components/anime/AnimeUI";
 
 export async function generateMetadata({ params }) {
+  await connection();
   const { id } = await params;
   try {
     const anime = await getAnime(id);
@@ -21,6 +23,8 @@ export async function generateMetadata({ params }) {
 }
 
 async function AnimeTitleContent({ params }) {
+  // A warm cache can return without any fetch that would defer prerendering.
+  await connection();
   const { id } = await params;
   let anime;
   try {

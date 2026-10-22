@@ -128,6 +128,7 @@ import {
   Star,
 } from "lucide-react";
 import { label } from "@/lib/anime/model";
+import { sameAnime, useAnimeLibrary, updateLibrary } from "./libraryStore";
 
 export {
   button,
@@ -230,9 +231,10 @@ export function AnimeCard({
 }) {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(false);
-  const [savedLocal, setSavedLocal] = useState(false);
+  const library = useAnimeLibrary();
+  const [saveError, setSaveError] = useState(false);
 
-  const saved = savedProp ?? savedLocal;
+  const saved = savedProp ?? library.some((item) => sameAnime(item, anime) && item.saved);
   const detailsHref = href || `/anime/${anime.id}`;
   const playHref = watchHref || `${detailsHref}#watch`;
   const synopsis = stripHtml(anime.description || anime.synopsis || "");
@@ -241,7 +243,7 @@ export function AnimeCard({
 
   const toggleSave = () => {
     if (onToggleSave) onToggleSave(anime, !saved);
-    else setSavedLocal((v) => !v);
+    else setSaveError(!updateLibrary(anime, { saved: !saved }));
   };
 
   return (
@@ -257,6 +259,7 @@ export function AnimeCard({
       }}
     >
       {/* Poster */}
+      {saveError && <p role="status" className="mb-2 text-xs text-amber-300">Browser storage is unavailable.</p>}
       <div className="relative overflow-hidden rounded-xl border border-white/10 transition-colors duration-300 group-hover:border-red-400/50 group-focus-within:border-red-400/50 group-hover:shadow-[0_20px_50px_-12px_rgba(248,113,113,0.35)]">
         <motion.div
           animate={{ scale: active && !reduce ? 1.08 : 1 }}
@@ -273,6 +276,7 @@ export function AnimeCard({
         {/* Stretched link: the whole poster opens the details page */}
         <Link
           href={detailsHref}
+          prefetch={false}
           aria-label={`${anime.title} details`}
           className="absolute inset-0 z-10 rounded-xl focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-red-400"
         />
@@ -393,6 +397,7 @@ export function AnimeCard({
               >
                 <Link
                   href={playHref}
+                  prefetch={false}
                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 py-2 text-xs font-semibold text-white transition-colors hover:bg-red-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   <Play className="size-3.5 fill-white" />

@@ -1,10 +1,10 @@
 import { animeError, getAnime, getEpisodes } from "@/lib/anime/catalogue";
-import { validAnimeId } from "@/lib/anime/model";
+import { validAnimeKey } from "@/lib/anime/model";
 
 export async function GET(request, { params }) {
   const { id } = await params;
   const page = Number(new URL(request.url).searchParams.get("page") || 1);
-  if (!validAnimeId(id) || !Number.isInteger(page) || page < 1 || page > 1000)
+  if (!validAnimeKey(id) || !Number.isInteger(page) || page < 1 || page > 1000)
     return Response.json(
       { error: "Invalid anime or episode page." },
       { status: 400 },

@@ -534,6 +534,7 @@ export default function AnimeWatch({ anime, episode, audio, playable }) {
                           )}
                           <motion.button
                             type="button"
+                            aria-label={`Play episode ${episode}`}
                             onClick={start}
                             whileHover={reduce ? undefined : { scale: 1.04 }}
                             whileTap={reduce ? undefined : { scale: 0.97 }}

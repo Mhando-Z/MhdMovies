@@ -16,7 +16,7 @@ import {
   Search,
   X,
 } from "lucide-react";
-import { useResource } from "@/components/tvSeries/TvUI";
+import { useAnimeResource as useResource } from "./useAnimeResource";
 import { releasedEpisodeCount, watchHref } from "@/lib/anime/model";
 import { button, focus } from "./AnimeUI";
 

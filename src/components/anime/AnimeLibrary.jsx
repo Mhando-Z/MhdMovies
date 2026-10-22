@@ -1,80 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Bookmark, Check } from "lucide-react";
-import { validAnimeId, watchHref } from "@/lib/anime/model";
+import { watchHref } from "@/lib/anime/model";
+import { sameAnime, useAnimeLibrary, updateLibrary } from "./libraryStore";
 import { AnimeCard, button, grid, SectionHeading } from "./AnimeUI";
 
-const key = "mhd:anime-library:v1";
-export function readLibrary() {
-  try {
-    const data = JSON.parse(localStorage.getItem(key) || "[]");
-    return Array.isArray(data)
-      ? data
-          .filter(
-            (item) => validAnimeId(item.id) && typeof item.title === "string",
-          )
-          .slice(0, 100)
-      : [];
-  } catch {
-    return [];
-  }
-}
-
-export function updateLibrary(anime, changes) {
-  try {
-    const library = readLibrary();
-    const old = library.find((item) => item.id === anime.id);
-    const record = {
-      ...old,
-      ...(changes.episode && changes.episode !== old?.episode
-        ? { time: 0, duration: 0 }
-        : {}),
-      id: anime.id,
-      title: anime.title,
-      cover: anime.cover,
-      country: anime.country,
-      format: anime.format,
-      year: anime.year,
-      episodes: anime.episodes,
-      score: anime.score,
-      ...changes,
-      updatedAt: Date.now(),
-    };
-    localStorage.setItem(
-      key,
-      JSON.stringify(
-        [record, ...library.filter((item) => item.id !== anime.id)].slice(
-          0,
-          100,
-        ),
-      ),
-    );
-    window.dispatchEvent(new Event("mhd:anime-library"));
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-export function useAnimeLibrary() {
-  const [library, setLibrary] = useState([]);
-  useEffect(() => {
-    const update = () => setLibrary(readLibrary());
-    update();
-    window.addEventListener("storage", update);
-    window.addEventListener("mhd:anime-library", update);
-    return () => {
-      window.removeEventListener("storage", update);
-      window.removeEventListener("mhd:anime-library", update);
-    };
-  }, []);
-  return library;
-}
+export { readLibrary, updateLibrary, useAnimeLibrary } from "./libraryStore";
 
 export function WatchlistButton({ anime }) {
   const library = useAnimeLibrary();
-  const saved = library.some((item) => item.id === anime.id && item.saved);
+  const saved = library.some((item) => sameAnime(item, anime) && item.saved);
   const [error, setError] = useState(false);
   return (
     <div>

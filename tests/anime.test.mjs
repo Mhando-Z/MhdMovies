@@ -20,19 +20,48 @@ registerHooks({
     return next(specifier, context);
   },
 });
-const { normalizeAnime, releasedEpisodeCount } =
-  await import("../src/lib/anime/model.js");
+const {
+  normalizeAnime,
+  normalizeMalAnime,
+  releasedEpisodeCount,
+  validAnimeKey,
+} = await import("../src/lib/anime/model.js");
 const { getAnimeSources, readPlayerEvent } =
   await import("../src/lib/anime/sources.js");
-const { canWatchEpisode, getChineseDetails, getCatalogue, getAnime, getHome } =
-  await import("../src/lib/anime/catalogue.js");
+const {
+  canWatchEpisode,
+  getChineseDetails,
+  getCatalogue,
+  getAnime,
+  getHome,
+  getEpisodes,
+} = await import("../src/lib/anime/catalogue.js");
 const { GET: catalogueRoute } = await import("../src/app/api/anime/route.js");
 const { getAnimeLogo } = await import("../src/lib/anime/tmdb.js");
+const { animeTransport, createAnimeTransport } =
+  await import("../src/lib/anime/transport.js");
+const { getMalAnime, getMalCatalogue } =
+  await import("../src/lib/anime/mal.js");
+Object.assign(
+  animeTransport,
+  createAnimeTransport({ directory: false, interval: 0 }),
+);
+process.env.MAL_CLIENT_ID = "test-client";
 const originalFetch = globalThis.fetch;
 const originalMappings = process.env.ANIME_BANGUMI_MAPPINGS;
-const logoEnvKeys = ["TMDB_ACCESS_TOKEN", "NEXT_PUBLIC_TMDB_ACCESS_TOKEN", "ANIME_TMDB_MAPPINGS"];
-const originalLogoEnv = Object.fromEntries(logoEnvKeys.map((key) => [key, process.env[key]]));
+const logoEnvKeys = [
+  "TMDB_ACCESS_TOKEN",
+  "NEXT_PUBLIC_TMDB_ACCESS_TOKEN",
+  "ANIME_TMDB_MAPPINGS",
+];
+const originalLogoEnv = Object.fromEntries(
+  logoEnvKeys.map((key) => [key, process.env[key]]),
+);
 afterEach(() => {
+  Object.assign(
+    animeTransport,
+    createAnimeTransport({ directory: false, interval: 0 }),
+  );
   globalThis.fetch = originalFetch;
   if (originalMappings === undefined) delete process.env.ANIME_BANGUMI_MAPPINGS;
   else process.env.ANIME_BANGUMI_MAPPINGS = originalMappings;
@@ -43,12 +72,21 @@ afterEach(() => {
 });
 
 const logoAnime = {
-  id: 1, title: "Example Anime", nativeTitle: "", aliases: [],
-  year: 2024, country: "JP", format: "TV",
+  id: 1,
+  title: "Example Anime",
+  nativeTitle: "",
+  aliases: [],
+  year: 2024,
+  country: "JP",
+  format: "TV",
 };
 const tmdbMatch = {
-  id: 42, name: "Example Anime", first_air_date: "2024-01-01",
-  genre_ids: [16], origin_country: ["JP"], original_language: "ja",
+  id: 42,
+  name: "Example Anime",
+  first_air_date: "2024-01-01",
+  genre_ids: [16],
+  origin_country: ["JP"],
+  original_language: "ja",
 };
 
 test("anime logos search TV and movies separately and prefer English artwork", async () => {
@@ -65,14 +103,29 @@ test("anime logos search TV and movies separately and prefer English artwork", a
         return Response.json({ results: [tmdbMatch] });
       }
       assert.equal(url.searchParams.get("language"), "");
-      return Response.json({ logos: [
-        { file_path: "/native.png", iso_639_1: "ja", vote_average: 10 },
-        { file_path: "/english.svg", iso_639_1: "en", width: 500, height: 200 },
-      ] });
+      return Response.json({
+        logos: [
+          { file_path: "/native.png", iso_639_1: "ja", vote_average: 10 },
+          {
+            file_path: "/english.svg",
+            iso_639_1: "en",
+            width: 500,
+            height: 200,
+          },
+        ],
+      });
     };
-    assert.deepEqual(await getAnimeLogo({ ...logoAnime, format: type === "movie" ? "MOVIE" : "TV" }), {
-      url: "https://image.tmdb.org/t/p/original/english.svg", width: 500, height: 200,
-    });
+    assert.deepEqual(
+      await getAnimeLogo({
+        ...logoAnime,
+        format: type === "movie" ? "MOVIE" : "TV",
+      }),
+      {
+        url: "https://image.tmdb.org/t/p/original/english.svg",
+        width: 500,
+        height: 200,
+      },
+    );
     assert.deepEqual(paths, [`/3/search/${type}`, `/3/${type}/42/images`]);
   }
 });
@@ -81,7 +134,8 @@ test("anime logo matching rejects unrelated, live-action, wrong-year, and ambigu
   process.env.TMDB_ACCESS_TOKEN = "test-token";
   delete process.env.ANIME_TMDB_MAPPINGS;
   for (const results of [
-    [], [{ ...tmdbMatch, name: "Another show" }],
+    [],
+    [{ ...tmdbMatch, name: "Another show" }],
     [{ ...tmdbMatch, genre_ids: [18] }],
     [{ ...tmdbMatch, first_air_date: "2001-01-01" }],
     [{ ...tmdbMatch, origin_country: ["US"], original_language: "en" }],
@@ -100,16 +154,24 @@ test("verified anime mappings support grouped sequels and native logo fallback",
   process.env.ANIME_TMDB_MAPPINGS = '{"1":{"type":"tv","id":42}}';
   globalThis.fetch = async (input) => {
     assert.equal(new URL(input).pathname, "/3/tv/42/images");
-    return Response.json({ logos: [{ file_path: "/native.png", iso_639_1: "ja", width: 300, height: 100 }] });
+    return Response.json({
+      logos: [
+        { file_path: "/native.png", iso_639_1: "ja", width: 300, height: 100 },
+      ],
+    });
   };
-  assert.equal((await getAnimeLogo({ ...logoAnime, year: 2026 })).url,
-    "https://image.tmdb.org/t/p/original/native.png");
+  assert.equal(
+    (await getAnimeLogo({ ...logoAnime, year: 2026 })).url,
+    "https://image.tmdb.org/t/p/original/native.png",
+  );
 });
 
 test("optional logos tolerate missing credentials, errors, and empty image lists", async () => {
   delete process.env.TMDB_ACCESS_TOKEN;
   delete process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
-  globalThis.fetch = () => { throw new Error("Unexpected fetch"); };
+  globalThis.fetch = () => {
+    throw new Error("Unexpected fetch");
+  };
   assert.equal(await getAnimeLogo(logoAnime), null);
   process.env.TMDB_ACCESS_TOKEN = "test-token";
   process.env.ANIME_TMDB_MAPPINGS = '{"1":{"type":"tv","id":42}}';
@@ -217,7 +279,7 @@ test("upcoming and out-of-range episodes cannot start a player", async () => {
   globalThis.fetch = async () =>
     Response.json({ data: { mal_id: 1, aired: "2099-01-01" } });
   assert.equal(
-    await canWatchEpisode({ status: "RELEASING", malId: 1 }, 1),
+    await canWatchEpisode({ status: "RELEASING", malId: 2 }, 1),
     false,
   );
   globalThis.fetch = async () =>
@@ -273,8 +335,12 @@ test("catalog filters are GraphQL variables and never interpolated into queries"
   assert.ok(!body.query.includes('A "title"'));
   assert.ok(!Object.hasOwn(body.variables, "format"));
   assert.ok(!Object.hasOwn(body.variables, "status"));
-  await getCatalogue(new URLSearchParams());
-  assert.deepEqual(Object.keys(body.variables).sort(), ["page", "sort"]);
+  await getCatalogue(new URLSearchParams({ country: "JP" }));
+  assert.deepEqual(Object.keys(body.variables).sort(), [
+    "country",
+    "page",
+    "sort",
+  ]);
 });
 
 test("provider throttling and malformed GraphQL responses return controlled errors", async () => {
@@ -285,7 +351,11 @@ test("provider throttling and malformed GraphQL responses return controlled erro
   );
   globalThis.fetch = async () =>
     Response.json({ errors: [{ message: "internal detail" }] });
-  await assert.rejects(getHome(), /could not be loaded/);
+  Object.assign(
+    animeTransport,
+    createAnimeTransport({ directory: false, interval: 0 }),
+  );
+  await assert.rejects(getHome(), /unavailable/);
 });
 
 test("Bangumi is queried only for explicitly mapped Chinese entries", async () => {
@@ -312,4 +382,337 @@ test("invalid title IDs are rejected before any API call", async () => {
     throw new Error("Unexpected fetch");
   };
   await assert.rejects(getAnime("../../etc"), { status: 404 });
+});
+
+test("MAL records use distinct URL keys and never invent country or aired counts", () => {
+  const anime = normalizeMalAnime({
+    id: 5114,
+    title: "Fullmetal Alchemist",
+    status: "currently_airing",
+    num_episodes: 64,
+  });
+  assert.equal(anime.id, "mal-5114");
+  assert.equal(anime.malId, 5114);
+  assert.equal(anime.anilistId, null);
+  assert.equal(anime.country, null);
+  assert.equal(releasedEpisodeCount(anime), null);
+  assert.equal(validAnimeKey("mal-5114"), true);
+  assert.equal(validAnimeKey("mal-../20"), false);
+  const sources = getAnimeSources(anime, 1);
+  assert.equal(sources.length, 2);
+  assert.match(sources[0].src, /\/mal\/5114\/1\/sub$/);
+  assert.ok(sources.every((source) => source.id !== "anilink"));
+});
+
+test("MAL search sends credentials only in a server header and encodes the query", async () => {
+  globalThis.fetch = async (input, options) => {
+    const url = new URL(input);
+    assert.equal(url.host, "api.myanimelist.net");
+    assert.equal(url.searchParams.get("q"), 'A "title" & another');
+    assert.equal(url.searchParams.get("offset"), "24");
+    assert.equal(options.headers["X-MAL-CLIENT-ID"], "test-client");
+    assert.ok(!url.href.includes("test-client"));
+    return Response.json({
+      data: [
+        { node: { id: 20, title: "Naruto", nsfw: "white" } },
+        { node: { id: 2, title: "Adult", nsfw: "black" } },
+      ],
+      paging: { next: "next" },
+    });
+  };
+  const data = await getCatalogue(
+    new URLSearchParams({ search: 'A "title" & another', page: "2" }),
+  );
+  assert.equal(data.provider, "mal");
+  assert.deepEqual(
+    data.results.map((anime) => anime.id),
+    ["mal-20"],
+  );
+  assert.equal(data.hasNextPage, true);
+});
+
+test("MAL outage falls back to Jikan details with the same MAL identity", async () => {
+  const calls = [];
+  globalThis.fetch = async (url) => {
+    calls.push(url);
+    if (url.includes("api.myanimelist"))
+      return new Response(null, { status: 503 });
+    return Response.json({
+      data: {
+        mal_id: 20,
+        title: "Naruto",
+        episodes: 220,
+        status: "Finished Airing",
+      },
+    });
+  };
+  const anime = await getMalAnime(20);
+  assert.equal(anime.id, "mal-20");
+  assert.equal(anime.provider, "jikan");
+  assert.equal(anime.episodes, 220);
+  assert.equal(calls.length, 2);
+});
+
+test("MAL not-found and adult titles do not fall back to a different title", async () => {
+  let calls = 0;
+  globalThis.fetch = async () => {
+    calls++;
+    return new Response(null, { status: 404 });
+  };
+  await assert.rejects(getMalAnime(876), { status: 404 });
+  assert.equal(calls, 1);
+  globalThis.fetch = async () =>
+    Response.json({ id: 23, title: "Restricted", nsfw: "black" });
+  await assert.rejects(getMalAnime(23), { status: 404 });
+});
+
+test("legacy AniList URLs resolve only through an explicit mapping", async () => {
+  globalThis.fetch = async (url) => {
+    if (url.includes("ani.zip"))
+      return Response.json({ mappings: { anilist_id: 123, mal_id: 456 } });
+    assert.match(url, /myanimelist\.net\/v2\/anime\/456\?/);
+    return Response.json({ id: 456, title: "Mapped title" });
+  };
+  const anime = await getAnime("123");
+  assert.equal(anime.id, 123);
+  assert.equal(anime.anilistId, 123);
+  assert.equal(anime.malId, 456);
+});
+
+test("a wrong legacy mapping cannot silently swap title identities", async () => {
+  globalThis.fetch = async (url) => {
+    if (url.includes("ani.zip"))
+      return Response.json({ mappings: { anilist_id: 999, mal_id: 456 } });
+    assert.equal(url, "https://graphql.anilist.co");
+    return Response.json({
+      data: {
+        Media: { id: 123, idMal: 789, title: { english: "Original title" } },
+      },
+    });
+  };
+  const anime = await getAnime("123");
+  assert.equal(anime.malId, 789);
+  assert.equal(anime.title, "Original title");
+});
+
+test("exact filters use Jikan and MAL fallback discloses its limited scope", async () => {
+  globalThis.fetch = async (input) => {
+    const url = new URL(input);
+    if (url.host === "api.jikan.moe") {
+      assert.equal(url.searchParams.get("genres"), "1");
+      assert.equal(url.searchParams.get("status"), "complete");
+      return new Response(null, { status: 503 });
+    }
+    return Response.json({
+      data: [
+        {
+          node: {
+            id: 20,
+            title: "Match",
+            genres: [{ name: "Action" }],
+            status: "finished_airing",
+          },
+        },
+        {
+          node: {
+            id: 21,
+            title: "Wrong genre",
+            genres: [{ name: "Drama" }],
+            status: "finished_airing",
+          },
+        },
+      ],
+    });
+  };
+  const result = await getMalCatalogue({
+    page: 1,
+    sort: "popular",
+    genre: "Action",
+    status: "FINISHED",
+  });
+  assert.equal(result.limited, true);
+  assert.match(result.notice, /first 100/);
+  assert.deepEqual(
+    result.results.map(({ id }) => id),
+    ["mal-20"],
+  );
+});
+
+test("concurrent identical requests are deduplicated", async () => {
+  let calls = 0;
+  const transport = createAnimeTransport({
+    directory: false,
+    interval: 0,
+    fetcher: async () => {
+      calls++;
+      return Response.json({ data: [1] });
+    },
+  });
+  const results = await Promise.all(
+    Array.from({ length: 8 }, () =>
+      transport.request("https://example.test/anime"),
+    ),
+  );
+  assert.equal(calls, 1);
+  assert.ok(results.every((result) => result.data[0] === 1));
+});
+
+test("outages serve stale successes, open a circuit, and retry after cooldown", async () => {
+  let time = 0;
+  let calls = 0;
+  const transport = createAnimeTransport({
+    directory: false,
+    interval: 0,
+    now: () => time,
+    fetcher: async () => {
+      calls++;
+      return calls === 1
+        ? Response.json({ data: [1] })
+        : new Response(null, { status: 429, headers: { "Retry-After": "60" } });
+    },
+  });
+  await transport.request("https://example.test/a", {}, { ttl: 1 });
+  time = 2000;
+  const stale = await transport.request(
+    "https://example.test/a",
+    {},
+    { ttl: 1 },
+  );
+  assert.equal(stale._stale, true);
+  await assert.rejects(transport.request("https://example.test/b"), {
+    status: 429,
+  });
+  assert.equal(calls, 2);
+  time += 61000;
+  await assert.rejects(transport.request("https://example.test/b"), {
+    status: 429,
+  });
+  assert.equal(calls, 3);
+});
+
+test("persistent cache survives a new transport and contains no credentials", async () => {
+  const { mkdtemp, readFile, readdir, unlink, rmdir } =
+    await import("node:fs/promises");
+  const { tmpdir } = await import("node:os");
+  const path = await import("node:path");
+  const directory = await mkdtemp(path.join(tmpdir(), "movies-anime-cache-"));
+  try {
+    const first = createAnimeTransport({
+      directory,
+      interval: 0,
+      now: () => 1000,
+      fetcher: async () => Response.json({ data: [20] }),
+    });
+    await first.request(
+      "https://example.test/anime/20",
+      { headers: { "X-MAL-CLIENT-ID": "private-client" } },
+      { ttl: 1 },
+    );
+    const second = createAnimeTransport({
+      directory,
+      interval: 0,
+      now: () => 5000,
+      fetcher: async () => new Response(null, { status: 503 }),
+    });
+    assert.equal(
+      (await second.request("https://example.test/anime/20", {}, { ttl: 1 }))
+        ._stale,
+      true,
+    );
+    const files = await readdir(directory);
+    assert.equal(files.length, 1);
+    assert.ok(
+      !(await readFile(path.join(directory, files[0]), "utf8")).includes(
+        "private-client",
+      ),
+    );
+  } finally {
+    for (const name of await readdir(directory))
+      await unlink(path.join(directory, name));
+    await rmdir(directory);
+  }
+});
+
+test("MAL-key details fall back to AniList by idMal without changing their URL identity", async () => {
+  globalThis.fetch = async (url, options) => {
+    if (url.includes("graphql.anilist")) {
+      const body = JSON.parse(options.body);
+      assert.match(body.query, /Media\(idMal: \$id/);
+      assert.equal(body.variables.id, 456);
+      return Response.json({
+        data: {
+          Media: { id: 123, idMal: 456, title: { english: "Fallback title" } },
+        },
+      });
+    }
+    return new Response(null, { status: 503 });
+  };
+  const anime = await getAnime("mal-456");
+  assert.equal(anime.id, "mal-456");
+  assert.equal(anime.malId, 456);
+  assert.equal(anime.anilistId, 123);
+  assert.equal(anime.provider, "anilist");
+});
+
+test("episode metadata falls back by explicit MAL identity and excludes special numbering", async () => {
+  globalThis.fetch = async (url) => {
+    if (url.includes("jikan")) return new Response(null, { status: 503 });
+    assert.match(url, /mappings\?mal_id=20$/);
+    return Response.json({
+      mappings: { mal_id: 20 },
+      episodes: {
+        1: {
+          title: { en: "First episode" },
+          airDateUtc: "2002-10-03T10:30:00Z",
+        },
+        2: { title: { en: "Upcoming" }, airDateUtc: "2099-01-01T00:00:00Z" },
+        S1: { title: { en: "A special" } },
+      },
+    });
+  };
+  const result = await getEpisodes({ malId: 20 }, 1);
+  assert.equal(result.results.length, 2);
+  assert.equal(result.results[0].title, "First episode");
+  assert.equal(
+    await canWatchEpisode({ malId: 20, status: "RELEASING" }, 1),
+    true,
+  );
+  assert.equal(
+    await canWatchEpisode({ malId: 20, status: "RELEASING" }, 2),
+    false,
+  );
+});
+
+test("expired stale records cannot keep titles available indefinitely", async () => {
+  let time = 1000;
+  let fail = false;
+  const transport = createAnimeTransport({
+    directory: false,
+    interval: 0,
+    now: () => time,
+    fetcher: async () =>
+      fail ? new Response(null, { status: 503 }) : Response.json({ data: [1] }),
+  });
+  await transport.request("https://example.test/title", {}, { ttl: 1 });
+  time += 8 * 86400 * 1000;
+  fail = true;
+  await assert.rejects(
+    transport.request("https://example.test/title", {}, { ttl: 1 }),
+    { status: 502 },
+  );
+});
+
+test("searching within upcoming collection applies its status filter", async () => {
+  globalThis.fetch = async (input) => {
+    const url = new URL(input);
+    assert.equal(url.host, "api.jikan.moe");
+    assert.equal(url.searchParams.get("q"), "Naruto");
+    assert.equal(url.searchParams.get("status"), "upcoming");
+    return Response.json({ data: [], pagination: { has_next_page: false } });
+  };
+  assert.equal(
+    (await getMalCatalogue({ search: "Naruto", sort: "upcoming", page: 1 }))
+      .provider,
+    "jikan",
+  );
 });
