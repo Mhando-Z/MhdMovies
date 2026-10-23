@@ -104,12 +104,12 @@ export default function Footer() {
               For everyone who loves a good story.
             </p>
             <p className="mt-4 flex items-start gap-2 text-sm leading-6 text-gray-400">
-              <MapPin
+              {/* <MapPin
                 size={16}
                 className="mt-1 shrink-0 text-gray-500"
                 aria-hidden="true"
               />
-              <span>Dar es Salaam, Tanzania</span>
+              <span>Dar es Salaam, Tanzania</span> */}
             </p>
             <div
               className="mt-5 flex gap-2"
