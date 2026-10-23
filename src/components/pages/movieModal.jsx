@@ -275,6 +275,93 @@ function CastProfile({ details, currentMovieId, onNavigate }) {
   );
 }
 
+function getYouTubeId(video) {
+  const raw = video?.url || video?.src || video?.key;
+  if (typeof raw !== "string" || !raw.trim()) return null;
+
+  // Respect TMDB's video provider.
+  if (video?.site && video.site.toLowerCase() !== "youtube") {
+    return null;
+  }
+
+  const value = raw.trim();
+  const validId = (id) => (/^[a-zA-Z0-9_-]{11}$/.test(id || "") ? id : null);
+
+  // TMDB YouTube ID or Vidstack-style source.
+  if (validId(value)) return value;
+  if (value.startsWith("youtube/")) {
+    return validId(value.slice(8));
+  }
+
+  try {
+    const url = new URL(value);
+    const host = url.hostname.toLowerCase();
+
+    if (["youtu.be", "www.youtu.be"].includes(host)) {
+      return validId(url.pathname.split("/")[1]);
+    }
+
+    const allowedHosts = [
+      "youtube.com",
+      "www.youtube.com",
+      "m.youtube.com",
+      "music.youtube.com",
+      "youtube-nocookie.com",
+      "www.youtube-nocookie.com",
+    ];
+
+    if (!allowedHosts.includes(host)) return null;
+
+    if (url.pathname === "/watch") {
+      return validId(url.searchParams.get("v"));
+    }
+
+    const match = url.pathname.match(/^\/(?:embed|shorts|live|v)\/([^/]+)/);
+
+    return validId(match?.[1]);
+  } catch {
+    return null;
+  }
+}
+
+function ModalVideoPlayer({ video }) {
+  const youtubeId = getYouTubeId(video);
+  const source = video?.url || video?.src || video?.key;
+
+  // YouTube videos use the official embedded player.
+  if (youtubeId) {
+    return (
+      <iframe
+        key={youtubeId}
+        src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0`}
+        title={video?.name || "YouTube video"}
+        className="h-full w-full border-0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+        referrerPolicy="strict-origin-when-cross-origin"
+      />
+    );
+  }
+
+  if (!source) {
+    return (
+      <div className="flex h-full items-center justify-center text-sm text-white/60">
+        Video unavailable.
+      </div>
+    );
+  }
+
+  // Non-YouTube videos use the existing player.
+  return (
+    <VidstackPlayer
+      key={source}
+      src={source}
+      title={video?.name || "Video"}
+      autoPlay
+    />
+  );
+}
+
 /* ------------------------------------------------------------------ */
 /* The modal                                                          */
 /* ------------------------------------------------------------------ */
@@ -306,13 +393,7 @@ export default function MovieModal({
     <Modal title={title} onClose={closeModal} wide={!isCast}>
       {isVideo && (
         <div className="aspect-video w-full bg-black">
-          <VidstackPlayer
-            key={modal.video.key}
-            src={`youtube/${modal.video.key}`}
-            title={modal.video.name}
-            poster={`https://i.ytimg.com/vi/${modal.video.key}/hqdefault.jpg`}
-            autoPlay
-          />
+          <ModalVideoPlayer video={modal.video} />
         </div>
       )}
 
