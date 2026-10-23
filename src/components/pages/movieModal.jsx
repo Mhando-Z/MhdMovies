@@ -17,14 +17,45 @@ import { personAge as ageFrom, personCredits, sortCredits } from "@/lib/people";
 import { Modal, formatMovieDate as date } from "./movieDetailsUI";
 import { Artwork, GalleryViewer } from "./movieImages";
 
+/* ------------------------------------------------------------------ */
+/* Video loading state                                                */
+/* ------------------------------------------------------------------ */
+
+function VideoLoader({ visible = true }) {
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      aria-hidden={!visible}
+      className={`absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-black transition-opacity duration-500 ${
+        visible ? "opacity-100" : "pointer-events-none opacity-0"
+      }`}
+    >
+      {/* soft shimmer behind the spinner */}
+      <div className="absolute inset-0 bg-linear-to-br from-white/[0.04] via-transparent to-white/[0.06] motion-safe:animate-pulse" />
+
+      <div className="relative flex size-16 items-center justify-center">
+        <span className="absolute inset-0 rounded-full border-2 border-white/10" />
+        <Loader2
+          className="size-16 text-red-500 motion-safe:animate-spin"
+          strokeWidth={1.25}
+          aria-hidden="true"
+        />
+        <Film className="absolute size-5 text-white/70" aria-hidden="true" />
+      </div>
+
+      <p className="relative text-xs font-medium tracking-wide text-white/60">
+        Loading video…
+      </p>
+    </div>
+  );
+}
+
 const VidstackPlayer = dynamic(() => import("../vidstackPlayer"), {
   ssr: false,
   loading: () => (
-    <div
-      role="status"
-      className="flex aspect-video items-center justify-center text-white/60"
-    >
-      Loading player...
+    <div className="relative aspect-video w-full bg-black">
+      <VideoLoader />
     </div>
   ),
 });
@@ -38,7 +69,7 @@ function CastSkeleton() {
   return (
     <div role="status" aria-label="Loading profile" className="p-5 sm:p-6">
       <div className="flex gap-5 motion-safe:animate-pulse">
-        <div className="aspect-[3/4] w-24 shrink-0 rounded-lg bg-white/10 sm:w-32" />
+        <div className="aspect-3/4 w-24 shrink-0 rounded-lg bg-white/10 sm:w-32" />
         <div className="flex-1 space-y-3 pt-1">
           <div className="h-5 w-1/2 rounded bg-white/10" />
           <div className="h-4 w-1/3 rounded bg-white/10" />
@@ -275,6 +306,10 @@ function CastProfile({ details, currentMovieId, onNavigate }) {
   );
 }
 
+/* ------------------------------------------------------------------ */
+/* Video player                                                       */
+/* ------------------------------------------------------------------ */
+
 function getYouTubeId(video) {
   const raw = video?.url || video?.src || video?.key;
   if (typeof raw !== "string" || !raw.trim()) return null;
@@ -324,22 +359,36 @@ function getYouTubeId(video) {
   }
 }
 
+function YouTubeFrame({ youtubeId, name }) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="relative h-full w-full bg-black">
+      <VideoLoader visible={!loaded} />
+      <iframe
+        src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0`}
+        title={name || "YouTube video"}
+        onLoad={() => setLoaded(true)}
+        className={`h-full w-full border-0 transition-opacity duration-500 ${
+          loaded ? "opacity-100" : "opacity-0"
+        }`}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+        referrerPolicy="strict-origin-when-cross-origin"
+      />
+    </div>
+  );
+}
+
 function ModalVideoPlayer({ video }) {
   const youtubeId = getYouTubeId(video);
   const source = video?.url || video?.src || video?.key;
 
   // YouTube videos use the official embedded player.
+  // `key` remounts the frame, so the loader resets when the video changes.
   if (youtubeId) {
     return (
-      <iframe
-        key={youtubeId}
-        src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0`}
-        title={video?.name || "YouTube video"}
-        className="h-full w-full border-0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-        referrerPolicy="strict-origin-when-cross-origin"
-      />
+      <YouTubeFrame key={youtubeId} youtubeId={youtubeId} name={video?.name} />
     );
   }
 
@@ -351,7 +400,7 @@ function ModalVideoPlayer({ video }) {
     );
   }
 
-  // Non-YouTube videos use the existing player.
+  // Non-YouTube videos use the existing player (its chunk shows VideoLoader while loading).
   return (
     <VidstackPlayer
       key={source}
