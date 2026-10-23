@@ -393,7 +393,7 @@ export default function MoviePlayer({
             title={title}
           />
         ) : (
-          <div className="relative flex aspect-video max-h-[560px] min-h-56 items-center justify-center overflow-hidden bg-zinc-950 p-6">
+          <div className="relative flex w-full aspect-video max-h-140 min-h-56 items-center justify-center overflow-hidde p-6">
             {movie.backdrop_path && (
               <img
                 src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
@@ -409,7 +409,7 @@ export default function MoviePlayer({
                 type="button"
                 disabled={!selected}
                 onClick={() => setPlaying(true)}
-                className={`mx-auto mb-5 flex size-16 items-center justify-center rounded-full bg-red-600 shadow-xl transition-colors hover:bg-red-500 disabled:opacity-40 md:size-20 ${focus}`}
+                className={`mx-auto mb-5 flex cursor-pointer size-16 items-center justify-center rounded-full bg-red-600 shadow-xl transition-colors hover:bg-red-500 disabled:opacity-40 md:size-20 ${focus}`}
                 aria-label={`Play ${title}`}
               >
                 <Play className="ml-1 size-7 fill-white" />
