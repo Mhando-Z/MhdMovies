@@ -16,6 +16,11 @@ export function getMovieSources(movie) {
       src: `https://vidfast.vc/movie/${id}?autoPlay=false&title=true&poster=true&theme=dc2626`,
     },
     {
+      id: "vidfastPro",
+      name: "VidFast",
+      src: `https://vidfast.pro/movie/${id}?autoPlay=false&title=true&poster=true&theme=dc2626`,
+    },
+    {
       id: "vidsrc",
       name: "VidSrc",
       src: `https://vidsrc.to/embed/movie/${id}`,
@@ -25,11 +30,6 @@ export function getMovieSources(movie) {
       name: "SuperEmbed",
       src: `https://multiembed.mov/?${superEmbedParams}`,
     },
-    // {
-    //   id: "superembed-vip",
-    //   name: "SuperEmbed VIP",
-    //   src: `https://multiembed.mov/directstream.php?${superEmbedParams}`,
-    // },
     {
       id: "vidsrc-cc",
       name: "VidSrc CC",
