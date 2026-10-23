@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowUpRight,
   CalendarDays,
-  ChevronLeft,
-  ChevronRight,
   Film,
   Loader2,
   MapPin,
@@ -16,7 +14,8 @@ import {
   Tv,
 } from "lucide-react";
 import { personAge as ageFrom, personCredits, sortCredits } from "@/lib/people";
-import { Artwork, Modal, formatMovieDate as date } from "./movieDetailsUI";
+import { Modal, formatMovieDate as date } from "./movieDetailsUI";
+import { Artwork, GalleryViewer } from "./movieImages";
 
 const VidstackPlayer = dynamic(() => import("../vidstackPlayer"), {
   ssr: false,
@@ -29,74 +28,6 @@ const VidstackPlayer = dynamic(() => import("../vidstackPlayer"), {
     </div>
   ),
 });
-
-/* ------------------------------------------------------------------ */
-/* Helpers                                                            */
-/* ------------------------------------------------------------------ */
-
-/* ------------------------------------------------------------------ */
-/* Gallery: prev / next, counter, arrow-key support                   */
-/* ------------------------------------------------------------------ */
-
-function GalleryViewer({ movie, gallery, index, onChange }) {
-  const total = gallery.length;
-  const go = (step) => onChange((index + step + total) % total);
-
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-        e.preventDefault();
-        go(e.key === "ArrowLeft" ? -1 : 1);
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }); // re-bind each render so `index` is never stale
-
-  const navButton =
-    "absolute top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full " +
-    "bg-black/60 text-white backdrop-blur transition-colors hover:bg-black/80 " +
-    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
-
-  return (
-    <div className="relative bg-black">
-      <Artwork
-        path={gallery[index]}
-        size="original"
-        alt={`${movie.title}, scene ${index + 1} of ${total}`}
-        eager
-        className="max-h-[75dvh] w-full object-contain"
-      />
-
-      {total > 1 && (
-        <>
-          <button
-            type="button"
-            onClick={() => go(-1)}
-            aria-label="Previous image"
-            className={`${navButton} left-3`}
-          >
-            <ChevronLeft className="size-6" />
-          </button>
-          <button
-            type="button"
-            onClick={() => go(1)}
-            aria-label="Next image"
-            className={`${navButton} right-3`}
-          >
-            <ChevronRight className="size-6" />
-          </button>
-          <p
-            aria-live="polite"
-            className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1 text-xs tabular-nums text-white/80 backdrop-blur"
-          >
-            {index + 1} / {total}
-          </p>
-        </>
-      )}
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /* Cast profile                                                       */

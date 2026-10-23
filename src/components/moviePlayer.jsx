@@ -2,14 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import {
-  ExternalLink,
-  Loader2,
-  Play,
-  RotateCcw,
-  Server,
-  X,
-} from "lucide-react";
+import { Loader2, Play, RotateCcw, Server, X } from "lucide-react";
 import { getMovieSources } from "@/lib/movieSources";
 import { getTvSources } from "@/lib/tvseries";
 
