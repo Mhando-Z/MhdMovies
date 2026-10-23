@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { Loader2, Play, RotateCcw, Server, X } from "lucide-react";
+import { Loader2, Play, PlayIcon, RotateCcw, Server, X } from "lucide-react";
 import { getMovieSources } from "@/lib/movieSources";
 import { getTvSources } from "@/lib/tvseries";
 
@@ -212,8 +212,12 @@ export default function MoviePlayer({
                 type="button"
                 onClick={() => selectSource(source.id)}
                 aria-pressed={selected?.id === source.id}
-                className={`min-h-11 cursor-pointer rounded-lg border px-4 py-2 text-xs font-medium transition-colors ${focus} ${selected?.id === source.id ? "border-red-500/60 bg-red-500/15 text-red-300" : "border-white/10 bg-white/[0.03] text-white/65 hover:bg-white/10 hover:text-white"}`}
+                className={`min-h-11 flex items-center gap-2 cursor-pointer rounded-lg border px-4 py-2 text-xs font-medium transition-colors ${focus} ${selected?.id === source.id ? "border-red-500/60 bg-red-500/15 text-red-300" : "border-white/10 bg-white/[0.03] text-white/65 hover:bg-white/10 hover:text-white"}`}
               >
+                <PlayIcon
+                  className={`${selected?.id === source.id ? "fill-white" : ""}`}
+                  size={14}
+                />
                 {source.name}
               </button>
             ))}
