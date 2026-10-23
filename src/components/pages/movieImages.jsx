@@ -212,7 +212,7 @@ export function GalleryViewer({ movie, gallery, index, onChange }) {
           {showSpinner && (
             <span
               aria-hidden="true"
-              className="size-9 rounded-full border-2 border-white/20 border-t-white motion-safe:animate-spin"
+              className="size-9 rounded-full border-2 border-white/20 border-t-red-500 motion-safe:animate-spin"
             />
           )}
           <span className="sr-only">Loading image</span>
