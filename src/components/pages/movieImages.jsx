@@ -26,23 +26,39 @@ const slugify = (text = "") =>
 // <a download> is ignored for cross-origin URLs, so fetch the file as a blob
 // and download that. If the CDN blocks the request (CORS), open it in a new
 // tab so the person can still save it.
-async function downloadImage(url, filename) {
+async function downloadImage(path, filename) {
+  if (!path) {
+    throw new Error("Image path is missing");
+  }
+
+  const params = new URLSearchParams({
+    path,
+    filename,
+  });
+
+  const response = await fetch(`/api/dimages?${params.toString()}`);
+
+  if (!response.ok) {
+    throw new Error("Unable to download image");
+  }
+
+  const blob = await response.blob();
+  const objectUrl = URL.createObjectURL(blob);
+
   try {
-    const res = await fetch(url, { mode: "cors" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const blob = await res.blob();
-    const objectUrl = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = objectUrl;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    const link = document.createElement("a");
+
+    link.href = objectUrl;
+    link.download = filename;
+    link.style.display = "none";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    return "done";
+  } finally {
     setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-    return "downloaded";
-  } catch {
-    window.open(url, "_blank", "noopener,noreferrer");
-    return "opened";
   }
 }
 
@@ -142,11 +158,24 @@ export function GalleryViewer({ movie, gallery, index, onChange }) {
   }); // re-bind each render so `index` is never stale
 
   const handleDownload = async () => {
-    if (download === "busy") return;
+    if (download === "busy" || !path) return;
+
     setDownload("busy");
-    const ext = path.split(".").pop() || "jpg";
-    const filename = `${slugify(movie.title)}-scene-${index + 1}.${ext}`;
-    setDownload(await downloadImage(tmdbImageUrl(path, "original"), filename));
+
+    try {
+      const ext = path.split(".").pop()?.toLowerCase() || "jpg";
+
+      const filename = `${slugify(
+        movie?.title || movie?.name || "movie",
+      )}-scene-${index + 1}.${ext}`;
+
+      await downloadImage(path, filename);
+
+      setDownload("done");
+    } catch (error) {
+      console.error("Download failed:", error);
+      setDownload("error");
+    }
   };
 
   const roundButton =
@@ -257,8 +286,8 @@ export function GalleryViewer({ movie, gallery, index, onChange }) {
       </button>
       <span aria-live="polite" className="sr-only">
         {download === "busy" && "Downloading image"}
-        {download === "done" && "Image downloaded"}
-        {download === "opened" && "Image opened in a new tab"}
+        {download === "done" && "Image downloaded successfully"}
+        {download === "error" && "Failed to download image"}
       </span>
     </div>
   );
