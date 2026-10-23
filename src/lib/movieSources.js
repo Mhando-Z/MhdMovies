@@ -31,16 +31,26 @@ export function getMovieSources(movie) {
       src: `https://multiembed.mov/?${superEmbedParams}`,
     },
     {
-      id: "vidsrc-cc",
-      name: "VidSrc CC",
-      src: `https://vidsrc.cc/v2/embed/movie/${id}`,
+      id: "vidsrc-sh",
+      name: "VidSrc SH",
+      src: `https://vidsrc.sh/embed/movie/${id}`,
+    },
+    {
+      id: "vidsrc-link",
+      name: "VidSrc Link",
+      src: `https://vidsrc.link/embed/movie/${id}`,
+    },
+    {
+      id: "vidsrc-pk",
+      name: "VidSrc PK",
+      src: `https://embed.vidsrc.pk/movie/${id}`,
     },
     ...(tmdb
       ? [
           {
             id: "videasy",
             name: "Videasy",
-            src: `https://player.videasy.net/movie/${tmdb}`,
+            src: `https://player.videasy.to/movie/${tmdb}`,
           },
         ]
       : []),
