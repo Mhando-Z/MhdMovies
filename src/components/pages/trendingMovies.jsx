@@ -45,11 +45,11 @@ export default function TrendingMovies() {
           <div className="min-w-0">
             <h2
               id="trending-movies-heading"
-              className="text-2xl font-bold leading-tight tracking-tight"
+              className="text-xl md:text-2xl font-bold leading-tight tracking-tight"
             >
               Trending Movies
             </h2>
-            <p className="mt-1 text-sm text-white/60 md:text-base">
+            <p className="mt-1 text-xs text-white/60 md:text-base">
               Discover the movies trending today.
             </p>
           </div>
@@ -117,7 +117,7 @@ export default function TrendingMovies() {
 
           {/* Footer controls */}
           {(Trending.length > INITIAL_COUNT || hasMoreTrending) && (
-            <div className="mt-12 flex flex-row justify-between items-center gap-5">
+            <div className="mt-12 flex flex-col md:flex-row justify-between md:items-center gap-5">
               <div className="flex flex-col  gap-2">
                 <p
                   className="text-xs text-white/50 md:text-sm"
@@ -141,7 +141,7 @@ export default function TrendingMovies() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-row justify-between gap-3">
                 {(!expanded || hasMoreTrending) && (
                   <button
                     type="button"
