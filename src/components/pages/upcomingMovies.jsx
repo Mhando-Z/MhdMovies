@@ -151,7 +151,7 @@ export default function UpcomingMovies() {
 
           {/* Footer controls */}
           {(UpComingMovies.length > INITIAL_COUNT || hasMoreUpcoming) && (
-            <div className="mt-12 flex flex-row justify-between items-center gap-5">
+            <div className="mt-12 flex flex-col md:flex-row justify-between md:items-center gap-5">
               <div className="flex flex-col gap-2">
                 <p
                   className="text-xs text-white/50 md:text-sm"
@@ -176,7 +176,7 @@ export default function UpcomingMovies() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-row justify-between gap-3">
                 {canShowMore && (
                   <button
                     type="button"
