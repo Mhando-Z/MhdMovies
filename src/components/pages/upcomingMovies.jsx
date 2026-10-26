@@ -52,7 +52,7 @@ export default function UpcomingMovies() {
     <section
       aria-labelledby="upcoming-movies-heading"
       aria-busy={loading}
-      className="w-full px-4 py-12 font-roboto text-white md:px-8 md:py-16 xl:container xl:mx-auto"
+      className="w-full mb-10 md:mb-0 px-4 py-12 font-roboto text-white md:px-8 md:py-16 xl:container xl:mx-auto"
     >
       {/* Header */}
       <header className="mb-8 md:mb-10">
