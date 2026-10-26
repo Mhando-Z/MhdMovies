@@ -91,7 +91,7 @@ export default function CatalogueSearch({ onClose }) {
             <h2 className="text-xl font-semibold tracking-tight">
               Search movies & series
             </h2>
-            <p className="text-sm text-white/40">
+            <p className="text-xs md:text-sm text-white/40">
               Find your next story across the whole collection.
             </p>
           </div>
