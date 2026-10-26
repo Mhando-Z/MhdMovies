@@ -161,7 +161,7 @@ export default function TvDirectory() {
   }
 
   return (
-    <main className="min-h-screen bg-black font-roboto text-white">
+    <main className="min-h-screen mb-10 md:mb-0 bg-black font-roboto text-white">
       {/* TvHero section */}
       <TvHeroSection Trending={featured?.data?.results} />
 
