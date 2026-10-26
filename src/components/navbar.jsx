@@ -79,14 +79,14 @@ function BottomNav({ pathname = "" }) {
               aria-current={active ? "page" : undefined}
               className={`relative flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg text-[11px] font-medium transition-colors ${focus} ${active ? "text-white" : "text-white/60"}`}
             >
-              {active && (
+              {/* {active && (
                 <motion.span
                   layoutId="mobile-nav-indicator"
                   aria-hidden="true"
                   transition={{ type: "spring", stiffness: 500, damping: 35 }}
                   className="absolute top-0 h-0.5 w-8 rounded-b bg-red-500"
                 />
-              )}
+              )} */}
               <motion.span
                 aria-hidden="true"
                 whileTap={{ scale: 0.85 }}
@@ -94,11 +94,11 @@ function BottomNav({ pathname = "" }) {
                 transition={{ type: "spring", stiffness: 400, damping: 22 }}
                 className="flex"
               >
-                <Icon
-                  className={`size-[22px] ${active ? "text-red-500" : ""}`}
-                />
+                <Icon className={`size-5.5 ${active ? "text-red-500" : ""}`} />
               </motion.span>
-              <span>{label}</span>
+              <span className={` ${active ? "text-red-500" : ""}`}>
+                {label}
+              </span>
             </Link>
           );
         })}
