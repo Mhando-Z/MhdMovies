@@ -10,6 +10,7 @@ import {
   ChevronRight,
   LayoutGrid,
   List,
+  Loader2,
   Lock,
   Play,
   RotateCw,
@@ -336,10 +337,37 @@ export default function AnimeEpisodes({
       )}
 
       {/* Status messages */}
-      {resource.loading && (
-        <p role="status" className="mb-4 text-xs text-white/50">
+      {true && (
+        <p
+          role="status"
+          className="mb-4 flex items-center gap-2 text-xs text-white/50"
+        >
+          <Loader2 size={13} className="animate-spin" />
           Loading episode titles...
         </p>
+      )}
+
+      {resource.error && (
+        <div
+          role="status"
+          className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3 text-xs leading-6 text-white/60"
+        >
+          <AlertCircle className="size-4 shrink-0 text-red-400" />
+          <span className="min-w-0 flex-1">
+            Episode details are temporarily unavailable.{" "}
+            {released !== null && released > 0
+              ? "You can still select a broadcast episode below."
+              : "Please retry to check episode dates."}
+          </span>
+          <button
+            type="button"
+            onClick={resource.retry}
+            className={`inline-flex min-h-11 items-center gap-1.5 rounded-md px-2 text-red-400 hover:text-red-300 ${focus}`}
+          >
+            <RotateCw className="size-3.5" />
+            Retry
+          </button>
+        </div>
       )}
 
       {resource.data?.unavailable && released === null && (
