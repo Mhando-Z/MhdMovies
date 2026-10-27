@@ -337,7 +337,7 @@ export default function AnimeEpisodes({
       )}
 
       {/* Status messages */}
-      {true && (
+      {resource.loading && (
         <p
           role="status"
           className="mb-4 flex items-center gap-2 text-xs text-white/50"
