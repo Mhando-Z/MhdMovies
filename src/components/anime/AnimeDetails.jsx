@@ -5,7 +5,12 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, CalendarDays, Play, Star } from "lucide-react";
 import { useAnimeResource as useResource } from "./useAnimeResource";
 import AnimeTitle from "./AnimeTitle";
-import { genres, label, releasedEpisodeCount, watchHref } from "@/lib/anime/model";
+import {
+  genres,
+  label,
+  releasedEpisodeCount,
+  watchHref,
+} from "@/lib/anime/model";
 import {
   AnimeArtwork,
   AnimeCard,
@@ -80,7 +85,14 @@ export default function AnimeDetails({ anime }) {
   const count = releasedEpisodeCount(anime);
   return (
     <main className="min-h-screen bg-black font-roboto text-white">
-      {anime.stale && <p role="status" className="bg-amber-400/10 px-6 pb-3 pt-24 text-center text-sm text-amber-200">Showing saved details while the catalog reconnects.</p>}
+      {anime.stale && (
+        <p
+          role="status"
+          className="bg-amber-400/10 px-6 pb-3 pt-24 text-center text-sm text-amber-200"
+        >
+          Showing saved details while the catalog reconnects.
+        </p>
+      )}
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <AnimeArtwork
@@ -127,15 +139,24 @@ export default function AnimeDetails({ anime }) {
                 {anime.duration && <span>{anime.duration} min / ep</span>}
               </div>
               <div className="mb-6 flex flex-wrap gap-2">
-                {anime.genres.map((genre) => genres.includes(genre) ? (
-                  <Link
-                    key={genre}
-                    href={`/anime?genre=${encodeURIComponent(genre)}`}
-                    className={`rounded-full border border-white/15 px-3 py-2 text-xs text-white/65 hover:bg-white/10 ${focus}`}
-                  >
-                    {genre}
-                  </Link>
-                ) : <span key={genre} className="rounded-full border border-white/15 px-3 py-2 text-xs text-white/65">{genre}</span>)}
+                {anime.genres.map((genre) =>
+                  genres.includes(genre) ? (
+                    <Link
+                      key={genre}
+                      href={`/anime?genre=${encodeURIComponent(genre)}`}
+                      className={`rounded-full border border-white/15 px-3 py-2 text-xs text-white/65 hover:bg-white/10 ${focus}`}
+                    >
+                      {genre}
+                    </Link>
+                  ) : (
+                    <span
+                      key={genre}
+                      className="rounded-full border border-white/15 px-3 py-2 text-xs text-white/65"
+                    >
+                      {genre}
+                    </span>
+                  ),
+                )}
               </div>
               <p className="line-clamp-3 text-sm leading-7 text-white/65">
                 {anime.description || "A synopsis has not been added yet."}
@@ -199,7 +220,14 @@ export default function AnimeDetails({ anime }) {
                 ["Episodes", anime.episodes || "TBA"],
                 ["Studio", anime.studios.join(", ") || "TBA"],
                 ...(anime.rank ? [["MAL ranking", `#${anime.rank}`]] : []),
-                ...(anime.broadcast?.day_of_the_week ? [["Regular broadcast", `${label(anime.broadcast.day_of_the_week)}${anime.broadcast.start_time ? ` at ${anime.broadcast.start_time} JST` : ""}`]] : []),
+                ...(anime.broadcast?.day_of_the_week
+                  ? [
+                      [
+                        "Regular broadcast",
+                        `${label(anime.broadcast.day_of_the_week)}${anime.broadcast.start_time ? ` at ${anime.broadcast.start_time} JST` : ""}`,
+                      ],
+                    ]
+                  : []),
               ].map(([key, value]) => (
                 <div key={key}>
                   <dt className="mb-1 text-xs text-white/40">{key}</dt>
@@ -234,11 +262,27 @@ export default function AnimeDetails({ anime }) {
         )}
         {anime.recommendations?.length > 0 && (
           <section className="mt-16">
-            <SectionHeading eyebrow="Find your next story" title="Fans also recommend" />
-            <div className={grid}>{anime.recommendations.map((item) => <AnimeCard key={item.id} anime={item} />)}</div>
+            <SectionHeading
+              eyebrow="Find your next story"
+              title="Fans also recommend"
+            />
+            <div className={grid}>
+              {anime.recommendations.map((item) => (
+                <AnimeCard key={item.id} anime={item} />
+              ))}
+            </div>
           </section>
         )}
-        {anime.malId && <a href={`https://myanimelist.net/anime/${anime.malId}`} target="_blank" rel="noreferrer" className="mt-10 block text-xs text-white/45 underline underline-offset-4">Anime information from MyAnimeList</a>}
+        {anime.malId && (
+          <a
+            href={`https://myanimelist.net/anime/${anime.malId}`}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-10 block text-xs text-white/45 underline underline-offset-4"
+          >
+            Anime information from MyAnimeList
+          </a>
+        )}
         <Link href="/anime" className={`${button} mt-12`}>
           Explore more anime
           <ArrowRight className="size-4" />
