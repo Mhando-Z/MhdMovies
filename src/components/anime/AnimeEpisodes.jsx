@@ -162,7 +162,7 @@ export default function AnimeEpisodes({
 
   const gridClass = list
     ? `grid gap-2 ${compact ? "max-h-[520px] overflow-y-auto pr-1" : ""}`
-    : "grid h-100 gap-1.5 sm:grid-cols-2 overflow-y-auto xl:grid-cols-4  lg:grid-cols-3";
+    : `grid h-100 gap-1.5 overflow-y-auto ${visible?.length <= 30 ? "" : "sm:grid-cols-2 xl:grid-cols-4 lg:grid-cols-3"} `;
 
   const showRangeChips = totalPages && totalPages > 1 && totalPages <= 8;
 
@@ -256,7 +256,7 @@ export default function AnimeEpisodes({
               type="button"
               aria-pressed={filter === item.id}
               onClick={() => setFilter(item.id)}
-              className={`relative min-h-9 rounded-md px-3 text-xs transition-colors ${focus} ${
+              className={`relative min-h-9 cursor-pointer rounded-md px-3 text-xs transition-colors ${focus} ${
                 filter === item.id
                   ? "text-white"
                   : "text-white/50 hover:text-white/80"
