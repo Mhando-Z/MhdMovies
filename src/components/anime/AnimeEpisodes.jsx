@@ -248,7 +248,7 @@ export default function AnimeEpisodes({
         <div
           role="group"
           aria-label="Filter episodes"
-          className="flex rounded-lg border border-white/10 bg-white/[0.03] p-1"
+          className="flex rounded-lg border border-white/10 bg-white/3 p-1"
         >
           {FILTERS.map((item) => (
             <button
@@ -282,7 +282,7 @@ export default function AnimeEpisodes({
           <div
             role="group"
             aria-label="Layout"
-            className="flex rounded-lg border border-white/10 bg-white/[0.03] p-1"
+            className="flex rounded-lg border border-white/10 bg-white/3 p-1"
           >
             {[
               { id: "grid", label: "Grid view", Icon: LayoutGrid },
@@ -293,7 +293,7 @@ export default function AnimeEpisodes({
                 type="button"
                 aria-pressed={view === id}
                 onClick={() => setView(id)}
-                className={`flex size-9 items-center justify-center rounded-md transition-colors ${focus} ${
+                className={`flex size-9 cursor-pointer items-center justify-center rounded-md transition-colors ${focus} ${
                   view === id
                     ? "bg-white/10 text-white"
                     : "text-white/45 hover:text-white/80"
