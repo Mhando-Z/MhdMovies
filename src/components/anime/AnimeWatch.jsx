@@ -551,7 +551,7 @@ export default function AnimeWatch({
                             {/* Play episode {episode} */}
                           </motion.button>
                         </div>
-                        <p> Play Episode {episode}</p>
+                        <p className="text-xs"> Play Episode {episode}</p>
                       </div>
                     ) : (
                       <>
