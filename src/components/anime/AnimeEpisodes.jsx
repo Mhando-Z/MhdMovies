@@ -472,7 +472,7 @@ export default function AnimeEpisodes({
                       <Link
                         href={watchHref(anime.id, number, audio)}
                         aria-current={isSelected ? "page" : undefined}
-                        className={`${classes} hover:border-white/30 hover:bg-white/[0.05]`}
+                        className={`${classes} hover:border-white/30 hover:bg-white/5`}
                       >
                         {content}
                       </Link>
