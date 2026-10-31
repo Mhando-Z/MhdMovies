@@ -164,3 +164,18 @@ export function releasedEpisodeCount(anime) {
 export function watchHref(id, episode = 1, audio = "sub") {
   return `/anime/${id}/watch?${new URLSearchParams({ episode: String(episode), audio })}`;
 }
+
+// Broadcast metadata and a provider's episode listing are independent signals.
+export function episodeAvailability(anime, number, metadata, audio = "sub", now = Date.now()) {
+  const inRange = Number.isSafeInteger(number) && number > 0 && number <= 100000 &&
+    !(anime.episodes && number > anime.episodes) &&
+    !["NOT_YET_RELEASED", "CANCELLED"].includes(anime.status);
+  const released = releasedEpisodeCount(anime);
+  const timestamp = metadata?.aired ? new Date(metadata.aired).getTime() : NaN;
+  const aired = inRange && (released !== null ? number <= released : Number.isFinite(timestamp) && timestamp <= now);
+  const streamListed = inRange && ["sub", "dub"].includes(audio) && Boolean(
+    anime.streamEpisodes?.find((episode) => episode.number === number)?.streams?.[audio] ||
+    metadata?.streamAudio?.includes(audio),
+  );
+  return { aired: Boolean(aired), streamListed: Boolean(streamListed), canWatch: Boolean(aired || streamListed) };
+}

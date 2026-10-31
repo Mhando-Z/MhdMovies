@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { canWatchEpisode, getAnime } from "@/lib/anime/catalogue";
+import { getPlaybackAnime } from "@/lib/anime/playback";
 import AnimeWatch from "@/components/anime/AnimeWatch";
 import { AnimeLoading } from "@/components/anime/AnimeUI";
 
@@ -30,13 +31,18 @@ async function AnimeWatchContent({ params, searchParams }) {
     if (error.status === 404) notFound();
     throw error;
   }
-  const playable = await canWatchEpisode(anime, episode);
+  anime = await getPlaybackAnime(anime);
+  const [playable, nextPlayable] = await Promise.all([
+    canWatchEpisode(anime, episode, audio),
+    canWatchEpisode(anime, episode + 1, audio),
+  ]);
   return (
     <AnimeWatch
       anime={anime}
       episode={episode}
       audio={audio}
       playable={playable}
+      nextEpisode={nextPlayable ? episode + 1 : null}
     />
   );
 }

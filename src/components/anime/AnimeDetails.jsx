@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, CalendarDays, Play, Star } from "lucide-react";
+import { ArrowRight, CalendarDays, Play, Star } from "lucide-react";
 import { useAnimeResource as useResource } from "./useAnimeResource";
 import AnimeTitle from "./AnimeTitle";
 import {
@@ -83,6 +83,10 @@ function ChineseDetails({ anime }) {
 export default function AnimeDetails({ anime }) {
   const [trailer, setTrailer] = useState(false);
   const count = releasedEpisodeCount(anime);
+  const firstStream =
+    count === 0
+      ? null
+      : anime.streamEpisodes?.find((item) => item.streams?.sub)?.number;
   return (
     <main className="min-h-screen bg-black font-roboto text-white">
       {anime.stale && (
@@ -164,11 +168,21 @@ export default function AnimeDetails({ anime }) {
               <div className="mt-7 flex flex-wrap items-start gap-3">
                 {count !== 0 && (
                   <Link
-                    href={count === null ? "#episodes" : watchHref(anime.id)}
+                    href={
+                      firstStream
+                        ? watchHref(anime.id, firstStream)
+                        : count === null
+                          ? "#episodes"
+                          : watchHref(anime.id)
+                    }
                     className={`${button} border-red-600 bg-red-600 hover:bg-red-700`}
                   >
                     <Play className="size-4 fill-current" />
-                    {count === null ? "Browse episodes" : "Watch episode 1"}
+                    {firstStream
+                      ? `Watch episode ${firstStream}`
+                      : count === null
+                        ? "Browse episodes"
+                        : "Watch episode 1"}
                   </Link>
                 )}
                 <WatchlistButton anime={anime} />

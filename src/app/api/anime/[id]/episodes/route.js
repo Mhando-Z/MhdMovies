@@ -1,5 +1,6 @@
 import { animeError, getAnime, getEpisodes } from "@/lib/anime/catalogue";
 import { validAnimeKey } from "@/lib/anime/model";
+import { getPlaybackAnime } from "@/lib/anime/playback";
 
 export async function GET(request, { params }) {
   const { id } = await params;
@@ -11,7 +12,7 @@ export async function GET(request, { params }) {
     );
   try {
     return Response.json(
-      await getEpisodes(await getAnime(id), page, request.signal),
+      await getEpisodes(await getPlaybackAnime(await getAnime(id)), page, request.signal),
     );
   } catch (error) {
     return animeError(error);

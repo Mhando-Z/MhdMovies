@@ -111,6 +111,8 @@ function Player({
         }
       }
       if (data.type === "complete") {
+        started.current = true;
+        setSlow(false);
         finished.current = true;
         setRatio(1);
         // Keep the next episode ready in Continue watching without claiming a seek.
@@ -142,7 +144,7 @@ function Player({
     return () => clearTimeout(tick);
   }, [countdown, nextHref, router]);
 
-  const showTrouble = (slow || error) && !loaded ? true : error;
+  const showTrouble = slow || error;
 
   return (
     <>
@@ -161,7 +163,7 @@ function Player({
 
         {/* Loading veil */}
         <AnimatePresence>
-          {!loaded && !error && (
+          {!loaded && !error && !slow && (
             <motion.div
               key="loading"
               initial={{ opacity: 1 }}
@@ -320,7 +322,13 @@ function Player({
   );
 }
 
-export default function AnimeWatch({ anime, episode, audio, playable }) {
+export default function AnimeWatch({
+  anime,
+  episode,
+  audio,
+  playable,
+  nextEpisode: confirmedNext,
+}) {
   const sources = useMemo(
     () => getAnimeSources(anime, episode, audio),
     [anime, episode, audio],
@@ -328,7 +336,7 @@ export default function AnimeWatch({ anime, episode, audio, playable }) {
   const router = useRouter();
   const reduce = useReducedMotion();
   const playerRef = useRef(null);
-  const [sourceId, setSourceId] = useState("zoko");
+  const [sourceId, setSourceId] = useState("auto");
   const [playing, setPlaying] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [autoNext, setAutoNext] = useState(false);
@@ -341,14 +349,13 @@ export default function AnimeWatch({ anime, episode, audio, playable }) {
     sources.length > 1 ? sources[(sourceIndex + 1) % sources.length] : null;
   const nikaSource = sources.find((item) => item.id === "nika");
   const count = releasedEpisodeCount(anime);
-  const nextEpisode =
-    playable && count !== null && episode < count ? episode + 1 : null;
+  const nextEpisode = playable ? confirmedNext : null;
   const canAutoNext = source?.id === "nika" && Boolean(nextEpisode);
   const progress = count ? Math.min(1, episode / count) : null;
 
   /* Restore device preferences. */
   useEffect(() => {
-    setSourceId(store.get("mhd:anime-source", "zoko"));
+    setSourceId(store.get("mhd:anime-source", "auto"));
     setAutoNext(store.get("mhd:anime-auto-next", "0") === "1");
     setTheater(store.get("mhd:anime-theater", "0") === "1");
   }, []);
@@ -514,7 +521,7 @@ export default function AnimeWatch({ anime, episode, audio, playable }) {
                     <div className="absolute inset-0 bg-linear-to-t from-black via-black/70 to-black/60" />
                   </div>
                   <div className="max-w-md text-center">
-                    {playable ? (
+                    {playable && source ? (
                       <div className="flex flex-col items-center gap-1.5">
                         <div className="relative inline-flex">
                           {!reduce && (
@@ -553,7 +560,8 @@ export default function AnimeWatch({ anime, episode, audio, playable }) {
                         </h2>
                         <p className="mt-3 text-sm leading-7 text-white/60">
                           This episode may be upcoming, out of range, or missing
-                          a confirmed broadcast date.
+                          both a broadcast date and a stream listing for this
+                          audio.
                         </p>
                         <button
                           type="button"
@@ -676,6 +684,11 @@ export default function AnimeWatch({ anime, episode, audio, playable }) {
                     >
                       {active && <Check className="size-4" />}
                       {item.name}
+                      <span className="text-[10px] opacity-60">
+                        {item.availability === "listed"
+                          ? "Stream listed"
+                          : "Unconfirmed"}
+                      </span>
                     </motion.button>
                   );
                 })}
@@ -761,7 +774,7 @@ export default function AnimeWatch({ anime, episode, audio, playable }) {
 
             {/* Footnote + shortcuts */}
             <div className="mt-4">
-              <div className="flex flex-wrap items-start justify-between gap-3">
+              <div className="flex flex-col md:flex-row items-start justify-between gap-3">
                 <p className="max-w-xl text-xs leading-6 text-white/35">
                   Continue watching is saved on this device. Progress and
                   auto-next are supported on NikaStream; automatic seeking is

@@ -6,6 +6,7 @@ import {
   formats,
   genres,
   normalizeAnime,
+  episodeAvailability,
   releasedEpisodeCount,
   sorts,
   statuses,
@@ -190,7 +191,7 @@ export const getAnime = cache(async (id) => {
   }
 });
 
-export async function getEpisodes(anime, page, signal) {
+async function getCatalogEpisodes(anime, page, signal) {
   if (!anime.malId)
     return { results: [], hasNextPage: false, unavailable: true };
   try {
@@ -227,9 +228,27 @@ export async function getEpisodes(anime, page, signal) {
   }
 }
 
-export async function canWatchEpisode(anime, episode) {
+export async function getEpisodes(anime, page, signal) {
+  const catalog = await getCatalogEpisodes(anime, page, signal);
+  const results = new Map(catalog.results.map((item) => [item.number, item]));
+  const start = (page - 1) * 100 + 1;
+  const streams = anime.streamEpisodes || [];
+  for (const item of streams) {
+    if (item.number < start || item.number >= start + 100) continue;
+    results.set(item.number, { number: item.number, title: item.title, aired: null,
+      ...results.get(item.number), streamAudio: Object.keys(item.streams) });
+  }
+  return { ...catalog, results: [...results.values()].sort((a, b) => a.number - b.number),
+    hasNextPage: catalog.hasNextPage || streams.some((item) => item.number >= start + 100),
+    streamState: anime.streamState || "unknown" };
+}
+
+export async function canWatchEpisode(anime, episode, audio = "sub") {
   if (!Number.isInteger(episode) || episode < 1 || episode > 100000)
     return false;
+  if (!["sub", "dub"].includes(audio) || ["NOT_YET_RELEASED", "CANCELLED"].includes(anime.status) ||
+    (anime.episodes && episode > anime.episodes)) return false;
+  if (episodeAvailability(anime, episode, null, audio).streamListed) return true;
   const count = releasedEpisodeCount(anime);
   if (count !== null) return episode <= count;
   if (!anime.malId) return false;
@@ -237,16 +256,13 @@ export async function canWatchEpisode(anime, episode) {
     const { data } = await requestJson(
       `https://api.jikan.moe/v4/anime/${anime.malId}/episodes/${episode}`,
     );
-    return (
-      data?.mal_id === episode &&
-      Boolean(data.aired) &&
-      new Date(data.aired).getTime() <= Date.now()
-    );
+    if (data?.mal_id === episode && episodeAvailability(anime, episode, data, audio).canWatch) return true;
   } catch {
-    const data = await getEpisodes(anime, Math.floor((episode - 1) / 100) + 1);
-    const item = data.results.find((item) => item.number === episode);
-    return Boolean(item?.aired) && new Date(item.aired).getTime() <= Date.now();
+    // Fall through to the shared episode list and its ani.zip fallback.
   }
+  const data = await getEpisodes(anime, Math.floor((episode - 1) / 100) + 1);
+  const item = data.results.find((item) => item.number === episode);
+  return episodeAvailability(anime, episode, item, audio).canWatch;
 }
 
 export async function getChineseDetails(anime, signal) {

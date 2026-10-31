@@ -18,12 +18,17 @@ import {
   X,
 } from "lucide-react";
 import { useAnimeResource as useResource } from "./useAnimeResource";
-import { releasedEpisodeCount, watchHref } from "@/lib/anime/model";
+import {
+  episodeAvailability,
+  releasedEpisodeCount,
+  watchHref,
+} from "@/lib/anime/model";
 import { button, focus } from "./AnimeUI";
 
 const PAGE_SIZE = 100;
 const FILTERS = [
   { id: "all", label: "All" },
+  { id: "streams", label: "Streams" },
   { id: "aired", label: "Aired" },
   { id: "upcoming", label: "Upcoming" },
 ];
@@ -66,7 +71,13 @@ export default function AnimeEpisodes({
   );
   const resource = useResource(`/api/anime/${anime.id}/episodes?page=${page}`);
   const released = releasedEpisodeCount(anime);
-  const knownCount = anime.episodes || released;
+  const knownCount =
+    anime.episodes ||
+    Math.max(
+      released || 0,
+      ...(anime.streamEpisodes || []).map((item) => item.number),
+    ) ||
+    null;
   const [jump, setJump] = useState("");
   const [jumpError, setJumpError] = useState("");
   const [query, setQuery] = useState("");
@@ -93,23 +104,22 @@ export default function AnimeEpisodes({
     : [...metadata.keys()];
   const totalPages = knownCount ? Math.ceil(knownCount / PAGE_SIZE) : null;
 
-  const isAvailable = (number) => {
-    const aired = metadata.get(number)?.aired
-      ? new Date(metadata.get(number).aired).getTime()
-      : null;
-    return (
-      anime.status !== "NOT_YET_RELEASED" &&
-      anime.status !== "CANCELLED" &&
-      (released !== null
-        ? number <= released
-        : aired !== null && aired <= Date.now())
-    );
-  };
+  const availability = (number) =>
+    episodeAvailability(anime, number, metadata.get(number), audio);
+  const isAvailable = (number) => availability(number).canWatch;
 
   const visible = numbers.filter((number) => {
-    const available = isAvailable(number);
-    if (filter === "aired" && !available) return false;
-    if (filter === "upcoming" && available) return false;
+    if (filter === "streams" && !availability(number).streamListed)
+      return false;
+    if (filter === "aired" && !availability(number).aired) return false;
+    if (
+      filter === "upcoming" &&
+      !(
+        anime.status === "NOT_YET_RELEASED" ||
+        new Date(metadata.get(number)?.aired).getTime() > Date.now()
+      )
+    )
+      return false;
     const q = query.trim().toLowerCase();
     if (!q) return true;
     const title = (metadata.get(number)?.title || "").toLowerCase();
@@ -117,13 +127,15 @@ export default function AnimeEpisodes({
   });
 
   const airedCount =
-    released !== null ? released : numbers.filter(isAvailable).length;
+    released !== null
+      ? released
+      : numbers.filter((number) => availability(number).aired).length;
   const progress =
     knownCount && released !== null
       ? Math.min(100, Math.round((released / knownCount) * 100))
       : null;
   const rangeStart = (page - 1) * PAGE_SIZE + 1;
-  const rangeEnd = (page - 1) * PAGE_SIZE + (numbers.length || PAGE_SIZE);
+  const rangeEnd = numbers.length ? Math.max(...numbers) : rangeStart;
   const list = view === "list";
 
   // Scroll a jumped-to / selected episode into view once it is rendered.
@@ -337,6 +349,13 @@ export default function AnimeEpisodes({
       )}
 
       {/* Status messages */}
+      <p className="mb-4 text-xs leading-6 text-white/50" role="status">
+        {anime.streamEpisodes?.some((item) => item.streams?.[audio])
+          ? "Select an episode marked Stream listed to choose a source."
+          : anime.streamState === "unavailable"
+            ? "Stream listings are temporarily unavailable. You can still try sources for aired episodes."
+            : "Stream availability is unconfirmed. Aired episodes can still be tried in the player."}
+      </p>
       {resource.loading && (
         <p
           role="status"
@@ -373,7 +392,8 @@ export default function AnimeEpisodes({
       {resource.data?.unavailable && released === null && (
         <p className="mb-4 flex items-center gap-2 text-sm leading-6 text-white/50">
           <CalendarClock className="size-4 shrink-0" />
-          Episode dates have not been confirmed for this title.
+          Broadcast dates have not been confirmed. Listed streams can still be
+          selected.
         </p>
       )}
 
@@ -442,7 +462,11 @@ export default function AnimeEpisodes({
                             {date || "Date unconfirmed or upcoming"}
                           </span>
                         ) : (
-                          <span>{date || "Broadcast episode"}</span>
+                          <span>
+                            {availability(number).streamListed
+                              ? `Stream listed · ${audio === "dub" ? "Dub" : "Sub"}`
+                              : `${date || "Aired"} · Stream unconfirmed`}
+                          </span>
                         )}
                         {tag && available && (
                           <span className="rounded border border-white/15 px-1.5 py-px text-[10px] text-white/55">

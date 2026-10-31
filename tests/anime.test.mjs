@@ -14,7 +14,7 @@ registerHooks({
     if (
       specifier.startsWith("./") &&
       context.parentURL?.includes("/lib/anime/") &&
-      !specifier.endsWith(".js")
+      !/\.(js|json)$/.test(specifier)
     )
       return next(`${specifier}.js`, context);
     return next(specifier, context);
@@ -25,7 +25,9 @@ const {
   normalizeMalAnime,
   releasedEpisodeCount,
   validAnimeKey,
+  episodeAvailability,
 } = await import("../src/lib/anime/model.js");
+const { getPlaybackAnime, validEpisodeEmbed } = await import("../src/lib/anime/playback.js");
 const { getAnimeSources, readPlayerEvent } =
   await import("../src/lib/anime/sources.js");
 const {
@@ -49,6 +51,7 @@ Object.assign(
 process.env.MAL_CLIENT_ID = "test-client";
 const originalFetch = globalThis.fetch;
 const originalMappings = process.env.ANIME_BANGUMI_MAPPINGS;
+const originalStreamMappings = process.env.ANIME_STREAM_MAPPINGS;
 const logoEnvKeys = [
   "TMDB_ACCESS_TOKEN",
   "NEXT_PUBLIC_TMDB_ACCESS_TOKEN",
@@ -65,10 +68,146 @@ afterEach(() => {
   globalThis.fetch = originalFetch;
   if (originalMappings === undefined) delete process.env.ANIME_BANGUMI_MAPPINGS;
   else process.env.ANIME_BANGUMI_MAPPINGS = originalMappings;
+  if (originalStreamMappings === undefined) delete process.env.ANIME_STREAM_MAPPINGS;
+  else process.env.ANIME_STREAM_MAPPINGS = originalStreamMappings;
   for (const key of logoEnvKeys) {
     if (originalLogoEnv[key] === undefined) delete process.env[key];
     else process.env[key] = originalLogoEnv[key];
   }
+});
+
+const streamAnime = { id: "mal-99", malId: 99, anilistId: 199, status: "RELEASING", episodes: 12 };
+const streamEpisode = (number, audio = "sub") => ({ number, title: `Episode ${number}`,
+  embed_url: { [audio]: `https://megaplay.buzz/stream/s-2/${1000 + number}/${audio}` } });
+const streamResponse = (episodes, anime = { id: 7, mal_id: "99", ani_id: "199" }) =>
+  Response.json({ ok: true, data: { anime, episodes } });
+
+test("listed donghua episodes unlock only their audio without inventing broadcast dates", async () => {
+  process.env.ANIME_STREAM_MAPPINGS = '{"mal-99":{"seriesId":7}}';
+  globalThis.fetch = async (url) => {
+    assert.equal(url, "https://anikotoapi.site/series/7");
+    return streamResponse([streamEpisode(1), streamEpisode(3, "dub")]);
+  };
+  const anime = await getPlaybackAnime(streamAnime);
+  assert.equal(anime.streamState, "checked");
+  assert.equal(await canWatchEpisode(anime, 1, "sub"), true);
+  assert.deepEqual(episodeAvailability(anime, 1), { aired: false, streamListed: true, canWatch: true });
+  assert.equal(episodeAvailability(anime, 1, null, "dub").canWatch, false);
+  assert.equal(episodeAvailability(anime, 2).canWatch, false);
+  assert.equal(episodeAvailability(anime, 3, null, "dub").canWatch, true);
+  assert.equal(episodeAvailability({ ...anime, status: "CANCELLED" }, 1).canWatch, false);
+  assert.equal(await canWatchEpisode({ ...anime, status: "NOT_YET_RELEASED" }, 1), false);
+  assert.equal(await canWatchEpisode({ ...anime, episodes: 2 }, 3, "dub"), false);
+  const sources = getAnimeSources(anime, 1);
+  assert.equal(sources[0].id, "anikoto");
+  assert.equal(sources[0].availability, "listed");
+  assert.equal(sources[1].src, "https://supaplay.fun/stream/s-2/1001/sub");
+  assert.equal(sources[1].availability, "unknown");
+  assert.ok(getAnimeSources(anime, 1, "dub").every((item) => item.availability === "unknown"));
+});
+
+test("discovery matches exact IDs, rejects ambiguous results, and never matches titles", async () => {
+  delete process.env.ANIME_STREAM_MAPPINGS;
+  for (const rows of [
+    [{ id: 7, mal_id: "99", ani_id: "199" }],
+    [{ id: 7, mal_id: "98", ani_id: "199", title: "Identical name" }],
+    [{ id: 7, mal_id: "99", ani_id: "199" }, { id: 8, mal_id: "99", ani_id: "199" }],
+  ]) {
+    Object.assign(animeTransport, createAnimeTransport({ directory: false, interval: 0 }));
+    let seriesCalls = 0;
+    globalThis.fetch = async (url) => {
+      if (url.includes("recent-anime")) return Response.json({ ok: true, data: rows });
+      seriesCalls++;
+      return streamResponse([streamEpisode(1)]);
+    };
+    const anime = await getPlaybackAnime(streamAnime);
+    assert.equal(anime.streamEpisodes.length, rows.length === 1 && rows[0].mal_id === "99" ? 1 : 0);
+    assert.equal(seriesCalls, anime.streamEpisodes.length);
+  }
+});
+
+test("series identity is rechecked after discovery or a configured mapping", async () => {
+  process.env.ANIME_STREAM_MAPPINGS = '{"mal-99":{"seriesId":7}}';
+  globalThis.fetch = async () => streamResponse([streamEpisode(1)], { id: 7, mal_id: 98, ani_id: 199 });
+  const anime = await getPlaybackAnime(streamAnime);
+  assert.deepEqual(anime.streamEpisodes, []);
+});
+
+test("legacy AniList titles can use an exact shared MAL ID when the provider omits AniList", async () => {
+  process.env.ANIME_STREAM_MAPPINGS = '{"mal-99":{"seriesId":7}}';
+  globalThis.fetch = async () => streamResponse([streamEpisode(1)], { id: 7, mal_id: 99, ani_id: "" });
+  const anime = await getPlaybackAnime({ ...streamAnime, id: 199 });
+  assert.equal(anime.streamEpisodes.length, 1);
+  assert.equal(anime.anilistId, 199);
+});
+
+test("explicit season mappings translate sparse episode numbers without guessing offsets", async () => {
+  process.env.ANIME_STREAM_MAPPINGS = JSON.stringify({ "mal-99": {
+    seriesId: 7, providerMalId: 98, episodeMap: { 1: 101, 2: 103, 13: 104 },
+  } });
+  globalThis.fetch = async () => streamResponse([streamEpisode(101), streamEpisode(103), streamEpisode(104)],
+    { id: 7, mal_id: 98 });
+  const anime = await getPlaybackAnime(streamAnime);
+  assert.deepEqual(anime.streamEpisodes.map((item) => item.number), [1, 2]);
+  assert.equal(getAnimeSources(anime, 2)[0].src, "https://megaplay.buzz/stream/s-2/1103/sub");
+});
+
+test("episode embeds reject untrusted hosts, credentials, paths, and audio mismatches", () => {
+  for (const url of ["javascript:alert(1)", "http://megaplay.buzz/stream/s-2/1/sub",
+    "https://megaplay.buzz.evil.test/stream/s-2/1/sub", "https://user:pass@megaplay.buzz/stream/s-2/1/sub",
+    "https://megaplay.buzz/stream/s-2/1/dub", "https://megaplay.buzz/stream/s-2/1/sub?redirect=bad",
+    "https://megaplay.buzz:444/stream/s-2/1/sub"])
+    assert.equal(validEpisodeEmbed(url, "sub"), null);
+  assert.equal(validEpisodeEmbed("https://megaplay.buzz/stream/s-2/1/sub", "sub"),
+    "https://megaplay.buzz/stream/s-2/1/sub");
+});
+
+test("duplicate, fractional, unsafe, and out-of-range provider episodes do not unlock playback", async () => {
+  process.env.ANIME_STREAM_MAPPINGS = '{"mal-99":{"seriesId":7}}';
+  globalThis.fetch = async () => streamResponse([streamEpisode(1), streamEpisode(1), streamEpisode(1.5),
+    streamEpisode(13), { ...streamEpisode(2), embed_url: { sub: "https://evil.test/stream/s-2/2/sub" } }]);
+  assert.deepEqual((await getPlaybackAnime(streamAnime)).streamEpisodes, []);
+});
+
+test("provider outages leave catalog playback usable and do not assert availability", async () => {
+  process.env.ANIME_STREAM_MAPPINGS = '{"mal-99":{"seriesId":7}}';
+  globalThis.fetch = async () => new Response(null, { status: 503 });
+  const anime = await getPlaybackAnime({ ...streamAnime, status: "FINISHED" });
+  assert.equal(anime.streamState, "unavailable");
+  assert.equal(await canWatchEpisode(anime, 1), true);
+  assert.deepEqual(anime.streamEpisodes, []);
+  assert.equal(getAnimeSources(anime, 1).length, 3);
+});
+
+test("MAL playback gains AniLink only from a verified reverse mapping", async () => {
+  process.env.ANIME_STREAM_MAPPINGS = '{"mal-99":false}';
+  globalThis.fetch = async (url) => {
+    assert.equal(url, "https://api.ani.zip/mappings?mal_id=99");
+    return Response.json({ mappings: { mal_id: 99, anilist_id: 199 } });
+  };
+  const anime = await getPlaybackAnime({ ...streamAnime, anilistId: null });
+  assert.equal(anime.anilistId, 199);
+  assert.equal(getAnimeSources(anime, 1).at(-1).id, "anilink");
+  Object.assign(animeTransport, createAnimeTransport({ directory: false, interval: 0 }));
+  globalThis.fetch = async () => Response.json({ mappings: { mal_id: 98, anilist_id: 199 } });
+  const rejected = await getPlaybackAnime({ ...streamAnime, anilistId: null });
+  assert.equal(rejected.anilistId, null);
+  assert.equal(getAnimeSources(rejected, 1).length, 2);
+});
+
+test("provider episodes merge into paginated metadata even when Jikan returns no rows", async () => {
+  globalThis.fetch = async () => Response.json({ data: [], pagination: { has_next_page: false } });
+  const anime = { ...streamAnime, episodes: null, streamState: "checked", streamEpisodes: [
+    { number: 1, title: "First", streams: { sub: "listed" } },
+    { number: 101, title: "Next range", streams: { dub: "listed" } },
+  ] };
+  const first = await getEpisodes(anime, 1);
+  assert.equal(first.hasNextPage, true);
+  assert.deepEqual(first.results, [{ number: 1, title: "First", aired: null, streamAudio: ["sub"] }]);
+  const second = await getEpisodes(anime, 2);
+  assert.equal(second.hasNextPage, false);
+  assert.equal(second.results[0].number, 101);
+  assert.equal(episodeAvailability(anime, 101, second.results[0], "dub").canWatch, true);
 });
 
 const logoAnime = {

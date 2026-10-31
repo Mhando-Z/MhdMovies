@@ -10,17 +10,24 @@ export function getAnimeSources(anime, episode, audio = "sub") {
     return [];
   const mal = validAnimeId(anime?.malId) ? anime.malId : null;
   const ani = validAnimeId(anime?.anilistId) ? anime.anilistId : validAnimeId(anime?.id) ? anime.id : null;
-  if (!mal && !ani) return [];
+  const listedUrl = anime?.streamEpisodes?.find((item) => item.number === episode)?.streams?.[audio];
+  const listed = listedUrl ? [{ id: "anikoto", name: "Anikoto", src: listedUrl, availability: "listed" }] : [];
+  if (listedUrl?.startsWith("https://megaplay.buzz/stream/s-2/"))
+    listed.push({ id: "supaplay", name: "SupaPlay", src: listedUrl.replace("https://megaplay.buzz/", "https://supaplay.fun/"), availability: "unknown" });
+  if (!mal && !ani) return listed;
   return [
+    ...listed,
     {
       id: "zoko",
       name: "Zokoanime",
       src: `https://zokoanime.video/stream/${mal ? "mal" : "anilist"}/${mal || ani}/${episode}/${audio}`,
+      availability: "unknown",
     },
     {
       id: "nika",
       name: "NikaStream",
       src: `https://nikastream.blog/embed/${mal ? "mal" : "ani"}/${mal || ani}/${episode}/${audio}`,
+      availability: "unknown",
     },
     ...(ani
       ? [
@@ -28,6 +35,7 @@ export function getAnimeSources(anime, episode, audio = "sub") {
             id: "anilink",
             name: "AniLink",
             src: `https://anilink.cc/watch/${ani}/${episode}?variant=${audio}`,
+            availability: "unknown",
           },
         ]
       : []),

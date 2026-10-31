@@ -61,7 +61,12 @@ function SearchForm({ search, onSearch, pending }) {
 }
 
 function Featured({ resource }) {
-  return <AnimeHeroSection Trending={resource.data?.trending} loading={resource.loading} />;
+  return (
+    <AnimeHeroSection
+      Trending={resource.data?.trending}
+      loading={resource.loading}
+    />
+  );
 }
 
 export default function AnimeDirectory() {
@@ -107,7 +112,9 @@ export default function AnimeDirectory() {
   return (
     <main className="min-h-screen font-roboto text-white">
       {!filtered && <Featured resource={home} />}
-      <div className={`xl:mx-auto xl:container px-6 py-10 md:py-14 ${filtered || home.error ? "pt-28 md:pt-32" : ""}`}>
+      <div
+        className={`xl:mx-auto xl:container px-6 py-10 md:py-14 ${filtered || home.error ? "pt-28 md:pt-32" : ""}`}
+      >
         {!filtered && (
           <>
             <LibraryRows />
@@ -140,17 +147,29 @@ export default function AnimeDirectory() {
                   "/anime?status=RELEASING&sort=popular",
                 ],
                 ["top", "Worth your time", "Top rated", "/anime?sort=score"],
-                ["upcoming", "Something to look forward to", "Coming soon", "/anime?sort=upcoming"],
-              ].map(([key, eyebrow, title, href]) => (
-                home.data?.[key]?.length > 0 && <section key={key} className="mb-14">
-                  <SectionHeading eyebrow={eyebrow} title={title} href={href} />
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
-                    {home.data?.[key]?.map((anime) => (
-                      <AnimeCard key={anime.id} anime={anime} />
-                    ))}
-                  </div>
-                </section>
-              ))
+                [
+                  "upcoming",
+                  "Something to look forward to",
+                  "Coming soon",
+                  "/anime?sort=upcoming",
+                ],
+              ].map(
+                ([key, eyebrow, title, href]) =>
+                  home.data?.[key]?.length > 0 && (
+                    <section key={key} className="mb-14">
+                      <SectionHeading
+                        eyebrow={eyebrow}
+                        title={title}
+                        href={href}
+                      />
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
+                        {home.data?.[key]?.map((anime) => (
+                          <AnimeCard key={anime.id} anime={anime} />
+                        ))}
+                      </div>
+                    </section>
+                  ),
+              )
             )}
           </>
         )}
@@ -280,8 +299,19 @@ export default function AnimeDirectory() {
               </Link>
             </div>
           </div>
-          {(catalogue.data?.stale || home.data?.stale) && <p role="status" className="mb-5 rounded-lg border border-amber-400/20 bg-amber-400/5 p-3 text-xs text-amber-200">Showing saved titles while the catalog reconnects.</p>}
-          {catalogue.data?.notice && <p role="status" className="mb-5 text-xs text-white/55">{catalogue.data.notice}</p>}
+          {(catalogue.data?.stale || home.data?.stale) && (
+            <p
+              role="status"
+              className="mb-5 rounded-lg border border-amber-400/20 bg-amber-400/5 p-3 text-xs text-amber-200"
+            >
+              Showing saved titles while the catalog reconnects.
+            </p>
+          )}
+          {catalogue.data?.notice && (
+            <p role="status" className="mb-5 text-xs text-white/55">
+              {catalogue.data.notice}
+            </p>
+          )}
           <div
             aria-live="polite"
             className="mb-5 flex min-h-6 items-center justify-between text-xs text-white/45"

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { getAnime } from "@/lib/anime/catalogue";
+import { getPlaybackAnime } from "@/lib/anime/playback";
 import AnimeDetails from "@/components/anime/AnimeDetails";
 import { AnimeLoading } from "@/components/anime/AnimeUI";
 
@@ -33,7 +34,7 @@ async function AnimeTitleContent({ params }) {
     if (error.status === 404) notFound();
     throw error;
   }
-  return <AnimeDetails anime={anime} />;
+  return <AnimeDetails anime={await getPlaybackAnime(anime)} />;
 }
 
 export default function AnimeTitlePage({ params }) {
